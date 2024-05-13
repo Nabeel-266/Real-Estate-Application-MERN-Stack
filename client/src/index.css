@@ -27,50 +27,49 @@
   /* ----> Mobile Small <---- */
   @media (max-width: 375px) {
     html {
-      font-size: 8.3px;
+      font-size: 7.4px;
     }
   }
 
   /* ----> Mobile Regular <---- */
   @media (376px <= width <= 480px) {
     html {
-      font-size: 8.6px;
+      font-size: 7.8px;
     }
   }
 
   /* ----> Mobile Large OR Tablet Small <---- */
   @media (481px <= width <= 639px) {
     html {
-      font-size: 9px;
+      font-size: 8.2px;
     }
   }
 
   /* ----> Tablet Medium <---- */
   @media (640px <= width <= 767px) {
     html {
-      font-size: 9.2px;
+      font-size: 8.6px;
     }
   }
 
   /* ----> Tablet Large OR Laptop Small <---- */
   @media (768px <= width <= 900px) {
     html {
-      font-size: 9.2px;
+      font-size: 9px;
     }
   }
 
   /* ----> Laptop Medium <---- */
   @media (901px <= width <= 1023px) {
     html {
-      font-size: 9.5px;
+      font-size: 8.8px;
     }
   }
 
   /* ----> Laptop Large <---- */
   @media (1024px <= width <= 1200px) {
     html {
-      font-size: 9.8px;
-      /* color: #052a38; */
+      font-size: 9.4px;
     }
   }
 

@@ -7,23 +7,23 @@ import { CgMenuRight } from "react-icons/cg";
 import LogoDark from "../assets/logoIcon-dark.png";
 import User from "../assets/user2.png";
 
-const Header = () => {
+const Header = ({ setIsOpenSidebar }) => {
   return (
-    <header className="header w-full h-[6rem] flex items-center fixed top-0 left-0 z-[99]">
+    <header className="header w-full h-[6rem] flex items-center fixed top-0 left-0 z-[99] backdrop-blur-[20px] bg-[#ffffffd8]">
       <div className="headerWrapper w-full flex justify-between mx-[4%]">
         {/* Header Left Side */}
         <div className="leftSide flex items-center gap-[3rem]">
           {/* Logo */}
           <div className="logo flex items-center gap-[0.2rem]">
             <img src={LogoDark} alt="Logo" className="w-[4rem] select-none" />
-            <h4 className="text-[3rem] leading-[3rem] text-cyan-950 font-semibold font-quick select-none">
+            <h4 className="text-[3rem] leading-[3rem]  text-cyan-950 font-semibold font-quick select-none">
               <span className="font-bold font-montAlter">Nab</span>
               <span>Estate</span>
             </h4>
           </div>
 
           {/* Navigations */}
-          <nav className="navigations">
+          <nav className="navigations hidden tabletLg:block">
             <ul className="flex items-center gap-[1rem]">
               {[
                 ["Home", "/"],
@@ -64,7 +64,7 @@ const Header = () => {
           </div>
 
           {/* Profile */}
-          <div className="profile flex items-center gap-[1rem]">
+          <div className="profile relative flex items-center gap-[1rem] px-[0.5rem] tabletSm:px-0">
             {/* Profile Image */}
             <div className="profileImage">
               <img
@@ -75,15 +75,19 @@ const Header = () => {
             </div>
 
             {/* Profile Button */}
-            <button className="profileBtn relative text-[1.7rem] leading-[1.7rem] font-semibold text-cyan-950 px-[1.6rem] py-[0.8rem] bg-amber-400 rounded-md">
+            <button className="profileBtn text-[1.7rem] leading-[1.7rem] font-semibold text-cyan-950 px-[1.6rem] py-[0.8rem] bg-amber-400 rounded-md hidden tabletSm:block">
               Profile
-              <span className="flex items-center justify-center min-w-[2rem] min-h-[2rem] p-[0.4rem] absolute top-[-0.8rem] right-[-0.8rem] text-[1.2rem] leading-[1rem] font-semibold font-quick text-white bg-red-500 rounded-full overflow-hidden">
-                99+
-              </span>
             </button>
+
+            <span className="flex items-center justify-center min-w-[2rem] min-h-[2rem] p-[0.4rem] absolute top-[-0.8rem] right-[-0.8rem] text-[1.2rem] leading-[1rem] font-semibold font-quick text-white bg-red-500 rounded-full overflow-hidden">
+              99+
+            </span>
           </div>
 
-          <button className="text-[3.5rem] text-cyan-950 hidden">
+          <button
+            onClick={() => setIsOpenSidebar((prvState) => !prvState)}
+            className="text-[3.5rem] text-cyan-950 block tabletLg:hidden"
+          >
             <CgMenuRight />
           </button>
         </div>

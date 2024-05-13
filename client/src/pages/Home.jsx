@@ -8,9 +8,10 @@ const Home = () => {
   return (
     <div className="homeCont w-full">
       <div className="homeWrapper mx-[4%]">
-        <div className="bannerCont w-full h-dvh flex items-center">
-          <div className="sideOne w-[50%] cursor-default select-none">
-            <h1 className="text-[4.3rem] leading-[4.5rem] font-bold text-cyan-950 mb-[1.5rem] tracking-[-0.1rem]">
+        <div className="bannerCont w-full laptopSm:h-dvh flex flex-col laptopSm:flex-row items-center justify-between mt-[10rem] tabletSm:mt-[11rem] laptopSm:mt-[0rem]">
+          {/* Side First */}
+          <section className="sideFirst w-full laptopSm:w-[45%] laptopRg:w-[50%] pr-0 tabletRg:pr-[18%] laptopSm:pr-0 cursor-default select-none">
+            <h1 className="text-[4.3rem] leading-[4.8rem] font-bold text-cyan-950 mb-[1.5rem] tracking-[-0.1rem]">
               Find your next perfect palace with ease
             </h1>
 
@@ -51,9 +52,10 @@ const Home = () => {
                 </span>
               </div>
             </div>
-          </div>
+          </section>
 
-          <div className="sideTwo w-[50%] mb-[3.5rem]">
+          {/* Side Second */}
+          <section className="sideSecond w-full laptopSm:w-[53%] laptopRg:w-[50%] mb-[3.5rem]">
             <div className="sideTwoWrapper w-full flex items-center justify-center">
               <img
                 src={bannerImage}
@@ -61,7 +63,7 @@ const Home = () => {
                 className="w-full drop-shadow-2xl select-none"
               />
             </div>
-          </div>
+          </section>
         </div>
       </div>
     </div>
