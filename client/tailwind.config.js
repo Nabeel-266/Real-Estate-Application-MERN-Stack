@@ -21,6 +21,9 @@ export default {
       mont: ["'Montserrat'", "sans-serif"],
       quick: ["'Quicksand'", "sans-serif"],
     },
+    backgroundImage: {
+      "banner-bg": "url('/src/assets/banner-bg-new.jpg')",
+    },
   },
   plugins: [],
 };
