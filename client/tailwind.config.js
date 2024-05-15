@@ -15,11 +15,25 @@ export default {
         desktopRg: "1350px",
         desktopLg: "1536px",
       },
+      animation: {
+        pulse: "pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+      },
+      keyframes: {
+        pulse: {
+          "0%, 100%": {
+            opacity: 1,
+          },
+          "50%": {
+            opacity: 0.4,
+          },
+        },
+      },
     },
     fontFamily: {
       montAlter: ["'Montserrat Alternates'", "sans-serif"],
       mont: ["'Montserrat'", "sans-serif"],
       quick: ["'Quicksand'", "sans-serif"],
+      k2D: ["K2D", "sans-serif"],
     },
   },
   plugins: [],

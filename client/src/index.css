@@ -14,12 +14,27 @@
     font-family: "Montserrat Alternates", sans-serif;
   }
 
+  /* Scrollbar Dark */
+  body::-webkit-scrollbar {
+    width: 1rem;
+  }
+
+  body::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  body::-webkit-scrollbar-thumb {
+    background-color: #082835;
+    border-radius: 10px;
+    cursor: grab;
+  }
+
   .boxPattern {
     background-image: radial-gradient(#0f475a 2px, transparent 2px),
       radial-gradient(#0f475a 2px, transparent 2px);
     background-size: 25px 25px;
     background-position: 0 0, 12.5px 12.5px;
-    background-color: #05212b;
+    background-color: #082835;
   }
 
   /* ----> Responsive Screen <---- */
@@ -32,14 +47,14 @@
   }
 
   /* ----> Mobile Regular <---- */
-  @media (376px <= width <= 480px) {
+  @media (376px <= width <= 479px) {
     html {
       font-size: 7.8px;
     }
   }
 
   /* ----> Mobile Large OR Tablet Small <---- */
-  @media (481px <= width <= 639px) {
+  @media (480px <= width <= 639px) {
     html {
       font-size: 8.2px;
     }
@@ -82,7 +97,16 @@
 
 @layer components {
   .active {
-    @apply text-white bg-cyan-950 rounded-[0.3rem];
+    @apply text-white bg-[#082835] rounded-[0.3rem];
+  }
+
+  .propertyTab {
+    @apply w-full relative z-[9] py-[0.5rem] text-center text-[1.9rem] tabletSm:text-[2rem] leading-[3rem] font-medium overflow-hidden cursor-pointer select-none before:content-[''] before:absolute before:-z-[1] before:bottom-0 before:left-0 before:w-full before:h-full before:bg-white before:rounded-full before:transition-[all_0.5s_ease-in] rounded-full;
+  }
+
+  .demandWrapper {
+    @apply relative before:content-[''] before:absolute before:-z-[1] before:w-[25rem] before:h-[25rem] before:top-[24%] before:left-[5%] before:bg-white before:animate-pulse before:rounded-full after:content-[''] after:absolute after:-z-[1] after:w-[25rem] after:h-[25rem] after:bottom-[12%] after:right-[5%] after:bg-white after:animate-pulse after:rounded-full;
   }
 }
+
 /* @layer utilities {} */

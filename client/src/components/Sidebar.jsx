@@ -18,7 +18,7 @@ const Sidebar = ({ isOpenSidebar, setIsOpenSidebar }) => {
   const [isActiveTab, setIsActiveTab] = useState(
     location.pathname.split("/")[1]
   );
-  console.log(isOpenSidebar);
+
   return (
     <aside
       className={`sidebar w-[35rem] min-w-[30rem] h-dvh fixed z-[999] top-0 left-0 backdrop-blur-[10px] bg-[#06171fe0] translate-x-[-100%] tabletLg:translate-x-[-100%] ${

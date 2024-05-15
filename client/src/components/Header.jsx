@@ -16,7 +16,7 @@ const Header = ({ setIsOpenSidebar }) => {
           {/* Logo */}
           <div className="logo flex items-center gap-[0.2rem]">
             <img src={LogoDark} alt="Logo" className="w-[4rem] select-none" />
-            <h4 className="text-[3rem] leading-[3rem]  text-cyan-950 font-semibold font-quick select-none">
+            <h4 className="text-[3rem] leading-[3rem]  text-[#082835] font-semibold font-quick select-none">
               <span className="font-bold font-montAlter">Nab</span>
               <span>Estate</span>
             </h4>
@@ -33,7 +33,7 @@ const Header = ({ setIsOpenSidebar }) => {
               ].map(([tilte, path], index) => (
                 <li
                   key={index}
-                  className="nav-item text-cyan-950 relative before:content-[''] before:absolute before:-z-[1] before:bottom-[0.2rem] before:w-full before:h-[0.3rem] before:bg-cyan-900 before:rounded-full before:transition-[all_0.5s_ease-in] before:scale-x-[0] hover:before:scale-x-[1]"
+                  className="nav-item text-[#082835] relative before:content-[''] before:absolute before:-z-[1] before:bottom-[0.2rem] before:w-full before:h-[0.3rem] before:bg-cyan-900 before:rounded-full before:transition-[all_0.5s_ease-in] before:scale-x-[0] hover:before:scale-x-[1]"
                 >
                   <NavLink
                     to={path}
@@ -53,12 +53,12 @@ const Header = ({ setIsOpenSidebar }) => {
           {/* Signin & Signup Buttons */}
           <div className="authBtns hidden items-center gap-[1.4rem]">
             {/* Signin Button */}
-            <button className="signinBtn text-[1.7rem] leading-[1.6rem] font-semibold text-cyan-950 p-[1rem] rounded-md hover:text-amber-400 transition-all">
+            <button className="signinBtn text-[1.7rem] leading-[1.6rem] font-semibold text-[#082835] p-[1rem] rounded-md hover:text-amber-400 transition-all">
               Sign in
             </button>
 
             {/* Signup Button */}
-            <button className="signupBtn text-[1.7rem] leading-[1.6rem] font-semibold text-cyan-950 p-[1rem] bg-amber-400 rounded-md">
+            <button className="signupBtn text-[1.7rem] leading-[1.6rem] font-semibold text-[#082835] p-[1rem] bg-amber-400 rounded-md">
               Sign up
             </button>
           </div>
@@ -70,12 +70,12 @@ const Header = ({ setIsOpenSidebar }) => {
               <img
                 src={User}
                 alt="profile"
-                className="w-[2.9rem] rounded-full bg-cyan-950 p-[0.2rem]"
+                className="w-[2.9rem] rounded-full bg-[#082835] p-[0.2rem]"
               />
             </div>
 
             {/* Profile Button */}
-            <button className="profileBtn text-[1.7rem] leading-[1.7rem] font-semibold text-cyan-950 px-[1.6rem] py-[0.8rem] bg-amber-400 rounded-md hidden tabletSm:block">
+            <button className="profileBtn text-[1.7rem] leading-[1.7rem] font-semibold text-[#082835] px-[1.6rem] py-[0.8rem] bg-amber-400 rounded-md hidden tabletSm:block">
               Profile
             </button>
 
@@ -86,7 +86,7 @@ const Header = ({ setIsOpenSidebar }) => {
 
           <button
             onClick={() => setIsOpenSidebar((prvState) => !prvState)}
-            className="text-[3.5rem] text-cyan-950 block tabletLg:hidden"
+            className="text-[3.5rem] text-[#082835] block tabletLg:hidden"
           >
             <CgMenuRight />
           </button>
