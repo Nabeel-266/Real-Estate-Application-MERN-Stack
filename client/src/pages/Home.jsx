@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-// Import Icon
+// Import React Icon
 import { FaBed, FaBath, FaArrowRightLong } from "react-icons/fa6";
 import { BiArea } from "react-icons/bi";
 import { HiLocationMarker } from "react-icons/hi";
@@ -84,7 +84,7 @@ const Home = () => {
 
       {/* Property Cont */}
       <div className="propertyCont w-full">
-        <section className="propertyWrapper flex flex-col items-center border-t-[0.2rem] border-neutral-200 mx-[4%] pt-[2rem] pb-[4rem]">
+        <section className="propertyWrapper flex flex-col items-center border-t-[0.2rem] border-neutral-200 mx-[4%] pt-[2rem] pb-[5rem]">
           {/* Property Heading */}
           <div className="heading w-full flex flex-col items-center py-[2rem]">
             <span className="text-[1.5rem] leading-[1.5rem] font-semibold text-amber-400 ">
@@ -93,8 +93,8 @@ const Home = () => {
             <h1 className="text-[3.2rem] leading-[4.5rem] font-semibold text-[#082835] tracking-tight">
               Featured Property
             </h1>
-            <span className="w-[26rem] h-[3px] bg-[#082835] rounded-full mb-[0.2rem]"></span>
-            <span className="w-[22rem] h-[2px] bg-[#082835] rounded-full"></span>
+            <span className="w-[26rem] h-[0.3rem] bg-[#082835] rounded-full mb-[0.2rem]"></span>
+            <span className="w-[22rem] h-[0.2rem] bg-[#082835] rounded-full"></span>
           </div>
 
           {/* Property Tab Indicators */}
@@ -126,7 +126,7 @@ const Home = () => {
                   className="propertyCard max-w-full min-w-[22rem] min-h-[25rem] relative bg-white overflow-hidden shadow-[0px_20px_30px_#d0d0d0] rounded-xl font-quick"
                 >
                   {/* Card Image */}
-                  <div className="imageArea relative w-full h-[18rem] object-cover before:content-[''] before:absolute before:z-[1] before:bottom-0 before:left-0 before:right-0 before:w-[120%] before:h-[20%] before:bg-gradient-to-b to-[#383838] from-transparent before:pointer-events-none">
+                  <div className="imageArea relative w-full h-[18rem] object-cover before:content-[''] before:absolute before:z-[1] before:bottom-0 before:left-0 before:right-0 before:w-[120%] before:h-[50%] before:bg-gradient-to-b to-[#30303090] from-transparent before:pointer-events-none">
                     <img
                       src={cardImage}
                       alt="property"
@@ -202,7 +202,7 @@ const Home = () => {
 
       {/* Demand Cont */}
       <div className="demandCont w-full bg-[#082835] overflow-hidden">
-        <section className="demandWrapper relative z-[1] flex flex-col items-center gap-[2rem] mx-[4%] pt-[2rem] pb-[6rem]">
+        <section className="demandWrapper relative z-[1] flex flex-col items-center gap-[2rem] mx-[4%] pt-[2.5rem] pb-[6rem]">
           {/* Demand Heading */}
           <div className="heading w-full flex flex-col items-center py-[2rem]">
             <span className="text-[1.5rem] leading-[1.5rem] font-semibold text-amber-400 ">
@@ -211,8 +211,8 @@ const Home = () => {
             <h1 className="text-[3.2rem] leading-[4.5rem] font-medium text-white tracking-tight">
               What do you Want ?
             </h1>
-            <span className="w-[26rem] h-[3px] bg-white rounded-full mb-[0.2rem]"></span>
-            <span className="w-[22rem] h-[2px] bg-white rounded-full"></span>
+            <span className="w-[28rem] h-[0.3rem] bg-white rounded-full mb-[0.2rem]"></span>
+            <span className="w-[24rem] h-[0.2rem] bg-white rounded-full"></span>
           </div>
 
           {/* Demand Row */}
@@ -281,8 +281,8 @@ const Home = () => {
       </div>
 
       {/* Agent Cont */}
-      <div className="agentCont w-full h-[60rem]">
-        <section className="agentWrapper flex flex-col items-center mx-[4%] pt-[2rem] pb-[6rem]">
+      <div className="agentCont w-full">
+        <section className="agentWrapper flex flex-col items-center mx-[4%] pt-[3rem] pb-[4rem]">
           {/* Agent Heading */}
           <div className="heading w-full flex flex-col items-center py-[2rem]">
             <span className="text-[1.5rem] leading-[1.5rem] font-semibold text-amber-400 ">
@@ -291,14 +291,14 @@ const Home = () => {
             <h1 className="text-[3.2rem] leading-[4.5rem] font-semibold text-[#082835] tracking-tight">
               Our Lead Experts
             </h1>
-            <span className="w-[26rem] h-[3px] bg-[#082835] rounded-full mb-[0.2rem]"></span>
-            <span className="w-[22rem] h-[2px] bg-[#082835] rounded-full"></span>
+            <span className="w-[23rem] h-[0.3rem] bg-[#082835] rounded-full mb-[0.2rem]"></span>
+            <span className="w-[19rem] h-[0.2rem] bg-[#082835] rounded-full"></span>
           </div>
 
           {/* Agent Row */}
-          <div className="propertyRow w-full flex justify-center pt-[3rem] pb-[4rem]">
-            <div className="propertyRowWrap grid grid-cols-1 mobileSm:grid-cols-2 laptopSm:grid-cols-4 gap-[2rem]">
-              {/* Cards */}
+          <div className="agentRow w-full flex justify-center pt-[3rem] pb-[4rem]">
+            <div className="agentRowWrap grid grid-cols-1 mobileSm:grid-cols-2 laptopSm:grid-cols-4 gap-[2rem]">
+              {/* Agent Cards */}
               {[
                 {
                   name: "Kinza Arsalan",
@@ -332,15 +332,57 @@ const Home = () => {
                       />
                     </div>
 
-                    {/* Card Content */}
+                    {/* Card Text */}
                     <figcaption className="cardContent w-full text-white absolute z-[2] bottom-[2rem] text-center">
-                      <span className="title text-[2rem] leading-[2rem] font-medium font-quick tracking-[0.05rem]">
+                      <span className="title text-[1.8rem] leading-[2rem] font-medium font-quick tracking-[0.05rem]">
                         {name}
                       </span>
                     </figcaption>
                   </figure>
                 ))}
             </div>
+          </div>
+        </section>
+      </div>
+
+      {/* Subscribe Cont */}
+      <div className="subscribeCont w-full">
+        <section className="subscribeWrapper flex flex-col items-center gap-[1rem] mx-[4%] pt-[2rem] pb-[6rem] border-t-[0.2rem] border-neutral-200">
+          {/* Subscribe Heading */}
+          <div className="heading w-full flex flex-col items-center py-[2rem]">
+            <span className="text-[1.5rem] leading-[1.5rem] font-semibold text-amber-400 ">
+              Subscribe
+            </span>
+            <h1 className="text-[3.2rem] leading-[4.5rem] font-semibold text-[#082835] tracking-tight">
+              Stay In Touch
+            </h1>
+            <span className="w-[18rem] h-[0.3rem] bg-[#082835] rounded-full mb-[0.2rem]"></span>
+            <span className="w-[14rem] h-[0.2rem] bg-[#082835] rounded-full"></span>
+          </div>
+
+          {/* Subscribe Content */}
+          <div className="content w-full flex flex-col items-center gap-[3rem]">
+            <p className="mobileSm:w-[90%] tabletSm:w-[80%] tabletRg:w-[75%] tabletLg:w-[65%] laptopSm:w-[55%] desktopSm:w-[50%] text-[1.6rem] leading-[2.2rem] font-medium text-center">
+              We recommended you to subscribe to our newspaper, enter your get
+              our daily update about us.
+            </p>
+
+            <form action="#" className="w-full flex justify-center">
+              <fieldset className="w-full tabletSm:w-[90%] tabletRg:w-[85%] tabletLg:w-[80%] laptopSm:w-[75%] desktopSm:w-[70%] flex justify-center p-[1rem] border-[0.2rem] border-neutral-200 rounded-lg font-quick">
+                <input
+                  type="email"
+                  id="email"
+                  autoComplete="off"
+                  placeholder="Enter your email address"
+                  className="w-[67.5%] tabletSm:w-[70%] tabletRg:w-[72.5%] tabletLg:w-[75%] laptopSm:w-[77.5%] desktopSm:w-[80%] outline-none text-neutral-700 text-[1.7rem] leading-[1.6rem] py-[1rem] px-[1rem] font-medium"
+                />
+                <input
+                  type="submit"
+                  value="Subscribe now"
+                  className="w-[32.5%] tabletSm:w-[30%] tabletRg:w-[27.5%] tabletLg:w-[25%] laptopSm:w-[22.5%] desktopSm:w-[20%] bg-[#082835] text-white text-[1.5rem] leading-[1.6rem] py-[1rem] rounded-md font-semibold tracking-[0.02rem] cursor-pointer"
+                />
+              </fieldset>
+            </form>
           </div>
         </section>
       </div>

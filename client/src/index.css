@@ -17,6 +17,7 @@
   /* Scrollbar Dark */
   body::-webkit-scrollbar {
     width: 1rem;
+    scroll-behavior: smooth;
   }
 
   body::-webkit-scrollbar-track {
@@ -27,14 +28,6 @@
     background-color: #082835;
     border-radius: 10px;
     cursor: grab;
-  }
-
-  .boxPattern {
-    background-image: radial-gradient(#0f475a 2px, transparent 2px),
-      radial-gradient(#0f475a 2px, transparent 2px);
-    background-size: 25px 25px;
-    background-position: 0 0, 12.5px 12.5px;
-    background-color: #082835;
   }
 
   /* ----> Responsive Screen <---- */
@@ -100,8 +93,20 @@
     @apply text-white bg-[#082835] rounded-[0.3rem];
   }
 
+  .boxPattern {
+    background-image: radial-gradient(#0f475a 2px, transparent 2px),
+      radial-gradient(#0f475a 2px, transparent 2px);
+    background-size: 25px 25px;
+    background-position: 0 0, 12.5px 12.5px;
+    background-color: #082835;
+  }
+
   .propertyTab {
     @apply w-full relative z-[9] py-[0.5rem] text-center text-[1.9rem] tabletSm:text-[2rem] leading-[3rem] font-medium overflow-hidden cursor-pointer select-none before:content-[''] before:absolute before:-z-[1] before:bottom-0 before:left-0 before:w-full before:h-full before:bg-white before:rounded-full before:transition-[all_0.5s_ease-in] rounded-full;
+  }
+
+  .demandCont {
+    background-image: url("data:image/svg+xml,<svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' patternUnits='userSpaceOnUse' width='40' height='40' patternTransform='scale(1) rotate(0)'><rect x='0' y='0' width='100%' height='100%' fill='hsla(197, 74%, 12%, 1)'/><path d='M20-5V5m0 30v10m20-30v10M0 15v10'  stroke-linejoin='round' stroke-linecap='round' stroke-width='0.5' stroke='hsla(196, 64%, 24%, 1)' fill='none'/><path d='M-5 40H5M-5 0H5m30 0h10M35 40h10M15 20h10'  stroke-linejoin='round' stroke-linecap='round' stroke-width='0.5' stroke='hsla(196, 64%, 24%, 1)' fill='none'/></pattern></defs><rect width='800%' height='800%' transform='translate(-24,0)' fill='url(%23a)'/></svg>");
   }
 
   .demandWrapper {
