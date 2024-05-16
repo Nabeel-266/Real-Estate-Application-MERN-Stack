@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 // Import Assets
-import LogoLight from "../assets/logoIcon-light.png";
+import LogoLight from "../assets/logo-light.png";
 import User from "../assets/user2.png";
 
 // Import React Icons
@@ -27,17 +27,9 @@ const Sidebar = ({ isOpenSidebar, setIsOpenSidebar }) => {
     >
       {/* Sidebar Header */}
       <div className="sidebarHeader w-full px-[1rem]">
-        <div className="headerWrapper w-full flex items-center justify-between py-[1.5rem] border-b-[0.2rem] border-[#0b2a33]">
+        <div className="headerWrapper w-full flex items-center justify-between py-[1.5rem] border-b-[0.2rem] border-cyan-950">
           <div className="logo flex items-center gap-[0.6rem]">
-            <img
-              src={LogoLight}
-              alt="Logo"
-              className="w-[4.3rem] select-none"
-            />
-            <h4 className="text-[3rem] leading-[3rem] text-white font-semibold font-quick select-none">
-              <span className="font-bold font-montAlter">Nab</span>
-              <span>Estate</span>
-            </h4>
+            <img src={LogoLight} alt="Logo" className="w-[22rem]" />
           </div>
 
           <button
@@ -92,8 +84,8 @@ const Sidebar = ({ isOpenSidebar, setIsOpenSidebar }) => {
           </ul>
         </div>
 
-        <footer className="w-full flex flex-col px-[0.8rem] py-[1.5rem] absolute z-50 bottom-0 border-t-[0.2rem] border-[#0b2a33]">
-          <button className="w-full relative flex items-center gap-[1.2rem] px-[1.2rem] py-[0.8rem] text-[2rem] text-cyan-950 font-semibold bg-white cursor-pointer rounded-full transition-all hover:bg-amber-400 active:scale-[0.98]">
+        <footer className="w-full flex flex-col px-[0.8rem] py-[1.5rem] absolute z-50 bottom-0 border-t-[0.2rem] border-cyan-950">
+          <button className="w-full relative flex items-center gap-[1.2rem] px-[1.2rem] py-[1rem] text-[2rem] text-cyan-950 font-semibold bg-white cursor-pointer rounded-full transition-all hover:bg-amber-400 active:scale-[0.98]">
             <img
               src={User}
               alt="profile"

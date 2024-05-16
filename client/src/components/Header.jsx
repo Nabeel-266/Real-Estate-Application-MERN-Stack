@@ -4,22 +4,18 @@ import { NavLink } from "react-router-dom";
 import { CgMenuRight } from "react-icons/cg";
 
 // Import Assets
-import LogoDark from "../assets/logoIcon-dark.png";
+import LogoDark from "../assets/logo-dark.png";
 import User from "../assets/user2.png";
 
 const Header = ({ setIsOpenSidebar }) => {
   return (
     <header className="header w-full h-[6rem] flex items-center fixed top-0 left-0 z-[99] backdrop-blur-[20px] bg-[#ffffffd8]">
-      <div className="headerWrapper w-full flex justify-between mx-[4%]">
+      <div className="headerWrapper w-full flex items-center justify-between mx-[4%]">
         {/* Header Left Side */}
-        <div className="leftSide flex items-center gap-[3rem]">
+        <div className="leftSide flex items-center gap-[3.5rem]">
           {/* Logo */}
-          <div className="logo flex items-center gap-[0.2rem]">
-            <img src={LogoDark} alt="Logo" className="w-[4rem] select-none" />
-            <h4 className="text-[3rem] leading-[3rem]  text-[#082835] font-semibold font-quick select-none">
-              <span className="font-bold font-montAlter">Nab</span>
-              <span>Estate</span>
-            </h4>
+          <div className="logo">
+            <img src={LogoDark} alt="Logo" className="w-[22rem] mb-[0.4rem]" />
           </div>
 
           {/* Navigations */}
@@ -33,11 +29,11 @@ const Header = ({ setIsOpenSidebar }) => {
               ].map(([tilte, path], index) => (
                 <li
                   key={index}
-                  className="nav-item text-[#082835] relative before:content-[''] before:absolute before:-z-[1] before:bottom-[0.2rem] before:w-full before:h-[0.3rem] before:bg-cyan-900 before:rounded-full before:transition-[all_0.5s_ease-in] before:scale-x-[0] hover:before:scale-x-[1]"
+                  className="nav-item text-[#082835] relative z-[2] before:content-[''] before:absolute before:z-[1] before:bottom-[-0.2rem] before:w-full before:h-[0.3rem] before:bg-cyan-900 before:rounded-full before:transition-[all_0.5s_ease-in] before:scale-x-[0] hover:before:scale-x-[1]"
                 >
                   <NavLink
                     to={path}
-                    className="nav-link text-[1.8rem] leading-[2.6rem] font-medium text-center px-[0.5rem] py-[0.2rem]"
+                    className="nav-link relative z-[3] text-[1.8rem] leading-[1.8rem] font-medium text-center px-[0.5rem] py-[0.2rem]"
                     href="#"
                   >
                     {tilte}

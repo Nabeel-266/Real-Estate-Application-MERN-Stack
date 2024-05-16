@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // Import Pages & Components
@@ -8,17 +9,20 @@ import Profile from "./pages/Profile";
 import Auth from "./pages/Auth";
 import Team from "./pages/Team";
 import Header from "./components/Header";
-import Sidebar from "./components/Sidebar";
-import { useState } from "react";
 import Overlay from "./components/Overlay";
+import Sidebar from "./components/Sidebar";
+import Footer from "./components/Footer";
 
 const App = () => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
   return (
     <div className="app relative">
       <Router>
-        <Overlay isOpenSidebar={isOpenSidebar} />
         <Header setIsOpenSidebar={setIsOpenSidebar} />
+        <Overlay
+          isOpenSidebar={isOpenSidebar}
+          setIsOpenSidebar={setIsOpenSidebar}
+        />
         <Sidebar
           isOpenSidebar={isOpenSidebar}
           setIsOpenSidebar={setIsOpenSidebar}
@@ -32,6 +36,7 @@ const App = () => {
           <Route path="/team" element={<Team />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>
+        <Footer />
       </Router>
     </div>
   );

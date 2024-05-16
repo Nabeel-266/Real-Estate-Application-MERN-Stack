@@ -368,7 +368,7 @@ const Home = () => {
             </p>
 
             <form action="#" className="w-full flex justify-center">
-              <fieldset className="w-full tabletSm:w-[90%] tabletRg:w-[85%] tabletLg:w-[80%] laptopSm:w-[75%] desktopSm:w-[70%] flex justify-center p-[1rem] border-[0.2rem] border-neutral-200 rounded-lg font-quick">
+              <fieldset className="w-full tabletSm:w-[90%] tabletRg:w-[85%] tabletLg:w-[80%] laptopSm:w-[75%] desktopSm:w-[70%] flex justify-center p-[1rem] border-[0.2rem] border-neutral-300 rounded-lg font-quick">
                 <input
                   type="email"
                   id="email"
