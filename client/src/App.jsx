@@ -3,11 +3,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // Import Pages & Components
 import Home from "./pages/Home";
+import Explore from "./pages/Explore";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Team from "./pages/Team";
 import Profile from "./pages/Profile";
 import Auth from "./pages/Auth";
-import Team from "./pages/Team";
 import Header from "./components/Header";
 import Overlay from "./components/Overlay";
 import Sidebar from "./components/Sidebar";
@@ -31,6 +32,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Auth />} />
           <Route path="/register" element={<Auth />} />
+          <Route path="/explore" element={<Explore />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/team" element={<Team />} />

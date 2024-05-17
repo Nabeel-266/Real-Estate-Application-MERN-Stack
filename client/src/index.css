@@ -12,12 +12,12 @@
   html {
     font-size: 10px;
     font-family: "Montserrat Alternates", sans-serif;
+    scroll-behavior: smooth;
   }
 
   /* Scrollbar Dark */
   body::-webkit-scrollbar {
     width: 1rem;
-    scroll-behavior: smooth;
   }
 
   body::-webkit-scrollbar-track {

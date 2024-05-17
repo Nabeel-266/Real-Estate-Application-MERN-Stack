@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 
 // Import Assets
 import LogoLight from "../assets/logo-light.png";
 import User from "../assets/user2.png";
 
 // Import React Icons
-import { HiOutlineHome } from "react-icons/hi";
+import { MdOutlineExplore } from "react-icons/md";
 import { MdOutlineRealEstateAgent } from "react-icons/md";
 import { RiMessage2Line } from "react-icons/ri";
 import { RiTeamLine } from "react-icons/ri";
@@ -29,7 +28,9 @@ const Sidebar = ({ isOpenSidebar, setIsOpenSidebar }) => {
       <div className="sidebarHeader w-full px-[1rem]">
         <div className="headerWrapper w-full flex items-center justify-between py-[1.5rem] border-b-[0.2rem] border-cyan-950">
           <div className="logo flex items-center gap-[0.6rem]">
-            <img src={LogoLight} alt="Logo" className="w-[22rem]" />
+            <Link to="/" onClick={() => setIsOpenSidebar(!isOpenSidebar)}>
+              <img src={LogoLight} alt="Logo" className="w-[22rem]" />
+            </Link>
           </div>
 
           <button
@@ -46,7 +47,7 @@ const Sidebar = ({ isOpenSidebar, setIsOpenSidebar }) => {
         <div className="w-full h-[70%] pr-[0.6rem] pt-[1.5rem] pb-[1rem]">
           <ul className="w-full flex flex-col gap-[0.8rem]">
             {[
-              [HiOutlineHome, "Home", "/"],
+              [MdOutlineExplore, "Explore", "/explore"],
               [MdOutlineRealEstateAgent, "About", "/about"],
               [RiMessage2Line, "Contact", "/contact"],
               [RiTeamLine, "Team", "/team"],
@@ -65,7 +66,7 @@ const Sidebar = ({ isOpenSidebar, setIsOpenSidebar }) => {
                     to={route}
                     onClick={() => {
                       setIsActiveTab(route.split("/")[1]);
-                      // setSidebarState(false);
+                      setIsOpenSidebar(!isOpenSidebar);
                     }}
                     className={`${
                       isActiveTab === route.split("/")[1]

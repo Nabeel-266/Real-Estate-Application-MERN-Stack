@@ -201,7 +201,7 @@ const Home = () => {
       </div>
 
       {/* Demand Cont */}
-      <div className="demandCont w-full bg-[#082835] overflow-hidden">
+      <div className="demandCont w-full bg-[#082835] bg-fixed overflow-hidden">
         <section className="demandWrapper relative z-[1] flex flex-col items-center gap-[2rem] mx-[4%] pt-[2.5rem] pb-[6rem]">
           {/* Demand Heading */}
           <div className="heading w-full flex flex-col items-center py-[2rem]">

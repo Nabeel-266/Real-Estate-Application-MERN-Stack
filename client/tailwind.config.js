@@ -28,12 +28,15 @@ export default {
           },
         },
       },
+      backgroundImage: {
+        "footer-image": "url('/src/assets/footer-bg.jpg')",
+      },
     },
     fontFamily: {
       montAlter: ["'Montserrat Alternates'", "sans-serif"],
       mont: ["'Montserrat'", "sans-serif"],
       quick: ["'Quicksand'", "sans-serif"],
-      k2D: ["K2D", "sans-serif"],
+      sans: ["DM Sans", "sans-serif"],
     },
   },
   plugins: [],

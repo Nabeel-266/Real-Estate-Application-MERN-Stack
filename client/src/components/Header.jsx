@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 // Import React Icons
 import { CgMenuRight } from "react-icons/cg";
@@ -15,14 +15,20 @@ const Header = ({ setIsOpenSidebar }) => {
         <div className="leftSide flex items-center gap-[3.5rem]">
           {/* Logo */}
           <div className="logo">
-            <img src={LogoDark} alt="Logo" className="w-[22rem] mb-[0.4rem]" />
+            <Link to="/">
+              <img
+                src={LogoDark}
+                alt="Logo"
+                className="w-[22rem] mb-[0.4rem]"
+              />
+            </Link>
           </div>
 
           {/* Navigations */}
           <nav className="navigations hidden tabletLg:block">
             <ul className="flex items-center gap-[1rem]">
               {[
-                ["Home", "/"],
+                ["Explore", "/explore"],
                 ["About", "/about"],
                 ["Contact", "/contact"],
                 ["Team", "/team"],
