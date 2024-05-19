@@ -17,6 +17,7 @@ export default {
       },
       animation: {
         pulse: "pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        moveArrow: "move 0.3s ease-out 1",
       },
       keyframes: {
         pulse: {
@@ -27,8 +28,19 @@ export default {
             opacity: 0.4,
           },
         },
+        move: {
+          "0%": {
+            opacity: 0,
+            transform: "translateX(-150%)",
+          },
+          "100%": {
+            opacity: 1,
+            transform: "translateX(0)",
+          },
+        },
       },
       backgroundImage: {
+        "auth-banner-image": "url('/src/assets/auth-banner-image.jpg')",
         "footer-image": "url('/src/assets/footer-bg.jpg')",
       },
     },

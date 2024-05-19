@@ -12,12 +12,11 @@ import Auth from "./pages/Auth";
 import Header from "./components/Header";
 import Overlay from "./components/Overlay";
 import Sidebar from "./components/Sidebar";
-import Footer from "./components/Footer";
 
 const App = () => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
   return (
-    <div className="app relative">
+    <div className="app relative overflow-hidden">
       <Router>
         <Header setIsOpenSidebar={setIsOpenSidebar} />
         <Overlay
@@ -30,15 +29,14 @@ const App = () => {
         />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Auth />} />
-          <Route path="/register" element={<Auth />} />
+          <Route path="/sign-in" element={<Auth />} />
+          <Route path="/sign-up" element={<Auth />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/team" element={<Team />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>
-        <Footer />
       </Router>
     </div>
   );

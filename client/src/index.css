@@ -89,6 +89,18 @@
 }
 
 @layer components {
+  .formInput {
+    @apply w-full pl-[0.5rem] pr-[3.5rem] py-[0.6rem] text-neutral-600 text-[1.7rem] leading-[2rem] font-medium font-mont outline-none bg-transparent border-b-2 border-neutral-400 focus:border-cyan-700;
+  }
+
+  .formInputLabel {
+    @apply absolute px-[0.5rem] font-medium cursor-text transition-all peer-focus/input:mb-[4.5rem] peer-focus/input:text-[1.5rem] peer-focus/input:text-cyan-800;
+  }
+
+  .formInputIcon {
+    @apply p-[0.5rem] absolute right-[1.8rem] text-neutral-500 z-10;
+  }
+
   .active {
     @apply text-white bg-[#082835] rounded-[0.3rem];
   }
@@ -110,8 +122,10 @@
   }
 
   .demandWrapper {
-    @apply relative before:content-[''] before:absolute before:-z-[1] before:w-[25rem] before:h-[25rem] before:top-[24%] before:left-[5%] before:bg-white before:animate-pulse before:rounded-full after:content-[''] after:absolute after:-z-[1] after:w-[25rem] after:h-[25rem] after:bottom-[12%] after:right-[5%] after:bg-white after:animate-pulse after:rounded-full;
+    @apply relative before:content-[''] before:absolute before:-z-[1] before:w-[25rem] before:h-[25rem] before:top-[16%] laptopSm:before:top-[24%] before:left-[1%] before:bg-cyan-700 before:animate-pulse before:rounded-full after:content-[''] after:absolute after:-z-[1] after:w-[25rem] after:h-[25rem] after:bottom-[7%] laptopSm:after:bottom-[12%] after:right-[1%] after:bg-cyan-700 after:animate-pulse after:rounded-full;
   }
 }
 
 /* @layer utilities {} */
+
+/* color: #fbbf24; */

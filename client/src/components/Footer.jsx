@@ -119,7 +119,7 @@ const Footer = () => {
         </section>
 
         {/* Footer Bottom */}
-        <section className="footerBottom w-full flex flex-col gap-[0.5rem] tabletRg:flex-row items-center justify-between py-[1.5rem] text-[1.4rem] font-sans border-t-[0.2rem] border-neutral-500">
+        <section className="footerBottom w-full flex flex-col gap-[0.5rem] tabletRg:flex-row items-center justify-between py-[1.5rem] text-[1.4rem] font-sans border-t-[0.2rem] border-neutral-500 border-dotted">
           <span>&copy; Copyright 2024. All rights reserved</span>
           <span>Designed & Powered by Muhammad Nabeel</span>
         </section>

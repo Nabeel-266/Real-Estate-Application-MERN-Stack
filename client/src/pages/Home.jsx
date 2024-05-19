@@ -6,9 +6,12 @@ import { BiArea } from "react-icons/bi";
 import { HiLocationMarker } from "react-icons/hi";
 import { MdOutlineTimer } from "react-icons/md";
 
+// Component
+import Footer from "../components/Footer";
+
 // Import Image
-import bannerImage from "../assets/3d-house-2.png";
-import cardImage from "../assets/banner-bg-new.jpg";
+import bannerImage from "../assets/banner-image.png";
+import cardImage from "../assets/home.jpg";
 import buy from "../assets/buy.png";
 import sell from "../assets/sell.png";
 import rent from "../assets/rent.png";
@@ -36,9 +39,9 @@ const Home = () => {
               available.
             </p>
 
-            <button className="flex items-center gap-[1rem] bg-amber-400 text-[#082835] py-[1rem] px-[1rem] text-[1.8rem] leading-[2rem] font-semibold rounded-md active:scale-[0.96] hover:scale-[1.02] transition-all">
-              <span>Explore it</span>
-              <FaArrowRightLong />
+            <button className="relative flex items-center gap-[1rem] bg-amber-400 text-[#082835] py-[1.2rem] pl-[1.2rem] pr-[3.8rem] text-[1.8rem] leading-[2rem] font-semibold rounded-md active:scale-[0.96] transition-all group/button">
+              <span className="relative z-[2] bg-amber-400">Explore it</span>
+              <FaArrowRightLong className="text-[1.9rem] absolute z-[1] right-[1.2rem] group-hover/button:animate-moveArrow" />
             </button>
 
             <div className="w-full flex gap-[2%] mt-[3rem]">
@@ -119,14 +122,14 @@ const Home = () => {
           {/* Property Row */}
           <div className="propertyRow w-full flex justify-center pt-[3rem] pb-[4rem]">
             <div className="propertyRowWrap grid grid-cols-1 mobileSm:grid-cols-2 laptopSm:grid-cols-4 gap-[2rem]">
-              {/* Cards */}
+              {/* Property Cards */}
               {[1, 2, 3, 4].map((item, index) => (
                 <figure
                   key={index}
                   className="propertyCard max-w-full min-w-[22rem] min-h-[25rem] relative bg-white overflow-hidden shadow-[0px_20px_30px_#d0d0d0] rounded-xl font-quick"
                 >
                   {/* Card Image */}
-                  <div className="imageArea relative w-full h-[18rem] object-cover before:content-[''] before:absolute before:z-[1] before:bottom-0 before:left-0 before:right-0 before:w-[120%] before:h-[50%] before:bg-gradient-to-b to-[#30303090] from-transparent before:pointer-events-none">
+                  <div className="imageArea relative w-full h-[18rem] object-cover before:content-[''] before:absolute before:z-[1] before:bottom-0 before:left-0 before:right-0 before:h-[50%] before:bg-gradient-to-b to-[#30303070] from-transparent before:pointer-events-none">
                     <img
                       src={cardImage}
                       alt="property"
@@ -386,6 +389,8 @@ const Home = () => {
           </div>
         </section>
       </div>
+
+      <Footer />
     </div>
   );
 };

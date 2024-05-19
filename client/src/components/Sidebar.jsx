@@ -3,7 +3,7 @@ import { useLocation, Link } from "react-router-dom";
 
 // Import Assets
 import LogoLight from "../assets/logo-light.png";
-import User from "../assets/user2.png";
+import User from "../assets/user.png";
 
 // Import React Icons
 import { MdOutlineExplore } from "react-icons/md";

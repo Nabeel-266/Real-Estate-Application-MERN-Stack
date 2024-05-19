@@ -5,11 +5,11 @@ import { CgMenuRight } from "react-icons/cg";
 
 // Import Assets
 import LogoDark from "../assets/logo-dark.png";
-import User from "../assets/user2.png";
+import User from "../assets/user.png";
 
 const Header = ({ setIsOpenSidebar }) => {
   return (
-    <header className="header w-full h-[6rem] flex items-center fixed top-0 left-0 z-[99] backdrop-blur-[20px] bg-[#ffffffd8]">
+    <header className="header w-full h-[6rem] flex items-center fixed top-0 left-0 z-[99] backdrop-blur-[20px] bg-[#ffffffd8] shadow-sm">
       <div className="headerWrapper w-full flex items-center justify-between mx-[4%]">
         {/* Header Left Side */}
         <div className="leftSide flex items-center gap-[3.5rem]">
@@ -53,20 +53,24 @@ const Header = ({ setIsOpenSidebar }) => {
         {/* Header Right Side */}
         <div className="rightSide flex gap-[2rem]">
           {/* Signin & Signup Buttons */}
-          <div className="authBtns hidden items-center gap-[1.4rem]">
+          <div className="authBtns flex items-center gap-[1.4rem]">
             {/* Signin Button */}
-            <button className="signinBtn text-[1.7rem] leading-[1.6rem] font-semibold text-[#082835] p-[1rem] rounded-md hover:text-amber-400 transition-all">
-              Sign in
-            </button>
+            <Link to="/sign-in">
+              <button className="signinBtn hidden tabletSm:block text-[1.7rem] leading-[1.6rem] font-semibold text-[#082835] p-[1rem] rounded-md hover:text-amber-400 transition-all ">
+                Sign in
+              </button>
+            </Link>
 
             {/* Signup Button */}
-            <button className="signupBtn text-[1.7rem] leading-[1.6rem] font-semibold text-[#082835] p-[1rem] bg-amber-400 rounded-md">
-              Sign up
-            </button>
+            <Link to="/sign-up">
+              <button className="signupBtn hidden tabletSm:block text-[1.7rem] leading-[1.6rem] font-semibold text-[#082835] p-[1rem] bg-amber-400 rounded-md hover:bg-[#082835] hover:text-amber-400 transition-all">
+                Sign up
+              </button>
+            </Link>
           </div>
 
           {/* Profile */}
-          <div className="profile relative flex items-center gap-[1rem] px-[0.5rem] tabletSm:px-0">
+          <div className="profile relative hidden tabletSm:hidden items-center gap-[1rem] px-[0.5rem] tabletSm:px-0">
             {/* Profile Image */}
             <div className="profileImage">
               <img
@@ -86,6 +90,7 @@ const Header = ({ setIsOpenSidebar }) => {
             </span>
           </div>
 
+          {/* Open Sidebar Button */}
           <button
             onClick={() => setIsOpenSidebar((prvState) => !prvState)}
             className="text-[3.5rem] text-[#082835] block tabletLg:hidden"
