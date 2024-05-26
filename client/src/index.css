@@ -94,11 +94,11 @@
   }
 
   .formInputLabel {
-    @apply absolute px-[0.5rem] font-medium cursor-text transition-all peer-focus/input:mb-[4.5rem] peer-focus/input:text-[1.5rem] peer-focus/input:text-cyan-800;
+    @apply absolute px-[0.5rem] font-medium cursor-text transition-all peer-focus/input:mb-[4.5rem] peer-focus/input:text-[1.5rem] peer-focus/input:text-cyan-800 pointer-events-none;
   }
 
   .formInputIcon {
-    @apply p-[0.5rem] absolute right-[1.8rem] text-neutral-500 z-10;
+    @apply p-[0.5rem] absolute right-0 text-neutral-500 z-10;
   }
 
   .active {
