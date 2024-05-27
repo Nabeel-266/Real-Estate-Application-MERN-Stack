@@ -3,6 +3,9 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
 
+// Import Routes
+import userRouter from "./routes/user-route.js";
+
 const app = express();
 const PORT = process.env.PORT || 8000;
 
@@ -20,6 +23,12 @@ const PORT = process.env.PORT || 8000;
     process.exit(1);
   }
 })();
+
+// Middlewares
+app.use(express.json());
+
+// Routes
+app.use("/api/user", userRouter);
 
 process.on("SIGINT", async function () {
   console.log("App is terminating");
