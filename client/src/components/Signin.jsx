@@ -8,13 +8,24 @@ import { IoMail, IoMailOpen, IoLockClosed, IoLockOpen } from "react-icons/io5";
 import GoogleIcon from "../assets/google.png";
 
 const Signin = () => {
-  const [loginEmail, setLoginEmail] = useState("");
-  const [loginPassword, setLoginPassword] = useState("");
+  // const [loginEmail, setLoginEmail] = useState("");
+  // const [loginPassword, setLoginPassword] = useState("");
+
+  const [loginFormData, setLoginFormData] = useState({});
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isEmailSuggest, setIsEmailSuggest] = useState(false);
 
   const routeLocation = useLocation();
   const currentLocation = routeLocation.pathname.split("/")[2];
+
+  const { email, password } = loginFormData;
+
+  const formDataHandleChange = (e) => {
+    setLoginFormData({
+      ...loginFormData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   return (
     <div
@@ -51,17 +62,16 @@ const Signin = () => {
                 <input
                   type="email"
                   name="email"
-                  id="email"
-                  defaultValue={loginEmail}
+                  id="signin_email"
                   autoComplete={isEmailSuggest ? "on" : "off"}
-                  onChange={(e) => setLoginEmail(e.target.value)}
+                  onChange={(e) => formDataHandleChange(e)}
                   className="formInput peer/input"
                 />
 
                 <label
                   htmlFor="email"
                   className={`formInputLabel ${
-                    loginEmail
+                    email
                       ? "mb-[4.5rem] text-[1.5rem] text-cyan-950"
                       : "mb-[0rem] text-[1.75rem] text-neutral-500"
                   }`}
@@ -97,16 +107,15 @@ const Signin = () => {
                 <input
                   type={isPasswordVisible ? "text" : "password"}
                   name="password"
-                  id="password"
-                  defaultValue={loginPassword}
-                  onChange={(e) => setLoginPassword(e.target.value)}
+                  id="signin_password"
+                  onChange={(e) => formDataHandleChange(e)}
                   className="formInput peer/input"
                 />
 
                 <label
                   htmlFor="password"
                   className={`formInputLabel ${
-                    loginPassword
+                    password
                       ? "mb-[4.5rem] text-[1.5rem] text-cyan-950"
                       : "mb-[0rem] text-[1.75rem] text-neutral-500"
                   }`}
@@ -140,9 +149,9 @@ const Signin = () => {
           <div className="formActions w-full px-[2rem] flex flex-col gap-[2.5rem]">
             {/* Login Btn */}
             <button
-              disabled={loginEmail && loginPassword ? false : true}
+              disabled={email && password ? false : true}
               className={`w-full py-[0.8rem] text-[2.1rem] font-bold rounded-full transition-all ${
-                loginEmail && loginPassword
+                email && password
                   ? "text-white bg-cyan-950 active:scale-[0.98] active:bg-amber-400 cursor-pointer"
                   : "text-neutral-700 bg-neutral-400 cursor-not-allowed"
               }`}

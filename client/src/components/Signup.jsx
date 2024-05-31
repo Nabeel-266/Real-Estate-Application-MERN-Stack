@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { registerUser } from "../api/auth";
 
 // Import React Icons
 import { IoMail, IoMailOpen, IoLockClosed, IoLockOpen } from "react-icons/io5";
@@ -8,20 +9,57 @@ import { IoMail, IoMailOpen, IoLockClosed, IoLockOpen } from "react-icons/io5";
 import GoogleIcon from "../assets/google.png";
 
 const Signup = () => {
-  const [registerUsername, setRegisterUsername] = useState("");
-  const [registerEmail, setRegisterEmail] = useState("");
-  const [registerPassword, setRegisterPassword] = useState("");
-  const [registerConfirmPassword, setRegisterConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const [isEmailSuggest, setIsEmailSuggest] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPassVisible, setIsConfirmPassVisible] = useState(false);
+  const [registerFormData, setRegisterFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPass: "",
+  });
 
   const routeLocation = useLocation();
   const currentLocation = routeLocation.pathname.split("/")[2];
 
+  const { username, email, password, confirmPass } = registerFormData;
+
+  const formDataChangeHandler = (e) => {
+    setRegisterFormData({
+      ...registerFormData,
+      [e.target.name]: e.target.value,
+    });
+    setError("");
+  };
+
+  const formSubmitHandler = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const newUser = await registerUser(registerFormData);
+      console.log(newUser);
+
+      setRegisterFormData({
+        username: "",
+        email: "",
+        password: "",
+        confirmPass: "",
+      });
+
+      setLoading(false);
+    } catch (error) {
+      const err = error.response.data.message;
+      setError(err);
+      setLoading(false);
+    }
+  };
+
   return (
     <div
-      className={`signupCont w-full py-[3rem] ${
+      className={`signupCont py-[3rem] ${
         currentLocation === "sign-up"
           ? "scale-100 w-full h-full"
           : "scale-0 w-0 h-0"
@@ -31,8 +69,8 @@ const Signup = () => {
       <div className="signupContWrapper w-full flex items-center justify-center">
         {/* Sign-up Form */}
         <form
-          action="#"
-          className="regiterForm w-[50rem] flex flex-col gap-[2.5rem] bg-white shadow-2xl px-[2rem] py-[2.5rem] rounded-lg"
+          onSubmit={formSubmitHandler}
+          className="registerForm w-[50rem] flex flex-col gap-[2.5rem] bg-white shadow-2xl px-[2rem] py-[2.5rem] rounded-lg"
         >
           {/* Form Header */}
           <header className="flex flex-col items-center gap-[0.2rem]">
@@ -53,14 +91,16 @@ const Signup = () => {
                 type="text"
                 name="username"
                 id="username"
-                onChange={(e) => setRegisterUsername(e.target.value)}
+                value={username}
+                autoComplete="off"
+                onChange={(e) => formDataChangeHandler(e)}
                 className="formInput peer/input"
               />
 
               <label
                 htmlFor="username"
                 className={`formInputLabel ${
-                  registerUsername
+                  username
                     ? "mb-[4.5rem] text-[1.5rem] text-cyan-950"
                     : "mb-[0rem] text-[1.75rem] text-neutral-500"
                 }`}
@@ -76,17 +116,17 @@ const Signup = () => {
                 <input
                   type="email"
                   name="email"
-                  id="email"
-                  defaultValue={registerEmail}
+                  id="signup_email"
+                  value={email}
                   autoComplete={isEmailSuggest ? "on" : "off"}
-                  onChange={(e) => setRegisterEmail(e.target.value)}
+                  onChange={(e) => formDataChangeHandler(e)}
                   className="formInput peer/input"
                 />
 
                 <label
                   htmlFor="email"
                   className={`formInputLabel ${
-                    registerEmail
+                    email
                       ? "mb-[4.5rem] text-[1.5rem] text-cyan-950"
                       : "mb-[0rem] text-[1.75rem] text-neutral-500"
                   }`}
@@ -110,9 +150,13 @@ const Signup = () => {
               </div>
 
               {/* Register Email Error Message */}
-              {/* <span className="emailErrorMsg text-[1.4rem] leading-[1.4rem] text-red-700">
-                Your email address is invalid
-              </span> */}
+              <span
+                className={`${
+                  error ? "block" : "hidden"
+                } emailErrorMsg text-[1.4rem] leading-[1.4rem] text-red-700`}
+              >
+                {error}
+              </span>
             </div>
 
             {/* For Register Password */}
@@ -122,15 +166,16 @@ const Signup = () => {
                 <input
                   type={isPasswordVisible ? "text" : "password"}
                   name="password"
-                  id="password"
-                  onChange={(e) => setRegisterPassword(e.target.value)}
+                  id="signup_password"
+                  value={password}
+                  onChange={(e) => formDataChangeHandler(e)}
                   className="formInput peer/input"
                 />
 
                 <label
                   htmlFor="password"
                   className={`formInputLabel ${
-                    registerPassword
+                    password
                       ? "mb-[4.5rem] text-[1.5rem] text-cyan-950"
                       : "mb-[0rem] text-[1.75rem] text-neutral-500"
                   }`}
@@ -165,16 +210,17 @@ const Signup = () => {
               <div className="w-full flex items-center relative">
                 <input
                   type={isConfirmPassVisible ? "text" : "password"}
-                  name="password"
-                  id="password"
-                  onChange={(e) => setRegisterConfirmPassword(e.target.value)}
+                  name="confirmPass"
+                  id="confirmPass"
+                  value={confirmPass}
+                  onChange={(e) => formDataChangeHandler(e)}
                   className="formInput peer/input"
                 />
 
                 <label
-                  htmlFor="password"
+                  htmlFor="confirmPass"
                   className={`formInputLabel ${
-                    registerConfirmPassword
+                    confirmPass
                       ? "mb-[4.5rem] text-[1.5rem] text-cyan-950"
                       : "mb-[0rem] text-[1.75rem] text-neutral-500"
                   }`}
@@ -208,17 +254,16 @@ const Signup = () => {
           <div className="formActions w-full px-[2rem] flex flex-col gap-[2.5rem]">
             {/* Register Btn */}
             <button
-              disabled={registerEmail && registerPassword ? false : true}
+              disabled={
+                username && email && password && confirmPass ? false : true
+              }
               className={`w-full py-[0.8rem] text-[2.1rem] font-bold rounded-full transition-all ${
-                registerUsername &&
-                registerEmail &&
-                registerPassword &&
-                registerConfirmPassword
+                username && email && password && confirmPass
                   ? "text-white bg-cyan-950 active:scale-[0.98] active:bg-amber-400 cursor-pointer"
                   : "text-neutral-700 bg-neutral-400 cursor-not-allowed"
               }`}
             >
-              Register
+              {loading ? "Loading..." : "Register"}
             </button>
 
             {/* OR */}

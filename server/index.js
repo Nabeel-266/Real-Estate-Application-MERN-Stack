@@ -5,6 +5,7 @@ dotenv.config();
 
 // Import Routes
 import userRouter from "./routes/user-route.js";
+import authRouter from "./routes/auth-route.js";
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -20,17 +21,29 @@ const PORT = process.env.PORT || 8000;
     });
   } catch (error) {
     console.log(error + " ==> Connection Problem");
-    process.exit(1);
+    // process.exit(1);
   }
 })();
 
 // Middlewares
 app.use(express.json());
 
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  const message = err.message || "Internal Server Error";
+
+  return res.status(statusCode).send({
+    statusCode,
+    status: "Failed",
+    message,
+  });
+});
+
 // Routes
 app.use("/api/user", userRouter);
+app.use("/api/auth", authRouter);
 
-process.on("SIGINT", async function () {
-  console.log("App is terminating");
-  process.exit(0);
-});
+// process.on("SIGINT", async function () {
+//   console.log("App is terminating");
+//   process.exit(0);
+// });
