@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { registerUser } from "../api/auth";
+import { registerUser } from "../api/authAPIs";
 import registrationErrorHandler from "../utils/authErrors";
 
 // Import React Icons
@@ -58,7 +58,7 @@ const Signup = () => {
       setLoading(false);
     } catch (error) {
       console.log(error);
-      const errorMsg = error.response?.data?.message;
+      const errorMsg = error?.response?.data?.message;
       registrationErrorHandler(registerFormData, setError, errorMsg);
       setLoading(false);
     }
