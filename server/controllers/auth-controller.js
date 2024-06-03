@@ -10,10 +10,10 @@ export const signup = async (req, res, next) => {
   console.log(req.body);
 
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, confirmPassword } = req.body;
 
     // All Fields Required Verification
-    if (!username || !email || !password) {
+    if (!username || !email || !password || !confirmPassword) {
       return res.status(StatusCodes.BAD_REQUEST).send(
         sendError({
           statusCode: StatusCodes.BAD_REQUEST,
@@ -26,12 +26,33 @@ export const signup = async (req, res, next) => {
 
     // If USER not exist
     if (!isUserExist) {
+      const emailRegex =
+        /^(?:[^@\s]+@(?:gmail\.com|hotmail\.com|yahoo\.com|outlook\.com|zoho\.com|icloud\.com|protonmail\.com|aol\.com))$/;
+
+      // Verify Email Address Typography
+      if (!emailRegex.test(email)) {
+        return res.status(StatusCodes.BAD_REQUEST).send(
+          sendError({
+            statusCode: StatusCodes.BAD_REQUEST,
+            message: resMessages.INVALID_EMAIL,
+          })
+        );
+      }
       // Password Lenght Verification
       if (password.length < 8) {
         return res.status(StatusCodes.LENGTH_REQUIRED).send(
           sendError({
             statusCode: StatusCodes.LENGTH_REQUIRED,
             message: resMessages.PASSWORD_LENGTH_SHORT,
+          })
+        );
+      }
+      // Password Match Verification
+      if (password !== confirmPassword) {
+        return res.status(StatusCodes.BAD_REQUEST).send(
+          sendError({
+            statusCode: StatusCodes.BAD_REQUEST,
+            message: resMessages.PASSWORD_AND_CONFIRM_PASSWORD_NO_MATCH,
           })
         );
       }
