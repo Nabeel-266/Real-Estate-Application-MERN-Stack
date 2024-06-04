@@ -30,6 +30,20 @@
     cursor: grab;
   }
 
+  .scrollbar::-webkit-scrollbar {
+    width: 1rem;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background-color: #08283550;
+    border-radius: 10px;
+    cursor: grab;
+  }
+
   /* ----> Responsive Screen <---- */
 
   /* ----> Mobile Small <---- */

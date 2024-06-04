@@ -15,31 +15,28 @@ import Team from "./pages/Team";
 import Profile from "./pages/Profile";
 import Auth from "./pages/Auth";
 import Header from "./components/Header";
-import Overlay from "./components/Overlay";
 import Sidebar from "./components/Sidebar";
 import Signin from "./components/Signin";
 import Signup from "./components/Signup";
+import VerifyAccount from "./components/VerifyAccount";
 
 const App = () => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
+
   return (
     <div className="app relative overflow-hidden">
       <Router>
         <Header setIsOpenSidebar={setIsOpenSidebar} />
-        <Overlay
-          isOpenSidebar={isOpenSidebar}
-          setIsOpenSidebar={setIsOpenSidebar}
-        />
         <Sidebar
           isOpenSidebar={isOpenSidebar}
           setIsOpenSidebar={setIsOpenSidebar}
         />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/auth/" element={<Auth />}>
+          <Route path="/account/" element={<Auth />}>
             <Route path="sign-in" element={<Signin />} />
             <Route path="sign-up" element={<Signup />} />
-            <Route path="" element={<Navigate to="sign-in" />} />
+            <Route path="verification" element={<VerifyAccount />} />
           </Route>
           <Route path="/explore" element={<Explore />} />
           <Route path="/about" element={<About />} />

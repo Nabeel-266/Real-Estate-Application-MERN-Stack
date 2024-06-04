@@ -55,14 +55,14 @@ const Header = ({ setIsOpenSidebar }) => {
           {/* Signin & Signup Buttons */}
           <div className="authBtns flex items-center gap-[1.4rem]">
             {/* Signin Button */}
-            <Link to="/auth/sign-in">
+            <Link to="/account/sign-in">
               <button className="signinBtn hidden tabletSm:block text-[1.7rem] leading-[1.6rem] font-semibold text-[#082835] p-[1rem] rounded-md hover:text-amber-400 transition-all ">
                 Sign in
               </button>
             </Link>
 
             {/* Signup Button */}
-            <Link to="/auth/sign-up">
+            <Link to="/account/sign-up">
               <button className="signupBtn hidden tabletSm:block text-[1.7rem] leading-[1.6rem] font-semibold text-[#082835] p-[1rem] bg-amber-400 rounded-md hover:bg-[#082835] hover:text-amber-400 transition-all">
                 Sign up
               </button>

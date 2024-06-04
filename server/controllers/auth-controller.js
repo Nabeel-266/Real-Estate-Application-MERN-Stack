@@ -1,8 +1,11 @@
 import User from "../Models/user-schema.js";
 import bcryptjs from "bcryptjs";
+import { v4 as uuidv4 } from "uuid";
 import { sendError, sendSuccess } from "../utils/responses.js";
 import { StatusCodes } from "http-status-codes";
 import resMessages from "../constants/responsesMessages.js";
+import { sendEmailOTP } from "../utils/nodemailer.js";
+import { emailRegex } from "../utils/emailRegex.js";
 
 // For Signup
 export const signup = async (req, res, next) => {
@@ -26,9 +29,6 @@ export const signup = async (req, res, next) => {
 
     // If USER not exist
     if (!isUserExist) {
-      const emailRegex =
-        /^(?:[^@\s]+@(?:gmail\.com|hotmail\.com|yahoo\.com|outlook\.com|zoho\.com|icloud\.com|protonmail\.com|aol\.com))$/;
-
       // Verify Email Address Typography
       if (!emailRegex.test(email)) {
         return res.status(StatusCodes.BAD_REQUEST).send(
@@ -59,15 +59,29 @@ export const signup = async (req, res, next) => {
 
       // Hashed Password
       const hashedPassword = bcryptjs.hashSync(password, 10);
+
       // Create New User in Database
       const user_Doc = new User({ username, email, password: hashedPassword });
+
+      // Create OTP
+      const otp = uuidv4().slice(0, 8);
+      console.log(otp);
+
+      // Set OTP and OTP Expiry in USER_Document
+      user_Doc.otp = otp;
+      user_Doc.expiresIn = Date.now() + 60000; // 1 minute
+
       // New User Saved in Db
-      const newUser = await user_Doc.save();
+      // const newUser = await user_Doc.save();
+
+      // send OTP to User Email
+      const emailResponse = await sendEmailOTP(email, otp);
+      console.log(emailResponse);
 
       return res.status(StatusCodes.CREATED).send(
         sendSuccess({
           message: resMessages.SUCCESS_REGISTRATION,
-          data: newUser,
+          data: user_Doc,
         })
       );
     } else {

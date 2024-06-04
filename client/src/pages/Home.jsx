@@ -205,7 +205,7 @@ const Home = () => {
 
       {/* Demand Cont */}
       <div className="demandCont w-full bg-[#082835] bg-fixed overflow-hidden">
-        <section className="demandWrapper relative z-[1] flex flex-col items-center gap-[2rem] mx-[4%] pt-[2.5rem] pb-[6rem]">
+        <section className="demandWrapper relative z-[1] flex flex-col items-center gap-[2rem] mx-[4%] pt-[2.5rem] pb-[6.5rem]">
           {/* Demand Heading */}
           <div className="heading w-full flex flex-col items-center py-[2rem]">
             <span className="text-[1.5rem] leading-[1.5rem] font-semibold text-amber-400 ">
@@ -219,7 +219,7 @@ const Home = () => {
           </div>
 
           {/* Demand Row */}
-          <div className="demandRow w-full flex justify-center bg-[#ffffff05] backdrop-blur-[75px] rounded-xl">
+          <div className="demandRow w-full flex justify-center bg-[#ffffff01] backdrop-blur-[75px] rounded-xl shadow-2xl">
             <div className="demandRowWrapper shadow-xl w-full grid mobileSm:grid-rows-3 mobileSm:grid-cols-1 laptopSm:grid-rows-1 laptopSm:grid-cols-3 justify-items-center gap-[3rem] tabletRg:gap-[5rem] p-[3rem] tabletRg:p-[4rem]">
               {/* Demand Card */}
               {[
