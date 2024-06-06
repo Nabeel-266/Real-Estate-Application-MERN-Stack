@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 
 // Import Pages & Components
+import { ToastContainer } from "react-toastify";
 import Home from "./pages/Home";
 import Explore from "./pages/Explore";
 import About from "./pages/About";
@@ -49,6 +50,8 @@ const App = () => {
           />
         </Routes>
       </Router>
+
+      <ToastContainer />
     </div>
   );
 };

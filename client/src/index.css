@@ -39,9 +39,17 @@
   }
 
   .scrollbar::-webkit-scrollbar-thumb {
-    background-color: #08283550;
+    background-color: #08283560;
     border-radius: 10px;
     cursor: grab;
+  }
+
+  .toast-message {
+    color: #fff;
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-family: "Montserrat Alternates", sans-serif;
+    padding: 10px 10px 15px 10px;
   }
 
   /* ----> Responsive Screen <---- */

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
+import { verifyUser } from "../api/authAPIs";
 
 // Import React Icon
 import { FaArrowRotateRight } from "react-icons/fa6";
@@ -8,6 +9,17 @@ const VerifyAccount = () => {
   const [OTPCode, setOTPCode] = useState();
   const location = useLocation();
   const routeLocation = location.pathname.split("/")[2];
+
+  const accountVerifiactionHandler = async (e) => {
+    e.preventDefault();
+
+    try {
+      const verifiedUser = await verifyUser(OTPCode);
+      console.log(verifiedUser);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div
@@ -36,11 +48,13 @@ const VerifyAccount = () => {
             id="otp"
             placeholder="Type OTP here..."
             onChange={(e) => setOTPCode(e.target.value)}
+            maxLength={8}
             className="w-full pl-[0.5rem] pr-[3.5rem] py-[0.6rem] text-neutral-600 text-[1.6rem] leading-[1.6rem] font-medium font-mont outline-none bg-transparent border-b-2 border-neutral-400 focus:border-cyan-900"
           />
 
           <div className="actionBtns flex justify-between items-end pt-[0.5rem]">
             <button
+              onClick={(e) => accountVerifiactionHandler(e)}
               disabled={OTPCode?.length === 8 ? false : true}
               className={`${
                 OTPCode?.length === 8
@@ -55,16 +69,16 @@ const VerifyAccount = () => {
             </button>
           </div>
 
-          <div className="text-[1.45rem] font-medium">
-            <b className="text-red-600">Note :</b>
-            <ul className="list-inside">
+          <div className="text-[1.45rem] font-medium mt-[0.5rem]">
+            <b className="text-red-800 text-[1.5rem]">Note :</b>
+            <ul className="list-inside mt-[0.2rem]">
               <li className="">
-                <b>-</b> If your account will not verified, so your account will
-                be deleted instantly.
+                <b>-</b> If account will not be verified, so that account will
+                be deleted.
               </li>
               <li>
-                <b>-</b> Then you try again with an authenticated email address
-                please!
+                <b>-</b> Then try again with an authenticated email address
+                account.
               </li>
             </ul>
           </div>

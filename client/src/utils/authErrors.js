@@ -1,4 +1,6 @@
-const registrationErrorHandler = (registerFormData, setError, errorMsg) => {
+import toastify from "../utils/toastify";
+
+const signupClientErrorHandler = (registerFormData, setError) => {
   const { username, email, password, confirmPassword } = registerFormData;
   const emailPattern =
     /^(?:[^@\s]+@(?:gmail\.com|hotmail\.com|yahoo\.com|outlook\.com|zoho\.com|icloud\.com|protonmail\.com|aol\.com))$/;
@@ -7,28 +9,25 @@ const registrationErrorHandler = (registerFormData, setError, errorMsg) => {
     if (!username.includes(" ")) {
       setError([
         "Username",
-        "Please! enter your proper Fullname with space separated",
+        "Please! enter your proper fullname with space separated",
       ]);
       return false;
-    } else if (username.length > 20) {
-      setError(["Username", "Your name must be 20 characters or fewer"]);
+    } else if (username.length < 7 || username.length > 20) {
+      setError([
+        "Username",
+        "Please! enter your name between 7 to 20 characters long",
+      ]);
       return false;
-    } else if (!emailPattern.test(email) || errorMsg === "Email is invalid") {
+    } else if (!emailPattern.test(email)) {
       setError([
         "Email",
         "Please! enter a valid Email address, your Email is invalid",
       ]);
       return false;
-    } else if (errorMsg === "User already exist") {
-      setError(["Email", "This email address is already in use!"]);
-      return false;
-    } else if (password.length < 8 || errorMsg === "Password length is short") {
+    } else if (password.length < 8) {
       setError(["Password", "Password must be minimum 8 characters long!"]);
       return false;
-    } else if (
-      password !== confirmPassword ||
-      errorMsg === "Passwords are not match"
-    ) {
+    } else if (password !== confirmPassword) {
       setError([
         "ConfirmPassword",
         "Please! Verify your Password, don't match",
@@ -43,12 +42,35 @@ const registrationErrorHandler = (registerFormData, setError, errorMsg) => {
       : email === ""
       ? setError(["Email", "Your Email is required!"])
       : password === ""
-      ? setError(["Password", "Your Email is required!"])
+      ? setError(["Password", "Your Password is required!"])
       : confirmPassword === "" &&
-        setError(["ConfirmPassword", "Your Email is required!"]);
+        setError(["ConfirmPassword", "Confirm Password is required!"]);
 
     return false;
   }
 };
 
-export default registrationErrorHandler;
+const signupServerErrorHandler = (errorMsg, setError) => {
+  if (errorMsg === "User name must be 8 to 20 letters long") {
+    setError([
+      "Username",
+      "Please! enter your name between 7 to 20 letters long",
+    ]);
+  } else if (errorMsg === "Email is invalid") {
+    setError([
+      "Email",
+      "Please! enter a valid Email address, your Email is invalid",
+    ]);
+    return false;
+  } else if (errorMsg === "User already exist") {
+    setError(["Email", "Already! account created from this email"]);
+  } else if (errorMsg === "Password length is short") {
+    setError(["Password", "Password must be minimum 8 characters long!"]);
+  } else if (errorMsg === "Passwords are not match") {
+    setError(["ConfirmPassword", "Please! Verify your Password, don't match"]);
+  } else {
+    toastify("error", `${errorMsg}`, "top-right", "dark", 5000);
+  }
+};
+
+export { signupClientErrorHandler, signupServerErrorHandler };

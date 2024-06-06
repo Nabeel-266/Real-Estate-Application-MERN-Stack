@@ -11,21 +11,21 @@ const emailConfig = {
   },
 };
 
-async function sendEmailOTP(toUserMail, otp) {
+async function sendEmailOTP(username, userEmail, otp) {
   const transporter = nodemailer.createTransport(emailConfig);
 
   const mailOptions = {
     from: process.env.PORTAL_EMAIL,
-    to: toUserMail,
-    subject: "NAB Estate Account OTP Verification",
-    text: `Your OTP is: ${otp}`,
+    to: userEmail,
+    subject: "Verify Your Email for Nab Estate Account",
+    text: `Dear ${username},\n\nThank you for signing up with Nab Estate! Please use the OTP below to verify your email address:\n\nYour OTP is: ${otp}\n\nIf you did not request this, please ignore this email.\n\nBest regards,\nNab Estate Team`,
   };
 
   try {
     await transporter.sendMail(mailOptions);
-    return `OTP sent to ${toUserMail} via email`;
+    return `OTP sent to ${userEmail} via email`;
   } catch (error) {
-    return `Error! sending OTP to ${toUserMail} via email: ${error}`;
+    return `Error! sending OTP to ${userEmail} via email: ${error}`;
   }
 }
 

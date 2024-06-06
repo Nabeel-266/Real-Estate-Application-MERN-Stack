@@ -1,7 +1,11 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { registerUser } from "../api/authAPIs";
-import registrationErrorHandler from "../utils/authErrors";
+import {
+  signupClientErrorHandler,
+  signupServerErrorHandler,
+} from "../utils/authErrors";
+import toastify from "../utils/toastify";
 
 // Import React Icons
 import { IoMail, IoMailOpen, IoLockClosed, IoLockOpen } from "react-icons/io5";
@@ -10,7 +14,10 @@ import { IoMail, IoMailOpen, IoLockClosed, IoLockOpen } from "react-icons/io5";
 import GoogleIcon from "../assets/google.png";
 
 const Signup = () => {
-  // console.log(setIsOpenOverlay);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const routeLocation = location.pathname.split("/")[2];
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState([]);
   const [isEmailSuggest, setIsEmailSuggest] = useState(false);
@@ -22,9 +29,6 @@ const Signup = () => {
     password: "",
     confirmPassword: "",
   });
-
-  const location = useLocation();
-  const routeLocation = location.pathname.split("/")[2];
 
   const { username, email, password, confirmPassword } = registerFormData;
 
@@ -39,14 +43,27 @@ const Signup = () => {
   };
 
   // SIGNUP Form Submission Handler
-  const formSubmitHandler = async (e) => {
+  const signupHandler = async (e) => {
     e.preventDefault();
 
+    const isUserCredentialsOK = signupClientErrorHandler(
+      registerFormData,
+      setError
+    );
+
     try {
-      if (registrationErrorHandler(registerFormData, setError)) {
+      if (isUserCredentialsOK) {
         setLoading(true);
         const newUser = await registerUser(registerFormData);
         console.log(newUser);
+
+        toastify(
+          "success",
+          `${newUser.data.username}! You Signup Succeessfully`,
+          "top-right",
+          "dark",
+          4000
+        );
 
         setRegisterFormData({
           username: "",
@@ -56,31 +73,27 @@ const Signup = () => {
         });
 
         setError("");
-      }
+        setLoading(false);
 
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-      const errorMsg = error?.response?.data?.message;
-      registrationErrorHandler(registerFormData, setError, errorMsg);
+        setTimeout(() => {
+          navigate("/account/verification"); //{ state: newUser?.data }
+        }, 300);
+
+        toastify(
+          "info",
+          "Please! Verify Your Account First",
+          "top-right",
+          "dark",
+          10000
+        );
+      }
+    } catch (err) {
+      console.log(err);
+      const errorMsg = err?.response?.data?.message;
+      signupServerErrorHandler(errorMsg, setError);
       setLoading(false);
     }
   };
-  //   if (error === "User already exists") {
-  //     setError({
-  //       for: "email",
-  //       error: (
-  //         <span className="emailErrorMsg text-[1.4rem] leading-[1.4rem] text-red-700">
-  //           User already registered from this email address
-  //         </span>
-  //       ),
-  //     });
-  //   } else if() {
-
-  //   } else {
-  //     return null;
-  //   }
-  // };
 
   return (
     <div
@@ -95,7 +108,7 @@ const Signup = () => {
         <div className="regiterFormCont w-[50rem] flex flex-col gap-[2.8rem] bg-white shadow-2xl px-[2rem] py-[2.5rem] rounded-lg">
           {/* Sign-up Form */}
           <form
-            onSubmit={formSubmitHandler}
+            onSubmit={signupHandler}
             className="registerForm w-full flex flex-col gap-[2.5rem]"
           >
             {/* Form Header */}
