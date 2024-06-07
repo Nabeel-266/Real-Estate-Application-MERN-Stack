@@ -8,6 +8,7 @@ import {
   signup,
   signin,
   verifyAccount,
+  resendOTP,
 } from "../controllers/auth-controller.js";
 
 const authRouter = express.Router();
@@ -20,5 +21,8 @@ authRouter.post("/login", signin);
 
 // For Verify Account
 authRouter.post("/verifyAccount", validateToken, verifyAccount);
+
+// For Resend OTP
+authRouter.post("/resendOTP", resendOTP);
 
 export default authRouter;

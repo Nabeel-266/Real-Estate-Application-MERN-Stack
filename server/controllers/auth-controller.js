@@ -65,7 +65,7 @@ export const signup = async (req, res, next) => {
         return res.status(StatusCodes.BAD_REQUEST).send(
           sendError({
             statusCode: StatusCodes.BAD_REQUEST,
-            message: resMessages.PASSWORD_AND_CONFIRM_PASSWORD_NO_MATCH,
+            message: resMessages.UN_MATCH_PASSWORDS,
           })
         );
       }
@@ -182,9 +182,71 @@ export const verifyAccount = async (req, res, next) => {
     const updatedUser = await user.save();
     updatedUser.password = undefined;
 
+    // Generate Token for User
+    const token = generateToken({ data: newUser });
+
+    res.cookie("token", token, { httpOnly: true });
     res.status(StatusCodes.ACCEPTED).send(
       sendSuccess({
         message: resMessages.SUCCESS_VERIFICATION,
+        data: updatedUser,
+      })
+    );
+  } catch (error) {
+    console.log(error.message, "==> error in user verfication");
+    next(error);
+  }
+};
+
+//* --> For Resend OTP <--
+//? @route --> POST --> api/auth/resendOTP
+// @access --> PRIVATE
+export const resendOTP = async (req, res, next) => {
+  console.log("Verify Account Controller");
+  console.log(req.body, "==> Request User");
+
+  try {
+    // Find User with Req.User.ID
+    const user = await User.findOne({ email: req.body.email });
+    console.log(user, "==> Find USer with ID");
+
+    if (!user) {
+      return res.status(StatusCodes.NOT_FOUND).send(
+        sendError({
+          statusCode: StatusCodes.NOT_FOUND,
+          message: resMessages.NO_USER,
+        })
+      );
+    }
+
+    if (user.isVerified) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.USER_ALREADY_VERIFIED,
+        })
+      );
+    }
+
+    // Create OTP
+    const otp = uuidv4().slice(0, 8);
+    console.log(otp);
+
+    // Set OTP and OTP Expiry in USER_Document
+    user.otp = otp;
+    user.otpExpiry = Date.now() + 60000; // 1 minute
+
+    // Update User after Verification
+    const updatedUser = await user.save();
+    updatedUser.password = undefined;
+
+    // send OTP to User Email
+    const emailResponse = await sendEmailOTP(user.username, user.email, otp);
+    console.log(emailResponse);
+
+    res.status(StatusCodes.OK).send(
+      sendSuccess({
+        message: resMessages.SUCCESS_RESEND_OTP,
         data: updatedUser,
       })
     );
