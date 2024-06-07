@@ -36,7 +36,6 @@ export const loginUser = async () => {};
 
 // For VERIFY USER
 export const verifyUser = async (OTP) => {
-  console.log("verify user Func");
   try {
     const response = await axios.post(
       `${VERIFY_ACCOUNT}`,

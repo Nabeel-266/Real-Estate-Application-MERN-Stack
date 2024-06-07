@@ -13,6 +13,9 @@ import { IoMail, IoMailOpen, IoLockClosed, IoLockOpen } from "react-icons/io5";
 // Import Assets
 import GoogleIcon from "../assets/google.png";
 
+// Component
+import Loader from "./Loader";
+
 const Signup = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -59,7 +62,7 @@ const Signup = () => {
 
         toastify(
           "success",
-          `${newUser.data.username}! You Signup Succeessfully`,
+          `${newUser.data.username} ! You Signup Succeessfully`,
           "top-right",
           "dark",
           4000
@@ -311,13 +314,17 @@ const Signup = () => {
                     ? false
                     : true
                 }
-                className={`w-full py-[0.8rem] text-[2.1rem] font-bold rounded-full transition-all ${
+                className={`w-full py-[0.8rem] text-[2.1rem] font-bold rounded-full transition-all flex justify-center ${
                   username && email && password && confirmPassword
                     ? "text-white bg-cyan-950 active:scale-[0.98] active:bg-amber-400 cursor-pointer"
                     : "text-neutral-700 bg-neutral-400 cursor-not-allowed"
                 }`}
               >
-                {loading ? "Loading..." : "Register"}
+                {loading ? (
+                  <Loader value="Processing" color="white" />
+                ) : (
+                  "Register"
+                )}
               </button>
             </fieldset>
           </form>

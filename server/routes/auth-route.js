@@ -1,7 +1,7 @@
 import express from "express";
 
 // Import Middlewares
-import { tokenValidation } from "../helpers/token.js";
+import { validateToken } from "../helpers/token.js";
 
 // Import Controllers
 import {
@@ -19,6 +19,6 @@ authRouter.post("/register", signup);
 authRouter.post("/login", signin);
 
 // For Verify Account
-authRouter.post("/verifyAccount", tokenValidation, verifyAccount);
+authRouter.post("/verifyAccount", validateToken, verifyAccount);
 
 export default authRouter;

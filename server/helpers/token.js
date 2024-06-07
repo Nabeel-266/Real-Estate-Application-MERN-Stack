@@ -13,15 +13,15 @@ export const generateToken = ({ data }) => {
   });
 };
 
-export const verifyToken = (token) => {
-  return verify(token, process.env.JWT_SECRET_KEY);
-};
+// export const verifyToken = (token) => {
+//   return verify(token, process.env.JWT_SECRET_KEY);
+// };
 
-export const validateToken = ({ token, key }) => {
-  return verify(token, key);
-};
+// export const validateToken = ({ token, key }) => {
+//   return verify(token, key);
+// };
 
-export const tokenValidation = async (req, res, next) => {
+export const validateToken = async (req, res, next) => {
   console.log(req.cookies?.token, "==> Request Cookies");
   console.log(req.body, "==> Request Body");
 
@@ -42,16 +42,16 @@ export const tokenValidation = async (req, res, next) => {
   const verifyToken = verify(token, process.env.JWT_SECRET_KEY);
   console.log(verifyToken, "====>>verifyToken");
 
-  // If Error between Verify Token
-  if (verifyToken.error)
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(
+  // If Token is unvalid
+  if (!verifyToken.result)
+    res.status(StatusCodes.UNAUTHORIZED).send(
       sendError({
-        statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
-        message: "Failed to authenticate token.",
+        statusCode: StatusCodes.UNAUTHORIZED,
+        message: "Failed to authenticate token, token is unvalid",
       })
     );
 
-  // Req.User is eual to Verify Token Result
+  // Req.User is equal to Verify Token Result
   req.user = verifyToken.result;
   next();
 };

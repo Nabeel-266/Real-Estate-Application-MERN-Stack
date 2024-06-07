@@ -8,8 +8,8 @@ import resMessages from "../constants/responsesMessages.js";
 import { sendError, sendSuccess } from "../utils/responses.js";
 import { generateToken } from "../helpers/token.js";
 
-// For Signup
-// @route --> POST --> api/auth/register
+//* --> For Signup <--
+//? @route --> POST --> api/auth/register
 // @access --> PUBLIC
 export const signup = async (req, res, next) => {
   console.log("Signup Controller");
@@ -119,8 +119,8 @@ export const signup = async (req, res, next) => {
   }
 };
 
-// For Signin
-// @route --> POST --> api/auth/login
+//* --> For Signin <--
+//? @route --> POST --> api/auth/login
 // @access --> PUBLIC
 export const signin = (req, res) => {
   res.json({
@@ -128,11 +128,68 @@ export const signin = (req, res) => {
   });
 };
 
-// For Verify Account
-// @route --> POST --> api/auth/verifyAccount
+//* --> For Verify Account <--
+//? @route --> POST --> api/auth/verifyAccount
 // @access --> PRIVATE
-export const verifyAccount = async (req, res) => {
+export const verifyAccount = async (req, res, next) => {
   console.log("Verify Account Controller");
-  console.log(req.body);
-  console.log(req.user);
+  console.log(req.body, "==> Request Body");
+  console.log(req.user, "==> Request User");
+
+  try {
+    const { OTP } = req.body;
+
+    // If OTP not found
+    if (!OTP) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.MISSING_FIELDS,
+        })
+      );
+    }
+
+    // Find User with OTP and Req.User.ID
+    const user = await User.findOne({ otp: OTP, _id: req.user._id });
+
+    // If User not found
+    if (!user) {
+      return res.status(StatusCodes.FORBIDDEN).send(
+        sendError({
+          statusCode: StatusCodes.FORBIDDEN,
+          message: resMessages.INVALID_OTP,
+        })
+      );
+    }
+
+    console.log(user, "==> Find USer with OTP and ID");
+
+    // If OTP Expired
+    if (user.otpExpiry < Date.now()) {
+      return res.status(StatusCodes.NOT_ACCEPTABLE).send(
+        sendError({
+          statusCode: StatusCodes.NOT_ACCEPTABLE,
+          message: "OTP has expired. Please request a new OTP",
+        })
+      );
+    }
+
+    user.isVerified = true;
+    user.otp = undefined;
+    user.otpExpiry = undefined;
+
+    // Update User after Verification
+    const updatedUser = await user.save();
+    updatedUser.password = undefined;
+
+    res.status(StatusCodes.ACCEPTED).send(
+      sendSuccess({
+        message: resMessages.SUCCESS_VERIFICATION,
+        data: updatedUser,
+      })
+    );
+  } catch (error) {
+    console.log(error.message, "==> error in user verfication");
+    next(error);
+  }
 };

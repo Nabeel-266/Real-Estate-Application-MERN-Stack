@@ -1,23 +1,47 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { verifyUser } from "../api/authAPIs";
+import toastify from "../utils/toastify";
 
 // Import React Icon
 import { FaArrowRotateRight } from "react-icons/fa6";
 
+// Component
+import Loader from "./Loader";
+
 const VerifyAccount = () => {
   const [OTPCode, setOTPCode] = useState();
+  const navigate = useNavigate();
   const location = useLocation();
   const routeLocation = location.pathname.split("/")[2];
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState([]);
 
+  // Account Verification Handler
   const accountVerifiactionHandler = async (e) => {
     e.preventDefault();
 
     try {
+      setLoading(true);
       const verifiedUser = await verifyUser(OTPCode);
       console.log(verifiedUser);
+
+      toastify(
+        "success",
+        `${verifiedUser.data.username} ! Your Verification Succeessfully`,
+        "top-center",
+        "dark",
+        3000
+      );
+
+      setError("");
+      setLoading(false);
+
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
     } catch (error) {
-      console.log(error);
+      setError(error.message);
     }
   };
 
@@ -62,7 +86,11 @@ const VerifyAccount = () => {
                   : "bg-neutral-500 text-white cursor-not-allowed"
               } gap-[0.5rem] text-[1.6rem] leading-[1.5rem] font-semibold px-[2rem] py-[1rem] rounded-sm hover:shadow-lg transition-all`}
             >
-              Verify Account
+              {loading ? (
+                <Loader value="Processing" color="white" />
+              ) : (
+                "Verify Account"
+              )}
             </button>
             <button className="flex items-center gap-[0.5rem] text-[1.6rem] leading-[1.5rem] font-medium px-[1rem] py-[1rem] bg-cyan-950 text-white rounded-md hover:shadow-lg active:scale-[0.98] transition-all">
               <FaArrowRotateRight /> <span>Resend OTP</span>
