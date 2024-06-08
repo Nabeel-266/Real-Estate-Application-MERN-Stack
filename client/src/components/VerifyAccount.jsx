@@ -129,7 +129,7 @@ const VerifyAccount = () => {
       } accountVerifyCont w-full min-h-dvh relative flex justify-center items-center pt-[9rem] px-[1rem] z-[1000] bg-neutral-200`}
     >
       {/* Verification Cont */}
-      <div className="verificationCont min-w-[50rem] max-w-[65rem] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-white p-[2.5rem] shadow-2xl rounded-lg">
+      <div className="verificationCont mobileSm:w-[42rem] mobileRg:w-[46rem] tabletSm:w-[50rem] max-w-[65rem] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-white p-[2.5rem] shadow-2xl rounded-lg">
         {/* Verfication Cont Header */}
         <header className="pb-[1.5rem] border-b-[0.2rem] border-neutral-500">
           <h1 className="text-[2.5rem] leading-[2.5rem] text-[#082835] font-semibold">

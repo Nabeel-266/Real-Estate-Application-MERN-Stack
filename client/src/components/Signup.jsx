@@ -28,6 +28,7 @@ const Signup = () => {
   const location = useLocation();
   const routeLocation = location.pathname.split("/")[2];
   const [error, setError] = useState([]);
+  const { currentUser, pending, failed } = useSelector((state) => state?.user);
   const [isEmailSuggest, setIsEmailSuggest] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPassVisible, setIsConfirmPassVisible] = useState(false);
@@ -37,7 +38,6 @@ const Signup = () => {
     password: "",
     confirmPassword: "",
   });
-  const { currentUser, pending, failed } = useSelector((state) => state?.user);
 
   const { username, email, password, confirmPassword } = registerFormData;
 
@@ -120,11 +120,11 @@ const Signup = () => {
     >
       <div className="signupWrapper w-full min-h-full pt-[9rem] pb-[3rem] flex items-center justify-center">
         {/* Sign-up Form Cont */}
-        <div className="regiterFormCont w-[50rem] flex flex-col gap-[2.8rem] bg-white shadow-2xl px-[2rem] py-[2.5rem] rounded-lg">
+        <div className="signupFormCont mobileSm:w-[42rem] mobileRg:w-[46rem] tabletSm:w-[50rem] flex flex-col gap-[2.8rem] bg-white shadow-2xl px-[2rem] py-[2.5rem] rounded-lg">
           {/* Sign-up Form */}
           <form
             onSubmit={signupHandler}
-            className="registerForm w-full flex flex-col gap-[2.5rem]"
+            className="signupForm w-full flex flex-col gap-[2.5rem]"
           >
             {/* Form Header */}
             <header className="flex flex-col items-center gap-[0.2rem]">
@@ -326,7 +326,7 @@ const Signup = () => {
                     ? false
                     : true
                 }
-                className={`w-full py-[0.8rem] text-[2.1rem] font-bold rounded-full transition-all flex justify-center ${
+                className={`w-full flex justify-center py-[0.8rem] text-[2.1rem] font-bold rounded-full transition-all ${
                   username && email && password && confirmPassword
                     ? "text-white bg-cyan-950 active:scale-[0.98] active:bg-amber-400 cursor-pointer"
                     : "text-neutral-700 bg-neutral-400 cursor-not-allowed"
@@ -342,7 +342,7 @@ const Signup = () => {
           </form>
 
           {/* OR */}
-          <div className="orCont relative w-full flex items-center justify-center my-[0.5rem]">
+          <div className="orCont relative w-full flex items-center justify-center px-[1rem] my-[0.5rem]">
             <span className="w-full h-[0.2rem] bg-neutral-300"></span>
             <span className="absolute text-neutral-600 text-[1.5rem] bg-white px-[3rem]">
               OR
