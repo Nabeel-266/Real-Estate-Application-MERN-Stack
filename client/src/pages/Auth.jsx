@@ -4,7 +4,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 // Import Components
 import Signin from "../components/Signin";
 import Signup from "../components/Signup";
-import VerifyAccount from "../components/VerifyAccount";
+import { AuthProtectedRoute } from "../secure/Protected_Route";
+// import VerifyAccount from "../components/VerifyAccount";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -22,11 +23,12 @@ const Auth = () => {
 
   return (
     // bg-[#082835]
-    <div className="authCont w-dvw h-dvh before:content-[''] before:absolute before:z-[-1] before:bottom-0 before:left-0 before:right-0 before:h-[100%] before:bg-gradient-to-b to-[#08283590] from-[#08283505] scrollbar">
+    <div className="authCont w-dvw h-dvh before:content-[''] before:absolute before:z-[-1] before:bottom-0 before:left-0 before:right-0 before:h-[100%] before:bg-gradient-to-b to-[#08283540] from-transparent scrollbar">
       <div className="authWrapper w-full h-full relative overflow-hidden">
-        <Signin />
-        <Signup />
-        <VerifyAccount />
+        <AuthProtectedRoute>
+          <Signin />
+          <Signup />
+        </AuthProtectedRoute>
       </div>
     </div>
   );

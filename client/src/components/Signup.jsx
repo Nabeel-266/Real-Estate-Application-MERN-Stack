@@ -37,8 +37,7 @@ const Signup = () => {
     password: "",
     confirmPassword: "",
   });
-  const { currentUser, pending, failed } = useSelector((state) => state.user);
-  console.log(currentUser, pending, failed);
+  const { currentUser, pending, failed } = useSelector((state) => state?.user);
 
   const { username, email, password, confirmPassword } = registerFormData;
 
@@ -84,7 +83,7 @@ const Signup = () => {
 
         toastify(
           "success",
-          `${newUser.data.username} ! \n You Signup Succeessfully`,
+          `${newUser.data.username}!       You Signup Succeessfully`,
           "top-right",
           "dark",
           4000

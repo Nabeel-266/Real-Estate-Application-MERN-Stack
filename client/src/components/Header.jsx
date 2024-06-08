@@ -1,4 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 // Import React Icons
 import { CgMenuRight } from "react-icons/cg";
@@ -8,6 +9,8 @@ import LogoDark from "../assets/logo-dark.png";
 import User from "../assets/user.png";
 
 const Header = ({ setIsOpenSidebar }) => {
+  const { currentUser } = useSelector((state) => state?.user);
+
   return (
     <header className="header w-full h-[6rem] flex items-center fixed top-0 left-0 z-[99] backdrop-blur-[20px] bg-[#ffffffd8] shadow-sm">
       <div className="headerWrapper w-full flex items-center justify-between mx-[4%]">
@@ -53,42 +56,46 @@ const Header = ({ setIsOpenSidebar }) => {
         {/* Header Right Side */}
         <div className="rightSide flex gap-[2rem]">
           {/* Signin & Signup Buttons */}
-          <div className="authBtns flex items-center gap-[1.4rem]">
-            {/* Signin Button */}
-            <Link to="/account/sign-in">
-              <button className="signinBtn hidden tabletSm:block text-[1.7rem] leading-[1.6rem] font-semibold text-[#082835] p-[1rem] rounded-md hover:text-amber-400 transition-all ">
-                Sign in
-              </button>
-            </Link>
+          {!currentUser && (
+            <div className="authBtns hidden tabletSm:flex items-center gap-[1.4rem]">
+              {/* Signin Button */}
+              <Link to="/account/sign-in">
+                <button className="signinBtn text-[1.7rem] leading-[1.6rem] font-semibold text-[#082835] p-[1rem] rounded-md hover:text-amber-400 transition-all ">
+                  Sign in
+                </button>
+              </Link>
 
-            {/* Signup Button */}
-            <Link to="/account/sign-up">
-              <button className="signupBtn hidden tabletSm:block text-[1.7rem] leading-[1.6rem] font-semibold text-[#082835] p-[1rem] bg-amber-400 rounded-md hover:bg-[#082835] hover:text-amber-400 transition-all">
-                Sign up
-              </button>
-            </Link>
-          </div>
+              {/* Signup Button */}
+              <Link to="/account/sign-up">
+                <button className="signupBtn text-[1.7rem] leading-[1.6rem] font-semibold text-[#082835] p-[1rem] bg-amber-400 rounded-md hover:bg-[#082835] hover:text-amber-400 transition-all">
+                  Sign up
+                </button>
+              </Link>
+            </div>
+          )}
 
           {/* Profile */}
-          <div className="profile relative hidden tabletSm:hidden items-center gap-[1rem] px-[0.5rem] tabletSm:px-0">
-            {/* Profile Image */}
-            <div className="profileImage">
-              <img
-                src={User}
-                alt="profile"
-                className="w-[2.9rem] rounded-full bg-[#082835] p-[0.2rem]"
-              />
+          {currentUser && (
+            <div className="profile relative hidden tabletSm:flex items-center gap-[1rem] px-[0.5rem] tabletSm:px-0">
+              {/* Profile Image */}
+              <div className="profileImage">
+                <img
+                  src={User}
+                  alt="profile"
+                  className="w-[2.9rem] rounded-full bg-[#082835] p-[0.2rem]"
+                />
+              </div>
+
+              {/* Profile Button */}
+              <button className="profileBtn text-[1.7rem] leading-[1.7rem] font-semibold text-[#082835] px-[1.6rem] py-[0.8rem] bg-amber-400 rounded-md hidden tabletSm:block">
+                Profile
+              </button>
+
+              <span className="flex items-center justify-center min-w-[2rem] min-h-[2rem] p-[0.4rem] absolute top-[-0.8rem] right-[-0.8rem] text-[1.2rem] leading-[1rem] font-semibold font-quick text-white bg-red-500 rounded-full overflow-hidden">
+                99+
+              </span>
             </div>
-
-            {/* Profile Button */}
-            <button className="profileBtn text-[1.7rem] leading-[1.7rem] font-semibold text-[#082835] px-[1.6rem] py-[0.8rem] bg-amber-400 rounded-md hidden tabletSm:block">
-              Profile
-            </button>
-
-            <span className="flex items-center justify-center min-w-[2rem] min-h-[2rem] p-[0.4rem] absolute top-[-0.8rem] right-[-0.8rem] text-[1.2rem] leading-[1rem] font-semibold font-quick text-white bg-red-500 rounded-full overflow-hidden">
-              99+
-            </span>
-          </div>
+          )}
 
           {/* Open Sidebar Button */}
           <button

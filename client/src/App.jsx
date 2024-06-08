@@ -6,6 +6,12 @@ import {
   Navigate,
 } from "react-router-dom";
 
+// Import Protected Route Components
+import {
+  UnAuthProtectedRoute,
+  VerifiedProtectedRoute,
+} from "./secure/Protected_Route";
+
 // Import Pages & Components
 import { ToastContainer } from "react-toastify";
 import Home from "./pages/Home";
@@ -34,16 +40,34 @@ const App = () => {
         />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route element={<Auth />}>
-            <Route path="/account/sign-in" element={<Signin />} />
-            <Route path="/account/sign-up" element={<Signup />} />
-            <Route path="/account/verification" element={<VerifyAccount />} />
-          </Route>
-          <Route path="/explore" element={<Explore />} />
+          <Route
+            path="/explore"
+            element={
+              <UnAuthProtectedRoute>
+                <Explore />
+              </UnAuthProtectedRoute>
+            }
+          />
+          <Route path="/profile" element={<Profile />} />
+
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/team" element={<Team />} />
-          <Route path="/profile" element={<Profile />} />
+
+          <Route element={<Auth />}>
+            <Route path="/account/sign-in" element={<Signin />} />
+            <Route path="/account/sign-up" element={<Signup />} />
+          </Route>
+
+          <Route
+            path="/account/verification"
+            element={
+              <VerifiedProtectedRoute>
+                <VerifyAccount />
+              </VerifiedProtectedRoute>
+            }
+          />
+
           <Route
             path="*"
             element={<h1 className="mt-[7rem]">Page not found</h1>}
