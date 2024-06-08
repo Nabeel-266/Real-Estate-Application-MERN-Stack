@@ -5,12 +5,18 @@ import {
   signupClientErrorHandler,
   signupServerErrorHandler,
 } from "../utils/authErrors";
+import {
+  signupPending,
+  signupSuccess,
+  signupFailure,
+} from "../app/actions/userActions";
 import toastify from "../utils/toastify";
+import { useDispatch, useSelector } from "react-redux";
 
 // Import React Icons
 import { IoMail, IoMailOpen, IoLockClosed, IoLockOpen } from "react-icons/io5";
 
-// Import Assets
+// Import Asset
 import GoogleIcon from "../assets/google.png";
 
 // Component
@@ -18,10 +24,9 @@ import Loader from "./Loader";
 
 const Signup = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const location = useLocation();
   const routeLocation = location.pathname.split("/")[2];
-
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState([]);
   const [isEmailSuggest, setIsEmailSuggest] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -32,6 +37,8 @@ const Signup = () => {
     password: "",
     confirmPassword: "",
   });
+  const { currentUser, pending, failed } = useSelector((state) => state.user);
+  console.log(currentUser, pending, failed);
 
   const { username, email, password, confirmPassword } = registerFormData;
 
@@ -49,16 +56,31 @@ const Signup = () => {
   const signupHandler = async (e) => {
     e.preventDefault();
 
+    // For Detecting Input Errors
     const isUserCredentialsOK = signupClientErrorHandler(
       registerFormData,
       setError
     );
-
     try {
       if (isUserCredentialsOK) {
-        setLoading(true);
-        const newUser = await registerUser(registerFormData);
-        console.log(newUser);
+        dispatch(signupPending());
+        const userFullname = username?.trim()?.split(" ");
+        const firstname =
+          userFullname[0]?.charAt(0).toLocaleUpperCase() +
+          userFullname[0]?.slice(1).toLocaleLowerCase();
+        const lastname =
+          userFullname[1]?.charAt(0).toLocaleUpperCase() +
+          userFullname[1]?.slice(1).toLocaleLowerCase();
+
+        const userCredentials = {
+          username: `${firstname} ${lastname}`,
+          email: email,
+          password,
+          confirmPassword,
+        };
+
+        const newUser = await registerUser(userCredentials);
+        dispatch(signupSuccess(newUser?.data));
 
         toastify(
           "success",
@@ -76,10 +98,9 @@ const Signup = () => {
         });
 
         setError("");
-        setLoading(false);
 
         setTimeout(() => {
-          navigate("/account/verification"); //{ state: newUser?.data }
+          navigate("/account/verification", { state: newUser?.data });
         }, 300);
 
         toastify(
@@ -92,9 +113,9 @@ const Signup = () => {
       }
     } catch (err) {
       console.log(err);
-      const errorMsg = err?.response?.data?.message;
+      dispatch(signupFailure());
+      const errorMsg = err?.response?.data?.message || err.message;
       signupServerErrorHandler(errorMsg, setError);
-      setLoading(false);
     }
   };
 
@@ -320,7 +341,7 @@ const Signup = () => {
                     : "text-neutral-700 bg-neutral-400 cursor-not-allowed"
                 }`}
               >
-                {loading ? (
+                {pending ? (
                   <Loader value="Processing" color="white" />
                 ) : (
                   "Register"

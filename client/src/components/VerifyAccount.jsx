@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { verifyUser } from "../api/authAPIs";
+import { resendOTP, verifyUser } from "../api/authAPIs";
+import { useSelector } from "react-redux";
 import toastify from "../utils/toastify";
 
 // Import React Icon
@@ -10,18 +11,22 @@ import { FaArrowRotateRight } from "react-icons/fa6";
 import Loader from "./Loader";
 
 const VerifyAccount = () => {
-  const [OTPCode, setOTPCode] = useState();
+  const [OTPCode, setOTPCode] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
   const routeLocation = location.pathname.split("/")[2];
   const [loading, setLoading] = useState(false);
+  const { currentUser, pending, failed } = useSelector((state) => state.user);
+  console.log(currentUser, pending, failed);
 
   // Account Verification Handler
-  const accountVerifiactionHandler = async (e) => {
+  const accountVerificationHandler = async (e) => {
     e.preventDefault();
 
     try {
       setLoading(true);
+
+      // Call Verify User API
       const verifiedUser = await verifyUser(OTPCode);
       console.log(verifiedUser);
 
@@ -33,7 +38,6 @@ const VerifyAccount = () => {
         3000
       );
 
-      setError("");
       setLoading(false);
 
       setTimeout(() => {
@@ -48,6 +52,55 @@ const VerifyAccount = () => {
         6000
       );
       setLoading(false);
+    }
+  };
+
+  // Resent OTP Handler
+  const resentOTPHandler = async (e) => {
+    e.preventDefault();
+    console.log(user.otpExpiry);
+
+    try {
+      if (!user.isVerified) {
+        if (user.otpExpiry < Date.now()) {
+          // Call Resend OTP API
+          const updateOTPUser = await resendOTP(user.email);
+          console.log(updateOTPUser);
+
+          toastify(
+            "success",
+            "OTP has been resent successfully",
+            "top-center",
+            "dark",
+            6000
+          );
+        } else {
+          toastify(
+            "info",
+            "Rejected! Your current OTP is active",
+            "top-right",
+            "dark",
+            6000
+          );
+        }
+      } else {
+        toastify(
+          "info",
+          "You are already verified, so don't need to resend OTP. ThankYou!",
+          "top-right",
+          "dark",
+          6000
+        );
+      }
+    } catch (error) {
+      console.log(error);
+      toastify(
+        "error",
+        `${error?.response?.data?.message || error.message}`,
+        "top-right",
+        "dark",
+        6000
+      );
     }
   };
 
@@ -80,6 +133,7 @@ const VerifyAccount = () => {
             type="text"
             name="otp"
             id="otp"
+            defaultValue={OTPCode}
             placeholder="Type OTP here..."
             onChange={(e) => setOTPCode(e.target.value)}
             maxLength={8}
@@ -89,7 +143,7 @@ const VerifyAccount = () => {
           {/* Action Buttons */}
           <div className="actionBtns w-full flex justify-between items-end pt-[0.5rem]">
             <button
-              onClick={(e) => accountVerifiactionHandler(e)}
+              onClick={(e) => accountVerificationHandler(e)}
               disabled={OTPCode?.length === 8 ? false : true}
               className={`${
                 OTPCode?.length === 8
@@ -103,7 +157,10 @@ const VerifyAccount = () => {
                 "Verify Account"
               )}
             </button>
-            <button className="flex items-center gap-[0.5rem] text-[1.6rem] leading-[1.5rem] font-medium px-[1rem] py-[1rem] bg-cyan-950 text-white rounded-md hover:shadow-lg active:scale-[0.98] transition-all">
+            <button
+              onClick={(e) => resentOTPHandler(e)}
+              className="flex items-center gap-[0.5rem] text-[1.6rem] leading-[1.5rem] font-medium px-[1rem] py-[1rem] bg-cyan-950 text-white rounded-md hover:shadow-lg active:scale-[0.98] transition-all"
+            >
               <FaArrowRotateRight /> <span>Resend OTP</span>
             </button>
           </div>

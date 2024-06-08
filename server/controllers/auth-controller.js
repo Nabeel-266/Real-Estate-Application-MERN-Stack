@@ -84,7 +84,7 @@ export const signup = async (req, res, next) => {
 
       // Set OTP and OTP Expiry in USER_Document
       user_Doc.otp = otp;
-      user_Doc.otpExpiry = Date.now() + 60000; // 1 minute
+      user_Doc.otpExpiry = Date.now() + 120000; // 1 minute
 
       // New User Saved in Db
       const newUser = await user_Doc.save();
@@ -183,7 +183,7 @@ export const verifyAccount = async (req, res, next) => {
     updatedUser.password = undefined;
 
     // Generate Token for User
-    const token = generateToken({ data: newUser });
+    const token = generateToken({ data: updatedUser });
 
     res.cookie("token", token, { httpOnly: true });
     res.status(StatusCodes.ACCEPTED).send(
@@ -202,7 +202,7 @@ export const verifyAccount = async (req, res, next) => {
 //? @route --> POST --> api/auth/resendOTP
 // @access --> PRIVATE
 export const resendOTP = async (req, res, next) => {
-  console.log("Verify Account Controller");
+  console.log("Resend OTP Controller");
   console.log(req.body, "==> Request User");
 
   try {
@@ -224,6 +224,15 @@ export const resendOTP = async (req, res, next) => {
         sendError({
           statusCode: StatusCodes.BAD_REQUEST,
           message: resMessages.USER_ALREADY_VERIFIED,
+        })
+      );
+    }
+
+    if (user.otpExpiry > Date.now()) {
+      return res.status(StatusCodes.NOT_ACCEPTABLE).send(
+        sendError({
+          statusCode: StatusCodes.NOT_ACCEPTABLE,
+          message: resMessages.OTP_NOT_EXPIRED,
         })
       );
     }

@@ -42,12 +42,12 @@ export const validateToken = async (req, res, next) => {
   const verifyToken = verify(token, process.env.JWT_SECRET_KEY);
   console.log(verifyToken, "====>>verifyToken");
 
-  // If Token is unvalid
+  // If Token is invalid
   if (!verifyToken.result)
     res.status(StatusCodes.UNAUTHORIZED).send(
       sendError({
         statusCode: StatusCodes.UNAUTHORIZED,
-        message: "Failed to authenticate token, token is unvalid",
+        message: resMessages.INVALID_TOKEN,
       })
     );
 

@@ -34,10 +34,10 @@ const App = () => {
         />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/account/" element={<Auth />}>
-            <Route path="sign-in" element={<Signin />} />
-            <Route path="sign-up" element={<Signup />} />
-            <Route path="verification" element={<VerifyAccount />} />
+          <Route element={<Auth />}>
+            <Route path="/account/sign-in" element={<Signin />} />
+            <Route path="/account/sign-up" element={<Signup />} />
+            <Route path="/account/verification" element={<VerifyAccount />} />
           </Route>
           <Route path="/explore" element={<Explore />} />
           <Route path="/about" element={<About />} />
