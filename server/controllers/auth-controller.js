@@ -4,9 +4,9 @@ import { v4 as uuidv4 } from "uuid";
 import { sendEmailOTP } from "../utils/nodemailer.js";
 import { emailRegex } from "../utils/emailRegex.js";
 import { StatusCodes } from "http-status-codes";
-import resMessages from "../constants/responsesMessages.js";
 import { sendError, sendSuccess } from "../utils/responses.js";
 import { generateToken } from "../helpers/token.js";
+import resMessages from "../constants/responsesMessages.js";
 
 //* --> For Signup <--
 //? @route --> POST --> api/auth/register
@@ -84,7 +84,7 @@ export const signup = async (req, res, next) => {
 
       // Set OTP and OTP Expiry in USER_Document
       user_Doc.otp = otp;
-      user_Doc.otpExpiry = Date.now() + 120000; // 1 minute
+      user_Doc.otpExpiry = Date.now() + 60000; // 1 minute
 
       // New User Saved in Db
       const newUser = await user_Doc.save();
@@ -169,7 +169,7 @@ export const verifyAccount = async (req, res, next) => {
       return res.status(StatusCodes.NOT_ACCEPTABLE).send(
         sendError({
           statusCode: StatusCodes.NOT_ACCEPTABLE,
-          message: "OTP has expired. Please request a new OTP",
+          message: resMessages.OTP_EXPIRED,
         })
       );
     }
@@ -208,7 +208,7 @@ export const resendOTP = async (req, res, next) => {
   try {
     // Find User with Req.User.ID
     const user = await User.findOne({ email: req.body.email });
-    console.log(user, "==> Find USer with ID");
+    console.log(user, "==> Find User with ID");
 
     if (!user) {
       return res.status(StatusCodes.NOT_FOUND).send(
@@ -245,7 +245,7 @@ export const resendOTP = async (req, res, next) => {
     user.otp = otp;
     user.otpExpiry = Date.now() + 60000; // 1 minute
 
-    // Update User after Verification
+    // Update User after create new OTP
     const updatedUser = await user.save();
     updatedUser.password = undefined;
 

@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { resendOTP, verifyUser } from "../api/authAPIs";
-import { useSelector } from "react-redux";
+import { resendOTPtoUser, verifyUser } from "../api/authAPIs";
+import { verifySuccess, resendOTPSuccess } from "../app/actions/userActions";
+import { useDispatch, useSelector } from "react-redux";
 import toastify from "../utils/toastify";
 
 // Import React Icon
@@ -13,37 +14,50 @@ import Loader from "./Loader";
 const VerifyAccount = () => {
   const [OTPCode, setOTPCode] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const location = useLocation();
   const routeLocation = location.pathname.split("/")[2];
-  const [loading, setLoading] = useState(false);
-  const { currentUser, pending, failed } = useSelector((state) => state.user);
-  console.log(currentUser, pending, failed);
+  const [verifyLoading, setVerifyLoading] = useState(false);
+  const [otpLoading, setOtpLoading] = useState(false);
+  const { currentUser } = useSelector((state) => state.user);
+  console.log(currentUser);
+
+  useEffect(() => {
+    toastify(
+      "info",
+      `Dear ${currentUser.username}, Please! verify your account`,
+      "top-right",
+      "dark",
+      10000
+    );
+  }, []);
 
   // Account Verification Handler
   const accountVerificationHandler = async (e) => {
     e.preventDefault();
+    setVerifyLoading(true);
 
     try {
-      setLoading(true);
-
       // Call Verify User API
       const verifiedUser = await verifyUser(OTPCode);
       console.log(verifiedUser);
+      dispatch(verifySuccess(verifiedUser?.data));
 
       toastify(
         "success",
-        `${verifiedUser.data.username} ! Your Verification Succeessfully`,
+        `${verifiedUser.data.username} ! \nYour Verification Successfully`,
         "top-center",
         "dark",
         3000
       );
 
-      setLoading(false);
+      setVerifyLoading(false);
 
       setTimeout(() => {
         navigate("/");
       }, 2000);
     } catch (error) {
+      setVerifyLoading(false);
       toastify(
         "error",
         `${error?.response?.data?.message || error.message}`,
@@ -51,26 +65,29 @@ const VerifyAccount = () => {
         "dark",
         6000
       );
-      setLoading(false);
     }
   };
 
   // Resent OTP Handler
   const resentOTPHandler = async (e) => {
     e.preventDefault();
-    console.log(user.otpExpiry);
+    setOtpLoading(true);
 
     try {
-      if (!user.isVerified) {
-        if (user.otpExpiry < Date.now()) {
+      if (!currentUser.isVerified) {
+        const otpExpiryDate = new Date(currentUser.otpExpiry).getTime();
+        const currentTime = Date.now();
+
+        if (otpExpiryDate < currentTime) {
           // Call Resend OTP API
-          const updateOTPUser = await resendOTP(user.email);
+          const updateOTPUser = await resendOTPtoUser(currentUser.email);
           console.log(updateOTPUser);
+          dispatch(resendOTPSuccess(updateOTPUser?.data));
 
           toastify(
             "success",
-            "OTP has been resent successfully",
-            "top-center",
+            "OTP has been resent successfully, Please! check your email",
+            "top-right",
             "dark",
             6000
           );
@@ -92,8 +109,10 @@ const VerifyAccount = () => {
           6000
         );
       }
+      setOtpLoading(false);
     } catch (error) {
       console.log(error);
+      setOtpLoading(false);
       toastify(
         "error",
         `${error?.response?.data?.message || error.message}`,
@@ -151,7 +170,7 @@ const VerifyAccount = () => {
                   : "bg-neutral-500 text-white cursor-not-allowed"
               } gap-[0.5rem] text-[1.6rem] leading-[1.5rem] font-semibold px-[2rem] py-[1rem] rounded-sm hover:shadow-lg transition-all`}
             >
-              {loading ? (
+              {verifyLoading ? (
                 <Loader value="Processing" color="#262626" />
               ) : (
                 "Verify Account"
@@ -161,7 +180,13 @@ const VerifyAccount = () => {
               onClick={(e) => resentOTPHandler(e)}
               className="flex items-center gap-[0.5rem] text-[1.6rem] leading-[1.5rem] font-medium px-[1rem] py-[1rem] bg-cyan-950 text-white rounded-md hover:shadow-lg active:scale-[0.98] transition-all"
             >
-              <FaArrowRotateRight /> <span>Resend OTP</span>
+              {otpLoading ? (
+                <Loader value="Sending" color="white" />
+              ) : (
+                <>
+                  <FaArrowRotateRight /> <span>Resend OTP</span>
+                </>
+              )}
             </button>
           </div>
 

@@ -1,6 +1,6 @@
 import { setLoading, setError, setUser } from "../slices/userSlice.js";
 
-//* For Signup Actions
+//* For Signup User Actions
 export const signupPending = () => (dispatch) => {
   dispatch(setLoading(true));
   dispatch(setError(false));
@@ -16,7 +16,7 @@ export const signupFailure = () => (dispatch) => {
   dispatch(setError(true));
 };
 
-//* For Signin Actions
+//* For Signin User Actions
 export const signinPending = () => (dispatch) => {
   dispatch(setLoading(true));
   dispatch(setError(false));
@@ -30,6 +30,16 @@ export const signinSuccess = (user) => (dispatch) => {
 export const signinFailure = () => (dispatch) => {
   dispatch(setLoading(false));
   dispatch(setError(true));
+};
+
+//* For Verify User Actions
+export const verifySuccess = (user) => (dispatch) => {
+  dispatch(setUser(user));
+};
+
+//* For Resend OTP to User Action
+export const resendOTPSuccess = (user) => (dispatch) => {
+  dispatch(setUser(user));
 };
 
 // export const logout = () => (dispatch) => {

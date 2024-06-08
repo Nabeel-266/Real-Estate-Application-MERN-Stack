@@ -84,7 +84,7 @@ const Signup = () => {
 
         toastify(
           "success",
-          `${newUser.data.username} ! You Signup Succeessfully`,
+          `${newUser.data.username} ! \n You Signup Succeessfully`,
           "top-right",
           "dark",
           4000
@@ -101,15 +101,7 @@ const Signup = () => {
 
         setTimeout(() => {
           navigate("/account/verification", { state: newUser?.data });
-        }, 300);
-
-        toastify(
-          "info",
-          "Please! Verify Your Account First",
-          "top-right",
-          "dark",
-          10000
-        );
+        }, 500);
       }
     } catch (err) {
       console.log(err);

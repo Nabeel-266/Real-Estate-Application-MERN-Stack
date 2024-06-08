@@ -30,8 +30,8 @@ export const verifyUser = async (OTP) => {
   }
 };
 
-// For RESEND OTP
-export const resendOTP = async (email) => {
+// For RESEND OTP to User
+export const resendOTPtoUser = async (email) => {
   try {
     const response = await axios.post(`${RESEND_OTP}`, { email });
     console.log(response);
