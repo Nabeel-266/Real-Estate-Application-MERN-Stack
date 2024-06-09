@@ -5,8 +5,12 @@ import toastify from "../utils/toastify";
 
 export const AuthProtectedRoute = ({ children }) => {
   const user = useSelector((state) => state?.user?.currentUser);
-  if (user) {
+  if (user && user.isVerified) {
     return <Navigate to="/" replace />;
+  }
+
+  if (user && !user.isVerified) {
+    return <Navigate to="/account/verification" replace />;
   }
 
   return <>{children}</>;
@@ -66,7 +70,8 @@ export const VerifiedProtectedRoute = ({ children }) => {
     return <Navigate to="/account/sign-in" replace />;
   }
   if (user.isVerified) {
-    return;
+    return <Navigate to="/" replace />;
   }
+
   return <>{children}</>;
 };

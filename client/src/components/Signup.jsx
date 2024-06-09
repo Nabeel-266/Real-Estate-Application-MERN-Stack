@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../api/authAPIs";
 import {
   signupClientErrorHandler,
@@ -11,7 +12,6 @@ import {
   signupFailure,
 } from "../app/actions/userActions";
 import toastify from "../utils/toastify";
-import { useDispatch, useSelector } from "react-redux";
 
 // Import React Icons
 import { IoMail, IoMailOpen, IoLockClosed, IoLockOpen } from "react-icons/io5";
@@ -28,7 +28,7 @@ const Signup = () => {
   const location = useLocation();
   const routeLocation = location.pathname.split("/")[2];
   const [error, setError] = useState([]);
-  const { currentUser, pending, failed } = useSelector((state) => state?.user);
+  const { pending } = useSelector((state) => state?.user);
   const [isEmailSuggest, setIsEmailSuggest] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPassVisible, setIsConfirmPassVisible] = useState(false);
@@ -83,12 +83,13 @@ const Signup = () => {
 
         toastify(
           "success",
-          `${newUser.data.username}!       You Signup Succeessfully`,
+          `${newUser.data.username}! You Signup Successfully`,
           "top-right",
           "dark",
           4000
         );
 
+        setError("");
         setRegisterFormData({
           username: "",
           email: "",
@@ -96,11 +97,7 @@ const Signup = () => {
           confirmPassword: "",
         });
 
-        setError("");
-
-        setTimeout(() => {
-          navigate("/account/verification", { state: newUser?.data });
-        }, 500);
+        navigate("/account/verification"); // { state: newUser?.data }
       }
     } catch (err) {
       console.log(err);

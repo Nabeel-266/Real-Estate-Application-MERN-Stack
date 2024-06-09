@@ -1,6 +1,6 @@
 import pkg from "jsonwebtoken";
-const { sign, verify } = pkg;
 import dotenv from "dotenv";
+const { sign, verify } = pkg;
 dotenv.config();
 
 import { StatusCodes } from "http-status-codes";

@@ -1,5 +1,5 @@
 import User from "../Models/user-schema.js";
-import bcryptjs from "bcryptjs";
+import pkg from "bcryptjs";
 import { v4 as uuidv4 } from "uuid";
 import { sendEmailOTP } from "../utils/nodemailer.js";
 import { emailRegex } from "../utils/emailRegex.js";
@@ -7,6 +7,7 @@ import { StatusCodes } from "http-status-codes";
 import { sendError, sendSuccess } from "../utils/responses.js";
 import { generateToken } from "../helpers/token.js";
 import resMessages from "../constants/responsesMessages.js";
+const { compareSync, hashSync, genSaltSync } = pkg;
 
 //* --> For Signup <--
 //? @route --> POST --> api/auth/register
@@ -49,63 +50,8 @@ export const signup = async (req, res, next) => {
     // Check User is Exist in DB
     const isUserExist = await User.findOne({ email });
 
-    // If USER not exist
-    if (!isUserExist) {
-      // Password Lenght Verification
-      if (password.length < 8) {
-        return res.status(StatusCodes.LENGTH_REQUIRED).send(
-          sendError({
-            statusCode: StatusCodes.LENGTH_REQUIRED,
-            message: resMessages.PASSWORD_LENGTH_SHORT,
-          })
-        );
-      }
-      // Password Match Verification
-      if (password !== confirmPassword) {
-        return res.status(StatusCodes.BAD_REQUEST).send(
-          sendError({
-            statusCode: StatusCodes.BAD_REQUEST,
-            message: resMessages.UN_MATCH_PASSWORDS,
-          })
-        );
-      }
-
-      let user_Doc;
-
-      // Hashed Password
-      const hashedPassword = bcryptjs.hashSync(password, 10);
-
-      // Create New User in Database
-      user_Doc = new User({ username, email, password: hashedPassword });
-
-      // Create OTP
-      const otp = uuidv4().slice(0, 8);
-      console.log(otp);
-
-      // Set OTP and OTP Expiry in USER_Document
-      user_Doc.otp = otp;
-      user_Doc.otpExpiry = Date.now() + 60000; // 1 minute
-
-      // New User Saved in Db
-      const newUser = await user_Doc.save();
-      newUser.password = undefined;
-
-      // Generate Token for User
-      const token = generateToken({ data: newUser });
-
-      // send OTP to User Email
-      const emailResponse = await sendEmailOTP(username, email, otp);
-      console.log(emailResponse);
-
-      res.cookie("token", token, { httpOnly: true });
-      res.status(StatusCodes.CREATED).send(
-        sendSuccess({
-          message: resMessages.SUCCESS_REGISTRATION,
-          data: user_Doc,
-        })
-      );
-    } else {
-      // If USER exist
+    // If USER exist
+    if (isUserExist) {
       return res.status(StatusCodes.CONFLICT).send(
         sendError({
           statusCode: StatusCodes.CONFLICT,
@@ -113,6 +59,60 @@ export const signup = async (req, res, next) => {
         })
       );
     }
+    // Password Lenght Verification
+    if (password.length < 8) {
+      return res.status(StatusCodes.LENGTH_REQUIRED).send(
+        sendError({
+          statusCode: StatusCodes.LENGTH_REQUIRED,
+          message: resMessages.PASSWORD_LENGTH_SHORT,
+        })
+      );
+    }
+    // Password Match Verification
+    if (password !== confirmPassword) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.UN_MATCH_PASSWORDS,
+        })
+      );
+    }
+
+    let user_Doc;
+
+    // Hashed Password
+    const passwordSalt = genSaltSync(10);
+    const hashedPassword = hashSync(password, passwordSalt);
+
+    // Create New User in Database
+    user_Doc = new User({ username, email, password: hashedPassword });
+
+    // Create OTP
+    const otp = uuidv4().slice(0, 8);
+    console.log(otp);
+
+    // Set OTP and OTP Expiry in USER_Document
+    user_Doc.otp = otp;
+    user_Doc.otpExpiry = Date.now() + 60000; // 1 minute
+
+    // New User Saved in Db
+    const newUser = await user_Doc.save();
+    newUser.password = undefined;
+
+    // Generate Token for User
+    const token = generateToken({ data: newUser });
+
+    // send OTP to User Email
+    const emailResponse = await sendEmailOTP(username, email, otp);
+    console.log(emailResponse);
+
+    res.cookie("token", token, { httpOnly: true });
+    res.status(StatusCodes.CREATED).send(
+      sendSuccess({
+        message: resMessages.SUCCESS_REGISTRATION,
+        data: user_Doc,
+      })
+    );
   } catch (error) {
     console.log(error.message, "==> error in registeration");
     next(error);
@@ -122,10 +122,97 @@ export const signup = async (req, res, next) => {
 //* --> For Signin <--
 //? @route --> POST --> api/auth/login
 // @access --> PUBLIC
-export const signin = (req, res) => {
-  res.json({
-    message: "user signin",
-  });
+export const signin = async (req, res) => {
+  console.log("Signup Controller");
+  console.log(req.body);
+
+  try {
+    const { email, password } = req.body;
+
+    // All Fields Required Verification
+    if (!email && !password) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.MISSING_FIELDS,
+        })
+      );
+    }
+
+    // Verify Email Address Typography
+    if (!emailRegex.test(email)) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.INVALID_EMAIL,
+        })
+      );
+    }
+
+    // Find User to Email
+    const user = await User.findOne({ email });
+    console.log(user);
+
+    // If USER not exist
+    if (!user) {
+      return res.status(StatusCodes.NOT_FOUND).send(
+        sendError({
+          statusCode: StatusCodes.NOT_FOUND,
+          message: resMessages.EMAIL_NOT_EXIST,
+        })
+      );
+    }
+
+    // Check Password is Correct
+    const isPasswordCorrect = compareSync(password, user.password);
+
+    // If Password is not correct
+    if (!isPasswordCorrect) {
+      return res.status(StatusCodes.UNAUTHORIZED).send(
+        sendError({
+          statusCode: StatusCodes.UNAUTHORIZED,
+          message: resMessages.INCORRECT_PASSWORD,
+        })
+      );
+    }
+
+    let updatedUser;
+
+    if (!user.isVerified) {
+      // Create OTP
+      const otp = uuidv4().slice(0, 8);
+      console.log(otp);
+
+      // Set OTP and OTP Expiry in USER_Document
+      user.otp = otp;
+      user.otpExpiry = Date.now() + 90000; // 1.5 minutes
+
+      // Update User after create new OTP
+      updatedUser = await user.save();
+      updatedUser.password = undefined;
+
+      // send OTP to User Email
+      const emailResponse = await sendEmailOTP(user.username, user.email, otp);
+      console.log(emailResponse);
+    } else {
+      updatedUser = user;
+      updatedUser.password = undefined;
+    }
+
+    // Generate Token for User
+    const token = generateToken({ data: updatedUser });
+
+    res.cookie("token", token, { httpOnly: true });
+    res.status(StatusCodes.OK).send(
+      sendSuccess({
+        message: resMessages.SUCCESS_LOGIN,
+        data: updatedUser,
+      })
+    );
+  } catch (error) {
+    console.log(error.message, "==> error in login");
+    next(error);
+  }
 };
 
 //* --> For Verify Account <--
@@ -137,10 +224,10 @@ export const verifyAccount = async (req, res, next) => {
   console.log(req.user, "==> Request User");
 
   try {
-    const { OTP } = req.body;
+    const { otp } = req.body;
 
     // If OTP not found
-    if (!OTP) {
+    if (!otp) {
       return res.status(StatusCodes.BAD_REQUEST).send(
         sendError({
           statusCode: StatusCodes.BAD_REQUEST,
@@ -150,13 +237,13 @@ export const verifyAccount = async (req, res, next) => {
     }
 
     // Find User with OTP and Req.User.ID
-    const user = await User.findOne({ otp: OTP, _id: req.user._id });
+    const user = await User.findOne({ otp: otp, _id: req.user._id });
 
     // If User not found
     if (!user) {
-      return res.status(StatusCodes.FORBIDDEN).send(
+      return res.status(StatusCodes.UNAUTHORIZED).send(
         sendError({
-          statusCode: StatusCodes.FORBIDDEN,
+          statusCode: StatusCodes.UNAUTHORIZED,
           message: resMessages.INVALID_OTP,
         })
       );
@@ -166,9 +253,9 @@ export const verifyAccount = async (req, res, next) => {
 
     // If OTP Expired
     if (user.otpExpiry < Date.now()) {
-      return res.status(StatusCodes.NOT_ACCEPTABLE).send(
+      return res.status(StatusCodes.FORBIDDEN).send(
         sendError({
-          statusCode: StatusCodes.NOT_ACCEPTABLE,
+          statusCode: StatusCodes.FORBIDDEN,
           message: resMessages.OTP_EXPIRED,
         })
       );
@@ -229,9 +316,9 @@ export const resendOTP = async (req, res, next) => {
     }
 
     if (user.otpExpiry > Date.now()) {
-      return res.status(StatusCodes.NOT_ACCEPTABLE).send(
+      return res.status(StatusCodes.FORBIDDEN).send(
         sendError({
-          statusCode: StatusCodes.NOT_ACCEPTABLE,
+          statusCode: StatusCodes.FORBIDDEN,
           message: resMessages.OTP_NOT_EXPIRED,
         })
       );

@@ -73,4 +73,49 @@ const signupServerErrorHandler = (errorMsg, setError) => {
   }
 };
 
-export { signupClientErrorHandler, signupServerErrorHandler };
+const signinClientErrorHandler = (loginFormData, setError) => {
+  const { email, password } = loginFormData;
+  const emailPattern =
+    /^(?:[^@\s]+@(?:gmail\.com|hotmail\.com|yahoo\.com|outlook\.com|zoho\.com|icloud\.com|protonmail\.com|aol\.com))$/;
+
+  if (email && password) {
+    if (!emailPattern.test(email)) {
+      setError([
+        "Email",
+        "Please! enter a valid Email address, your Email is invalid",
+      ]);
+      return false;
+    } else {
+      return true;
+    }
+  } else {
+    email === ""
+      ? setError(["Email", "Your Email is required!"])
+      : password === "" && setError(["Password", "Your Password is required!"]);
+
+    return false;
+  }
+};
+
+const signinServerErrorHandler = (errorMsg, setError) => {
+  if (errorMsg === "Email is invalid") {
+    setError([
+      "Email",
+      "Please! enter a valid Email address, your Email is invalid",
+    ]);
+    return false;
+  } else if (errorMsg === "Email doesn't exists") {
+    setError(["Email", "Your email address doesn't exist"]);
+  } else if (errorMsg === "Password is incorrect") {
+    setError(["Password", "Your password is incorrect"]);
+  } else {
+    toastify("error", `${errorMsg}`, "top-right", "dark", 5000);
+  }
+};
+
+export {
+  signupClientErrorHandler,
+  signupServerErrorHandler,
+  signinClientErrorHandler,
+  signinServerErrorHandler,
+};

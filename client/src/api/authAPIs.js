@@ -1,5 +1,10 @@
 import axios from "axios";
-import { VERIFY_ACCOUNT, SIGN_UP, RESEND_OTP } from "../constants/apisRoute";
+import {
+  SIGN_IN,
+  SIGN_UP,
+  VERIFY_ACCOUNT,
+  RESEND_OTP,
+} from "../constants/apisRoute";
 
 // For SIGNUP USER
 export const registerUser = async (userCredentials) => {
@@ -13,14 +18,22 @@ export const registerUser = async (userCredentials) => {
 };
 
 // For SIGNIN USER
-export const loginUser = async () => {};
+export const loginUser = async (userCredentials) => {
+  try {
+    const response = await axios.post(`${SIGN_IN}`, userCredentials);
+    console.log(response);
+    return response?.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
 // For VERIFY USER
 export const verifyUser = async (OTP) => {
   try {
     const response = await axios.post(
       `${VERIFY_ACCOUNT}`,
-      { OTP },
+      { otp: OTP },
       { withCredentials: true }
     );
     console.log(response);

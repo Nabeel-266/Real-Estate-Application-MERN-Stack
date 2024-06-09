@@ -22,14 +22,16 @@ const VerifyAccount = () => {
   const { currentUser } = useSelector((state) => state?.user);
 
   useEffect(() => {
-    toastify(
-      "info",
-      `Dear ${currentUser.username}, Please! verify your account`,
-      "top-right",
-      "dark",
-      10000
-    );
-  }, []);
+    if (currentUser) {
+      toastify(
+        "info",
+        `Dear ${currentUser?.username}, Please! verify your account`,
+        "top-right",
+        "dark",
+        10000
+      );
+    }
+  }, [currentUser]);
 
   // Account Verification Handler
   const accountVerificationHandler = async (e) => {
@@ -129,7 +131,7 @@ const VerifyAccount = () => {
       } accountVerifyCont w-full min-h-dvh relative flex justify-center items-center pt-[9rem] px-[1rem] z-[1000] bg-neutral-200`}
     >
       {/* Verification Cont */}
-      <div className="verificationCont mobileSm:w-[42rem] mobileRg:w-[46rem] tabletSm:w-[50rem] max-w-[65rem] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-white p-[2.5rem] shadow-2xl rounded-lg">
+      <div className="verificationCont mobileSm:min-w-[90%] mobileRg:min-w-[90%] tabletSm:min-w-[55rem] max-w-[65rem] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-white p-[2.5rem] shadow-2xl rounded-lg">
         {/* Verfication Cont Header */}
         <header className="pb-[1.5rem] border-b-[0.2rem] border-neutral-500">
           <h1 className="text-[2.5rem] leading-[2.5rem] text-[#082835] font-semibold">
@@ -167,7 +169,7 @@ const VerifyAccount = () => {
                 OTPCode?.length === 8
                   ? "bg-amber-400 text-neutral-800 cursor-pointer active:scale-[0.98]"
                   : "bg-neutral-500 text-white cursor-not-allowed"
-              } gap-[0.5rem] text-[1.6rem] leading-[1.5rem] font-semibold px-[2rem] py-[1rem] rounded-sm hover:shadow-lg transition-all`}
+              } gap-[0.5rem] text-[1.6rem] leading-[1.5rem] font-semibold px-[2rem] py-[1.2rem] rounded-sm hover:shadow-lg transition-all`}
             >
               {verifyLoading ? (
                 <Loader value="Processing" color="#262626" />
@@ -177,7 +179,7 @@ const VerifyAccount = () => {
             </button>
             <button
               onClick={(e) => resentOTPHandler(e)}
-              className="flex items-center gap-[0.5rem] text-[1.6rem] leading-[1.5rem] font-medium px-[1rem] py-[1rem] bg-cyan-950 text-white rounded-md hover:shadow-lg active:scale-[0.98] transition-all"
+              className="flex items-center gap-[0.5rem] text-[1.6rem] leading-[1.5rem] font-medium px-[1.5rem] py-[1.2rem] bg-cyan-950 text-white rounded-md hover:shadow-lg active:scale-[0.98] transition-all"
             >
               {otpLoading ? (
                 <Loader value="Sending" color="white" />
@@ -191,17 +193,13 @@ const VerifyAccount = () => {
 
           {/* Note */}
           <div className="w-full text-[1.45rem] font-medium">
-            <b className="text-red-800 text-[1.5rem]">Note :</b>
-            <ul className="list-inside mt-[0.2rem]">
-              <li className="">
-                <b>-</b> If account will not be verified, so that account will
-                be deleted.
-              </li>
-              <li>
-                <b>-</b> Then try again with an authenticated email address
-                account.
-              </li>
-            </ul>
+            <h6 className="text-red-800 text-[1.5rem] font-bold">Note :</h6>
+            <p>
+              <b className="text-[2rem] leading-[1.45rem]">-</b> If your account
+              is not verified, you will not be able to see any property details
+              or take any actions such as contacting agents, selling property,
+              etc.
+            </p>
           </div>
         </div>
       </div>
