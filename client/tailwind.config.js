@@ -40,7 +40,7 @@ export default {
         },
       },
       backgroundImage: {
-        "auth-banner-image": "url('/src/assets/auth-banner-image.jpg')",
+        "about-hd-image": "url('/src/assets/about-bg.jpg')",
         "footer-image": "url('/src/assets/footer-bg.jpg')",
       },
     },

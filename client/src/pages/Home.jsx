@@ -78,7 +78,7 @@ const Home = () => {
               <img
                 src={bannerImage}
                 alt="banner"
-                className="w-full drop-shadow-2xl select-none"
+                className="w-full drop-shadow-xl select-none"
               />
             </div>
           </section>

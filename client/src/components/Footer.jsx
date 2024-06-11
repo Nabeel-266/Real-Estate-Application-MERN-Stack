@@ -14,7 +14,7 @@ import Youtube from "../assets/Social-Icons/youtube.png";
 
 const Footer = () => {
   return (
-    <footer className="header relative bottom-0 w-full flex items-center backdrop-blur-[20px] bg-footer-image bg-cover bg-no-repeat bg-center bg-fixed bg-clip-padding bg-[#08283510] bg-blend-multiply border-t-[0.2rem] border-[#082835] border-dotted">
+    <footer className="header relative bottom-0 w-full flex items-center backdrop-blur-[20px] bg-footer-image bg-cover bg-no-repeat bg-center bg-fixed bg-clip-padding bg-[#08283560] bg-blend-multiply border-t-[0.2rem] border-[#082835] border-dotted">
       <div className="headerWrapper w-full flex flex-col justify-between mx-[4%] text-white">
         {/* Footer Top */}
         <section className="footerTop w-full grid grid-cols-12 gap-[3rem] laptopSm:grid-cols-5 laptopSm:gap-[2rem] pt-[4rem] pb-[3rem]">
