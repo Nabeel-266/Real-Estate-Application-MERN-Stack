@@ -10,7 +10,9 @@ import { MdOutlineTimer } from "react-icons/md";
 import Footer from "../components/Footer";
 
 // Import Image
-import bannerImage from "../assets/banner-image.png";
+import bannerHomes from "../assets/banner-homes.png";
+import bannerRoom from "../assets/banner-room.jpg";
+import bannerBalcony from "../assets/banner-balcony.jpg";
 import cardImage from "../assets/home.jpg";
 import buy from "../assets/buy.png";
 import sell from "../assets/sell.png";
@@ -26,14 +28,14 @@ const Home = () => {
     <div className="homeCont w-full">
       {/* Banner Cont */}
       <div className="bannerCont w-full">
-        <section className="bannerWrapper laptopSm:h-dvh flex flex-col laptopSm:flex-row items-center justify-between mt-[10rem] tabletSm:mt-[11rem] laptopSm:mt-[0rem] mx-[4%]">
+        <section className="bannerWrapper laptopSm:h-dvh flex flex-col gap-[10rem] tabletRg:gap-[13rem] laptopSm:gap-0 laptopSm:flex-row items-center justify-between py-[10rem] tabletSm:py-[11rem] laptopSm:py-[0rem] mx-[4%]">
           {/* Side First */}
-          <section className="sideFirst w-full laptopSm:w-[45%] laptopRg:w-[50%] pr-0 tabletRg:pr-[18%] laptopSm:pr-0">
-            <h1 className="text-[4rem] leading-[4.6rem] font-bold text-[#082835] mb-[1rem] tracking-[-0.1rem]">
+          <section className="sideFirst w-full laptopSm:w-[55%] laptopRg:w-[50%] pr-0 tabletSm:pr-[6%] tabletRg:pr-[16%] laptopSm:pr-0 laptopRg:mt-[1rem]">
+            <h1 className="text-[4rem] leading-[4.8rem] font-bold text-[#082835] mb-[1.5rem] tracking-[-0.1rem] pr-0 tabletSm:pr-[3%] tabletLg:pr-[14%] laptopSm:pr-0">
               Find your next perfect place with ease
             </h1>
 
-            <p className="text-[1.55rem] text-neutral-800 font-medium mb-[1.5rem] pr-[4rem]">
+            <p className="text-[1.55rem] text-neutral-800 font-medium mb-[2.5rem] pr-[4rem]">
               Nab Estate will help you find your dream home fast and easy with
               tailored to your desires. Our agents and expert support are always
               available.
@@ -44,7 +46,7 @@ const Home = () => {
               <FaArrowRightLong className="text-[1.9rem] absolute z-[1] right-[1.2rem] group-hover/button:animate-moveArrow" />
             </button>
 
-            <div className="w-full flex gap-[2%] mt-[3rem]">
+            <div className="w-full flex gap-[2.5%] mt-[3.2rem]">
               <div className="min-w-[30%] flex flex-col gap-[0.2rem] text-white bg-[#082835] p-[1.5rem] rounded-[0.4rem] boxPattern">
                 <span className="text-[3rem] leading-[3rem] font-semibold">
                   16+
@@ -73,12 +75,24 @@ const Home = () => {
           </section>
 
           {/* Side Second */}
-          <section className="sideSecond w-full laptopSm:w-[53%] laptopRg:w-[50%] mb-[3.5rem]">
-            <div className="sideTwoWrapper w-full flex items-center justify-center">
+          <section className="sideSecond w-full laptopSm:w-[45%] laptopRg:w-[50%]">
+            <div className="sideTwoWrapper w-full relative flex items-center justify-center">
               <img
-                src={bannerImage}
-                alt="banner"
-                className="w-full drop-shadow-xl select-none"
+                src={bannerHomes}
+                alt="Homes"
+                className="min-w-[34rem] w-[50%] laptopSm:w-[75%] laptopRg:w-[68%] desktopSm:w-[62%] laptopRg:ml-[4%] shadow-2xl shadow-[#33333390] select-none rounded-[1rem_10rem_1rem_10rem] object-cover border-neutral-100 border-[0.3rem]"
+              />
+
+              <img
+                src={bannerBalcony}
+                alt="Homes"
+                className="min-w-[15rem] w-[27%] tabletSm:w-[25%] laptopSm:w-[32%] laptopRg:w-[28%] shadow-xl shadow-[#33333330] absolute top-[-11%] laptopSm:top-[-8%] laptopRg:top-[-4%] left-[5%] tabletSm:left-[10%] laptopSm:left-[2%] laptopRg:left-[8%]  drop-shadow-xl select-none rounded-full object-cover border-amber-300 border-[0.7rem] border-double animate-holding"
+              />
+
+              <img
+                src={bannerRoom}
+                alt="Homes"
+                className="min-w-[22rem] w-[42%] tabletSm:w-[40%] laptopSm:w-[53%] laptopRg:w-[50%] shadow-xl shadow-[#33333330] overflow-hidden absolute bottom-[-10%] right-[5%] laptopSm:bottom-[-8%] laptopSm:right-0 drop-shadow-xl select-none rounded-full object-cover border-amber-300 border-[0.7rem] border-double animate-holding"
               />
             </div>
           </section>
@@ -121,12 +135,12 @@ const Home = () => {
 
           {/* Property Row */}
           <div className="propertyRow w-full flex justify-center pt-[3rem] pb-[4rem]">
-            <div className="propertyRowWrap grid grid-cols-1 mobileSm:grid-cols-2 laptopSm:grid-cols-4 gap-[2rem]">
+            <div className="propertyRowWrap grid grid-cols-1 mobileRg:grid-cols-2 laptopSm:grid-cols-4 gap-[2.5rem]">
               {/* Property Cards */}
               {[1, 2, 3, 4].map((item, index) => (
                 <figure
                   key={index}
-                  className="propertyCard max-w-full min-w-[22rem] min-h-[25rem] relative bg-white overflow-hidden shadow-[0px_20px_30px_#d0d0d0] rounded-xl font-quick"
+                  className="propertyCard max-w-[35rem] min-w-[22rem] min-h-[25rem] relative bg-white overflow-hidden shadow-[0px_20px_30px_#d0d0d0] rounded-xl font-quick"
                 >
                   {/* Card Image */}
                   <div className="imageArea relative w-full h-[18rem] object-cover before:content-[''] before:absolute before:z-[1] before:bottom-0 before:left-0 before:right-0 before:h-[50%] before:bg-gradient-to-b to-[#30303070] from-transparent before:pointer-events-none">
@@ -300,7 +314,7 @@ const Home = () => {
 
           {/* Agent Row */}
           <div className="agentRow w-full flex justify-center pt-[3rem] pb-[4rem]">
-            <div className="agentRowWrap grid grid-cols-1 mobileSm:grid-cols-2 laptopSm:grid-cols-4 gap-[2rem]">
+            <div className="agentRowWrap grid grid-cols-1 mobileRg:grid-cols-2 laptopSm:grid-cols-4 gap-[2.5rem]">
               {/* Agent Cards */}
               {[
                 {
