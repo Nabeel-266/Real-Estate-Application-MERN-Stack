@@ -19,10 +19,10 @@ const Footer = () => {
         {/* Footer Top */}
         <section className="footerTop w-full grid grid-cols-12 gap-[3rem] laptopSm:grid-cols-5 laptopSm:gap-[2rem] pt-[4rem] pb-[3rem]">
           {/* Objective */}
-          <div className="objective col-span-12 tabletSm:col-span-12 laptopSm:col-span-2 flex flex-col gap-[1rem] text-[1.5rem] leading-[1.9rem] font-sans font-light text-neutral-200 pr-[0%] tabletSm:pr-[15%]">
+          <div className="objective col-span-12 tabletSm:col-span-12 laptopSm:col-span-2 flex flex-col gap-[1rem] text-[1.5rem] leading-[1.9rem] font-sans font-normal text-neutral-200 pr-[0%] tabletSm:pr-[15%]">
             <img src={LogoLight} alt="Logo" className="w-[20rem]" />
 
-            <p className="tracking-[-0.02rem]">
+            <p className="tracking-[-0.05rem]">
               <b className="text-neutral-100">Nab Estate</b> is your premier
               destination for luxury and comfort in the real estate market. We
               pride ourselves on offering exclusive properties that meet the
@@ -36,7 +36,7 @@ const Footer = () => {
           </div>
 
           {/* Quick Links */}
-          <div className="quickLinks col-span-6 tabletSm:col-span-4 laptopSm:col-span-1 flex flex-col gap-[1rem] py-[0.5rem]">
+          <div className="quickLinks col-span-6 tabletSm:col-span-4 laptopSm:col-span-1 flex flex-col gap-[1.5rem] py-[0.5rem]">
             <h5 className="text-[1.8rem] font-medium">Quick Links</h5>
             <ul className="flex flex-col gap-[1rem]">
               {[
@@ -59,7 +59,7 @@ const Footer = () => {
           </div>
 
           {/* Property Types */}
-          <div className="propertyTypes col-span-6 tabletSm:col-span-4 laptopSm:col-span-1 flex flex-col gap-[1rem] py-[0.5rem]">
+          <div className="propertyTypes col-span-6 tabletSm:col-span-4 laptopSm:col-span-1 flex flex-col gap-[1.5rem] py-[0.5rem]">
             <h5 className="text-[1.8rem] font-medium">Property Types</h5>
             <ul className="flex flex-col gap-[1rem]">
               {[
@@ -91,7 +91,7 @@ const Footer = () => {
           </div>
 
           {/* Follow Us */}
-          <div className="follow&Help col-span-12 tabletSm:col-span-4 laptopSm:col-span-1 flex flex-col items-center tabletSm:items-start gap-[1rem] py-[0.5rem]">
+          <div className="follow&Help col-span-12 tabletSm:col-span-4 laptopSm:col-span-1 flex flex-col items-center tabletSm:items-start gap-[1.2rem] py-[0.5rem]">
             <h5 className="text-[1.8rem] font-medium">Follow Us</h5>
             <ul className="flex gap-[0.5rem]">
               {[

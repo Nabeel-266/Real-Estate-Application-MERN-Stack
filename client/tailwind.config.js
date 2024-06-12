@@ -18,6 +18,7 @@ export default {
       animation: {
         pulse: "pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite",
         moveArrow: "move 0.3s ease-out 1",
+        holding: "hold 2.5s linear 0s infinite alternate",
       },
       keyframes: {
         pulse: {
@@ -35,6 +36,14 @@ export default {
           },
           "100%": {
             opacity: 1,
+            transform: "translateX(0)",
+          },
+        },
+        hold: {
+          "0%": {
+            transform: "translateX(-2%)",
+          },
+          "100%": {
             transform: "translateX(0)",
           },
         },

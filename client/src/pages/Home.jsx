@@ -390,6 +390,7 @@ const Home = () => {
         </section>
       </div>
 
+      {/* Footer */}
       <Footer />
     </div>
   );
