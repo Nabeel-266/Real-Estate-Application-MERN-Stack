@@ -1,13 +1,25 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+
+// import required module
+import { Navigation } from "swiper/modules";
 
 // Import React Icon
 import { FaBed, FaBath, FaArrowRightLong } from "react-icons/fa6";
 import { BiArea } from "react-icons/bi";
-import { HiLocationMarker } from "react-icons/hi";
 import { MdOutlineTimer } from "react-icons/md";
-
-// Component
-import Footer from "../components/Footer";
+import {
+  HiLocationMarker,
+  HiOutlineArrowNarrowLeft,
+  HiOutlineArrowNarrowRight,
+} from "react-icons/hi";
+import { FaQuoteLeft } from "react-icons/fa";
 
 // Import Image
 import bannerHomes from "../assets/banner-homes.png";
@@ -21,9 +33,53 @@ import agent01 from "../assets/Agents/agent01.jpg";
 import agent02 from "../assets/Agents/agent02.png";
 import agent03 from "../assets/Agents/agent03.png";
 import agent04 from "../assets/Agents/agent04.png";
+import feedbackImage from "../assets/feedback-image.jpg";
+import person01 from "../assets/Persons/person01.jpg";
+import person02 from "../assets/Persons/person02.jpg";
+import person03 from "../assets/Persons/person03.jpeg";
+import person04 from "../assets/Persons/person04.jpeg";
+import person05 from "../assets/Persons/person05.jpg";
+
+// Component
+import Footer from "../components/Footer";
+
+const testimonials = [
+  {
+    id: 1,
+    image: person01,
+    name: "Azlan Farooq",
+    designation: "Our Trusted Client",
+  },
+  {
+    id: 2,
+    image: person02,
+    name: "Sheraz Iqbal",
+    designation: "Our Trusted Client",
+  },
+  {
+    id: 3,
+    image: person03,
+    name: "Najam Iftikhar",
+    designation: "Our Trusted Client",
+  },
+  {
+    id: 4,
+    image: person04,
+    name: "Muhammad Ibad",
+    designation: "Our Trusted Client",
+  },
+  {
+    id: 5,
+    image: person05,
+    name: "Junaid Rehman",
+    designation: "Our Trusted Client",
+  },
+];
 
 const Home = () => {
   const [propertyTab, setPropertyTab] = useState("residential");
+  const swiperRef = useRef(null);
+
   return (
     <div className="homeCont w-full">
       {/* Banner Cont */}
@@ -80,19 +136,19 @@ const Home = () => {
               <img
                 src={bannerHomes}
                 alt="Homes"
-                className="min-w-[34rem] w-[50%] laptopSm:w-[75%] laptopRg:w-[68%] desktopSm:w-[62%] laptopRg:ml-[4%] shadow-2xl shadow-[#33333390] select-none rounded-[1rem_10rem_1rem_10rem] object-cover border-neutral-100 border-[0.3rem]"
+                className="min-w-[34rem] w-[50%] laptopSm:w-[75%] laptopRg:w-[68%] desktopSm:w-[62%] laptopRg:ml-[4%] shadow-2xl shadow-[#33333390] select-none rounded-[1rem_10rem_1rem_10rem] object-cover border-white border-y-[0.4rem] border-l-[0.3rem]"
               />
 
               <img
                 src={bannerBalcony}
                 alt="Homes"
-                className="min-w-[15rem] w-[27%] tabletSm:w-[25%] laptopSm:w-[32%] laptopRg:w-[28%] shadow-xl shadow-[#33333330] absolute top-[-11%] laptopSm:top-[-8%] laptopRg:top-[-4%] left-[5%] tabletSm:left-[10%] laptopSm:left-[2%] laptopRg:left-[8%]  drop-shadow-xl select-none rounded-full object-cover border-amber-300 border-[0.7rem] border-double animate-holding"
+                className="min-w-[15rem] w-[27%] tabletSm:w-[25%] laptopSm:w-[32%] laptopRg:w-[28%] shadow-xl shadow-[#33333330] absolute top-[-11%] laptopSm:top-[-8%] laptopRg:top-[-4%] left-[5%] tabletSm:left-[10%] laptopSm:left-[2%] laptopRg:left-[8%] drop-shadow-xl select-none rounded-full object-cover border-[#082835] border-y-[0.6rem] border-l-[0.6rem] border-dashed animate-holding"
               />
 
               <img
                 src={bannerRoom}
                 alt="Homes"
-                className="min-w-[22rem] w-[42%] tabletSm:w-[40%] laptopSm:w-[53%] laptopRg:w-[50%] shadow-xl shadow-[#33333330] overflow-hidden absolute bottom-[-10%] right-[5%] laptopSm:bottom-[-8%] laptopSm:right-0 drop-shadow-xl select-none rounded-full object-cover border-amber-300 border-[0.7rem] border-double animate-holding"
+                className="min-w-[22rem] w-[42%] tabletSm:w-[40%] laptopSm:w-[53%] laptopRg:w-[50%] shadow-xl shadow-[#33333330] overflow-hidden absolute bottom-[-10%] right-[5%] laptopSm:bottom-[-8%] laptopSm:right-0 drop-shadow-xl select-none rounded-full object-cover border-[#082835] border-y-[0.8rem] border-r-[0.8rem] border-double animate-holding"
               />
             </div>
           </section>
@@ -101,7 +157,7 @@ const Home = () => {
 
       {/* Property Cont */}
       <div className="propertyCont w-full">
-        <section className="propertyWrapper flex flex-col items-center border-t-[0.2rem] border-neutral-200 mx-[4%] pt-[2rem] pb-[5rem]">
+        <section className="propertyWrapper flex flex-col items-center border-t-[0.2rem] border-neutral-200 mx-[4%] pt-[2.5rem] pb-[6rem]">
           {/* Property Heading */}
           <div className="heading w-full flex flex-col items-center py-[2rem]">
             <span className="text-[1.5rem] leading-[1.5rem] font-semibold text-amber-400 ">
@@ -219,7 +275,7 @@ const Home = () => {
 
       {/* Demand Cont */}
       <div className="demandCont w-full bg-[#082835] bg-fixed overflow-hidden">
-        <section className="demandWrapper relative z-[1] flex flex-col items-center gap-[2rem] mx-[4%] pt-[2.5rem] pb-[6.5rem]">
+        <section className="demandWrapper relative z-[1] flex flex-col items-center gap-[2rem] mx-[4%] pt-[3rem] pb-[7rem]">
           {/* Demand Heading */}
           <div className="heading w-full flex flex-col items-center py-[2rem]">
             <span className="text-[1.5rem] leading-[1.5rem] font-semibold text-amber-400 ">
@@ -362,9 +418,102 @@ const Home = () => {
         </section>
       </div>
 
+      {/* Feedback Cont */}
+      <div className="feedbackCont w-full">
+        <section className="feedbackWrapper flex flex-col items-center gap-[6rem] mx-[4%] pt-[3rem] pb-[9rem] border-t-[0.2rem] border-neutral-200">
+          {/* Feedback Heading */}
+          <div className="heading w-full flex flex-col items-center py-[2rem]">
+            <span className="text-[1.5rem] leading-[1.5rem] font-semibold text-amber-400 ">
+              Feedback
+            </span>
+            <h1 className="text-[3.2rem] leading-[4.5rem] font-semibold text-[#082835] tracking-tight">
+              People Say About Us
+            </h1>
+            <span className="w-[23rem] h-[0.3rem] bg-[#082835] rounded-full mb-[0.2rem]"></span>
+            <span className="w-[19rem] h-[0.2rem] bg-[#082835] rounded-full"></span>
+          </div>
+
+          {/* Feedback Content */}
+          <div className="feedbackContent w-full flex flex-row-reverse justify-between pb-[4rem]">
+            <div className="imageSide w-[43%] relative z-[1] flex items-center justify-center before:content-[''] before:absolute before:z-10 before:w-full before:h-full before:bg-gradient-to-r before:to-[#22222260] before:from-transparent before:rounded-xl after:content-[''] after:absolute after:z-[-1] after:right-[-11%] after:bottom-[-10%] after:w-[60%] after:h-[120%] after:bg-amber-400 after:rounded-tl-xl after:rounded-bl-xl">
+              <img
+                src={feedbackImage}
+                alt="feedback"
+                className="w-full h-full object-cover select-none rounded-xl"
+              />
+            </div>
+            <div className="textSide w-[53%] flex flex-col items-start gap-[3rem]">
+              <div className="quoteIcon text-[4.5rem] text-cyan-950 drop-shadow-xl ml-[1rem] mt-[1rem]">
+                <FaQuoteLeft />
+              </div>
+
+              <Swiper
+                modules={[Navigation]}
+                slidesPerView={1}
+                loop={true}
+                navigation={false}
+                className="mySwiper w-full cursor-grab"
+                onSwiper={(swiper) => {
+                  swiperRef.current = swiper;
+                }}
+              >
+                {testimonials.map(({ name, designation, image }, index) => (
+                  <SwiperSlide
+                    key={index}
+                    className="w-full flex flex-col gap-[3rem] px-[2rem]"
+                  >
+                    <p className="text-[1.5rem] text-neutral-800 font-medium">
+                      Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                      Reprehenderit velit debitis corporis blanditiis aliquid
+                      esse inventore suscipit, doloribus beatae consectetur
+                      vitae, sed animi provident! Laborum voluptates adipisci
+                      ratione voluptatibus odio commodi saepe nisi iure, dolore
+                      quae, tenetur molestiae minus labore.
+                    </p>
+
+                    <div className="feedbackPerson flex items-center gap-[2rem]">
+                      <div className="personImage flex items-center justify-center">
+                        <img
+                          src={image}
+                          alt="person"
+                          className="w-[6rem] h-[6rem] object-cover rounded-full drop-shadow-lg"
+                        />
+                      </div>
+                      <div className="personInfo flex flex-col items-start gap-[0.8rem]">
+                        <h6 className="text-[1.8rem] leading-[1.8rem] font-semibold text-neutral-800">
+                          {name}
+                        </h6>
+                        <p className="text-[1.5rem] leading-[1.5rem] font-medium">
+                          {designation}
+                        </p>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+
+              <div className="swiperButtons flex gap-[1.5rem] ml-[2rem] mt-[1rem]">
+                <button
+                  onClick={() => swiperRef.current?.slidePrev()}
+                  className="previous outline-none text-[3.8rem] text-neutral-800 hover:scale-[1.3] hover:text-amber-400 transition-all"
+                >
+                  <HiOutlineArrowNarrowLeft />
+                </button>
+                <button
+                  onClick={() => swiperRef.current?.slideNext()}
+                  className="next outline-none text-[3.8rem] text-neutral-800 hover:scale-[1.3] hover:text-amber-400 transition-all"
+                >
+                  <HiOutlineArrowNarrowRight />
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
       {/* Subscribe Cont */}
       <div className="subscribeCont w-full">
-        <section className="subscribeWrapper flex flex-col items-center gap-[1rem] mx-[4%] pt-[2rem] pb-[6rem] border-t-[0.2rem] border-neutral-200">
+        <section className="subscribeWrapper flex flex-col items-center gap-[1rem] mx-[4%] pt-[3rem] pb-[7rem] border-t-[0.2rem] border-neutral-200">
           {/* Subscribe Heading */}
           <div className="heading w-full flex flex-col items-center py-[2rem]">
             <span className="text-[1.5rem] leading-[1.5rem] font-semibold text-amber-400 ">
@@ -380,8 +529,8 @@ const Home = () => {
           {/* Subscribe Content */}
           <div className="content w-full flex flex-col items-center gap-[3rem]">
             <p className="mobileSm:w-[90%] tabletSm:w-[80%] tabletRg:w-[75%] tabletLg:w-[65%] laptopSm:w-[55%] desktopSm:w-[50%] text-[1.6rem] leading-[2.2rem] font-medium text-center">
-              We recommended you to subscribe to our newspaper, enter your get
-              our daily update about us.
+              We recommended you to subscribe our newsletter, enter your get our
+              daily update about us.
             </p>
 
             <form action="#" className="w-full flex justify-center">

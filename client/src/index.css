@@ -39,7 +39,7 @@
   }
 
   .scrollbar::-webkit-scrollbar-thumb {
-    background-color: #08283540;
+    background-color: #082835;
     border-radius: 10px;
     cursor: grab;
   }

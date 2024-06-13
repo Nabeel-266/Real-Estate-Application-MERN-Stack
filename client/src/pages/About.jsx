@@ -1,17 +1,38 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+
+// import required module
+import { Navigation } from "swiper/modules";
 
 // Import Assets
 import aboutUsImage from "../assets/About/about-us.png";
-import ourMissionImage from "../assets/About/mission.jpg";
+import ourMissionImage from "../assets/About/mission.png";
 import ourVisionImage from "../assets/About/vision.png";
 import ourSolutionImage from "../assets/About/solution.png";
 import expertiseImage from "../assets/About/expertise.png";
 import personalizedImage from "../assets/About/personalized.png";
 import insuranceImage from "../assets/About/insurance.png";
 import profitImage from "../assets/About/profit.png";
+import feedbackImage from "../assets/About/feedback.png";
+import person01 from "../assets/Persons/person01.jpg";
+import person02 from "../assets/Persons/person02.jpg";
+import person03 from "../assets/Persons/person03.jpeg";
+import person04 from "../assets/Persons/person04.jpeg";
+import person05 from "../assets/Persons/person05.jpg";
 
 // Import React Icons
 import { FaRegLightbulb, FaLightbulb } from "react-icons/fa6";
+import {
+  HiOutlineArrowNarrowLeft,
+  HiOutlineArrowNarrowRight,
+} from "react-icons/hi";
+import { FaQuoteLeft } from "react-icons/fa";
 
 // Import Component
 import Footer from "../components/Footer";
@@ -80,8 +101,42 @@ const services = [
   },
 ];
 
+const testimonials = [
+  {
+    id: 1,
+    image: person01,
+    name: "Azlan Farooq",
+    designation: "Our Trusted Client",
+  },
+  {
+    id: 2,
+    image: person02,
+    name: "Sheraz Iqbal",
+    designation: "Our Trusted Client",
+  },
+  {
+    id: 3,
+    image: person03,
+    name: "Najam Iftikhar",
+    designation: "Our Trusted Client",
+  },
+  {
+    id: 4,
+    image: person04,
+    name: "Muhammad Ibad",
+    designation: "Our Trusted Client",
+  },
+  {
+    id: 5,
+    image: person05,
+    name: "Junaid Rehman",
+    designation: "Our Trusted Client",
+  },
+];
+
 const About = () => {
   const [solutionNum, setSolutionNum] = useState(1);
+  const swiperRef = useRef(null);
 
   return (
     <div className="aboutCont w-full min-h-dvh pt-[6rem]">
@@ -105,7 +160,7 @@ const About = () => {
             />
           </div>
           <div className="textSide w-[55%] flex flex-col items-start gap-[1.2rem]">
-            <h2 className="text-[3rem] leading-[3rem] font-semibold relative text-[#082835] before:content-[''] before:absolute before:bottom-[-0.2rem] before:left-0 before:w-full before:h-[0.3rem] before:bg-amber-400 before:rounded-full after:content-[''] after:absolute after:bottom-[-0.7rem] after:left-0 after:w-[75%] after:h-[0.2rem] after:bg-amber-400 after:rounded-full">
+            <h2 className="text-[3rem] leading-[3rem] font-semibold relative text-[#082835] before:content-[''] before:absolute before:bottom-[-0.3rem] before:left-0 before:w-full before:h-[0.3rem] before:bg-amber-400 before:rounded-full after:content-[''] after:absolute after:bottom-[-0.8rem] after:left-0 after:w-[75%] after:h-[0.2rem] after:bg-amber-400 after:rounded-full">
               NAB Estate at a Glance
             </h2>
             <p className="text-[1.7rem] font-medium text-neutral-800 mt-[1rem]">
@@ -137,8 +192,9 @@ const About = () => {
               className="w-full h-full object-cover select-none animate-holding"
             />
           </div>
+
           <div className="textSide w-[55%] flex flex-col items-start gap-[3rem]">
-            <h2 className="text-[3rem] leading-[3rem] font-semibold relative text-[#082835] before:content-[''] before:absolute before:bottom-[-0.2rem] before:left-0 before:w-full before:h-[0.3rem] before:bg-amber-400 before:rounded-full after:content-[''] after:absolute after:bottom-[-0.7rem] after:left-0 after:w-[75%] after:h-[0.2rem] after:bg-amber-400 after:rounded-full">
+            <h2 className="text-[3rem] leading-[3rem] font-semibold relative text-[#082835] before:content-[''] before:absolute before:bottom-[-0.3rem] before:left-0 before:w-full before:h-[0.3rem] before:bg-amber-400 before:rounded-full after:content-[''] after:absolute after:bottom-[-0.8rem] after:left-0 after:w-[75%] after:h-[0.2rem] after:bg-amber-400 after:rounded-full">
               Our Mission
             </h2>
             <p className="text-[1.7rem] font-medium text-neutral-800">
@@ -165,8 +221,8 @@ const About = () => {
               className="w-full h-full object-cover select-none animate-holding"
             />
           </div>
-          <div className="textSide w-[52%] flex flex-col items-start gap-[3rem]">
-            <h2 className="text-[3rem] leading-[3rem] font-semibold relative text-[#082835] before:content-[''] before:absolute before:bottom-[-0.2rem] before:left-0 before:w-full before:h-[0.3rem] before:bg-amber-400 before:rounded-full after:content-[''] after:absolute after:bottom-[-0.7rem] after:left-0 after:w-[75%] after:h-[0.2rem] after:bg-amber-400 after:rounded-full">
+          <div className="textSide w-[53%] flex flex-col items-start gap-[3rem]">
+            <h2 className="text-[3rem] leading-[3rem] font-semibold relative text-[#082835] before:content-[''] before:absolute before:bottom-[-0.3rem] before:left-0 before:w-full before:h-[0.3rem] before:bg-amber-400 before:rounded-full after:content-[''] after:absolute after:bottom-[-0.8rem] after:left-0 after:w-[75%] after:h-[0.2rem] after:bg-amber-400 after:rounded-full">
               Our Vision
             </h2>
             <p className="text-[1.7rem] font-medium text-neutral-800">
@@ -184,8 +240,8 @@ const About = () => {
 
       {/* Our Solution Cont */}
       <div className="ourSolutionCont w-full">
-        <section className="ourSolutionWrapper flex flex-row-reverse items-center justify-between mx-[4%] pt-[7rem] pb-[4rem]">
-          <div className="imageSide w-[44%] flex items-center justify-center">
+        <section className="ourSolutionWrapper flex flex-row-reverse items-center justify-between mx-[4%] pt-[5rem] pb-[4rem]">
+          <div className="imageSide w-[43.5%] flex items-center justify-center">
             <img
               src={ourSolutionImage}
               alt="OurSolution"
@@ -193,8 +249,8 @@ const About = () => {
             />
           </div>
 
-          <div className="textSide w-[50%] flex flex-col items-start gap-[3rem]">
-            <h2 className="text-[3rem] leading-[3rem] font-semibold relative text-[#082835] before:content-[''] before:absolute before:bottom-[-0.2rem] before:left-0 before:w-full before:h-[0.3rem] before:bg-amber-400 before:rounded-full after:content-[''] after:absolute after:bottom-[-0.7rem] after:left-0 after:w-[75%] after:h-[0.2rem] after:bg-amber-400 after:rounded-full">
+          <div className="textSide w-[48%] flex flex-col items-start gap-[5rem]">
+            <h2 className="text-[3rem] leading-[3rem] font-semibold relative text-[#082835] before:content-[''] before:absolute before:bottom-[-0.4rem] before:left-0 before:w-full before:h-[0.3rem] before:bg-amber-400 before:rounded-full after:content-[''] after:absolute after:bottom-[-0.9rem] after:left-0 after:w-[75%] after:h-[0.2rem] after:bg-amber-400 after:rounded-full">
               Our Quick Solutions
             </h2>
 
@@ -211,7 +267,7 @@ const About = () => {
                     onClick={() => setSolutionNum(id)}
                     className="accHeader w-full flex items-center justify-between px-[1.5rem] py-[1.6rem] bg-[#082835] text-white cursor-pointer"
                   >
-                    <h4 className="text-[1.75rem] leading-[1.75rem] font-semibold">
+                    <h4 className="text-[1.7rem] leading-[1.75rem] font-semibold">
                       {query}
                     </h4>
                     <div className="accIcon flex items-center justify-center text-[2rem]">
@@ -227,11 +283,11 @@ const About = () => {
                   <div
                     className={`accBody ${
                       solutionNum === id
-                        ? "h-auto max-h-[500px] py-[1rem]"
+                        ? "h-auto max-h-[100rem] py-[1rem]"
                         : "max-h-0 p-0"
                     } w-full px-[1.5rem] transition-all duration-500 ease-in-out overflow-hidden`}
                   >
-                    <p className={`text-[1.5rem] font-medium`}>{solution}</p>
+                    <p className={`text-[1.55rem] font-medium`}>{solution}</p>
                   </div>
                 </div>
               ))}
@@ -264,6 +320,88 @@ const About = () => {
                 </div>
               </div>
             ))}
+          </div>
+        </section>
+      </div>
+
+      {/* Feedback Cont */}
+      <div className="feedbackCont w-full">
+        <section className="feedbackWrapper flex items-center justify-between mx-[4%] pt-[5rem] pb-[9rem]">
+          <div className="imageSide w-[42%] flex items-center justify-center">
+            <img
+              src={feedbackImage}
+              alt="feedback"
+              className="w-full h-full object-cover select-none animate-holding"
+            />
+          </div>
+          <div className="textSide w-[53%] flex flex-col items-start gap-[3rem]">
+            <h2 className="text-[3rem] leading-[3rem] font-semibold relative text-[#082835] before:content-[''] before:absolute before:bottom-[-0.6rem] before:left-0 before:w-full before:h-[0.3rem] before:bg-amber-400 before:rounded-full after:content-[''] after:absolute after:bottom-[-1.1rem] after:left-0 after:w-[75%] after:h-[0.2rem] after:bg-amber-400 after:rounded-full">
+              People Say About Us
+            </h2>
+
+            <div className="quoteIcon text-[4.5rem] text-cyan-950 drop-shadow-xl ml-[1rem] mt-[1rem]">
+              <FaQuoteLeft />
+            </div>
+
+            <Swiper
+              modules={[Navigation]}
+              slidesPerView={1}
+              loop={true}
+              navigation={false}
+              className="mySwiper w-full cursor-grab"
+              onSwiper={(swiper) => {
+                swiperRef.current = swiper;
+              }}
+            >
+              {testimonials.map(({ name, designation, image }, index) => (
+                <SwiperSlide
+                  key={index}
+                  className="w-full flex flex-col gap-[3rem] px-[2rem]"
+                >
+                  <p className="text-[1.5rem] text-neutral-800 font-medium">
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                    Reprehenderit velit debitis corporis blanditiis aliquid esse
+                    inventore suscipit, doloribus beatae consectetur vitae, sed
+                    animi provident! Laborum voluptates adipisci ratione
+                    voluptatibus odio commodi saepe nisi iure, dolore quae,
+                    tenetur molestiae minus labore.
+                  </p>
+
+                  <div className="feedbackPerson flex items-center gap-[2rem]">
+                    <div className="personImage flex items-center justify-center">
+                      <img
+                        src={image}
+                        alt="person"
+                        className="w-[6rem] h-[6rem] object-cover rounded-full drop-shadow-lg"
+                      />
+                    </div>
+                    <div className="personInfo flex flex-col items-start gap-[0.8rem]">
+                      <h6 className="text-[1.8rem] leading-[1.8rem] font-semibold text-neutral-800">
+                        {name}
+                      </h6>
+                      <p className="text-[1.5rem] leading-[1.5rem] font-medium">
+                        {designation}
+                      </p>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+
+            <div className="swiperButtons flex gap-[1.5rem] ml-[2rem] mt-[1rem]">
+              <button
+                onClick={() => swiperRef.current?.slidePrev()}
+                className="previous outline-none text-[3.8rem] text-neutral-800 hover:scale-[1.3] hover:text-amber-400 transition-all"
+              >
+                <HiOutlineArrowNarrowLeft />
+              </button>
+              <button
+                onClick={() => swiperRef.current?.slideNext()}
+                className="next outline-none text-[3.8rem] text-neutral-800 hover:scale-[1.3] hover:text-amber-400 transition-all"
+              >
+                <HiOutlineArrowNarrowRight />
+              </button>
+            </div>
           </div>
         </section>
       </div>
