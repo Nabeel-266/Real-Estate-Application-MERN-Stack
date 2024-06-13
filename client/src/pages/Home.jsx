@@ -462,7 +462,7 @@ const Home = () => {
                     key={index}
                     className="w-full flex flex-col gap-[3rem] px-[2rem]"
                   >
-                    <p className="text-[1.5rem] text-neutral-800 font-medium">
+                    <p className="text-[1.6rem] text-neutral-800 font-medium">
                       Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                       Reprehenderit velit debitis corporis blanditiis aliquid
                       esse inventore suscipit, doloribus beatae consectetur
