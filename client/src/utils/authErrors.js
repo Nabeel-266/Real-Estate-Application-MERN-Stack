@@ -18,10 +18,16 @@ const signupClientErrorHandler = (registerFormData, setError) => {
         "Please! enter your name between 7 to 20 characters long",
       ]);
       return false;
+    } else if (email.startsWith(" ") || email.endsWith(" ")) {
+      setError([
+        "Email",
+        "Please! enter a valid email address, unknown spaces in your email",
+      ]);
+      return false;
     } else if (!emailPattern.test(email)) {
       setError([
         "Email",
-        "Please! enter a valid Email address, your Email is invalid",
+        "Please! enter a valid email address, your Email is invalid",
       ]);
       return false;
     } else if (password.length < 8) {
@@ -59,9 +65,8 @@ const signupServerErrorHandler = (errorMsg, setError) => {
   } else if (errorMsg === "Email is invalid") {
     setError([
       "Email",
-      "Please! enter a valid Email address, your Email is invalid",
+      "Please! enter a valid email address, your Email is invalid",
     ]);
-    return false;
   } else if (errorMsg === "User already exist") {
     setError(["Email", "Already! account created from this email"]);
   } else if (errorMsg === "Password length is short") {
@@ -103,7 +108,6 @@ const signinServerErrorHandler = (errorMsg, setError) => {
       "Email",
       "Please! enter a valid Email address, your Email is invalid",
     ]);
-    return false;
   } else if (errorMsg === "Email doesn't exists") {
     setError(["Email", "Your email address doesn't exist"]);
   } else if (errorMsg === "Password is incorrect") {
@@ -113,9 +117,37 @@ const signinServerErrorHandler = (errorMsg, setError) => {
   }
 };
 
+const sendOtpErrorHandler = (currentUser) => {
+  const otpExpiryDate = new Date(currentUser?.otpExpiry).getTime();
+  const currentTime = Date.now();
+
+  if (currentUser.isVerified) {
+    toastify(
+      "info",
+      "You are already verified, so don't need to resend OTP. ThankYou!",
+      "top-right",
+      "dark",
+      6000
+    );
+    return false;
+  } else if (otpExpiryDate > currentTime) {
+    toastify(
+      "info",
+      "Rejected! Your current OTP is already active",
+      "top-right",
+      "dark",
+      6000
+    );
+    return false;
+  } else {
+    return true;
+  }
+};
+
 export {
   signupClientErrorHandler,
   signupServerErrorHandler,
   signinClientErrorHandler,
   signinServerErrorHandler,
+  sendOtpErrorHandler,
 };

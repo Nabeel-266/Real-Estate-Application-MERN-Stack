@@ -62,7 +62,7 @@ export const VerifiedProtectedRoute = ({ children }) => {
   if (!user) {
     toastify(
       "info",
-      `Welcome to NAB Estate! Please SIGNIN to your account first`,
+      `Welcome to NAB Estate! Please LOGIN to your account first`,
       "top-right",
       "dark",
       10000

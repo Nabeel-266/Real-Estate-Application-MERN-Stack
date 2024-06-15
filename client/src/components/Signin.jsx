@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../api/authAPIs";
@@ -6,12 +6,6 @@ import {
   signinClientErrorHandler,
   signinServerErrorHandler,
 } from "../utils/authErrors";
-import {
-  signinFailure,
-  signinSuccess,
-  signinPending,
-} from "../app/actions/userActions";
-import toastify from "../utils/toastify";
 
 // Import React Icons
 import { IoMail, IoMailOpen, IoLockClosed, IoLockOpen } from "react-icons/io5";
@@ -23,12 +17,12 @@ import GoogleIcon from "../assets/google.png";
 import Loader from "./Loader";
 
 const Signin = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const routeLocation = useLocation();
-  const currentLocation = routeLocation.pathname.split("/")[2];
+  const navigate = useNavigate();
+  const location = useLocation();
+  const currentLocation = location.pathname.split("/")[2];
+  const { pending } = useSelector((state) => state?.user);
   const [error, setError] = useState([]);
-  const { currentUser, pending } = useSelector((state) => state?.user);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isEmailSuggest, setIsEmailSuggest] = useState(false);
   const [loginFormData, setLoginFormData] = useState({
@@ -36,18 +30,7 @@ const Signin = () => {
     password: "",
   });
 
-  // useEffect(() => {
-  //   if (currentUser) {
-  //     if (!currentUser.isVerified) {
-
-  //     } else {
-  //       navigate("/");
-  //     }
-  //   }
-  // }, [currentUser, navigate]);
-
   const { email, password } = loginFormData;
-  // console.log(email, password);
 
   const formDataChangeHandler = (e) => {
     setLoginFormData({
@@ -59,43 +42,28 @@ const Signin = () => {
   };
 
   // SIGNIN Form Submission Handler
-  const signinHandler = async (e) => {
+  const signinFormSubmissionHandler = async (e) => {
     e.preventDefault();
 
-    // For Detecting Input Errors
-    const isUserCredentialsOK = signinClientErrorHandler(
-      loginFormData,
-      setError
-    );
-
     try {
+      // For Detecting Input Errors
+      const isUserCredentialsOK = signinClientErrorHandler(
+        loginFormData,
+        setError
+      );
+
       if (isUserCredentialsOK) {
-        dispatch(signinPending());
-
-        const loggedInUser = await loginUser(loginFormData);
-        dispatch(signinSuccess(loggedInUser?.data));
-
-        toastify(
-          "success",
-          `${loggedInUser.data.username}! You Login Successfully`,
-          "top-right",
-          "dark",
-          4000
-        );
+        // Call Signin User API Function
+        await loginUser(loginFormData, dispatch, navigate);
 
         setError("");
         setLoginFormData({
           email: "",
           password: "",
         });
-
-        if (!loggedInUser.data.isVerified) {
-          navigate("/account/verification");
-        }
       }
     } catch (err) {
       console.log(err);
-      dispatch(signinFailure());
       const errorMsg = err?.response?.data?.message || err.message;
       signinServerErrorHandler(errorMsg, setError);
     }
@@ -114,7 +82,7 @@ const Signin = () => {
         <div className="signinFormCont mobileSm:w-[42rem] mobileRg:w-[46rem] tabletSm:w-[50rem] flex flex-col gap-[2.8rem] bg-white shadow-2xl px-[2rem] py-[2.5rem] rounded-lg">
           {/* Sign-in Form */}
           <form
-            onSubmit={signinHandler}
+            onSubmit={signinFormSubmissionHandler}
             className="signinForm w-full flex flex-col gap-[2.5rem]"
           >
             {/* Form Header */}

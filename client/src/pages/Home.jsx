@@ -420,7 +420,7 @@ const Home = () => {
 
       {/* Feedback Cont */}
       <div className="feedbackCont w-full">
-        <section className="feedbackWrapper flex flex-col items-center gap-[6rem] mx-[4%] pt-[3rem] pb-[9rem] border-t-[0.2rem] border-neutral-200">
+        <section className="feedbackWrapper flex flex-col items-center gap-[6rem] mx-[4%] pt-[3rem] pb-[7rem] border-t-[0.2rem] border-neutral-200">
           {/* Feedback Heading */}
           <div className="heading w-full flex flex-col items-center py-[2rem]">
             <span className="text-[1.5rem] leading-[1.5rem] font-semibold text-amber-400 ">
@@ -513,7 +513,7 @@ const Home = () => {
 
       {/* Subscribe Cont */}
       <div className="subscribeCont w-full">
-        <section className="subscribeWrapper flex flex-col items-center gap-[1rem] mx-[4%] pt-[3rem] pb-[7rem] border-t-[0.2rem] border-neutral-200">
+        <section className="subscribeWrapper flex flex-col items-center gap-[1rem] mx-[4%] pt-[3rem] pb-[8rem] border-t-[0.2rem] border-neutral-200">
           {/* Subscribe Heading */}
           <div className="heading w-full flex flex-col items-center py-[2rem]">
             <span className="text-[1.5rem] leading-[1.5rem] font-semibold text-amber-400 ">

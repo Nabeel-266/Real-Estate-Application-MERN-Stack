@@ -1,17 +1,11 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { registerUser } from "../api/authAPIs";
 import {
   signupClientErrorHandler,
   signupServerErrorHandler,
 } from "../utils/authErrors";
-import {
-  signupPending,
-  signupSuccess,
-  signupFailure,
-} from "../app/actions/userActions";
-import toastify from "../utils/toastify";
 
 // Import React Icons
 import { IoMail, IoMailOpen, IoLockClosed, IoLockOpen } from "react-icons/io5";
@@ -23,12 +17,12 @@ import GoogleIcon from "../assets/google.png";
 import Loader from "./Loader";
 
 const Signup = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const location = useLocation();
   const routeLocation = location.pathname.split("/")[2];
-  const [error, setError] = useState([]);
   const { pending } = useSelector((state) => state?.user);
+  const [error, setError] = useState([]);
   const [isEmailSuggest, setIsEmailSuggest] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPassVisible, setIsConfirmPassVisible] = useState(false);
@@ -52,17 +46,18 @@ const Signup = () => {
   };
 
   // SIGNUP Form Submission Handler
-  const signupHandler = async (e) => {
+  const signupFormSubmissionHandler = async (e) => {
     e.preventDefault();
 
-    // For Detecting Input Errors
-    const isUserCredentialsOK = signupClientErrorHandler(
-      registerFormData,
-      setError
-    );
     try {
+      // For Detecting Input Errors
+      const isUserCredentialsOK = signupClientErrorHandler(
+        registerFormData,
+        setError
+      );
+
       if (isUserCredentialsOK) {
-        dispatch(signupPending());
+        // Username Formated
         const userFullname = username?.trim()?.split(" ");
         const firstname =
           userFullname[0]?.charAt(0).toLocaleUpperCase() +
@@ -71,6 +66,7 @@ const Signup = () => {
           userFullname[1]?.charAt(0).toLocaleUpperCase() +
           userFullname[1]?.slice(1).toLocaleLowerCase();
 
+        // User Credentials
         const userCredentials = {
           username: `${firstname} ${lastname}`,
           email: email,
@@ -78,16 +74,8 @@ const Signup = () => {
           confirmPassword,
         };
 
-        const newUser = await registerUser(userCredentials);
-        dispatch(signupSuccess(newUser?.data));
-
-        toastify(
-          "success",
-          `${newUser.data.username}! You Signup Successfully`,
-          "top-right",
-          "dark",
-          4000
-        );
+        // Call Signup User API Function
+        await registerUser(userCredentials, dispatch, navigate);
 
         setError("");
         setRegisterFormData({
@@ -96,12 +84,9 @@ const Signup = () => {
           password: "",
           confirmPassword: "",
         });
-
-        navigate("/account/verification"); // { state: newUser?.data }
       }
     } catch (err) {
       console.log(err);
-      dispatch(signupFailure());
       const errorMsg = err?.response?.data?.message || err.message;
       signupServerErrorHandler(errorMsg, setError);
     }
@@ -120,7 +105,7 @@ const Signup = () => {
         <div className="signupFormCont mobileSm:w-[42rem] mobileRg:w-[46rem] tabletSm:w-[50rem] flex flex-col gap-[2.8rem] bg-white shadow-2xl px-[2rem] py-[2.5rem] rounded-lg">
           {/* Sign-up Form */}
           <form
-            onSubmit={signupHandler}
+            onSubmit={signupFormSubmissionHandler}
             className="signupForm w-full flex flex-col gap-[2.5rem]"
           >
             {/* Form Header */}

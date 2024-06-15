@@ -1,54 +1,120 @@
 import axios from "axios";
+
+import toastify from "../utils/toastify";
 import {
   SIGN_IN,
   SIGN_UP,
   VERIFY_ACCOUNT,
   RESEND_OTP,
 } from "../constants/apisRoute";
+import {
+  resendOTPSuccess,
+  signinFailure,
+  signinPending,
+  signinSuccess,
+  signupFailure,
+  signupPending,
+  signupSuccess,
+  verifySuccess,
+} from "../app/actions/userActions";
 
 // For SIGNUP USER
-export const registerUser = async (userCredentials) => {
+export const registerUser = async (userCredentials, dispatch, navigate) => {
+  dispatch(signupPending());
+
   try {
     const response = await axios.post(`${SIGN_UP}`, userCredentials);
-    console.log(response);
-    return response?.data;
+    const newUser = response?.data?.data;
+    console.log(newUser);
+    dispatch(signupSuccess(newUser));
+
+    toastify(
+      "success",
+      `${newUser.username}! You Signup Successfully`,
+      "top-right",
+      "dark",
+      4000
+    );
+
+    navigate("/account/verification"); // { state: newUser?.data }
   } catch (error) {
+    dispatch(signupFailure());
     throw error;
   }
 };
 
 // For SIGNIN USER
-export const loginUser = async (userCredentials) => {
+export const loginUser = async (userCredentials, dispatch, navigate) => {
+  dispatch(signinPending());
+
   try {
     const response = await axios.post(`${SIGN_IN}`, userCredentials);
-    console.log(response);
-    return response?.data;
+    const loggedInUser = response?.data?.data;
+    console.log(loggedInUser);
+    dispatch(signinSuccess(loggedInUser));
+
+    toastify(
+      "success",
+      `${loggedInUser.username}! You Login Successfully`,
+      "top-right",
+      "dark",
+      4000
+    );
+
+    if (!loggedInUser.isVerified) {
+      navigate("/account/verification");
+    } else {
+      navigate("/");
+    }
   } catch (error) {
+    dispatch(signinFailure());
     throw error;
   }
 };
 
 // For VERIFY USER
-export const verifyUser = async (OTP) => {
+export const verifyUser = async (OTP, dispatch, navigate) => {
   try {
     const response = await axios.post(
       `${VERIFY_ACCOUNT}`,
       { otp: OTP },
       { withCredentials: true }
     );
-    console.log(response);
-    return response?.data;
+    const verifiedUser = response?.data?.data;
+    console.log(verifiedUser);
+    dispatch(verifySuccess(verifiedUser));
+
+    toastify(
+      "success",
+      `${verifiedUser.username} ! Your Verification Successfully`,
+      "top-center",
+      "dark",
+      3000
+    );
+
+    setTimeout(() => {
+      navigate("/");
+    }, 2000);
   } catch (error) {
     throw error;
   }
 };
 
 // For RESEND OTP to User
-export const resendOTPtoUser = async (email) => {
+export const resendOTPtoUser = async (email, dispatch) => {
   try {
     const response = await axios.post(`${RESEND_OTP}`, { email });
-    console.log(response);
-    return response?.data;
+    const updatedOTPUser = response?.data?.data;
+    console.log(updatedOTPUser);
+    dispatch(resendOTPSuccess(updatedOTPUser));
+
+    toastify(
+      "success",
+      "OTP has been resent successfully, Please! check your email",
+      "top-right",
+      "dark",
+      6000
+    );
   } catch (error) {
     throw error;
   }

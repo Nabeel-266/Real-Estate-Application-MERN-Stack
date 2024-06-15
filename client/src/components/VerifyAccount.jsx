@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { resendOTPtoUser, verifyUser } from "../api/authAPIs";
-import { verifySuccess, resendOTPSuccess } from "../app/actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 import toastify from "../utils/toastify";
+import { sendOtpErrorHandler } from "../utils/authErrors";
 
 // Import React Icon
 import { FaArrowRotateRight } from "react-icons/fa6";
@@ -12,11 +12,11 @@ import { FaArrowRotateRight } from "react-icons/fa6";
 import Loader from "./Loader";
 
 const VerifyAccount = () => {
-  const [OTPCode, setOTPCode] = useState("");
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const location = useLocation();
   const routeLocation = location.pathname.split("/")[2];
+  const [OTPCode, setOTPCode] = useState("");
   const [otpLoading, setOtpLoading] = useState(false);
   const [verifyLoading, setVerifyLoading] = useState(false);
   const { currentUser } = useSelector((state) => state?.user);
@@ -30,6 +30,8 @@ const VerifyAccount = () => {
         "dark",
         10000
       );
+    } else {
+      navigate("/account/sign-in");
     }
   }, [currentUser]);
 
@@ -39,24 +41,10 @@ const VerifyAccount = () => {
     setVerifyLoading(true);
 
     try {
-      // Call Verify User API
-      const verifiedUser = await verifyUser(OTPCode);
-      console.log(verifiedUser);
-      dispatch(verifySuccess(verifiedUser?.data));
-
-      toastify(
-        "success",
-        `${verifiedUser.data.username} ! \nYour Verification Successfully`,
-        "top-center",
-        "dark",
-        3000
-      );
+      // Call Verify User API Function
+      await verifyUser(OTPCode, dispatch, navigate);
 
       setVerifyLoading(false);
-
-      setTimeout(() => {
-        navigate("/");
-      }, 2000);
     } catch (error) {
       setVerifyLoading(false);
       toastify(
@@ -75,45 +63,16 @@ const VerifyAccount = () => {
     setOtpLoading(true);
 
     try {
-      if (!currentUser.isVerified) {
-        const otpExpiryDate = new Date(currentUser.otpExpiry).getTime();
-        const currentTime = Date.now();
+      const isOTPConditionsOK = sendOtpErrorHandler(currentUser);
 
-        if (otpExpiryDate < currentTime) {
-          // Call Resend OTP API
-          const updateOTPUser = await resendOTPtoUser(currentUser.email);
-          console.log(updateOTPUser);
-          dispatch(resendOTPSuccess(updateOTPUser?.data));
-
-          toastify(
-            "success",
-            "OTP has been resent successfully, Please! check your email",
-            "top-right",
-            "dark",
-            6000
-          );
-        } else {
-          toastify(
-            "info",
-            "Rejected! Your current OTP is active",
-            "top-right",
-            "dark",
-            6000
-          );
-        }
-      } else {
-        toastify(
-          "info",
-          "You are already verified, so don't need to resend OTP. ThankYou!",
-          "top-right",
-          "dark",
-          6000
-        );
+      if (isOTPConditionsOK) {
+        // Call Resend OTP API Function
+        await resendOTPtoUser(currentUser.email, dispatch);
       }
+
       setOtpLoading(false);
     } catch (error) {
       console.log(error);
-      setOtpLoading(false);
       toastify(
         "error",
         `${error?.response?.data?.message || error.message}`,
@@ -121,6 +80,7 @@ const VerifyAccount = () => {
         "dark",
         6000
       );
+      setOtpLoading(false);
     }
   };
 
