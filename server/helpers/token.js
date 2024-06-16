@@ -1,6 +1,6 @@
 import pkg from "jsonwebtoken";
-import dotenv from "dotenv";
 const { sign, verify } = pkg;
+import dotenv from "dotenv";
 dotenv.config();
 
 import { StatusCodes } from "http-status-codes";
@@ -23,7 +23,6 @@ export const generateToken = ({ data }) => {
 
 export const validateToken = async (req, res, next) => {
   console.log(req.cookies?.token, "==> Request Cookies");
-  console.log(req.body, "==> Request Body");
 
   // Get Token
   const token = req.cookies?.token;
@@ -38,22 +37,34 @@ export const validateToken = async (req, res, next) => {
     );
   }
 
-  // Verify Token
-  const verifyToken = verify(token, process.env.JWT_SECRET_KEY);
-  console.log(verifyToken, "====>>verifyToken");
+  try {
+    // Decoded Token
+    const decoded = verify(token, process.env.JWT_SECRET_KEY);
+    console.log(decoded, "====>> Decoded Token INFO");
 
-  // If Token is invalid
-  if (!verifyToken.result)
-    res.status(StatusCodes.UNAUTHORIZED).send(
+    // Check Token Expiry
+    const currentTime = Math.floor(Date.now() / 1000); // current time in seconds
+    if (decoded.exp && decoded.exp < currentTime) {
+      return res.status(StatusCodes.UNAUTHORIZED).send(
+        sendError({
+          statusCode: StatusCodes.UNAUTHORIZED,
+          message: resMessages.TOKEN_EXPIRED,
+        })
+      );
+    }
+
+    // Req.User is equal to Verify Token Result
+    req.user = decoded.result;
+    next();
+  } catch (error) {
+    // If Token is invalid
+    return res.status(StatusCodes.UNAUTHORIZED).send(
       sendError({
         statusCode: StatusCodes.UNAUTHORIZED,
         message: resMessages.INVALID_TOKEN,
       })
     );
-
-  // Req.User is equal to Verify Token Result
-  req.user = verifyToken.result;
-  next();
+  }
 };
 
 // export const checkToken = async (req, res, next) => {

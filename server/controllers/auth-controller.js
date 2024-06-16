@@ -8,10 +8,14 @@ import { sendError, sendSuccess } from "../utils/responses.js";
 import { generateToken } from "../helpers/token.js";
 import resMessages from "../constants/responsesMessages.js";
 const { compareSync, hashSync, genSaltSync } = pkg;
+import jwtPkg from "jsonwebtoken";
+const { sign } = jwtPkg;
+import dotenv from "dotenv";
+dotenv.config();
 
 //* --> For Signup <--
 //? @route --> POST --> api/auth/register
-// @access --> PUBLIC
+//  @access --> PUBLIC
 export const signup = async (req, res, next) => {
   console.log("Signup Controller");
   console.log(req.body);
@@ -106,7 +110,7 @@ export const signup = async (req, res, next) => {
     const emailResponse = await sendEmailOTP(username, email, otp);
     console.log(emailResponse);
 
-    res.cookie("token", token, { httpOnly: true });
+    res.cookie("token", token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
     res.status(StatusCodes.CREATED).send(
       sendSuccess({
         message: resMessages.SUCCESS_REGISTRATION,
@@ -121,8 +125,8 @@ export const signup = async (req, res, next) => {
 
 //* --> For Signin <--
 //? @route --> POST --> api/auth/login
-// @access --> PUBLIC
-export const signin = async (req, res) => {
+//  @access --> PUBLIC
+export const signin = async (req, res, next) => {
   console.log("Signup Controller");
   console.log(req.body);
 
@@ -202,7 +206,7 @@ export const signin = async (req, res) => {
     // Generate Token for User
     const token = generateToken({ data: updatedUser });
 
-    res.cookie("token", token, { httpOnly: true });
+    res.cookie("token", token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
     res.status(StatusCodes.OK).send(
       sendSuccess({
         message: resMessages.SUCCESS_LOGIN,
@@ -217,7 +221,7 @@ export const signin = async (req, res) => {
 
 //* --> For Verify Account <--
 //? @route --> POST --> api/auth/verifyAccount
-// @access --> PRIVATE
+//  @access --> PRIVATE
 export const verifyAccount = async (req, res, next) => {
   console.log("Verify Account Controller");
   console.log(req.body, "==> Request Body");
@@ -272,7 +276,7 @@ export const verifyAccount = async (req, res, next) => {
     // Generate Token for User
     const token = generateToken({ data: updatedUser });
 
-    res.cookie("token", token, { httpOnly: true });
+    res.cookie("token", token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
     res.status(StatusCodes.ACCEPTED).send(
       sendSuccess({
         message: resMessages.SUCCESS_VERIFICATION,
@@ -287,7 +291,7 @@ export const verifyAccount = async (req, res, next) => {
 
 //* --> For Resend OTP <--
 //? @route --> POST --> api/auth/resendOTP
-// @access --> PRIVATE
+//  @access --> PRIVATE
 export const resendOTP = async (req, res, next) => {
   console.log("Resend OTP Controller");
   console.log(req.body, "==> Request User");
@@ -347,7 +351,50 @@ export const resendOTP = async (req, res, next) => {
       })
     );
   } catch (error) {
-    console.log(error.message, "==> error in user verfication");
+    console.log(error.message, "==> error in resend Otp");
+    next(error);
+  }
+};
+
+//* --> For Refresh Token <--
+//? @route --> GET --> api/auth/refreshToken
+//  @access --> PUBLIC
+export const refreshToken = async (req, res, next) => {
+  console.log("Refresh Token Controller");
+  console.log(req.user, "==> Request User");
+
+  try {
+    const user = await User.findOne({ _id: req.user._id });
+    console.log(user, "==> Find User with ID");
+
+    if (!user) {
+      return res.status(StatusCodes.NOT_FOUND).send(
+        sendError({
+          statusCode: StatusCodes.NOT_FOUND,
+          message: resMessages.NO_USER,
+        })
+      );
+    }
+
+    const updatedUser = user;
+    updatedUser.password = undefined;
+
+    // Generate Token for User
+    // const token = generateToken({ data: user });
+    const token = sign({ result: updatedUser }, process.env.JWT_SECRET_KEY, {
+      expiresIn: "1h",
+    });
+
+    // res.cookie("token", token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+    res.cookie("token", token, { httpOnly: true, maxAge: 1 * 60 * 60 * 1000 });
+    res.status(StatusCodes.OK).send(
+      sendSuccess({
+        message: resMessages.SUCCESS_REFRESH_TOKEN,
+        data: user,
+      })
+    );
+  } catch (error) {
+    console.log(error.message, "==> error in refresh token");
     next(error);
   }
 };

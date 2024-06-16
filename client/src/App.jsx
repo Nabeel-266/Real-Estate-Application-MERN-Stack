@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
+  useNavigate,
 } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { checkToken } from "./api/authAPIs";
 
 // Import Protected Route Components
 import {
@@ -27,55 +30,72 @@ import Signin from "./components/Signin";
 import Signup from "./components/Signup";
 import VerifyAccount from "./components/VerifyAccount";
 
-const App = () => {
+const AppRouter = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
+
+  const memoizedCheckToken = useCallback(
+    () => checkToken(dispatch, navigate),
+    [dispatch, navigate]
+  );
+
+  // useEffect(() => {
+  //   memoizedCheckToken();
+  // }, [memoizedCheckToken]);
 
   return (
     <div className="app relative overflow-hidden">
-      <Router>
-        <Header setIsOpenSidebar={setIsOpenSidebar} />
-        <Sidebar
-          isOpenSidebar={isOpenSidebar}
-          setIsOpenSidebar={setIsOpenSidebar}
+      <Header setIsOpenSidebar={setIsOpenSidebar} />
+      <Sidebar
+        isOpenSidebar={isOpenSidebar}
+        setIsOpenSidebar={setIsOpenSidebar}
+      />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/explore"
+          element={
+            <UnAuthProtectedRoute>
+              <Explore />
+            </UnAuthProtectedRoute>
+          }
         />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/explore"
-            element={
-              <UnAuthProtectedRoute>
-                <Explore />
-              </UnAuthProtectedRoute>
-            }
-          />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/team" element={<Team />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/team" element={<Team />} />
 
-          <Route element={<Auth />}>
-            <Route path="/account/sign-in" element={<Signin />} />
-            <Route path="/account/sign-up" element={<Signup />} />
-          </Route>
+        <Route element={<Auth />}>
+          <Route path="/account/sign-in" element={<Signin />} />
+          <Route path="/account/sign-up" element={<Signup />} />
+        </Route>
 
-          <Route
-            path="/account/verification"
-            element={
-              <VerifiedProtectedRoute>
-                <VerifyAccount />
-              </VerifiedProtectedRoute>
-            }
-          />
+        <Route
+          path="/account/verification"
+          element={
+            <VerifiedProtectedRoute>
+              <VerifyAccount />
+            </VerifiedProtectedRoute>
+          }
+        />
 
-          <Route
-            path="*"
-            element={<h1 className="mt-[7rem]">Page not found</h1>}
-          />
-        </Routes>
-      </Router>
+        <Route
+          path="*"
+          element={<h1 className="mt-[7rem]">Page not found</h1>}
+        />
+      </Routes>
 
       <ToastContainer />
     </div>
+  );
+};
+
+const App = () => {
+  return (
+    <Router>
+      <AppRouter />
+    </Router>
   );
 };
 

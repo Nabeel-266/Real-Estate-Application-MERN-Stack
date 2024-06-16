@@ -32,13 +32,18 @@ export const signinFailure = () => (dispatch) => {
   dispatch(setError(true));
 };
 
-//* For Verify User Actions
+//* For Verify User Action
 export const verifySuccess = (user) => (dispatch) => {
   dispatch(setUser(user));
 };
 
 //* For Resend OTP to User Action
 export const resendOTPSuccess = (user) => (dispatch) => {
+  dispatch(setUser(user));
+};
+
+//* For Refresh Token Action
+export const refreshTokenSuccess = (user) => (dispatch) => {
   dispatch(setUser(user));
 };
 

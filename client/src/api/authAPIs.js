@@ -6,6 +6,7 @@ import {
   SIGN_UP,
   VERIFY_ACCOUNT,
   RESEND_OTP,
+  CHECK_TOKEN,
 } from "../constants/apisRoute";
 import {
   resendOTPSuccess,
@@ -17,6 +18,7 @@ import {
   signupSuccess,
   verifySuccess,
 } from "../app/actions/userActions";
+import { setUser } from "../app/slices/userSlice";
 
 // For SIGNUP USER
 export const registerUser = async (userCredentials, dispatch, navigate) => {
@@ -100,7 +102,7 @@ export const verifyUser = async (OTP, dispatch, navigate) => {
   }
 };
 
-// For RESEND OTP to User
+// For RESEND OTP to USER
 export const resendOTPtoUser = async (email, dispatch) => {
   try {
     const response = await axios.post(`${RESEND_OTP}`, { email });
@@ -117,5 +119,26 @@ export const resendOTPtoUser = async (email, dispatch) => {
     );
   } catch (error) {
     throw error;
+  }
+};
+
+// For CHECK USER Token
+export const checkToken = async (dispatch, navigate) => {
+  console.log("Check Token Function Working");
+  try {
+    const response = await axios.get(`${CHECK_TOKEN}`);
+    const refreshUser = response.data.data;
+    console.log(refreshUser);
+
+    if (response.data.status === "Success") {
+      dispatch(setUser(refreshUser));
+    } else {
+      dispatch(setUser(null));
+      // navigate("/account/sign-in");
+    }
+  } catch (error) {
+    console.error("Check Token Error:", error);
+    dispatch(setUser(null));
+    // navigate("/account/sign-in");
   }
 };

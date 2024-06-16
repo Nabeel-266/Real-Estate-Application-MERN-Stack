@@ -9,6 +9,7 @@ import {
   signin,
   verifyAccount,
   resendOTP,
+  refreshToken,
 } from "../controllers/auth-controller.js";
 
 const authRouter = express.Router();
@@ -24,5 +25,8 @@ authRouter.post("/verifyAccount", validateToken, verifyAccount);
 
 // For Resend OTP
 authRouter.post("/resendOTP", resendOTP);
+
+// For Refresh Token
+authRouter.get("/checkToken", validateToken, refreshToken);
 
 export default authRouter;
