@@ -93,20 +93,20 @@ export const signup = async (req, res, next) => {
 
     // Set OTP and OTP Expiry in USER_Document
     user_Doc.otp = otp;
-    user_Doc.otpExpiry = Date.now() + 60000; // 1 minute
+    user_Doc.otpExpiry = Date.now() + 90000; // 1.5 minutes
 
     // New User Saved in Db
     const newUser = await user_Doc.save();
     newUser.password = undefined;
 
-    // Generate Token for User
-    const token = generateToken({ data: newUser._id });
-
     // send OTP to User Email
     const emailResponse = await sendEmailOTP(username, email, otp);
     console.log(emailResponse);
 
-    res.cookie("token", token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+    // Generate Token for User
+    const token = generateToken({ data: newUser._id });
+
+    res.cookie("token", token, { httpOnly: true, maxAge: 12 * 60 * 60 * 1000 });
     res.status(StatusCodes.CREATED).send(
       sendSuccess({
         message: resMessages.SUCCESS_REGISTRATION,
@@ -202,7 +202,7 @@ export const signin = async (req, res, next) => {
     // Generate Token for User
     const token = generateToken({ data: updatedUser._id });
 
-    res.cookie("token", token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+    res.cookie("token", token, { httpOnly: true, maxAge: 12 * 60 * 60 * 1000 });
     res.status(StatusCodes.OK).send(
       sendSuccess({
         message: resMessages.SUCCESS_LOGIN,
@@ -221,7 +221,7 @@ export const signin = async (req, res, next) => {
 export const verifyAccount = async (req, res, next) => {
   console.log("Verify Account Controller");
   console.log(req.body, "==> Request Body");
-  console.log(req.user, "==> Request User");
+  console.log(req.user, "==> Request User ID");
 
   try {
     const { otp } = req.body;
@@ -272,7 +272,7 @@ export const verifyAccount = async (req, res, next) => {
     // Generate Token for User
     const token = generateToken({ data: updatedUser._id });
 
-    res.cookie("token", token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+    res.cookie("token", token, { httpOnly: true, maxAge: 12 * 60 * 60 * 1000 });
     res.status(StatusCodes.ACCEPTED).send(
       sendSuccess({
         message: resMessages.SUCCESS_VERIFICATION,
@@ -373,13 +373,15 @@ export const refreshToken = async (req, res, next) => {
       );
     }
 
+    // User Password Remove for giving Response
     user.password = undefined;
 
     const tokenExpiry = req.tokenExp;
-    const currentTime = Math.floor(Date.now() / 1000);
-    const currentTimeAdd3hours = currentTime + 3 * 60 * 60;
+    const currentTime = Math.floor(Date.now() / 1000); // current time in seconds
+    const checktokenExpiryIsGreaterThan3Hours =
+      tokenExpiry > currentTime + 3 * 60 * 60;
 
-    if (tokenExpiry > currentTime) {
+    if (checktokenExpiryIsGreaterThan3Hours) {
       return res.status(StatusCodes.OK).send(
         sendSuccess({
           message: "Current Token is Fine",
@@ -391,7 +393,7 @@ export const refreshToken = async (req, res, next) => {
     // Generate Token for User
     const token = generateToken({ data: user._id });
 
-    res.cookie("token", token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+    res.cookie("token", token, { httpOnly: true, maxAge: 12 * 60 * 60 * 1000 });
     res.status(StatusCodes.OK).send(
       sendSuccess({
         message: resMessages.SUCCESS_REFRESH_TOKEN,

@@ -26,7 +26,7 @@ export const registerUser = async (userCredentials, dispatch, navigate) => {
   try {
     const response = await axios.post(`${SIGN_UP}`, userCredentials);
     const newUser = response?.data?.data;
-    console.log(newUser);
+    // console.log(newUser);
     dispatch(signupSuccess(newUser));
 
     toastify(
@@ -51,7 +51,7 @@ export const loginUser = async (userCredentials, dispatch, navigate) => {
   try {
     const response = await axios.post(`${SIGN_IN}`, userCredentials);
     const loggedInUser = response?.data?.data;
-    console.log(loggedInUser);
+    // console.log(loggedInUser);
     dispatch(signinSuccess(loggedInUser));
 
     toastify(
@@ -82,7 +82,7 @@ export const verifyUser = async (OTP, dispatch, navigate) => {
       { withCredentials: true }
     );
     const verifiedUser = response?.data?.data;
-    console.log(verifiedUser);
+    // console.log(verifiedUser);
     dispatch(verifyAccountSuccess(verifiedUser));
 
     toastify(
@@ -106,7 +106,7 @@ export const resendOTPtoUser = async (email, dispatch) => {
   try {
     const response = await axios.post(`${RESEND_OTP}`, { email });
     const updatedOTPUser = response?.data?.data;
-    console.log(updatedOTPUser);
+    // console.log(updatedOTPUser);
     dispatch(resendOTPSuccess(updatedOTPUser));
 
     toastify(
