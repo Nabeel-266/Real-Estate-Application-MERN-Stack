@@ -420,7 +420,7 @@ const Home = () => {
 
       {/* Feedback Cont */}
       <div className="feedbackCont w-full">
-        <section className="feedbackWrapper flex flex-col items-center gap-[6rem] mx-[4%] pt-[3rem] pb-[7rem] border-t-[0.2rem] border-neutral-200">
+        <section className="feedbackWrapper flex flex-col items-center gap-[2rem] tabletLg:gap-[2rem] laptopSm:gap-[4rem] laptopRg:gap-[5rem] desktopSm:gap-[5.5rem] mx-[4%] pt-[3rem] pb-[7rem] border-t-[0.2rem] border-neutral-200">
           {/* Feedback Heading */}
           <div className="heading w-full flex flex-col items-center py-[2rem]">
             <span className="text-[1.5rem] leading-[1.5rem] font-semibold text-amber-400 ">
@@ -434,19 +434,15 @@ const Home = () => {
           </div>
 
           {/* Feedback Content */}
-          <div className="feedbackContent w-full flex flex-row-reverse justify-between pb-[4rem]">
-            <div className="imageSide w-[43%] relative z-[1] flex items-center justify-center before:content-[''] before:absolute before:z-10 before:w-full before:h-full before:bg-gradient-to-r before:to-[#22222260] before:from-transparent before:rounded-xl after:content-[''] after:absolute after:z-[-1] after:right-[-11%] after:bottom-[-10%] after:w-[60%] after:h-[120%] after:bg-amber-400 after:rounded-tl-xl after:rounded-bl-xl">
-              <img
-                src={feedbackImage}
-                alt="feedback"
-                className="w-full h-full object-cover select-none rounded-xl"
-              />
-            </div>
-            <div className="textSide w-[53%] flex flex-col items-start gap-[3rem]">
+          <div className="feedbackContent w-full flex flex-col gap-[5rem] tabletLg:flex-row justify-between pb-[4rem]">
+            {/* Feedback Swiper */}
+            <div className="textSide w-[100%] tabletLg:w-[50%] self-start tabletLg:self-start  flex flex-col items-start gap-[3rem]">
+              {/* Quote Icon */}
               <div className="quoteIcon text-[4.5rem] text-cyan-950 drop-shadow-xl ml-[1rem] mt-[1rem]">
                 <FaQuoteLeft />
               </div>
 
+              {/* Swiper */}
               <Swiper
                 modules={[Navigation]}
                 slidesPerView={1}
@@ -492,20 +488,30 @@ const Home = () => {
                 ))}
               </Swiper>
 
-              <div className="swiperButtons flex gap-[1.5rem] ml-[2rem] mt-[1rem]">
+              {/* Swiper Buttons */}
+              <div className="swiperButtons flex gap-[1.2rem] ml-[2rem] mt-[1rem]">
                 <button
                   onClick={() => swiperRef.current?.slidePrev()}
-                  className="previous outline-none text-[3.8rem] text-neutral-800 hover:scale-[1.3] hover:text-amber-400 transition-all"
+                  className="previous outline-none text-[4rem] text-neutral-800 hover:scale-[1.3] hover:text-amber-400 transition-all"
                 >
                   <HiOutlineArrowNarrowLeft />
                 </button>
                 <button
                   onClick={() => swiperRef.current?.slideNext()}
-                  className="next outline-none text-[3.8rem] text-neutral-800 hover:scale-[1.3] hover:text-amber-400 transition-all"
+                  className="next outline-none text-[4rem] text-neutral-800 hover:scale-[1.2] hover:text-amber-400 transition-all"
                 >
                   <HiOutlineArrowNarrowRight />
                 </button>
               </div>
+            </div>
+
+            {/* Feedback Image */}
+            <div className="imageSide w-[100%] mobileRg:w-[90%] tabletSm:w-[80%] tabletLg:w-[46%] self-end tabletLg:self-center tabletLg:max-h-[40rem] relative z-[1] flex items-center justify-center before:content-[''] before:absolute before:z-10 before:w-full before:h-full before:bg-gradient-to-r before:to-[#22222260] before:from-transparent before:rounded-xl after:content-[''] after:absolute after:z-[-1] after:right-[-11%] after:bottom-[-10%] after:w-[60%] after:h-[120%] after:bg-amber-400 after:rounded-tl-xl after:rounded-bl-xl">
+              <img
+                src={feedbackImage}
+                alt="feedback"
+                className="w-full h-full tabletLg:min-h-[35rem] object-cover select-none rounded-xl"
+              />
             </div>
           </div>
         </section>
