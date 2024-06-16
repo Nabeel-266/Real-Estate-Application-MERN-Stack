@@ -56,7 +56,7 @@ export const loginUser = async (userCredentials, dispatch, navigate) => {
 
     toastify(
       "success",
-      `${loggedInUser.username}! You Login Successfully`,
+      `${loggedInUser.username} ! You Login Successfully`,
       "top-right",
       "dark",
       4000
