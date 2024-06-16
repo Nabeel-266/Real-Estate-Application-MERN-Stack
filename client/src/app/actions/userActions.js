@@ -32,8 +32,8 @@ export const signinFailure = () => (dispatch) => {
   dispatch(setError(true));
 };
 
-//* For Verify User Action
-export const verifySuccess = (user) => (dispatch) => {
+//* For Verify User Account Action
+export const verifyAccountSuccess = (user) => (dispatch) => {
   dispatch(setUser(user));
 };
 
@@ -42,8 +42,8 @@ export const resendOTPSuccess = (user) => (dispatch) => {
   dispatch(setUser(user));
 };
 
-//* For Refresh Token Action
-export const refreshTokenSuccess = (user) => (dispatch) => {
+//* For Check User Token Action
+export const checkTokenSuccess = (user) => (dispatch) => {
   dispatch(setUser(user));
 };
 

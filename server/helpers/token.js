@@ -53,8 +53,9 @@ export const validateToken = async (req, res, next) => {
       );
     }
 
-    // Req.User is equal to Verify Token Result
+    // Req.User is equal to Verify Token Result ID
     req.user = decoded.result;
+    req.tokenExp = decoded.exp;
     next();
   } catch (error) {
     // If Token is invalid

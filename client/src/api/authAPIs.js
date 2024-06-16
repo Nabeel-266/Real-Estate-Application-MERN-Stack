@@ -1,5 +1,4 @@
 import axios from "axios";
-
 import toastify from "../utils/toastify";
 import {
   SIGN_IN,
@@ -9,6 +8,7 @@ import {
   CHECK_TOKEN,
 } from "../constants/apisRoute";
 import {
+  checkTokenSuccess,
   resendOTPSuccess,
   signinFailure,
   signinPending,
@@ -16,9 +16,8 @@ import {
   signupFailure,
   signupPending,
   signupSuccess,
-  verifySuccess,
+  verifyAccountSuccess,
 } from "../app/actions/userActions";
-import { setUser } from "../app/slices/userSlice";
 
 // For SIGNUP USER
 export const registerUser = async (userCredentials, dispatch, navigate) => {
@@ -84,7 +83,7 @@ export const verifyUser = async (OTP, dispatch, navigate) => {
     );
     const verifiedUser = response?.data?.data;
     console.log(verifiedUser);
-    dispatch(verifySuccess(verifiedUser));
+    dispatch(verifyAccountSuccess(verifiedUser));
 
     toastify(
       "success",
@@ -123,22 +122,18 @@ export const resendOTPtoUser = async (email, dispatch) => {
 };
 
 // For CHECK USER Token
-export const checkToken = async (dispatch, navigate) => {
-  console.log("Check Token Function Working");
+export const checkToken = async (dispatch) => {
   try {
     const response = await axios.get(`${CHECK_TOKEN}`);
     const refreshUser = response.data.data;
-    console.log(refreshUser);
+    // console.log(refreshUser);
 
     if (response.data.status === "Success") {
-      dispatch(setUser(refreshUser));
+      dispatch(checkTokenSuccess(refreshUser));
     } else {
-      dispatch(setUser(null));
-      // navigate("/account/sign-in");
+      dispatch(checkTokenSuccess(null));
     }
   } catch (error) {
-    console.error("Check Token Error:", error);
-    dispatch(setUser(null));
-    // navigate("/account/sign-in");
+    dispatch(checkTokenSuccess(null));
   }
 };

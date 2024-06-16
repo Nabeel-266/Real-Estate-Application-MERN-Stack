@@ -8,10 +8,6 @@ import { sendError, sendSuccess } from "../utils/responses.js";
 import { generateToken } from "../helpers/token.js";
 import resMessages from "../constants/responsesMessages.js";
 const { compareSync, hashSync, genSaltSync } = pkg;
-import jwtPkg from "jsonwebtoken";
-const { sign } = jwtPkg;
-import dotenv from "dotenv";
-dotenv.config();
 
 //* --> For Signup <--
 //? @route --> POST --> api/auth/register
@@ -104,7 +100,7 @@ export const signup = async (req, res, next) => {
     newUser.password = undefined;
 
     // Generate Token for User
-    const token = generateToken({ data: newUser });
+    const token = generateToken({ data: newUser._id });
 
     // send OTP to User Email
     const emailResponse = await sendEmailOTP(username, email, otp);
@@ -204,7 +200,7 @@ export const signin = async (req, res, next) => {
     }
 
     // Generate Token for User
-    const token = generateToken({ data: updatedUser });
+    const token = generateToken({ data: updatedUser._id });
 
     res.cookie("token", token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
     res.status(StatusCodes.OK).send(
@@ -241,7 +237,7 @@ export const verifyAccount = async (req, res, next) => {
     }
 
     // Find User with OTP and Req.User.ID
-    const user = await User.findOne({ otp: otp, _id: req.user._id });
+    const user = await User.findOne({ otp: otp, _id: req.user });
 
     // If User not found
     if (!user) {
@@ -274,7 +270,7 @@ export const verifyAccount = async (req, res, next) => {
     updatedUser.password = undefined;
 
     // Generate Token for User
-    const token = generateToken({ data: updatedUser });
+    const token = generateToken({ data: updatedUser._id });
 
     res.cookie("token", token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
     res.status(StatusCodes.ACCEPTED).send(
@@ -362,9 +358,10 @@ export const resendOTP = async (req, res, next) => {
 export const refreshToken = async (req, res, next) => {
   console.log("Refresh Token Controller");
   console.log(req.user, "==> Request User");
+  console.log(req.tokenExp, "==> Request Token Expiry");
 
   try {
-    const user = await User.findOne({ _id: req.user._id });
+    const user = await User.findById({ _id: req.user });
     console.log(user, "==> Find User with ID");
 
     if (!user) {
@@ -376,17 +373,25 @@ export const refreshToken = async (req, res, next) => {
       );
     }
 
-    const updatedUser = user;
-    updatedUser.password = undefined;
+    user.password = undefined;
+
+    const tokenExpiry = req.tokenExp;
+    const currentTime = Math.floor(Date.now() / 1000);
+    const currentTimeAdd3hours = currentTime + 3 * 60 * 60;
+
+    if (tokenExpiry > currentTime) {
+      return res.status(StatusCodes.OK).send(
+        sendSuccess({
+          message: "Current Token is Fine",
+          data: user,
+        })
+      );
+    }
 
     // Generate Token for User
-    // const token = generateToken({ data: user });
-    const token = sign({ result: updatedUser }, process.env.JWT_SECRET_KEY, {
-      expiresIn: "1h",
-    });
+    const token = generateToken({ data: user._id });
 
-    // res.cookie("token", token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
-    res.cookie("token", token, { httpOnly: true, maxAge: 1 * 60 * 60 * 1000 });
+    res.cookie("token", token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
     res.status(StatusCodes.OK).send(
       sendSuccess({
         message: resMessages.SUCCESS_REFRESH_TOKEN,
