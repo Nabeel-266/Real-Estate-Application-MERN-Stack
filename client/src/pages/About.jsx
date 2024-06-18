@@ -97,7 +97,7 @@ const About = () => {
       {/* About Us Cont */}
       <div className="aboutUsCont w-full">
         <section className="aboutUsWrapper flex items-center justify-between mx-[4%] py-[4rem]">
-          <div className="imageSide w-[42%] flex items-center justify-center">
+          <div className="imageSide w-[100%] laptopSm:w-[42%] flex items-center justify-center">
             <img
               src={aboutUsImage}
               alt="aboutUs"
