@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 
 // Import Assets
@@ -16,10 +16,14 @@ import { useSelector } from "react-redux";
 
 const Sidebar = ({ isOpenSidebar, setIsOpenSidebar }) => {
   const location = useLocation();
+  const { currentUser } = useSelector((state) => state?.user);
   const [isActiveTab, setIsActiveTab] = useState(
     location.pathname.split("/")[1]
   );
-  const { currentUser } = useSelector((state) => state?.user);
+
+  useEffect(() => {
+    setIsActiveTab(location.pathname.split("/")[1]);
+  }, [location]);
 
   return (
     <>
@@ -77,10 +81,7 @@ const Sidebar = ({ isOpenSidebar, setIsOpenSidebar }) => {
                   >
                     <Link
                       to={route}
-                      onClick={() => {
-                        setIsActiveTab(route.split("/")[1]);
-                        setIsOpenSidebar(!isOpenSidebar);
-                      }}
+                      onClick={() => setIsOpenSidebar(!isOpenSidebar)}
                       className={`${
                         isActiveTab === route.split("/")[1]
                           ? "text-amber-400 border-amber-400 border-l-[0.3rem]"

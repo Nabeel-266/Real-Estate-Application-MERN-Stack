@@ -436,7 +436,7 @@ const Home = () => {
           {/* Feedback Content */}
           <div className="feedbackContent w-full flex flex-col gap-[5rem] tabletLg:flex-row justify-between pb-[4rem]">
             {/* Feedback Swiper */}
-            <div className="textSide w-[100%] tabletLg:w-[50%] self-start tabletLg:self-start  flex flex-col items-start gap-[3rem]">
+            <div className="textSide w-[100%] tabletLg:w-[50%] self-start tabletLg:self-start  flex flex-col items-start gap-[2.5rem] tabletLg:gap-[3rem]">
               {/* Quote Icon */}
               <div className="quoteIcon text-[4.5rem] text-cyan-950 drop-shadow-xl ml-[1rem] mt-[1rem]">
                 <FaQuoteLeft />
@@ -456,7 +456,7 @@ const Home = () => {
                 {testimonials.map(({ name, designation, image }, index) => (
                   <SwiperSlide
                     key={index}
-                    className="w-full flex flex-col gap-[3rem] px-[2rem]"
+                    className="w-full flex flex-col gap-[3rem] px-[2.5rem]"
                   >
                     <p className="text-[1.6rem] text-neutral-800 font-medium">
                       Lorem ipsum, dolor sit amet consectetur adipisicing elit.
@@ -489,7 +489,7 @@ const Home = () => {
               </Swiper>
 
               {/* Swiper Buttons */}
-              <div className="swiperButtons flex gap-[1.2rem] ml-[2rem] mt-[1rem]">
+              <div className="swiperButtons flex gap-[1.2rem] pl-[2.5rem] mt-[1rem]">
                 <button
                   onClick={() => swiperRef.current?.slidePrev()}
                   className="previous outline-none text-[4rem] text-neutral-800 hover:scale-[1.3] hover:text-amber-400 transition-all"

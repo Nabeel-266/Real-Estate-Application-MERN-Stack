@@ -19,31 +19,31 @@ import Footer from "../components/Footer";
 const solutions = [
   {
     id: 1,
-    query: "How do you help in finding the perfect property ?",
+    query: "How do you help in finding the perfect property?",
     solution:
       "At NAB Estate, we have a vast database of properties and use advanced search tools to match your preferences. Our team listens to your needs and provides a curated list of properties that fit your criteria, saving you time and effort.",
   },
   {
     id: 2,
-    query: "What services do you offer for property sellers ?",
+    query: "What services do you offer for property sellers?",
     solution:
       "We offer comprehensive services for property sellers, including property valuation, marketing, and negotiation support. Our aim is to help you sell your property at the best possible price and in the shortest time frame.",
   },
   {
     id: 3,
-    query: "Can you assist with property investments ?",
+    query: "Can you assist with property investments?",
     solution:
       "At NAB Estate, we have a vast database of properties and use advanced search tools to match your preferences. Our team listens to your needs and provides a curated list of properties that fit your criteria, saving you time and effort.",
   },
   {
     id: 4,
-    query: "Do you provide legal and financial advice ?",
+    query: "Do you provide legal and financial advice?",
     solution:
       "Absolutely. We work closely with a network of legal and financial experts to offer you advice and assistance on all legal and financial aspects of your property transaction, ensuring a smooth and compliant process.",
   },
   {
     id: 5,
-    query: "What makes your customer service stand out ?",
+    query: "What makes your customer service stand out?",
     solution:
       "Our customer service is driven by a commitment to excellence. We are available to assist you at every step, offering timely and responsive support to address any concerns or queries you may have.",
   },
@@ -84,10 +84,10 @@ const About = () => {
   const [solutionNum, setSolutionNum] = useState(1);
 
   return (
-    <div className="aboutCont w-full min-h-dvh pt-[6rem]">
+    <div className="aboutCont w-full min-h-dvh pt-[6rem] flex flex-col gap-[4rem]">
       {/* About Heading */}
-      <div className="aboutHd w-full h-[25rem] bg-about-hd-image bg-cover bg-bottom bg-no-repeat">
-        <div className="aboutHdWrapper w-full h-full flex items-center justify-center bg-[#22222290] backdrop-blur-[0.2rem] border-b-[0.3rem] border-dotted border-white">
+      <div className="aboutHd w-full h-[20rem] tabletSm:h-[22rem] tabletLg:h-[25rem] bg-about-hd-image bg-cover bg-bottom bg-no-repeat">
+        <div className="aboutHdWrapper w-full h-full flex items-center justify-center bg-[#222222a0] backdrop-blur-[0.2rem] border-b-[0.3rem] border-dotted border-white">
           <h1 className="text-[4rem] leading-[2rem] font-bold text-white">
             ABOUT US
           </h1>
@@ -96,15 +96,15 @@ const About = () => {
 
       {/* About Us Cont */}
       <div className="aboutUsCont w-full">
-        <section className="aboutUsWrapper flex flex-col-reverse gap-[4rem] laptopSm:gap-0 laptopSm:flex-row items-center justify-between mx-[4%] py-[4rem]">
-          <div className="imageSide w-[70%] laptopSm:w-[42%] flex items-center justify-center">
+        <section className="aboutUsWrapper flex flex-col-reverse gap-[4rem] laptopRg:gap-0 laptopRg:flex-row laptopRg:items-start items-center justify-between mx-[4%] pb-[2rem]">
+          <div className="imageSide w-[100%] tabletSm:w-[55rem] laptopRg:w-[42%] flex items-center justify-center">
             <img
               src={aboutUsImage}
               alt="aboutUs"
               className="w-full h-full object-cover select-none animate-holding drop-shadow-xl"
             />
           </div>
-          <div className="textSide w-[100%] laptopSm:w-[55%] flex flex-col items-start gap-[1.2rem]">
+          <div className="textSide w-[100%] laptopRg:w-[55%] flex flex-col items-start gap-[1.2rem]">
             <h2 className="text-[3rem] leading-[3rem] font-semibold relative text-[#082835] before:content-[''] before:absolute before:bottom-[-0.3rem] before:left-0 before:w-full before:h-[0.3rem] before:bg-amber-400 before:rounded-full after:content-[''] after:absolute after:bottom-[-0.8rem] after:left-0 after:w-[75%] after:h-[0.2rem] after:bg-amber-400 after:rounded-full">
               NAB Estate at a Glance
             </h2>
@@ -129,8 +129,8 @@ const About = () => {
 
       {/* Our Mission Cont */}
       <div className="ourMissionCont w-full">
-        <section className="ourMissionWrapper flex flex-col-reverse gap-[3rem] laptopSm:gap-0 laptopSm:flex-row-reverse items-center justify-between mx-[4%] py-[3.5rem] laptopSm:py-[2.5rem]">
-          <div className="imageSide w-[70%] laptopSm:w-[42%] flex items-center justify-center">
+        <section className="ourMissionWrapper flex flex-col-reverse gap-[3rem] laptopRg:gap-0 laptopRg:flex-row-reverse items-center justify-between mx-[4%] pt-[2rem] pb-[1rem] laptopRg:py-[1rem]">
+          <div className="imageSide w-[100%] tabletSm:w-[55rem] laptopRg:w-[42%] flex items-center justify-center">
             <img
               src={ourMissionImage}
               alt="OurMission"
@@ -138,11 +138,11 @@ const About = () => {
             />
           </div>
 
-          <div className="textSide w-[100%] laptopSm:w-[55%] flex flex-col items-center gap-[3rem]">
+          <div className="textSide w-[100%] laptopRg:w-[55%] flex flex-col items-start gap-[3rem]">
             <h2 className="text-[3rem] leading-[3rem] font-semibold relative text-[#082835] before:content-[''] before:absolute before:bottom-[-0.3rem] before:left-0 before:w-full before:h-[0.3rem] before:bg-amber-400 before:rounded-full after:content-[''] after:absolute after:bottom-[-0.8rem] after:left-0 after:w-[75%] after:h-[0.2rem] after:bg-amber-400 after:rounded-full">
               Our Mission
             </h2>
-            <p className="text-[1.7rem] font-medium text-neutral-800 text-center laptopSm:text-left">
+            <p className="text-[1.7rem] font-medium text-neutral-800 ">
               Our mission at <strong>NAB Estate</strong> is to revolutionize the
               real estate industry by offering unparalleled services that exceed
               our clients' expectations. We aim to provide a seamless,
@@ -158,15 +158,15 @@ const About = () => {
 
       {/* Our Vision Cont */}
       <div className="ourVisionCont w-full">
-        <section className="ourVisionWrapper flex flex-col-reverse gap-[3rem] laptopSm:gap-0 items-center justify-between mx-[4%] py-[3.5rem] laptopSm:py-[3rem]">
-          <div className="imageSide w-[70%] laptopSm:w-[43%] flex items-center justify-center">
+        <section className="ourVisionWrapper flex flex-col-reverse gap-[2.5rem] laptopRg:gap-0 laptopRg:flex-row items-center justify-between mx-[4%] py-[1rem]">
+          <div className="imageSide w-[100%] tabletSm:w-[55rem] laptopRg:w-[43%] flex items-center justify-center">
             <img
               src={ourVisionImage}
               alt="OurVision"
               className="w-full h-full object-cover select-none animate-holding"
             />
           </div>
-          <div className="textSide w-[100%] laptopSm:w-[53%] flex flex-col items-start gap-[3rem]">
+          <div className="textSide w-[100%] laptopRg:w-[53%] flex flex-col items-start gap-[3rem]">
             <h2 className="text-[3rem] leading-[3rem] font-semibold relative text-[#082835] before:content-[''] before:absolute before:bottom-[-0.3rem] before:left-0 before:w-full before:h-[0.3rem] before:bg-amber-400 before:rounded-full after:content-[''] after:absolute after:bottom-[-0.8rem] after:left-0 after:w-[75%] after:h-[0.2rem] after:bg-amber-400 after:rounded-full">
               Our Vision
             </h2>
@@ -185,8 +185,8 @@ const About = () => {
 
       {/* Our Solution Cont */}
       <div className="ourSolutionCont w-full">
-        <section className="ourSolutionWrapper flex flex-row-reverse items-center justify-between mx-[4%] pt-[5rem] pb-[4rem]">
-          <div className="imageSide w-[43.5%] flex items-center justify-center">
+        <section className="ourSolutionWrapper flex flex-row-reverse items-center justify-between mx-[4%] py-[2rem]">
+          <div className="imageSide hidden laptopRg:w-[45%] laptopRg:flex items-center justify-center">
             <img
               src={ourSolutionImage}
               alt="OurSolution"
@@ -194,7 +194,7 @@ const About = () => {
             />
           </div>
 
-          <div className="textSide w-[48%] flex flex-col items-start gap-[5rem]">
+          <div className="textSide w-[100%] laptopRg:w-[50%] flex flex-col items-start gap-[5rem]">
             <h2 className="text-[3rem] leading-[3rem] font-semibold relative text-[#082835] before:content-[''] before:absolute before:bottom-[-0.4rem] before:left-0 before:w-full before:h-[0.3rem] before:bg-amber-400 before:rounded-full after:content-[''] after:absolute after:bottom-[-0.9rem] after:left-0 after:w-[75%] after:h-[0.2rem] after:bg-amber-400 after:rounded-full">
               Our Quick Solutions
             </h2>
@@ -212,7 +212,7 @@ const About = () => {
                     onClick={() => setSolutionNum(id)}
                     className="accHeader w-full flex items-center justify-between px-[1.5rem] py-[1.6rem] bg-[#082835] text-white cursor-pointer"
                   >
-                    <h4 className="text-[1.7rem] leading-[1.75rem] font-semibold">
+                    <h4 className="text-[1.7rem] font-semibold pr-[1.5rem]">
                       {query}
                     </h4>
                     <div className="accIcon flex items-center justify-center text-[2rem]">
@@ -243,21 +243,25 @@ const About = () => {
 
       {/* Why Choose Us Cont */}
       <div className="chooseUsCont w-full">
-        <section className="chooseUsWrapper flex flex-col items-start justify-start gap-[5rem] mx-[4%] pt-[5rem] pb-[7rem]">
+        <section className="chooseUsWrapper flex flex-col items-start justify-start gap-[5rem] mx-[4%] py-[2rem]">
           <h2 className="text-[3rem] leading-[3rem] font-semibold relative text-[#082835] before:content-[''] before:absolute before:bottom-[-0.6rem] before:left-0 before:w-full before:h-[0.3rem] before:bg-amber-400 before:rounded-full after:content-[''] after:absolute after:bottom-[-1.1rem] after:left-0 after:w-[75%] after:h-[0.2rem] after:bg-amber-400 after:rounded-full">
             Why Choose Us Our Service
           </h2>
 
-          <div className="grid grid-cols-2 gap-[3rem]">
+          <div className="w-full grid grid-cols-1 gap-[2rem] laptopSm:grid-cols-2 laptopSm:gap-[3rem]">
             {services.map(({ iconImage, title, description }, index) => (
               <div
                 key={index}
-                className="serviceCard flex items-start gap-[2rem] p-[1.5rem] rounded-xl"
+                className="serviceCard w-full flex items-start gap-[2rem] p-[1rem] rounded-xl"
               >
                 <div className="icon">
-                  <img src={iconImage} alt={title} className="w-[30rem]" />
+                  <img
+                    src={iconImage}
+                    alt={title}
+                    className="w-[7rem] laptopSm:w-[7.5rem]"
+                  />
                 </div>
-                <div className="discription flex flex-col gap-[1rem]">
+                <div className="discription flex-1 flex flex-col gap-[1rem]">
                   <h5 className="text-[2.2rem] leading-[2.2rem] font-semibold text-neutral-800">
                     {title}
                   </h5>

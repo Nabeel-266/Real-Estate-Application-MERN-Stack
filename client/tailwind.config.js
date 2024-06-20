@@ -49,7 +49,7 @@ export default {
         },
       },
       backgroundImage: {
-        "about-hd-image": "url('/src/assets/about-bg.jpg')",
+        "about-hd-image": "url('/src/assets/About/about-bg.jpg')",
         "footer-image": "url('/src/assets/footer-bg.jpg')",
       },
     },
