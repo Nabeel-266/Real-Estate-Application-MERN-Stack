@@ -96,15 +96,15 @@ const About = () => {
 
       {/* About Us Cont */}
       <div className="aboutUsCont w-full">
-        <section className="aboutUsWrapper flex items-center justify-between mx-[4%] py-[4rem]">
-          <div className="imageSide w-[100%] laptopSm:w-[42%] flex items-center justify-center">
+        <section className="aboutUsWrapper flex flex-col-reverse gap-[4rem] laptopSm:gap-0 laptopSm:flex-row items-center justify-between mx-[4%] py-[4rem]">
+          <div className="imageSide w-[70%] laptopSm:w-[42%] flex items-center justify-center">
             <img
               src={aboutUsImage}
               alt="aboutUs"
               className="w-full h-full object-cover select-none animate-holding drop-shadow-xl"
             />
           </div>
-          <div className="textSide w-[55%] flex flex-col items-start gap-[1.2rem]">
+          <div className="textSide w-[100%] laptopSm:w-[55%] flex flex-col items-start gap-[1.2rem]">
             <h2 className="text-[3rem] leading-[3rem] font-semibold relative text-[#082835] before:content-[''] before:absolute before:bottom-[-0.3rem] before:left-0 before:w-full before:h-[0.3rem] before:bg-amber-400 before:rounded-full after:content-[''] after:absolute after:bottom-[-0.8rem] after:left-0 after:w-[75%] after:h-[0.2rem] after:bg-amber-400 after:rounded-full">
               NAB Estate at a Glance
             </h2>
@@ -129,8 +129,8 @@ const About = () => {
 
       {/* Our Mission Cont */}
       <div className="ourMissionCont w-full">
-        <section className="ourMissionWrapper flex flex-row-reverse items-center justify-between mx-[4%] py-[2.5rem]">
-          <div className="imageSide w-[42%] flex items-center justify-center">
+        <section className="ourMissionWrapper flex flex-col-reverse gap-[3rem] laptopSm:gap-0 laptopSm:flex-row-reverse items-center justify-between mx-[4%] py-[3.5rem] laptopSm:py-[2.5rem]">
+          <div className="imageSide w-[70%] laptopSm:w-[42%] flex items-center justify-center">
             <img
               src={ourMissionImage}
               alt="OurMission"
@@ -138,11 +138,11 @@ const About = () => {
             />
           </div>
 
-          <div className="textSide w-[55%] flex flex-col items-start gap-[3rem]">
+          <div className="textSide w-[100%] laptopSm:w-[55%] flex flex-col items-center gap-[3rem]">
             <h2 className="text-[3rem] leading-[3rem] font-semibold relative text-[#082835] before:content-[''] before:absolute before:bottom-[-0.3rem] before:left-0 before:w-full before:h-[0.3rem] before:bg-amber-400 before:rounded-full after:content-[''] after:absolute after:bottom-[-0.8rem] after:left-0 after:w-[75%] after:h-[0.2rem] after:bg-amber-400 after:rounded-full">
               Our Mission
             </h2>
-            <p className="text-[1.7rem] font-medium text-neutral-800">
+            <p className="text-[1.7rem] font-medium text-neutral-800 text-center laptopSm:text-left">
               Our mission at <strong>NAB Estate</strong> is to revolutionize the
               real estate industry by offering unparalleled services that exceed
               our clients' expectations. We aim to provide a seamless,
@@ -158,15 +158,15 @@ const About = () => {
 
       {/* Our Vision Cont */}
       <div className="ourVisionCont w-full">
-        <section className="ourVisionWrapper flex items-center justify-between mx-[4%] py-[3rem]">
-          <div className="imageSide w-[43%] flex items-center justify-center">
+        <section className="ourVisionWrapper flex flex-col-reverse gap-[3rem] laptopSm:gap-0 items-center justify-between mx-[4%] py-[3.5rem] laptopSm:py-[3rem]">
+          <div className="imageSide w-[70%] laptopSm:w-[43%] flex items-center justify-center">
             <img
               src={ourVisionImage}
               alt="OurVision"
               className="w-full h-full object-cover select-none animate-holding"
             />
           </div>
-          <div className="textSide w-[53%] flex flex-col items-start gap-[3rem]">
+          <div className="textSide w-[100%] laptopSm:w-[53%] flex flex-col items-start gap-[3rem]">
             <h2 className="text-[3rem] leading-[3rem] font-semibold relative text-[#082835] before:content-[''] before:absolute before:bottom-[-0.3rem] before:left-0 before:w-full before:h-[0.3rem] before:bg-amber-400 before:rounded-full after:content-[''] after:absolute after:bottom-[-0.8rem] after:left-0 after:w-[75%] after:h-[0.2rem] after:bg-amber-400 after:rounded-full">
               Our Vision
             </h2>
