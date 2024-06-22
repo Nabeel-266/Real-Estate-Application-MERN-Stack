@@ -12,8 +12,8 @@ const Header = ({ setIsOpenSidebar }) => {
   const { currentUser } = useSelector((state) => state?.user);
 
   return (
-    <header className="header w-full h-[6rem] flex items-center fixed top-0 left-0 z-[99] backdrop-blur-[20px] bg-[#ffffffd8] shadow-sm">
-      <div className="headerWrapper w-full flex items-center justify-between mx-[4%]">
+    <header className="header w-full flex items-center fixed top-0 left-0 z-[99] backdrop-blur-[20px] bg-[#fffffff0]">
+      <div className="headerWrapper w-full h-[6rem] flex items-center justify-between mx-[2%] px-[2%] border-b-[1px] border-neutral-100">
         {/* Header Left Side */}
         <div className="leftSide flex items-center gap-[3.5rem]">
           {/* Logo */}
@@ -87,9 +87,11 @@ const Header = ({ setIsOpenSidebar }) => {
               </div>
 
               {/* Profile Button */}
-              <button className="profileBtn text-[1.7rem] leading-[1.7rem] font-semibold text-[#082835] px-[1.6rem] py-[0.8rem] bg-amber-400 rounded-md hidden tabletSm:block">
-                Profile
-              </button>
+              <Link to="/profile">
+                <button className="profileBtn text-[1.7rem] leading-[1.7rem] font-semibold text-[#082835] px-[1.6rem] py-[0.8rem] bg-amber-400 rounded-md hidden tabletSm:block">
+                  Profile
+                </button>
+              </Link>
 
               <span className="flex items-center justify-center min-w-[2rem] min-h-[2rem] p-[0.4rem] absolute top-[-0.8rem] right-[-0.8rem] text-[1.2rem] leading-[1rem] font-semibold font-quick text-white bg-red-500 rounded-full overflow-hidden">
                 99+

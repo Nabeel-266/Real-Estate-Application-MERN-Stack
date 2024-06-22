@@ -38,12 +38,12 @@ const App = () => {
     [dispatch]
   );
 
-  // useEffect(() => {
-  //   memoizedCheckToken();
-  // }, [memoizedCheckToken]);
+  useEffect(() => {
+    memoizedCheckToken();
+  }, [memoizedCheckToken]);
 
   return (
-    <div className="app relative overflow-hidden">
+    <div className="app bg-white relative overflow-hidden">
       <Router>
         <Header setIsOpenSidebar={setIsOpenSidebar} />
         <Sidebar

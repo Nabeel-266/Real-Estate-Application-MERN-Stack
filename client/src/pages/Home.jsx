@@ -142,13 +142,13 @@ const Home = () => {
               <img
                 src={bannerBalcony}
                 alt="Homes"
-                className="min-w-[15rem] w-[27%] tabletSm:w-[25%] laptopSm:w-[32%] laptopRg:w-[28%] shadow-xl shadow-[#33333330] absolute top-[-11%] laptopSm:top-[-8%] laptopRg:top-[-4%] left-[5%] tabletSm:left-[10%] laptopSm:left-[2%] laptopRg:left-[8%] drop-shadow-xl select-none rounded-full object-cover border-[#082835] border-y-[0.6rem] border-l-[0.6rem] border-dashed animate-holding"
+                className="min-w-[15rem] w-[27%] tabletSm:w-[25%] laptopSm:w-[32%] laptopRg:w-[28%] shadow-xl shadow-[#33333330] absolute top-[-11%] laptopSm:top-[-8%] laptopRg:top-[-4%] left-[5%] tabletSm:left-[10%] laptopSm:left-[2%] laptopRg:left-[8%] drop-shadow-xl select-none rounded-full object-cover border-[#082835] border-y-[0.3rem] border-l-[0.5rem] border-dashed animate-holding"
               />
 
               <img
                 src={bannerRoom}
                 alt="Homes"
-                className="min-w-[22rem] w-[42%] tabletSm:w-[40%] laptopSm:w-[53%] laptopRg:w-[50%] shadow-xl shadow-[#33333330] overflow-hidden absolute bottom-[-10%] right-[5%] laptopSm:bottom-[-8%] laptopSm:right-0 drop-shadow-xl select-none rounded-full object-cover border-[#082835] border-y-[0.8rem] border-r-[0.8rem] border-double animate-holding"
+                className="min-w-[22rem] w-[42%] tabletSm:w-[40%] laptopSm:w-[53%] laptopRg:w-[50%] shadow-xl shadow-[#33333330] overflow-hidden absolute bottom-[-10%] right-[5%] laptopSm:bottom-[-8%] laptopSm:right-0 drop-shadow-xl select-none rounded-full object-cover border-[#082835] border-y-[0.6rem] border-r-[0.8rem] border-double animate-holding"
               />
             </div>
           </section>
