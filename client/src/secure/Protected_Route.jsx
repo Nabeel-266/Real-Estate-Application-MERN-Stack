@@ -21,7 +21,7 @@ export const UnAuthProtectedRoute = ({ children }) => {
   if (!user) {
     toastify(
       "info",
-      `Welcome to NAB Estate! If you explore our properties, so please LOGIN to your account`,
+      `Welcome to NAB Estate! Please LOGIN to your account`,
       "top-right",
       "dark",
       10000

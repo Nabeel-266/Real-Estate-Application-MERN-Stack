@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
 // Import Assets
@@ -6,36 +6,130 @@ import ProfilePicture from "../assets/user.png";
 import PropertyImage from "../assets/Properties/room-01.jpg";
 
 // Import React Icons
-import { PiDotsThreeOutlineVerticalBold, PiToiletBold } from "react-icons/pi";
+import {
+  PiDotsThreeOutlineVerticalBold,
+  PiSignOutBold,
+  PiToiletBold,
+} from "react-icons/pi";
 import { BiArea, BiEditAlt } from "react-icons/bi";
 import { GiCheckMark } from "react-icons/gi";
-import { MdOutlineMailOutline, MdOutlineTimer } from "react-icons/md";
+import {
+  MdOutlineMailOutline,
+  MdOutlineTimer,
+  MdPassword,
+} from "react-icons/md";
 import { TiPhoneOutline } from "react-icons/ti";
 import { FaBath, FaBed } from "react-icons/fa6";
 import { AiOutlinePartition } from "react-icons/ai";
-import { TbToolsKitchen } from "react-icons/tb";
+import { TbToolsKitchen, TbMailCog } from "react-icons/tb";
 import { HiLocationMarker } from "react-icons/hi";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { HiMiniXMark } from "react-icons/hi2";
 
 const Profile = () => {
   const user = useSelector((state) => state?.user?.currentUser);
   const [isActiveTab, setIsActiveTab] = useState("saved");
+  const [isOpenAccStngDropdown, setIsOpenAccStngDropdown] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const handleClickOutsideDropdown = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsOpenAccStngDropdown(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutsideDropdown);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutsideDropdown);
+    };
+  }, []);
 
   return (
     <div className="profileCont w-full min-h-dvh pt-[6rem] bg-profile-image bg-cover bg-no-repeat bg-center">
       <div className="profileWrapperCont mx-[8%] pb-[5rem]">
         {/* Profile Heading */}
-        <div className="profileHD w-full flex justify-between items-center pt-[3rem] pb-[1rem] px-[1rem] border-b-[0.2rem] border-theme-blue ">
+        <div className="profileHD w-full relative z-10 flex justify-between items-center pt-[3rem] pb-[0.8rem] px-[1rem] border-b-[0.2rem] border-neutral-300 ">
           <h1 className="text-[3rem] leading-[3rem] font-semibold text-theme-blue">
             Your Profile
           </h1>
 
-          <button className="text-[2.5rem] text-theme-blue rounded-lg">
-            <PiDotsThreeOutlineVerticalBold />
-          </button>
+          {!isOpenAccStngDropdown ? (
+            <button
+              onClick={() => setIsOpenAccStngDropdown(true)}
+              className="text-[2.5rem] text-theme-blue rounded-lg"
+            >
+              <PiDotsThreeOutlineVerticalBold />
+            </button>
+          ) : (
+            <button
+              onClick={() => setIsOpenAccStngDropdown(false)}
+              className="text-[3rem] text-theme-blue rounded-lg"
+            >
+              <HiMiniXMark />
+            </button>
+          )}
+
+          <div
+            ref={dropdownRef}
+            className={`accountSettingsDropdown absolute top-[105%] right-0 z-[-1] backdrop-blur-[1rem] bg-[#082835f0] rounded-lg overflow-hidden shadow-xl ${
+              isOpenAccStngDropdown ? "h-[16.5rem]" : "h-0"
+            } transition-all`}
+          >
+            <ul className="h-full text-[1.7rem] leading-[1.5rem] font-semibold text-white px-[0.8rem] py-[1rem] grid grid-rows-4 gap-[0.5rem]">
+              <li className="flex items-center gap-[0.8rem] h-full p-[0.8rem] cursor-pointer hover:bg-theme-yellow hover:text-neutral-800 rounded-sm transition-all">
+                <TbMailCog />
+                <span>Change Email</span>
+              </li>
+              <li className="flex items-center gap-[0.8rem] h-full p-[0.8rem] cursor-pointer hover:bg-theme-yellow hover:text-neutral-800 rounded-sm transition-all">
+                <MdPassword />
+                <span>Reset Password</span>
+              </li>
+              <li className="flex items-center gap-[0.8rem] h-full p-[0.8rem] cursor-pointer hover:bg-theme-yellow hover:text-neutral-800 rounded-sm transition-all">
+                <PiSignOutBold />
+                <span>Logout</span>
+              </li>
+              <li className="flex items-center gap-[0.8rem] h-full p-[0.8rem] cursor-pointer hover:bg-red-500 rounded-sm transition-all">
+                <RiDeleteBin6Line />
+                <span>Delete Account</span>
+              </li>
+            </ul>
+          </div>
         </div>
 
         {/* Profile Info */}
-        <section className="profileInfoCont w-full relative px-[2rem] py-[2.5rem] flex flex-col gap-[1.5rem] laptopSm:flex-row laptopSm:items-center laptopSm:gap-[2rem] border-b-[0.2rem] border-neutral-100">
+        <section className="profileInfoCont w-full relative px-[2rem] py-[2.5rem] flex flex-col gap-[1.5rem] laptopSm:flex-row laptopSm:items-start laptopSm:gap-[2rem] border-b-[0.2rem] border-neutral-100">
+          {/* User Image */}
+          <div className="userImage w-[12rem] h-[12rem] rounded-full border-[0.2rem] border-theme-blue overflow-hidden shadow-lg">
+            <img
+              src={ProfilePicture}
+              alt="ProfilePicture"
+              className="w-full h-full object-cover bg-theme-blue rounded-full p-[1rem] border-[0.4rem] border-white"
+            />
+          </div>
+
+          {/* User Details */}
+          <div className="userDetails flex flex-col gap-[0.6rem] mt-[1rem]">
+            <h4 className="text-[2.5rem] leading-[2.5rem] text-neutral-800 font-semibold font-mont">
+              {user.username}
+            </h4>
+
+            <p className="text-[1.6rem] flex items-center gap-[0.5rem]">
+              <MdOutlineMailOutline className="text-neutral-700" />
+              <span className="leading-[2rem] text-neutral-800 font-medium">
+                {user.email}
+              </span>
+            </p>
+
+            {/* <p className="text-[1.6rem] flex items-center gap-[0.5rem]">
+              <TiPhoneOutline className="text-neutral-700" />
+              <span className="leading-[2rem] text-neutral-800 font-medium">
+                03342805639
+              </span>
+            </p> */}
+          </div>
+
           {/* Profile Buttons */}
           <div className="profileBtns absolute top-[2.5rem] right-[2rem] flex flex-col items-end gap-[1rem]">
             {!user?.isVerified && (
@@ -49,36 +143,6 @@ const Profile = () => {
               <BiEditAlt />
               <span>Edit Profile</span>
             </button>
-          </div>
-
-          {/* User Image */}
-          <div className="userImage w-[12rem] h-[12rem] rounded-full border-[0.2rem] border-theme-blue overflow-hidden shadow-lg">
-            <img
-              src={ProfilePicture}
-              alt="ProfilePicture"
-              className="w-full h-full object-cover bg-neutral-800 rounded-full p-[1rem] border-[0.4rem] border-white"
-            />
-          </div>
-
-          {/* User Details */}
-          <div className="userDetails flex flex-col gap-[0.6rem]">
-            <h4 className="text-[2.6rem] leading-[2.6rem] text-neutral-800 font-semibold font-mont">
-              {user.username}
-            </h4>
-
-            <p className="text-[1.6rem] flex items-center gap-[0.5rem]">
-              <MdOutlineMailOutline className="text-neutral-700" />
-              <span className="leading-[2rem] text-neutral-800 font-medium">
-                {user.email}
-              </span>
-            </p>
-
-            <p className="text-[1.6rem] flex items-center gap-[0.5rem]">
-              <TiPhoneOutline className="text-neutral-700" />
-              <span className="leading-[2rem] text-neutral-800 font-medium">
-                03342805639
-              </span>
-            </p>
           </div>
         </section>
 
