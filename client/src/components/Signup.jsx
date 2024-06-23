@@ -310,7 +310,7 @@ const Signup = () => {
                 }
                 className={`w-full flex justify-center py-[0.8rem] text-[2.1rem] font-bold rounded-full transition-all ${
                   username && email && password && confirmPassword
-                    ? "text-white bg-cyan-950 active:scale-[0.98] active:bg-amber-400 cursor-pointer"
+                    ? "text-white bg-cyan-950 active:scale-[0.98] active:bg-theme-yellow cursor-pointer"
                     : "text-neutral-700 bg-neutral-400 cursor-not-allowed"
                 }`}
               >

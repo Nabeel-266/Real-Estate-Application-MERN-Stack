@@ -105,7 +105,7 @@ const About = () => {
             />
           </div>
           <div className="textSide w-[100%] laptopRg:w-[55%] flex flex-col items-start gap-[1.2rem]">
-            <h2 className="text-[3rem] leading-[3rem] font-semibold relative text-[#082835] before:content-[''] before:absolute before:bottom-[-0.3rem] before:left-0 before:w-full before:h-[0.3rem] before:bg-amber-400 before:rounded-full after:content-[''] after:absolute after:bottom-[-0.8rem] after:left-0 after:w-[75%] after:h-[0.2rem] after:bg-amber-400 after:rounded-full">
+            <h2 className="text-[3rem] leading-[3rem] font-semibold relative text-theme-blue before:content-[''] before:absolute before:bottom-[-0.3rem] before:left-0 before:w-full before:h-[0.3rem] before:bg-theme-yellow before:rounded-full after:content-[''] after:absolute after:bottom-[-0.8rem] after:left-0 after:w-[75%] after:h-[0.2rem] after:bg-theme-yellow after:rounded-full">
               NAB Estate at a Glance
             </h2>
             <p className="text-[1.7rem] font-medium text-neutral-800 mt-[1rem]">
@@ -139,7 +139,7 @@ const About = () => {
           </div>
 
           <div className="textSide w-[100%] laptopRg:w-[55%] flex flex-col items-start gap-[3rem]">
-            <h2 className="text-[3rem] leading-[3rem] font-semibold relative text-[#082835] before:content-[''] before:absolute before:bottom-[-0.3rem] before:left-0 before:w-full before:h-[0.3rem] before:bg-amber-400 before:rounded-full after:content-[''] after:absolute after:bottom-[-0.8rem] after:left-0 after:w-[75%] after:h-[0.2rem] after:bg-amber-400 after:rounded-full">
+            <h2 className="text-[3rem] leading-[3rem] font-semibold relative text-theme-blue before:content-[''] before:absolute before:bottom-[-0.3rem] before:left-0 before:w-full before:h-[0.3rem] before:bg-theme-yellow before:rounded-full after:content-[''] after:absolute after:bottom-[-0.8rem] after:left-0 after:w-[75%] after:h-[0.2rem] after:bg-theme-yellow after:rounded-full">
               Our Mission
             </h2>
             <p className="text-[1.7rem] font-medium text-neutral-800 ">
@@ -167,7 +167,7 @@ const About = () => {
             />
           </div>
           <div className="textSide w-[100%] laptopRg:w-[53%] flex flex-col items-start gap-[3rem]">
-            <h2 className="text-[3rem] leading-[3rem] font-semibold relative text-[#082835] before:content-[''] before:absolute before:bottom-[-0.3rem] before:left-0 before:w-full before:h-[0.3rem] before:bg-amber-400 before:rounded-full after:content-[''] after:absolute after:bottom-[-0.8rem] after:left-0 after:w-[75%] after:h-[0.2rem] after:bg-amber-400 after:rounded-full">
+            <h2 className="text-[3rem] leading-[3rem] font-semibold relative text-theme-blue before:content-[''] before:absolute before:bottom-[-0.3rem] before:left-0 before:w-full before:h-[0.3rem] before:bg-theme-yellow before:rounded-full after:content-[''] after:absolute after:bottom-[-0.8rem] after:left-0 after:w-[75%] after:h-[0.2rem] after:bg-theme-yellow after:rounded-full">
               Our Vision
             </h2>
             <p className="text-[1.7rem] font-medium text-neutral-800">
@@ -195,7 +195,7 @@ const About = () => {
           </div>
 
           <div className="textSide w-[100%] laptopRg:w-[50%] flex flex-col items-start gap-[5rem]">
-            <h2 className="text-[3rem] leading-[3rem] font-semibold relative text-[#082835] before:content-[''] before:absolute before:bottom-[-0.4rem] before:left-0 before:w-full before:h-[0.3rem] before:bg-amber-400 before:rounded-full after:content-[''] after:absolute after:bottom-[-0.9rem] after:left-0 after:w-[75%] after:h-[0.2rem] after:bg-amber-400 after:rounded-full">
+            <h2 className="text-[3rem] leading-[3rem] font-semibold relative text-theme-blue before:content-[''] before:absolute before:bottom-[-0.4rem] before:left-0 before:w-full before:h-[0.3rem] before:bg-theme-yellow before:rounded-full after:content-[''] after:absolute after:bottom-[-0.9rem] after:left-0 after:w-[75%] after:h-[0.2rem] after:bg-theme-yellow after:rounded-full">
               Our Quick Solutions
             </h2>
 
@@ -210,14 +210,14 @@ const About = () => {
                   {/* Accordion Header */}
                   <div
                     onClick={() => setSolutionNum(id)}
-                    className="accHeader w-full flex items-center justify-between px-[1.5rem] py-[1.6rem] bg-[#082835] text-white cursor-pointer"
+                    className="accHeader w-full flex items-center justify-between px-[1.5rem] py-[1.6rem] bg-theme-blue text-white cursor-pointer"
                   >
                     <h4 className="text-[1.7rem] font-semibold pr-[1.5rem]">
                       {query}
                     </h4>
                     <div className="accIcon flex items-center justify-center text-[2rem]">
                       {id === solutionNum ? (
-                        <FaLightbulb className="text-amber-400 drop-shadow-[0px_0px_4px_rgb(251_191_36)]" />
+                        <FaLightbulb className="text-theme-yellow drop-shadow-[0px_0px_4px_rgb(251_191_36)]" />
                       ) : (
                         <FaRegLightbulb className="text-white" />
                       )}
@@ -244,7 +244,7 @@ const About = () => {
       {/* Why Choose Us Cont */}
       <div className="chooseUsCont w-full">
         <section className="chooseUsWrapper flex flex-col items-start justify-start gap-[5rem] mx-[4%] py-[2rem]">
-          <h2 className="text-[3rem] leading-[3rem] font-semibold relative text-[#082835] before:content-[''] before:absolute before:bottom-[-0.6rem] before:left-0 before:w-full before:h-[0.3rem] before:bg-amber-400 before:rounded-full after:content-[''] after:absolute after:bottom-[-1.1rem] after:left-0 after:w-[75%] after:h-[0.2rem] after:bg-amber-400 after:rounded-full">
+          <h2 className="text-[3rem] leading-[3rem] font-semibold relative text-theme-blue before:content-[''] before:absolute before:bottom-[-0.6rem] before:left-0 before:w-full before:h-[0.3rem] before:bg-theme-yellow before:rounded-full after:content-[''] after:absolute after:bottom-[-1.1rem] after:left-0 after:w-[75%] after:h-[0.2rem] after:bg-theme-yellow after:rounded-full">
             Why Choose Us Our Service
           </h2>
 

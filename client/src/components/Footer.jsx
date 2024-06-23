@@ -14,7 +14,7 @@ import Youtube from "../assets/Social-Icons/youtube.png";
 
 const Footer = () => {
   return (
-    <footer className="header relative bottom-0 w-full flex items-center backdrop-blur-[20px] bg-footer-image bg-cover bg-no-repeat bg-center bg-fixed bg-clip-padding bg-[#08283560] bg-blend-multiply border-t-[0.2rem] border-[#082835] border-dotted">
+    <footer className="header relative bottom-0 w-full flex items-center backdrop-blur-[20px] bg-footer-image bg-cover bg-no-repeat bg-center bg-fixed bg-clip-padding bg-[#08283560] bg-blend-multiply border-t-[0.2rem] border-theme-blue border-dotted">
       <div className="headerWrapper w-full flex flex-col justify-between mx-[4%] text-white">
         {/* Footer Top */}
         <section className="footerTop w-full grid grid-cols-12 gap-[3rem] laptopSm:grid-cols-5 laptopSm:gap-[2rem] pt-[4rem] pb-[3rem]">
@@ -49,7 +49,7 @@ const Footer = () => {
                 <li key={index}>
                   <Link
                     to={linkRoute}
-                    className="text-[1.5rem] leading-[1.5rem] font-sans text-neutral-200 flex items-center gap-[0.2rem] hover:translate-x-[0.5rem] hover:text-amber-400 transition-all"
+                    className="text-[1.5rem] leading-[1.5rem] font-sans text-neutral-200 flex items-center gap-[0.2rem] hover:translate-x-[0.5rem] hover:text-theme-yellow transition-all"
                   >
                     <FaCaretRight /> {linkTitle}
                   </Link>
@@ -75,7 +75,7 @@ const Footer = () => {
                 <li key={index} className="max-w-max">
                   <Link
                     to={linkRoute}
-                    className={`text-[1.5rem] leading-[1.5rem] font-sans text-neutral-200 flex items-center gap-[0.2rem] hover:translate-x-[0.5rem] hover:text-amber-400 transition-all ${
+                    className={`text-[1.5rem] leading-[1.5rem] font-sans text-neutral-200 flex items-center gap-[0.2rem] hover:translate-x-[0.5rem] hover:text-theme-yellow transition-all ${
                       linkTitle === "Commercial" ||
                       linkTitle === "Residential" ||
                       linkTitle === "Plot"
@@ -104,7 +104,7 @@ const Footer = () => {
                 <li key={index}>
                   <Link
                     to={linkRoute}
-                    className="text-[1.5rem] leading-[1.5rem] font-sans text-neutral-200 flex items-center gap-[0.2rem] filter grayscale-[0.5] hover:filter-none hover:scale-[1.1] hover:text-amber-400 transition-all"
+                    className="text-[1.5rem] leading-[1.5rem] font-sans text-neutral-200 flex items-center gap-[0.2rem] filter grayscale-[0.5] hover:filter-none hover:scale-[1.1] hover:text-theme-yellow transition-all"
                   >
                     <img
                       src={LinkIcon}

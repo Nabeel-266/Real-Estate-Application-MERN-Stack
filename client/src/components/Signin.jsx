@@ -200,7 +200,7 @@ const Signin = () => {
                 disabled={email && password ? false : true}
                 className={`w-full flex justify-center py-[0.8rem] text-[2.1rem] font-bold rounded-full transition-all ${
                   email && password
-                    ? "text-white bg-cyan-950 active:scale-[0.98] active:bg-amber-400 cursor-pointer"
+                    ? "text-white bg-cyan-950 active:scale-[0.98] active:bg-theme-yellow cursor-pointer"
                     : "text-neutral-700 bg-neutral-400 cursor-not-allowed"
                 }`}
               >

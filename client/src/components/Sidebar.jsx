@@ -84,7 +84,7 @@ const Sidebar = ({ isOpenSidebar, setIsOpenSidebar }) => {
                       onClick={() => setIsOpenSidebar(!isOpenSidebar)}
                       className={`${
                         isActiveTab === route.split("/")[1]
-                          ? "text-amber-400 border-amber-400 border-l-[0.3rem]"
+                          ? "text-theme-yellow border-theme-yellow border-l-[0.3rem]"
                           : "text-white border-white hover:border-l-[0.3rem]"
                       } w-full relative z-10 flex items-center gap-[1.5rem] px-[1.5rem] py-[1rem]`}
                     >
@@ -106,7 +106,7 @@ const Sidebar = ({ isOpenSidebar, setIsOpenSidebar }) => {
                 <Link to={"/account/sign-in"}>
                   <button
                     onClick={() => setIsOpenSidebar(!isOpenSidebar)}
-                    className="w-full relative flex items-center gap-[1rem] px-[1.4rem] py-[1rem] text-[2.2rem] leading-[3.2rem] text-cyan-950 font-semibold bg-white cursor-pointer rounded-full transition-all hover:bg-amber-400 active:scale-[0.98]"
+                    className="w-full relative flex items-center gap-[1rem] px-[1.4rem] py-[1rem] text-[2.2rem] leading-[3.2rem] text-cyan-950 font-semibold bg-white cursor-pointer rounded-full transition-all hover:bg-theme-yellow active:scale-[0.98]"
                   >
                     <PiSignInBold size={"3rem"} />
                     <span>Sign in</span>
@@ -121,7 +121,7 @@ const Sidebar = ({ isOpenSidebar, setIsOpenSidebar }) => {
                 <Link to={"/profile"}>
                   <button
                     onClick={() => setIsOpenSidebar(!isOpenSidebar)}
-                    className="w-full relative flex items-center gap-[1.2rem] px-[1.2rem] py-[1rem] text-[2.2rem] leading-[3.2rem] text-cyan-950 font-semibold bg-white cursor-pointer rounded-full transition-all hover:bg-amber-400 active:scale-[0.98]"
+                    className="w-full relative flex items-center gap-[1.2rem] px-[1.2rem] py-[1rem] text-[2.2rem] leading-[3.2rem] text-cyan-950 font-semibold bg-white cursor-pointer rounded-full transition-all hover:bg-theme-yellow active:scale-[0.98]"
                   >
                     <img
                       src={User}
@@ -137,7 +137,7 @@ const Sidebar = ({ isOpenSidebar, setIsOpenSidebar }) => {
 
                 <button
                   onClick={() => setIsOpenSidebar(!isOpenSidebar)}
-                  className="w-full relative flex items-center gap-[1rem] px-[1.4rem] py-[1rem] text-[2.2rem] leading-[3.2rem] text-cyan-950 font-semibold bg-white cursor-pointer rounded-full transition-all hover:bg-amber-400 active:scale-[0.98]"
+                  className="w-full relative flex items-center gap-[1rem] px-[1.4rem] py-[1rem] text-[2.2rem] leading-[3.2rem] text-cyan-950 font-semibold bg-white cursor-pointer rounded-full transition-all hover:bg-theme-yellow active:scale-[0.98]"
                 >
                   <PiSignOutBold size={"3rem"} />
                   <span>Logout</span>

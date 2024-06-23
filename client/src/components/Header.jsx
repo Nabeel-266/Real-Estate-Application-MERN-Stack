@@ -38,7 +38,7 @@ const Header = ({ setIsOpenSidebar }) => {
               ].map(([tilte, path], index) => (
                 <li
                   key={index}
-                  className="nav-item text-[#082835] relative z-[2] before:content-[''] before:absolute before:z-[1] before:bottom-[-0.2rem] before:w-full before:h-[0.3rem] before:bg-cyan-900 before:rounded-full before:transition-[all_0.5s_ease-in] before:scale-x-[0] hover:before:scale-x-[1]"
+                  className="nav-item text-theme-blue relative z-[2] before:content-[''] before:absolute before:z-[1] before:bottom-[-0.2rem] before:w-full before:h-[0.3rem] before:bg-cyan-900 before:rounded-full before:transition-[all_0.5s_ease-in] before:scale-x-[0] hover:before:scale-x-[1]"
                 >
                   <NavLink
                     to={path}
@@ -60,14 +60,14 @@ const Header = ({ setIsOpenSidebar }) => {
             <div className="authBtns hidden tabletSm:flex items-center gap-[1.4rem]">
               {/* Signin Button */}
               <Link to="/account/sign-in">
-                <button className="signinBtn text-[1.7rem] leading-[1.6rem] font-semibold text-[#082835] p-[1rem] rounded-md hover:text-amber-400 transition-all ">
+                <button className="signinBtn text-[1.7rem] leading-[1.6rem] font-semibold text-theme-blue p-[1rem] rounded-md hover:text-theme-yellow transition-all ">
                   Sign in
                 </button>
               </Link>
 
               {/* Signup Button */}
               <Link to="/account/sign-up">
-                <button className="signupBtn text-[1.7rem] leading-[1.6rem] font-semibold text-[#082835] p-[1rem] bg-amber-400 rounded-md hover:bg-[#082835] hover:text-amber-400 transition-all">
+                <button className="signupBtn text-[1.7rem] leading-[1.6rem] font-semibold text-theme-blue p-[1rem] bg-theme-yellow rounded-md hover:bg-theme-blue hover:text-theme-yellow transition-all">
                   Sign up
                 </button>
               </Link>
@@ -82,13 +82,13 @@ const Header = ({ setIsOpenSidebar }) => {
                 <img
                   src={User}
                   alt="profile"
-                  className="w-[2.9rem] rounded-full bg-[#082835] p-[0.2rem]"
+                  className="w-[2.9rem] rounded-full bg-theme-blue p-[0.2rem]"
                 />
               </div>
 
               {/* Profile Button */}
               <Link to="/profile">
-                <button className="profileBtn text-[1.7rem] leading-[1.7rem] font-semibold text-[#082835] px-[1.6rem] py-[0.8rem] bg-amber-400 rounded-md hidden tabletSm:block">
+                <button className="profileBtn text-[1.7rem] leading-[1.7rem] font-semibold text-theme-blue px-[1.6rem] py-[0.8rem] bg-theme-yellow rounded-md hidden tabletSm:block">
                   Profile
                 </button>
               </Link>
@@ -102,7 +102,7 @@ const Header = ({ setIsOpenSidebar }) => {
           {/* Open Sidebar Button */}
           <button
             onClick={() => setIsOpenSidebar((prvState) => !prvState)}
-            className="text-[3.5rem] text-[#082835] block tabletLg:hidden"
+            className="text-[3.5rem] text-theme-blue block tabletLg:hidden"
           >
             <CgMenuRight />
           </button>

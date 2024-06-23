@@ -94,7 +94,7 @@ const VerifyAccount = () => {
       <div className="verificationCont mobileSm:min-w-[90%] mobileRg:min-w-[90%] tabletSm:min-w-[55rem] max-w-[65rem] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-white p-[2.5rem] shadow-2xl rounded-lg">
         {/* Verfication Cont Header */}
         <header className="pb-[1.5rem] border-b-[0.2rem] border-neutral-500">
-          <h1 className="text-[2.5rem] leading-[2.5rem] text-[#082835] font-semibold">
+          <h1 className="text-[2.5rem] leading-[2.5rem] text-theme-blue font-semibold">
             Please Verify Your Account
           </h1>
         </header>
@@ -127,7 +127,7 @@ const VerifyAccount = () => {
               disabled={OTPCode?.length === 8 ? false : true}
               className={`${
                 OTPCode?.length === 8
-                  ? "bg-amber-400 text-neutral-800 cursor-pointer active:scale-[0.98]"
+                  ? "bg-theme-yellow text-neutral-800 cursor-pointer active:scale-[0.98]"
                   : "bg-neutral-500 text-white cursor-not-allowed"
               } gap-[0.5rem] text-[1.6rem] leading-[1.5rem] font-semibold px-[2rem] py-[1.2rem] rounded-sm hover:shadow-lg transition-all`}
             >

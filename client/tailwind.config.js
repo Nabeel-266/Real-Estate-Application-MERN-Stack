@@ -15,6 +15,10 @@ export default {
         desktopRg: "1350px",
         desktopLg: "1536px",
       },
+      colors: {
+        "theme-blue": "#082835",
+        "theme-yellow": "#fbbf24",
+      },
       animation: {
         pulse: "pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite",
         moveArrow: "move 0.3s ease-out 1",
@@ -50,6 +54,7 @@ export default {
       },
       backgroundImage: {
         "about-hd-image": "url('/src/assets/About/about-bg.jpg')",
+        "profile-image": "url('/src/assets/profile-bg.png')",
         "footer-image": "url('/src/assets/footer-bg.jpg')",
       },
     },
