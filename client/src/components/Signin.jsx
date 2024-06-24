@@ -103,7 +103,7 @@ const Signin = () => {
                 {/* Login Email Input Cont */}
                 <div className="w-full flex items-center relative">
                   <input
-                    type="email"
+                    type="text"
                     name="email"
                     id="signin_email"
                     value={email}

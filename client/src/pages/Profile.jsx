@@ -26,10 +26,14 @@ import { HiLocationMarker } from "react-icons/hi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { HiMiniXMark } from "react-icons/hi2";
 
+// Import Component
+import EditProfile from "../components/EditProfile";
+
 const Profile = () => {
   const user = useSelector((state) => state?.user?.currentUser);
   const [isActiveTab, setIsActiveTab] = useState("saved");
   const [isOpenAccStngDropdown, setIsOpenAccStngDropdown] = useState(false);
+  const [isOpenEditProfileModal, setIsOpenEditProfileModal] = useState(false);
   const dropdownRef = useRef(null);
 
   const handleClickOutsideDropdown = (event) => {
@@ -105,7 +109,7 @@ const Profile = () => {
             <img
               src={ProfilePicture}
               alt="ProfilePicture"
-              className="w-full h-full object-cover bg-theme-blue rounded-full p-[1rem] border-[0.4rem] border-white"
+              className="w-full h-full object-cover bg-theme-blue rounded-full border-[0.4rem] border-white"
             />
           </div>
 
@@ -122,12 +126,12 @@ const Profile = () => {
               </span>
             </p>
 
-            {/* <p className="text-[1.6rem] flex items-center gap-[0.5rem]">
+            <p className="text-[1.6rem] flex items-center gap-[0.5rem]">
               <TiPhoneOutline className="text-neutral-700" />
               <span className="leading-[2rem] text-neutral-800 font-medium">
                 03342805639
               </span>
-            </p> */}
+            </p>
           </div>
 
           {/* Profile Buttons */}
@@ -139,7 +143,10 @@ const Profile = () => {
               </button>
             )}
 
-            <button className="editProfileBtn text-[1.7rem] leading-[1.7rem] font-medium text-white px-[1rem] py-[0.8rem] bg-theme-blue rounded-md flex items-center gap-[0.5rem]">
+            <button
+              onClick={() => setIsOpenEditProfileModal(true)}
+              className="editProfileBtn text-[1.7rem] leading-[1.7rem] font-medium text-white px-[1rem] py-[0.8rem] bg-theme-blue rounded-md flex items-center gap-[0.5rem]"
+            >
               <BiEditAlt />
               <span>Edit Profile</span>
             </button>
@@ -291,6 +298,10 @@ const Profile = () => {
           </div>
         </section>
       </div>
+
+      {isOpenEditProfileModal && (
+        <EditProfile setIsOpenModal={setIsOpenEditProfileModal} />
+      )}
     </div>
   );
 };

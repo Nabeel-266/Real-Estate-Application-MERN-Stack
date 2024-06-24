@@ -82,7 +82,7 @@ const Header = ({ setIsOpenSidebar }) => {
                 <img
                   src={User}
                   alt="profile"
-                  className="w-[2.9rem] rounded-full bg-theme-blue p-[0.2rem]"
+                  className="w-[3rem] rounded-full bg-theme-blue border-[0.2rem] border-neutral-300"
                 />
               </div>
 

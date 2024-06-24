@@ -112,6 +112,10 @@
 }
 
 @layer components {
+  .numberInput::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
   .formInput {
     @apply w-full pl-[0.5rem] pr-[3.5rem] py-[0.6rem] text-neutral-600 text-[1.7rem] leading-[2rem] font-medium font-mont outline-none bg-transparent border-b-2 border-neutral-400 focus:border-cyan-700;
   }
