@@ -5,6 +5,7 @@ import { validateToken } from "../helpers/token.js";
 
 // Import Controllers
 import {
+  signupVerification,
   signup,
   signin,
   verifyAccount,
@@ -14,11 +15,14 @@ import {
 
 const authRouter = express.Router();
 
+// For Signup Account Verification
+authRouter.post("/signupVerification", signupVerification);
+
 // For Signup
-authRouter.post("/register", signup);
+authRouter.post("/signup", signup);
 
 // For Signin
-authRouter.post("/login", signin);
+authRouter.post("/signin", signin);
 
 // For Verify Account
 authRouter.post("/verifyAccount", validateToken, verifyAccount);

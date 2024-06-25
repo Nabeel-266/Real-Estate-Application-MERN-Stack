@@ -15,6 +15,7 @@ const resMessages = {
   USER_NAME_EXISTS: "User name already taken, kindly choose another",
   USER_ALREADY_VERIFIED: "User already verified",
   MISSING_FIELDS: "All Fields are required",
+  MISSING_FIELD: "Empty Field",
   SUCCESS_LOGIN: "User Login Successfull",
   SUCCESS_REGISTRATION: "User Registration Successfull",
   SUCCESS_VERIFICATION: "User Verification Successfull",

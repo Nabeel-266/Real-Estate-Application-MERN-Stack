@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 // Import Components
@@ -8,18 +8,7 @@ import { AuthProtectedRoute } from "../secure/Protected_Route";
 // import VerifyAccount from "../components/VerifyAccount";
 
 const Auth = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const routeLocation = location.pathname
-    .split("/")
-    .filter((str) => str !== "");
-
-  useEffect(() => {
-    if (routeLocation[0] === "account" && routeLocation.length === 1) {
-      navigate("/account/sign-in");
-    }
-  }, []);
+  const [isUserCredentialsGiven, setIsUserCredentialsGiven] = useState("");
 
   return (
     // bg-theme-blue

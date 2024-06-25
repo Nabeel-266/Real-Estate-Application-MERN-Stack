@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { resendOTPtoUser, verifyUser } from "../api/authAPIs";
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
+import { registerVerifyUser, resendOTPtoUser } from "../api/authAPIs";
+import { checkOtpVerificationHandler } from "../utils/authErrors";
 import { useDispatch, useSelector } from "react-redux";
 import toastify from "../utils/toastify";
-import { sendOtpErrorHandler } from "../utils/authErrors";
 
 // Import React Icon
 import { FaArrowRotateRight } from "react-icons/fa6";
@@ -13,40 +13,26 @@ import Loader from "./Loader";
 
 const VerifyAccount = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const location = useLocation();
-  const routeLocation = location.pathname.split("/")[2];
   const [OTPCode, setOTPCode] = useState("");
   const [otpLoading, setOtpLoading] = useState(false);
-  const [verifyLoading, setVerifyLoading] = useState(false);
-  const { currentUser } = useSelector((state) => state?.user);
+  const [userDoc, setUserDoc] = useState(location.state.data);
+  const { pending } = useSelector((state) => state?.user);
 
-  useEffect(() => {
-    if (currentUser) {
-      toastify(
-        "info",
-        `Dear ${currentUser?.username}, Please! verify your account`,
-        "top-right",
-        "dark",
-        10000
-      );
-    } else {
-      navigate("/account/sign-in");
-    }
-  }, [currentUser]);
+  console.log(userDoc);
 
-  // Account Verification Handler
-  const accountVerificationHandler = async (e) => {
+  // Signup Verification Handler
+  const signupVerificationHandler = async (e) => {
     e.preventDefault();
-    setVerifyLoading(true);
 
     try {
-      // Call Verify User API Function
-      await verifyUser(OTPCode, dispatch, navigate);
+      const isOtpOk = checkOtpVerificationHandler(userDoc, OTPCode);
 
-      setVerifyLoading(false);
+      if (isOtpOk) {
+        // Call Register Verify_User API Function
+        await registerVerifyUser(userDoc, OTPCode, dispatch);
+      }
     } catch (error) {
-      setVerifyLoading(false);
       toastify(
         "error",
         `${error?.response?.data?.message || error.message}`,
@@ -63,11 +49,21 @@ const VerifyAccount = () => {
     setOtpLoading(true);
 
     try {
-      const isOTPConditionsOK = sendOtpErrorHandler(currentUser);
+      const isOtpExpire = userDoc.otpExpiry < Date.now();
 
-      if (isOTPConditionsOK) {
+      if (isOtpExpire) {
         // Call Resend OTP API Function
-        await resendOTPtoUser(currentUser.email, dispatch);
+        const updatedOtpUser = await resendOTPtoUser(userDoc);
+        console.log(updatedOtpUser);
+        setUserDoc(updatedOtpUser);
+      } else {
+        toastify(
+          "info",
+          "Rejected! Your current OTP is already active",
+          "top-right",
+          "dark",
+          6000
+        );
       }
 
       setOtpLoading(false);
@@ -86,16 +82,14 @@ const VerifyAccount = () => {
 
   return (
     <div
-      className={`${
-        routeLocation === "verification" ? "block" : "hidden"
-      } accountVerifyCont w-full min-h-dvh relative flex justify-center items-center pt-[9rem] px-[1rem] z-[1000] bg-neutral-200`}
+      className={`accountVerifyCont w-full min-h-dvh relative flex justify-center items-center p-[3rem] bg-neutral-200`}
     >
       {/* Verification Cont */}
-      <div className="verificationCont mobileSm:min-w-[90%] mobileRg:min-w-[90%] tabletSm:min-w-[55rem] max-w-[65rem] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-white p-[2.5rem] shadow-2xl rounded-lg">
+      <div className="verificationCont mobileSm:min-w-[90%] mobileRg:min-w-[90%] tabletSm:min-w-[55rem] max-w-[65rem] bg-white p-[2.5rem] shadow-2xl rounded-lg">
         {/* Verfication Cont Header */}
         <header className="pb-[1.5rem] border-b-[0.2rem] border-neutral-500">
           <h1 className="text-[2.5rem] leading-[2.5rem] text-theme-blue font-semibold">
-            Please Verify Your Account
+            Verify & Create Account
           </h1>
         </header>
 
@@ -104,8 +98,8 @@ const VerifyAccount = () => {
           {/* Message */}
           <p className="text-[1.6rem] font-normal">
             We have sent <b>OTP</b> to your email to verify your account. Please
-            check your email and put your account verification <b>OTP</b> here
-            then click on a <b>Verify Account</b> Button.
+            check your email and put your <b>account verification code</b> here
+            then click on a <b>Verify & Create Account</b> Button.
           </p>
 
           {/* OTP Input */}
@@ -114,7 +108,7 @@ const VerifyAccount = () => {
             name="otp"
             id="otp"
             defaultValue={OTPCode}
-            placeholder="Type OTP here..."
+            placeholder="Enter code here..."
             onChange={(e) => setOTPCode(e.target.value)}
             maxLength={8}
             className="w-full pl-[0.5rem] pr-[3.5rem] py-[0.6rem] text-neutral-600 text-[1.6rem] leading-[1.6rem] font-medium font-mont outline-none bg-transparent border-b-2 border-neutral-400 focus:border-cyan-900"
@@ -123,7 +117,7 @@ const VerifyAccount = () => {
           {/* Action Buttons */}
           <div className="actionBtns w-full flex justify-between items-end pt-[0.5rem]">
             <button
-              onClick={(e) => accountVerificationHandler(e)}
+              onClick={(e) => signupVerificationHandler(e)}
               disabled={OTPCode?.length === 8 ? false : true}
               className={`${
                 OTPCode?.length === 8
@@ -131,10 +125,10 @@ const VerifyAccount = () => {
                   : "bg-neutral-500 text-white cursor-not-allowed"
               } gap-[0.5rem] text-[1.6rem] leading-[1.5rem] font-semibold px-[2rem] py-[1.2rem] rounded-sm hover:shadow-lg transition-all`}
             >
-              {verifyLoading ? (
+              {pending ? (
                 <Loader value="Processing" color="#262626" />
               ) : (
-                "Verify Account"
+                "Verify & Create Account"
               )}
             </button>
             <button
@@ -157,8 +151,7 @@ const VerifyAccount = () => {
             <p>
               <b className="text-[2rem] leading-[1.45rem]">-</b> If your account
               is not verified, you will not be able to see any property details
-              or take any actions such as contacting agents, selling property,
-              etc.
+              or take any actions such as selling property, etc.
             </p>
           </div>
         </div>

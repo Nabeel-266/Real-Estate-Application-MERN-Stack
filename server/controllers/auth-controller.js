@@ -9,11 +9,11 @@ import { generateToken } from "../helpers/token.js";
 import resMessages from "../constants/responsesMessages.js";
 const { compareSync, hashSync, genSaltSync } = pkg;
 
-//* --> For Signup <--
-//? @route --> POST --> api/auth/register
+//* --> For Signup Verification <--
+//? @route --> POST --> api/auth/signupVerification
 //  @access --> PUBLIC
-export const signup = async (req, res, next) => {
-  console.log("Signup Controller");
+export const signupVerification = async (req, res, next) => {
+  console.log("Signup Verifiaction Controller");
   console.log(req.body);
 
   try {
@@ -78,14 +78,7 @@ export const signup = async (req, res, next) => {
       );
     }
 
-    let user_Doc;
-
-    // Hashed Password
-    const passwordSalt = genSaltSync(10);
-    const hashedPassword = hashSync(password, passwordSalt);
-
-    // Create New User in Database
-    user_Doc = new User({ username, email, password: hashedPassword });
+    let user_Doc = req.body;
 
     // Create OTP
     const otp = uuidv4().slice(0, 8);
@@ -95,13 +88,87 @@ export const signup = async (req, res, next) => {
     user_Doc.otp = otp;
     user_Doc.otpExpiry = Date.now() + 90000; // 1.5 minutes
 
-    // New User Saved in Db
-    const newUser = await user_Doc.save();
-    newUser.password = undefined;
-
     // send OTP to User Email
     const emailResponse = await sendEmailOTP(username, email, otp);
     console.log(emailResponse);
+
+    res.status(StatusCodes.OK).send(
+      sendSuccess({
+        message: emailResponse,
+        data: user_Doc,
+      })
+    );
+  } catch (error) {
+    console.log(error.message, "==> error in registeration");
+    next(error);
+  }
+};
+
+//* --> For Signup <--
+//? @route --> POST --> api/auth/register
+//  @access --> PUBLIC
+export const signup = async (req, res, next) => {
+  console.log("Signup Controller");
+  console.log(req.body);
+
+  try {
+    const { enteredOTP, user } = req.body;
+
+    // If OTP not found
+    if (!enteredOTP) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.MISSING_FIELD,
+        })
+      );
+    }
+
+    // If User not found
+    if (!user) {
+      return res.status(StatusCodes.NOT_FOUND).send(
+        sendError({
+          statusCode: StatusCodes.NOT_FOUND,
+          message: resMessages.NO_USER,
+        })
+      );
+    }
+
+    // If OTP not matched
+    if (enteredOTP !== user.otp) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.INVALID_OTP,
+        })
+      );
+    }
+
+    // If OTP Expired
+    if (user.otpExpiry < Date.now()) {
+      return res.status(StatusCodes.FORBIDDEN).send(
+        sendError({
+          statusCode: StatusCodes.FORBIDDEN,
+          message: resMessages.OTP_EXPIRED,
+        })
+      );
+    }
+
+    console.log(enteredOTP);
+    console.log(user);
+
+    const { username, email, password } = user;
+
+    // Hashed Password
+    const passwordSalt = genSaltSync(10);
+    const hashedPassword = hashSync(password, passwordSalt);
+
+    // Create New User in Database
+    const user_Doc = new User({ username, email, password: hashedPassword });
+
+    // New User Saved in Db
+    const newUser = await user_Doc.save();
+    newUser.password = undefined;
 
     // Generate Token for User
     const token = generateToken({ data: newUser._id });
@@ -293,11 +360,9 @@ export const resendOTP = async (req, res, next) => {
   console.log(req.body, "==> Request User");
 
   try {
-    // Find User with Req.User.ID
-    const user = await User.findOne({ email: req.body.email });
-    console.log(user, "==> Find User with ID");
+    let { userDoc } = req.body;
 
-    if (!user) {
+    if (!userDoc) {
       return res.status(StatusCodes.NOT_FOUND).send(
         sendError({
           statusCode: StatusCodes.NOT_FOUND,
@@ -306,16 +371,7 @@ export const resendOTP = async (req, res, next) => {
       );
     }
 
-    if (user.isVerified) {
-      return res.status(StatusCodes.BAD_REQUEST).send(
-        sendError({
-          statusCode: StatusCodes.BAD_REQUEST,
-          message: resMessages.USER_ALREADY_VERIFIED,
-        })
-      );
-    }
-
-    if (user.otpExpiry > Date.now()) {
+    if (userDoc.otpExpiry > Date.now()) {
       return res.status(StatusCodes.FORBIDDEN).send(
         sendError({
           statusCode: StatusCodes.FORBIDDEN,
@@ -329,21 +385,21 @@ export const resendOTP = async (req, res, next) => {
     console.log(otp);
 
     // Set OTP and OTP Expiry in USER_Document
-    user.otp = otp;
-    user.otpExpiry = Date.now() + 60000; // 1 minute
-
-    // Update User after create new OTP
-    const updatedUser = await user.save();
-    updatedUser.password = undefined;
+    userDoc.otp = otp;
+    userDoc.otpExpiry = Date.now() + 60000; // 1 minute
 
     // send OTP to User Email
-    const emailResponse = await sendEmailOTP(user.username, user.email, otp);
+    const emailResponse = await sendEmailOTP(
+      userDoc.username,
+      userDoc.email,
+      otp
+    );
     console.log(emailResponse);
 
     res.status(StatusCodes.OK).send(
       sendSuccess({
         message: resMessages.SUCCESS_RESEND_OTP,
-        data: updatedUser,
+        data: userDoc,
       })
     );
   } catch (error) {

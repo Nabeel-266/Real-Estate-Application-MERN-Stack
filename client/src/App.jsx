@@ -4,14 +4,16 @@ import {
   Routes,
   Route,
   Navigate,
+  useLocation,
 } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { checkToken } from "./api/authAPIs";
 
 // Import Protected Route Components
 import {
+  AuthProtectedRoute,
   UnAuthProtectedRoute,
-  VerifiedProtectedRoute,
+  VerifyProtectedRoute,
 } from "./secure/Protected_Route";
 
 // Import Pages & Components
@@ -29,10 +31,19 @@ import Signin from "./components/Signin";
 import Signup from "./components/Signup";
 import VerifyAccount from "./components/VerifyAccount";
 
-const App = () => {
+const AppRoutes = () => {
+  const location = useLocation();
   const dispatch = useDispatch();
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
 
+  // Check Header is shown or not?
+  const routeLocation = location.pathname;
+  const isHeaderShow =
+    routeLocation !== "/account/sign-in" &&
+    routeLocation !== "/account/sign-up" &&
+    routeLocation !== "/account/verification";
+
+  // Check User Token Authorization
   const memoizedCheckToken = useCallback(
     () => checkToken(dispatch),
     [dispatch]
@@ -44,57 +55,73 @@ const App = () => {
 
   return (
     <div className="app bg-white relative overflow-hidden">
-      <Router>
-        <Header setIsOpenSidebar={setIsOpenSidebar} />
-        <Sidebar
-          isOpenSidebar={isOpenSidebar}
-          setIsOpenSidebar={setIsOpenSidebar}
+      {isHeaderShow && (
+        <>
+          <Header setIsOpenSidebar={setIsOpenSidebar} />
+          <Sidebar
+            isOpenSidebar={isOpenSidebar}
+            setIsOpenSidebar={setIsOpenSidebar}
+          />
+        </>
+      )}
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+
+        <Route element={<Auth />}>
+          <Route path="/account/sign-in" element={<Signin />} />
+          <Route path="/account/sign-up" element={<Signup />} />
+        </Route>
+
+        <Route
+          path="/account/verification"
+          element={
+            <VerifyProtectedRoute>
+              <VerifyAccount />
+            </VerifyProtectedRoute>
+          }
         />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/explore"
-            element={
-              <UnAuthProtectedRoute>
-                <Explore />
-              </UnAuthProtectedRoute>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <UnAuthProtectedRoute>
-                <Profile />
-              </UnAuthProtectedRoute>
-            }
-          />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/team" element={<Team />} />
 
-          <Route element={<Auth />}>
-            <Route path="/account/sign-in" element={<Signin />} />
-            <Route path="/account/sign-up" element={<Signup />} />
-          </Route>
+        <Route
+          path="/explore"
+          element={
+            <UnAuthProtectedRoute>
+              <Explore />
+            </UnAuthProtectedRoute>
+          }
+        />
 
-          <Route
-            path="/account/verification"
-            element={
-              <VerifiedProtectedRoute>
-                <VerifyAccount />
-              </VerifiedProtectedRoute>
-            }
-          />
+        <Route
+          path="/profile"
+          element={
+            <UnAuthProtectedRoute>
+              <Profile />
+            </UnAuthProtectedRoute>
+          }
+        />
 
-          <Route
-            path="*"
-            element={<h1 className="mt-[7rem]">Page not found</h1>}
-          />
-        </Routes>
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/team" element={<Team />} />
+
+        <Route
+          path="*"
+          element={<h1 className="mt-[7rem]">Page not found</h1>}
+        />
+      </Routes>
+    </div>
+  );
+};
+
+const App = () => {
+  return (
+    <>
+      <Router>
+        <AppRoutes />
       </Router>
 
       <ToastContainer />
-    </div>
+    </>
   );
 };
 

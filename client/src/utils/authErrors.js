@@ -117,23 +117,16 @@ const signinServerErrorHandler = (errorMsg, setError) => {
   }
 };
 
-const sendOtpErrorHandler = (currentUser) => {
-  const otpExpiryDate = new Date(currentUser?.otpExpiry).getTime();
+const checkOtpVerificationHandler = (userDoc, OTPCode) => {
   const currentTime = Date.now();
 
-  if (currentUser.isVerified) {
-    toastify(
-      "info",
-      "You are already verified, so don't need to resend OTP. ThankYou!",
-      "top-right",
-      "dark",
-      6000
-    );
+  if (userDoc.otp !== OTPCode) {
+    toastify("error", "OTP is invalid", "top-right", "dark", 6000);
     return false;
-  } else if (otpExpiryDate > currentTime) {
+  } else if (userDoc.otpExpiry < currentTime) {
     toastify(
-      "info",
-      "Rejected! Your current OTP is already active",
+      "error",
+      "Your OTP code has been expired, please request a new OTP code",
       "top-right",
       "dark",
       6000
@@ -149,5 +142,5 @@ export {
   signupServerErrorHandler,
   signinClientErrorHandler,
   signinServerErrorHandler,
-  sendOtpErrorHandler,
+  checkOtpVerificationHandler,
 };

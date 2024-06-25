@@ -18,12 +18,12 @@ async function sendEmailOTP(username, userEmail, otp) {
     from: process.env.PORTAL_EMAIL,
     to: userEmail,
     subject: "Verify Your Email for Nab Estate Account",
-    text: `Dear ${username},\n\nThank you for signing up with Nab Estate! Please use the OTP below to verify your email address:\n\nYour OTP is: ${otp}\n\nIf you did not request this, please ignore this email.\n\nBest regards,\nNab Estate Team`,
+    text: `Dear ${username},\n\nWelcome to Nab Estate family! Please use the OTP below to verify your email address:\n\nYour OTP is: ${otp}\n\nIf you did not request this, please ignore this email.\n\nBest regards,\nNab Estate Team`,
   };
 
   try {
     await transporter.sendMail(mailOptions);
-    return `OTP sent to ${userEmail} via email`;
+    return `OTP sent to via email successfully`;
   } catch (error) {
     return `Error! sending OTP to ${userEmail} via email: ${error}`;
   }

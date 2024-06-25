@@ -20,7 +20,7 @@ const Signin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const currentLocation = location.pathname.split("/")[2];
+  const routeLocation = location.pathname.split("/")[2];
   const { pending } = useSelector((state) => state?.user);
   const [error, setError] = useState([]);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -54,7 +54,9 @@ const Signin = () => {
 
       if (isUserCredentialsOK) {
         // Call Signin User API Function
-        await loginUser(loginFormData, dispatch, navigate);
+        // await loginUser(loginFormData, dispatch, navigate);
+
+        // navigate("/account/verify", { state: "From Login" });
 
         setError("");
         setLoginFormData({
@@ -72,12 +74,12 @@ const Signin = () => {
   return (
     <div
       className={`signinCont w-full h-full overflow-auto absolute z-[90] top-0 left-0 scrollbar ${
-        currentLocation === "sign-in"
-          ? "translate-x-[0%] translate-y-[0%] scale-100 rotate-0"
-          : "translate-x-[-100%] translate-y-[-100%] scale-0 rotate-180"
+        routeLocation === "sign-in"
+          ? "translate-x-[0%] opacity-100 scale-100"
+          : "translate-x-[-100%] opacity-0 scale-0"
       } transition-all duration-[700ms] ease-in-out`}
     >
-      <div className="signinWrapper w-full min-h-full pt-[8rem] pb-[3rem] flex items-center justify-center">
+      <div className="signinWrapper w-full min-h-full p-[3rem] flex items-center justify-center">
         {/* Sign-in Form Cont */}
         <div className="signinFormCont mobileSm:w-[42rem] mobileRg:w-[46rem] tabletSm:w-[50rem] flex flex-col gap-[2.8rem] bg-white shadow-2xl px-[2rem] py-[2.5rem] rounded-lg">
           {/* Sign-in Form */}

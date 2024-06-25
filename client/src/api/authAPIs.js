@@ -6,6 +6,7 @@ import {
   VERIFY_ACCOUNT,
   RESEND_OTP,
   CHECK_TOKEN,
+  SIGN_UP_VERIFICATION,
 } from "../constants/apisRoute";
 import {
   checkTokenSuccess,
@@ -19,25 +20,43 @@ import {
   verifyAccountSuccess,
 } from "../app/actions/userActions";
 
-// For SIGNUP USER
-export const registerUser = async (userCredentials, dispatch, navigate) => {
+// For SIGNUP_USER VERIFICATION
+export const registerUserVerification = async (userCredentials) => {
+  try {
+    const response = await axios.post(
+      `${SIGN_UP_VERIFICATION}`,
+      userCredentials
+    );
+    const userDoc = response?.data;
+
+    toastify("success", `${userDoc.message}`, "top-right", "dark", 4000);
+
+    return userDoc;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// For SIGNUP VERIFY_USER
+export const registerVerifyUser = async (userDoc, OTP, dispatch) => {
   dispatch(signupPending());
 
   try {
-    const response = await axios.post(`${SIGN_UP}`, userCredentials);
+    const response = await axios.post(`${SIGN_UP}`, {
+      enteredOTP: OTP,
+      user: userDoc,
+    });
     const newUser = response?.data?.data;
-    // console.log(newUser);
+    console.log(newUser);
     dispatch(signupSuccess(newUser));
 
     toastify(
       "success",
-      `${newUser.username}! You Signup Successfully`,
+      `${newUser.username}! Your Account Created Successfully`,
       "top-right",
       "dark",
       4000
     );
-
-    navigate("/account/verification"); // { state: newUser?.data }
   } catch (error) {
     dispatch(signupFailure());
     throw error;
@@ -102,12 +121,12 @@ export const verifyUser = async (OTP, dispatch, navigate) => {
 };
 
 // For RESEND OTP to USER
-export const resendOTPtoUser = async (email, dispatch) => {
+export const resendOTPtoUser = async (userDoc) => {
+  console.log(userDoc);
   try {
-    const response = await axios.post(`${RESEND_OTP}`, { email });
+    const response = await axios.post(`${RESEND_OTP}`, { userDoc });
     const updatedOTPUser = response?.data?.data;
-    // console.log(updatedOTPUser);
-    dispatch(resendOTPSuccess(updatedOTPUser));
+    console.log(updatedOTPUser);
 
     toastify(
       "success",
@@ -116,6 +135,8 @@ export const resendOTPtoUser = async (email, dispatch) => {
       "dark",
       6000
     );
+
+    return updatedOTPUser;
   } catch (error) {
     throw error;
   }

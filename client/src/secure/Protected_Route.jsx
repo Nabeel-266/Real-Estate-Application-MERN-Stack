@@ -1,16 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import toastify from "../utils/toastify";
 
 export const AuthProtectedRoute = ({ children }) => {
   const user = useSelector((state) => state?.user?.currentUser);
-  if (user && user.isVerified) {
+  if (user) {
     return <Navigate to="/" replace />;
-  }
-
-  if (user && !user.isVerified) {
-    return <Navigate to="/account/verification" replace />;
   }
 
   return <>{children}</>;
@@ -57,19 +53,17 @@ export const UnVerifiedProtectedRoute = ({ children }) => {
   return <>{children}</>;
 };
 
-export const VerifiedProtectedRoute = ({ children }) => {
-  const user = useSelector((state) => state?.user?.currentUser);
-  if (!user) {
-    toastify(
-      "info",
-      `Welcome to NAB Estate! Please LOGIN to your account first`,
-      "top-right",
-      "dark",
-      10000
-    );
-    return <Navigate to="/account/sign-in" replace />;
+export const VerifyProtectedRoute = ({ children }) => {
+  const location = useLocation();
+  const userDoc = location.state;
+  const { currentUser } = useSelector((state) => state?.user);
+  console.log(userDoc);
+
+  if (!userDoc) {
+    return <Navigate to="/account/sign-up" replace />;
   }
-  if (user.isVerified) {
+
+  if (currentUser) {
     return <Navigate to="/" replace />;
   }
 

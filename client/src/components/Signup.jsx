@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { registerUser } from "../api/authAPIs";
+import { registerUserVerification } from "../api/authAPIs";
 import {
   signupClientErrorHandler,
   signupServerErrorHandler,
@@ -21,7 +21,7 @@ const Signup = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const routeLocation = location.pathname.split("/")[2];
-  const { pending } = useSelector((state) => state?.user);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState([]);
   const [isEmailSuggest, setIsEmailSuggest] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -57,6 +57,8 @@ const Signup = () => {
       );
 
       if (isUserCredentialsOK) {
+        setLoading(true);
+
         // Username Formated
         const userFullname = username?.trim()?.split(" ");
         const firstname =
@@ -75,8 +77,11 @@ const Signup = () => {
         };
 
         // Call Signup User API Function
-        await registerUser(userCredentials, dispatch, navigate);
+        const userDoc = await registerUserVerification(userCredentials);
 
+        navigate("/account/verification", { state: userDoc });
+
+        setLoading(false);
         setError("");
         setRegisterFormData({
           username: "",
@@ -89,6 +94,7 @@ const Signup = () => {
       console.log(err);
       const errorMsg = err?.response?.data?.message || err.message;
       signupServerErrorHandler(errorMsg, setError);
+      setLoading(false);
     }
   };
 
@@ -96,11 +102,11 @@ const Signup = () => {
     <div
       className={`signupCont w-full h-full overflow-auto absolute z-[90] top-0 left-0 scrollbar ${
         routeLocation === "sign-up"
-          ? "translate-x-[0%] translate-y-[0%] scale-100 rotate"
-          : "translate-x-[100%] translate-y-[100%] scale-0 rotate-180"
+          ? "translate-x-[0%] opacity-100 scale-100 "
+          : "translate-x-[100%] opacity-0 scale-0"
       } transition-all duration-[700ms] ease-in-out`}
     >
-      <div className="signupWrapper w-full min-h-full pt-[9rem] pb-[3rem] flex items-center justify-center">
+      <div className="signupWrapper w-full min-h-full p-[3rem] flex items-center justify-center">
         {/* Sign-up Form Cont */}
         <div className="signupFormCont mobileSm:w-[42rem] mobileRg:w-[46rem] tabletSm:w-[50rem] flex flex-col gap-[2.8rem] bg-white shadow-2xl px-[2rem] py-[2.5rem] rounded-lg">
           {/* Sign-up Form */}
@@ -314,10 +320,10 @@ const Signup = () => {
                     : "text-neutral-700 bg-neutral-400 cursor-not-allowed"
                 }`}
               >
-                {pending ? (
+                {loading ? (
                   <Loader value="Processing" color="white" />
                 ) : (
-                  "Register"
+                  "Send Verification Code"
                 )}
               </button>
             </fieldset>
