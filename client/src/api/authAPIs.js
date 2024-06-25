@@ -21,7 +21,7 @@ import {
 } from "../app/actions/userActions";
 
 // For SIGNUP_USER VERIFICATION
-export const registerUserVerification = async (userCredentials) => {
+export const registerUserVerification = async (userCredentials, navigate) => {
   try {
     const response = await axios.post(
       `${SIGN_UP_VERIFICATION}`,
@@ -29,9 +29,14 @@ export const registerUserVerification = async (userCredentials) => {
     );
     const userDoc = response?.data;
 
+    // If User Doc updated with an OTP
+    if (userDoc.status === "Success") {
+      localStorage.setItem("user_Doc", JSON.stringify(userDoc.data));
+    }
+
     toastify("success", `${userDoc.message}`, "top-right", "dark", 4000);
 
-    return userDoc;
+    navigate("/account/verification");
   } catch (error) {
     throw error;
   }
@@ -47,8 +52,9 @@ export const registerVerifyUser = async (userDoc, OTP, dispatch) => {
       user: userDoc,
     });
     const newUser = response?.data?.data;
-    console.log(newUser);
     dispatch(signupSuccess(newUser));
+
+    localStorage.removeItem("user_Doc");
 
     toastify(
       "success",
@@ -64,13 +70,12 @@ export const registerVerifyUser = async (userDoc, OTP, dispatch) => {
 };
 
 // For SIGNIN USER
-export const loginUser = async (userCredentials, dispatch, navigate) => {
+export const loginUser = async (userCredentials, dispatch) => {
   dispatch(signinPending());
 
   try {
     const response = await axios.post(`${SIGN_IN}`, userCredentials);
     const loggedInUser = response?.data?.data;
-    // console.log(loggedInUser);
     dispatch(signinSuccess(loggedInUser));
 
     toastify(
@@ -80,12 +85,6 @@ export const loginUser = async (userCredentials, dispatch, navigate) => {
       "dark",
       4000
     );
-
-    if (!loggedInUser.isVerified) {
-      navigate("/account/verification");
-    } else {
-      navigate("/");
-    }
   } catch (error) {
     dispatch(signinFailure());
     throw error;
@@ -125,18 +124,19 @@ export const resendOTPtoUser = async (userDoc) => {
   console.log(userDoc);
   try {
     const response = await axios.post(`${RESEND_OTP}`, { userDoc });
-    const updatedOTPUser = response?.data?.data;
-    console.log(updatedOTPUser);
+    const updatedOTPUser = response?.data;
+
+    if (updatedOTPUser.status === "Success") {
+      localStorage.setItem("user_Doc", JSON.stringify(updatedOTPUser.data));
+    }
 
     toastify(
       "success",
-      "OTP has been resent successfully, Please! check your email",
+      "OTP has been resent successfully,\n Please! check your email",
       "top-right",
       "dark",
       6000
     );
-
-    return updatedOTPUser;
   } catch (error) {
     throw error;
   }

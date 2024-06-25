@@ -54,9 +54,7 @@ const Signin = () => {
 
       if (isUserCredentialsOK) {
         // Call Signin User API Function
-        // await loginUser(loginFormData, dispatch, navigate);
-
-        // navigate("/account/verify", { state: "From Login" });
+        await loginUser(loginFormData, dispatch);
 
         setError("");
         setLoginFormData({

@@ -17,7 +17,8 @@ export const signupVerification = async (req, res, next) => {
   console.log(req.body);
 
   try {
-    const { username, email, password, confirmPassword } = req.body;
+    let user_Credentials = req.body;
+    const { username, email, password, confirmPassword } = user_Credentials;
 
     // All Fields Required Verification
     if (!username || !email || !password || !confirmPassword) {
@@ -78,15 +79,13 @@ export const signupVerification = async (req, res, next) => {
       );
     }
 
-    let user_Doc = req.body;
-
     // Create OTP
     const otp = uuidv4().slice(0, 8);
     console.log(otp);
 
-    // Set OTP and OTP Expiry in USER_Document
-    user_Doc.otp = otp;
-    user_Doc.otpExpiry = Date.now() + 90000; // 1.5 minutes
+    // Set OTP and OTP Expiry in USER_Credentials
+    user_Credentials.otp = otp;
+    user_Credentials.otpExpiry = Date.now() + 90000; // 1.5 minutes
 
     // send OTP to User Email
     const emailResponse = await sendEmailOTP(username, email, otp);
@@ -95,7 +94,7 @@ export const signupVerification = async (req, res, next) => {
     res.status(StatusCodes.OK).send(
       sendSuccess({
         message: emailResponse,
-        data: user_Doc,
+        data: user_Credentials,
       })
     );
   } catch (error) {
@@ -154,9 +153,6 @@ export const signup = async (req, res, next) => {
       );
     }
 
-    console.log(enteredOTP);
-    console.log(user);
-
     const { username, email, password } = user;
 
     // Hashed Password
@@ -177,7 +173,7 @@ export const signup = async (req, res, next) => {
     res.status(StatusCodes.CREATED).send(
       sendSuccess({
         message: resMessages.SUCCESS_REGISTRATION,
-        data: user_Doc,
+        data: newUser,
       })
     );
   } catch (error) {
@@ -190,7 +186,7 @@ export const signup = async (req, res, next) => {
 //? @route --> POST --> api/auth/login
 //  @access --> PUBLIC
 export const signin = async (req, res, next) => {
-  console.log("Signup Controller");
+  console.log("Signin Controller");
   console.log(req.body);
 
   try {
@@ -243,37 +239,16 @@ export const signin = async (req, res, next) => {
       );
     }
 
-    let updatedUser;
-
-    if (!user.isVerified) {
-      // Create OTP
-      const otp = uuidv4().slice(0, 8);
-      console.log(otp);
-
-      // Set OTP and OTP Expiry in USER_Document
-      user.otp = otp;
-      user.otpExpiry = Date.now() + 90000; // 1.5 minutes
-
-      // Update User after create new OTP
-      updatedUser = await user.save();
-      updatedUser.password = undefined;
-
-      // send OTP to User Email
-      const emailResponse = await sendEmailOTP(user.username, user.email, otp);
-      console.log(emailResponse);
-    } else {
-      updatedUser = user;
-      updatedUser.password = undefined;
-    }
+    user.password = undefined;
 
     // Generate Token for User
-    const token = generateToken({ data: updatedUser._id });
+    const token = generateToken({ data: user._id });
 
     res.cookie("token", token, { httpOnly: true, maxAge: 12 * 60 * 60 * 1000 });
     res.status(StatusCodes.OK).send(
       sendSuccess({
         message: resMessages.SUCCESS_LOGIN,
-        data: updatedUser,
+        data: user,
       })
     );
   } catch (error) {

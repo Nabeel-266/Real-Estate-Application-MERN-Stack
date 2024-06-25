@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import toastify from "../utils/toastify";
 
 export const AuthProtectedRoute = ({ children }) => {
@@ -54,8 +54,7 @@ export const UnVerifiedProtectedRoute = ({ children }) => {
 };
 
 export const VerifyProtectedRoute = ({ children }) => {
-  const location = useLocation();
-  const userDoc = location.state;
+  const userDoc = JSON.parse(localStorage.getItem("user_Doc"));
   const { currentUser } = useSelector((state) => state?.user);
   console.log(userDoc);
 

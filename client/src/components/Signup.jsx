@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 import { registerUserVerification } from "../api/authAPIs";
 import {
   signupClientErrorHandler,
@@ -17,7 +16,6 @@ import GoogleIcon from "../assets/google.png";
 import Loader from "./Loader";
 
 const Signup = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const routeLocation = location.pathname.split("/")[2];
@@ -59,30 +57,33 @@ const Signup = () => {
       if (isUserCredentialsOK) {
         setLoading(true);
 
-        // Username Formated
-        const userFullname = username?.trim()?.split(" ");
+        // Username split into firstname and lastname
+        const userFullname = [
+          username?.trim().slice(0, username.trim().lastIndexOf(" ")),
+          username?.trim().slice(username.trim().lastIndexOf(" ") + 1),
+        ];
+        // User Firstname
         const firstname =
-          userFullname[0]?.charAt(0).toLocaleUpperCase() +
-          userFullname[0]?.slice(1).toLocaleLowerCase();
+          userFullname[0]?.trim().charAt(0).toLocaleUpperCase() +
+          userFullname[0]?.trim().slice(1).toLocaleLowerCase();
+        // User Lastname
         const lastname =
-          userFullname[1]?.charAt(0).toLocaleUpperCase() +
-          userFullname[1]?.slice(1).toLocaleLowerCase();
+          userFullname[1]?.trim().charAt(0).toLocaleUpperCase() +
+          userFullname[1]?.trim().slice(1).toLocaleLowerCase();
 
         // User Credentials
         const userCredentials = {
           username: `${firstname} ${lastname}`,
-          email: email,
+          email,
           password,
           confirmPassword,
         };
 
         // Call Signup User API Function
-        const userDoc = await registerUserVerification(userCredentials);
+        await registerUserVerification(userCredentials, navigate);
 
-        navigate("/account/verification", { state: userDoc });
-
-        setLoading(false);
         setError("");
+        setLoading(false);
         setRegisterFormData({
           username: "",
           email: "",
@@ -148,7 +149,7 @@ const Signup = () => {
                         : "mb-[0rem] text-[1.75rem] text-neutral-500"
                     }`}
                   >
-                    Full Name
+                    Your Name
                   </label>
                 </div>
 

@@ -13,13 +13,10 @@ import Loader from "./Loader";
 
 const VerifyAccount = () => {
   const dispatch = useDispatch();
-  const location = useLocation();
   const [OTPCode, setOTPCode] = useState("");
   const [otpLoading, setOtpLoading] = useState(false);
-  const [userDoc, setUserDoc] = useState(location.state.data);
   const { pending } = useSelector((state) => state?.user);
-
-  console.log(userDoc);
+  let userDoc = JSON.parse(localStorage.getItem("user_Doc"));
 
   // Signup Verification Handler
   const signupVerificationHandler = async (e) => {
@@ -53,9 +50,7 @@ const VerifyAccount = () => {
 
       if (isOtpExpire) {
         // Call Resend OTP API Function
-        const updatedOtpUser = await resendOTPtoUser(userDoc);
-        console.log(updatedOtpUser);
-        setUserDoc(updatedOtpUser);
+        await resendOTPtoUser(userDoc);
       } else {
         toastify(
           "info",
