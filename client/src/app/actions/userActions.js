@@ -37,11 +37,6 @@ export const verifyAccountSuccess = (user) => (dispatch) => {
   dispatch(setUser(user));
 };
 
-//* For Resend OTP to User Action
-export const resendOTPSuccess = (user) => (dispatch) => {
-  dispatch(setUser(user));
-};
-
 //* For Check User Token Action
 export const checkTokenSuccess = (user) => (dispatch) => {
   dispatch(setUser(user));

@@ -12,14 +12,13 @@ import {
   PiToiletBold,
 } from "react-icons/pi";
 import { BiArea, BiEditAlt } from "react-icons/bi";
-import { GiCheckMark } from "react-icons/gi";
 import {
   MdOutlineMailOutline,
   MdOutlineTimer,
   MdPassword,
 } from "react-icons/md";
 import { TiPhoneOutline } from "react-icons/ti";
-import { FaBath, FaBed } from "react-icons/fa6";
+import { FaBath, FaBed, FaPlus } from "react-icons/fa6";
 import { AiOutlinePartition } from "react-icons/ai";
 import { TbToolsKitchen, TbMailCog } from "react-icons/tb";
 import { HiLocationMarker } from "react-icons/hi";
@@ -134,18 +133,11 @@ const Profile = () => {
             </p>
           </div>
 
-          {/* Profile Buttons */}
+          {/* Profile Button */}
           <div className="profileBtns absolute top-[2.5rem] right-[2rem] flex flex-col items-end gap-[1rem]">
-            {!user?.isVerified && (
-              <button className="verifyProfileBtn text-[1.7rem] leading-[1.7rem] font-medium text-white px-[1rem] py-[0.8rem] bg-theme-blue rounded-md flex items-center gap-[0.5rem]">
-                <GiCheckMark />
-                <span>Verify Account</span>
-              </button>
-            )}
-
             <button
               onClick={() => setIsOpenEditProfileModal(true)}
-              className="editProfileBtn text-[1.7rem] leading-[1.7rem] font-medium text-white px-[1rem] py-[0.8rem] bg-theme-blue rounded-md flex items-center gap-[0.5rem]"
+              className="editProfileBtn text-[1.7rem] leading-[1.7rem] font-medium text-white p-[1rem] bg-theme-blue rounded-md flex items-center gap-[0.5rem]"
             >
               <BiEditAlt />
               <span>Edit Profile</span>
@@ -195,12 +187,13 @@ const Profile = () => {
               </p>
             )}
 
-            <div className="propertyCardsCont grid grid-cols-2 gap-[3rem]">
-              {/* Property Cards */}
+            {/* Profile Property Cards Container */}
+            <div className=" grid grid-cols-2 gap-[3rem]">
               {[1, 2, 3, 4].map((item, index) => (
+                // Profile Property Card
                 <div
                   key={index}
-                  className="propertyCard w-full flex border-[0.2rem] border-neutral-200 overflow-hidden rounded-2xl shadow-md"
+                  className="propertyCard w-full flex border-[0.2rem] border-neutral-200 overflow-hidden rounded-2xl shadow-lg cursor-pointer"
                 >
                   {/* Image Side */}
                   <div className="imageSide w-[40%]">
@@ -296,6 +289,16 @@ const Profile = () => {
               ))}
             </div>
           </div>
+
+          {/* Add New Property Button */}
+          {isActiveTab === "owned" && (
+            <div className="addPropertyBtnCont w-full flex items-center justify-center pt-[3rem]">
+              <button className="editProfileBtn text-[1.8rem] leading-[1.8rem] font-semibold text-theme-blue p-[1.2rem] bg-theme-yellow rounded-md flex items-center gap-[0.5rem]">
+                <FaPlus />
+                <span>Add New Property</span>
+              </button>
+            </div>
+          )}
         </section>
       </div>
 

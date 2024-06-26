@@ -3,18 +3,13 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate,
   useLocation,
 } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { checkToken } from "./api/authAPIs";
 
 // Import Protected Route Components
-import {
-  AuthProtectedRoute,
-  UnAuthProtectedRoute,
-  VerifyProtectedRoute,
-} from "./secure/Protected_Route";
+import { UnAuthProtectedRoute } from "./secure/Protected_Route";
 
 // Import Pages & Components
 import { ToastContainer } from "react-toastify";
@@ -71,16 +66,8 @@ const AppRoutes = () => {
         <Route element={<Auth />}>
           <Route path="/account/sign-in" element={<Signin />} />
           <Route path="/account/sign-up" element={<Signup />} />
+          <Route path="/account/verification" element={<VerifyAccount />} />
         </Route>
-
-        <Route
-          path="/account/verification"
-          element={
-            <VerifyProtectedRoute>
-              <VerifyAccount />
-            </VerifyProtectedRoute>
-          }
-        />
 
         <Route
           path="/explore"

@@ -84,12 +84,12 @@ const Signup = () => {
 
         setError("");
         setLoading(false);
-        setRegisterFormData({
-          username: "",
-          email: "",
-          password: "",
-          confirmPassword: "",
-        });
+        // setRegisterFormData({
+        //   username: "",
+        //   email: "",
+        //   password: "",
+        //   confirmPassword: "",
+        // });
       }
     } catch (err) {
       console.log(err);

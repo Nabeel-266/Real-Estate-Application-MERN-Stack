@@ -10,7 +10,6 @@ import {
 } from "../constants/apisRoute";
 import {
   checkTokenSuccess,
-  resendOTPSuccess,
   signinFailure,
   signinPending,
   signinSuccess,
@@ -32,11 +31,14 @@ export const registerUserVerification = async (userCredentials, navigate) => {
     // If User Doc updated with an OTP
     if (userDoc.status === "Success") {
       localStorage.setItem("user_Doc", JSON.stringify(userDoc.data));
+
+      toastify("success", `${userDoc.message}`, "top-right", "dark", 4000);
+
+      // Navigate to the verification page
+      navigate("/account/verification");
+    } else {
+      toastify("error", `${userDoc.message}`, "top-right", "dark", 4000);
     }
-
-    toastify("success", `${userDoc.message}`, "top-right", "dark", 4000);
-
-    navigate("/account/verification");
   } catch (error) {
     throw error;
   }
@@ -128,15 +130,17 @@ export const resendOTPtoUser = async (userDoc) => {
 
     if (updatedOTPUser.status === "Success") {
       localStorage.setItem("user_Doc", JSON.stringify(updatedOTPUser.data));
-    }
 
-    toastify(
-      "success",
-      "OTP has been resent successfully,\n Please! check your email",
-      "top-right",
-      "dark",
-      6000
-    );
+      toastify(
+        "success",
+        "OTP has been resent successfully,\n Please! check your email",
+        "top-right",
+        "dark",
+        6000
+      );
+    } else {
+      toastify("error", `${updatedOTPUser.message}`, "top-right", "dark", 4000);
+    }
   } catch (error) {
     throw error;
   }

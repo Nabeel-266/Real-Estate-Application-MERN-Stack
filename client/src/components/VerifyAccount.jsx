@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { registerVerifyUser, resendOTPtoUser } from "../api/authAPIs";
 import { checkOtpVerificationHandler } from "../utils/authErrors";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,10 +13,34 @@ import Loader from "./Loader";
 
 const VerifyAccount = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const routeLocation = location.pathname.split("/")[2];
   const [OTPCode, setOTPCode] = useState("");
   const [otpLoading, setOtpLoading] = useState(false);
   const { pending } = useSelector((state) => state?.user);
   let userDoc = JSON.parse(localStorage.getItem("user_Doc"));
+
+  console.log(userDoc);
+
+  // If remove user_Doc from Storage so navigate to signup
+  useEffect(() => {
+    if (!userDoc) {
+      const handleStorageChange = (event) => {
+        if (event.key === "user_Doc") {
+          const signupUserDoc = JSON.parse(localStorage.getItem("user_Doc"));
+          userDoc = signupUserDoc;
+          if (!signupUserDoc) {
+            navigate("/account/sign-up");
+          }
+        }
+      };
+
+      window.addEventListener("storage", handleStorageChange);
+
+      return () => window.removeEventListener("storage", handleStorageChange);
+    }
+  }, [userDoc]);
 
   // Signup Verification Handler
   const signupVerificationHandler = async (e) => {
@@ -77,7 +101,11 @@ const VerifyAccount = () => {
 
   return (
     <div
-      className={`accountVerifyCont w-full min-h-dvh relative flex justify-center items-center p-[3rem] bg-neutral-200`}
+      className={`accountVerifyCont w-full h-full bg-white absolute z-[90] top-0 left-0 flex justify-center items-center p-[3rem] ${
+        routeLocation === "verification"
+          ? "opacity-100 scale-100 "
+          : "opacity-0 scale-0"
+      } transition-all duration-[700ms] ease-in-out`}
     >
       {/* Verification Cont */}
       <div className="verificationCont mobileSm:min-w-[90%] mobileRg:min-w-[90%] tabletSm:min-w-[55rem] max-w-[65rem] bg-white p-[2.5rem] shadow-2xl rounded-lg">

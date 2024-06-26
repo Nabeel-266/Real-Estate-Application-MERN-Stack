@@ -88,12 +88,12 @@ export const signupVerification = async (req, res, next) => {
     user_Credentials.otpExpiry = Date.now() + 90000; // 1.5 minutes
 
     // send OTP to User Email
-    const emailResponse = await sendEmailOTP(username, email, otp);
-    console.log(emailResponse);
+    // const emailResponse = await sendEmailOTP(username, email, otp);
+    // console.log(emailResponse);
 
     res.status(StatusCodes.OK).send(
       sendSuccess({
-        message: emailResponse,
+        message: "emailResponse",
         data: user_Credentials,
       })
     );
@@ -105,7 +105,7 @@ export const signupVerification = async (req, res, next) => {
 
 //* --> For Signup <--
 //? @route --> POST --> api/auth/register
-//  @access --> PUBLIC
+//  @access --> PRIVATE
 export const signup = async (req, res, next) => {
   console.log("Signup Controller");
   console.log(req.body);

@@ -1,12 +1,20 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import toastify from "../utils/toastify";
 
 export const AuthProtectedRoute = ({ children }) => {
   const user = useSelector((state) => state?.user?.currentUser);
-  if (user) {
-    return <Navigate to="/" replace />;
+  const [redirectPath, setRedirectPath] = useState(null);
+
+  useEffect(() => {
+    if (user) {
+      setRedirectPath("/");
+    }
+  }, [user]);
+
+  if (redirectPath) {
+    return <Navigate to={redirectPath} replace />;
   }
 
   return <>{children}</>;
@@ -55,15 +63,9 @@ export const UnVerifiedProtectedRoute = ({ children }) => {
 
 export const VerifyProtectedRoute = ({ children }) => {
   const userDoc = JSON.parse(localStorage.getItem("user_Doc"));
-  const { currentUser } = useSelector((state) => state?.user);
-  console.log(userDoc);
 
   if (!userDoc) {
-    return <Navigate to="/account/sign-up" replace />;
-  }
-
-  if (currentUser) {
-    return <Navigate to="/" replace />;
+    return <Navigate to={"/account/sign-up"} replace />;
   }
 
   return <>{children}</>;
