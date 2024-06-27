@@ -1,4 +1,9 @@
-import { setLoading, setError, setUser } from "../slices/userSlice.js";
+import {
+  setLoading,
+  setError,
+  setAuthUser,
+  setUnAuthUser,
+} from "../slices/userSlice.js";
 
 //* For Signup User Actions
 export const signupPending = () => (dispatch) => {
@@ -8,7 +13,8 @@ export const signupPending = () => (dispatch) => {
 
 export const signupSuccess = (user) => (dispatch) => {
   dispatch(setLoading(false));
-  dispatch(setUser(user));
+  dispatch(setAuthUser(user));
+  dispatch(setUnAuthUser(null));
 };
 
 export const signupFailure = () => (dispatch) => {
@@ -24,7 +30,7 @@ export const signinPending = () => (dispatch) => {
 
 export const signinSuccess = (user) => (dispatch) => {
   dispatch(setLoading(false));
-  dispatch(setUser(user));
+  dispatch(setAuthUser(user));
 };
 
 export const signinFailure = () => (dispatch) => {
@@ -32,23 +38,28 @@ export const signinFailure = () => (dispatch) => {
   dispatch(setError(true));
 };
 
-//* For Verify User Account Action
-export const verifyAccountSuccess = (user) => (dispatch) => {
-  dispatch(setUser(user));
+//* For User Verification Code Action
+export const verificationCodeSuccess = (user) => (dispatch) => {
+  dispatch(setUnAuthUser(user));
+};
+
+//* For Resend OTP to User Action
+export const resendOTPSuccess = (user) => (dispatch) => {
+  dispatch(setUnAuthUser(user));
 };
 
 //* For Check User Token Action
 export const checkTokenSuccess = (user) => (dispatch) => {
-  dispatch(setUser(user));
+  dispatch(setAuthUser(user));
 };
 
 // export const logout = () => (dispatch) => {
-//   dispatch(resetUser());
+//   dispatch(resetAuthUser());
 // };
 
 // export const updateSuccess = (user) => (dispatch) => {
 //   dispatch(setLoading(false));
-//   dispatch(setUser(user));
+//   dispatch(setAuthUser(user));
 // };
 
 // export const uploadImgSuccess = (imgUrl) => (dispatch) => {
@@ -58,5 +69,5 @@ export const checkTokenSuccess = (user) => (dispatch) => {
 
 // export const updatePasswordSuccess = (user) => (dispatch) => {
 //   dispatch(setLoading(false));
-//   dispatch(setUser(user));
+//   dispatch(setAuthUser(user));
 // };

@@ -83,17 +83,21 @@ export const signupVerification = async (req, res, next) => {
     const otp = uuidv4().slice(0, 8);
     console.log(otp);
 
+    // Hashed OTP
+    const OTPSalt = genSaltSync(10);
+    const hashedOTP = hashSync(otp, OTPSalt);
+
     // Set OTP and OTP Expiry in USER_Credentials
-    user_Credentials.otp = otp;
+    user_Credentials.otp = hashedOTP;
     user_Credentials.otpExpiry = Date.now() + 90000; // 1.5 minutes
 
     // send OTP to User Email
-    // const emailResponse = await sendEmailOTP(username, email, otp);
-    // console.log(emailResponse);
+    const emailResponse = await sendEmailOTP(username, email, otp);
+    console.log(emailResponse);
 
     res.status(StatusCodes.OK).send(
       sendSuccess({
-        message: "emailResponse",
+        message: emailResponse,
         data: user_Credentials,
       })
     );
@@ -133,8 +137,11 @@ export const signup = async (req, res, next) => {
       );
     }
 
-    // If OTP not matched
-    if (enteredOTP !== user.otp) {
+    // Check OTP is Correct
+    const isOtpValid = compareSync(enteredOTP, user.otp);
+
+    // If OTP invalid
+    if (!isOtpValid) {
       return res.status(StatusCodes.BAD_REQUEST).send(
         sendError({
           statusCode: StatusCodes.BAD_REQUEST,
@@ -337,6 +344,7 @@ export const resendOTP = async (req, res, next) => {
   try {
     let { userDoc } = req.body;
 
+    // If User not found
     if (!userDoc) {
       return res.status(StatusCodes.NOT_FOUND).send(
         sendError({
@@ -346,6 +354,7 @@ export const resendOTP = async (req, res, next) => {
       );
     }
 
+    // If OTP not expired
     if (userDoc.otpExpiry > Date.now()) {
       return res.status(StatusCodes.FORBIDDEN).send(
         sendError({
@@ -359,8 +368,12 @@ export const resendOTP = async (req, res, next) => {
     const otp = uuidv4().slice(0, 8);
     console.log(otp);
 
+    // Hashed OTP
+    const OTPSalt = genSaltSync(10);
+    const hashedOTP = hashSync(otp, OTPSalt);
+
     // Set OTP and OTP Expiry in USER_Document
-    userDoc.otp = otp;
+    userDoc.otp = hashedOTP;
     userDoc.otpExpiry = Date.now() + 60000; // 1 minute
 
     // send OTP to User Email

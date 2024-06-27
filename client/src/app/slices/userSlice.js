@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  currentUser: null,
+  authenticUser: null,
+  unAuthenticUser: null,
   pending: false,
   failed: false,
 };
@@ -16,17 +17,20 @@ const userSlice = createSlice({
     setError(state, action) {
       state.failed = action.payload;
     },
-    setUser(state, action) {
-      state.currentUser = action.payload;
+    setAuthUser(state, action) {
+      state.authenticUser = action.payload;
+    },
+    setUnAuthUser(state, action) {
+      state.unAuthenticUser = action.payload;
     },
     // resetUser(state) {
-    //   state.currentUser = null;
+    //   state.authenticUser = null;
     //   state.pending = false;
     //   state.failed = false;
     // },
     // updateUserProfileImg(state, action) {
-    //   if (state.currentUser) {
-    //     state.currentUser.profileImg = action.payload;
+    //   if (state.authenticUser) {
+    //     state.authenticUser.profileImg = action.payload;
     //   }
     // },
   },
@@ -35,7 +39,8 @@ const userSlice = createSlice({
 export const {
   setLoading,
   setError,
-  setUser,
+  setAuthUser,
+  setUnAuthUser,
   //   resetUser,
   //   updateUserProfileImg,
 } = userSlice.actions;

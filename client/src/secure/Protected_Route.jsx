@@ -1,27 +1,19 @@
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import toastify from "../utils/toastify";
 
 export const AuthProtectedRoute = ({ children }) => {
-  const user = useSelector((state) => state?.user?.currentUser);
-  const [redirectPath, setRedirectPath] = useState(null);
+  const user = useSelector((state) => state?.user?.authenticUser);
 
-  useEffect(() => {
-    if (user) {
-      setRedirectPath("/");
-    }
-  }, [user]);
-
-  if (redirectPath) {
-    return <Navigate to={redirectPath} replace />;
+  if (user) {
+    return <Navigate to={"/"} replace />;
   }
 
   return <>{children}</>;
 };
 
 export const UnAuthProtectedRoute = ({ children }) => {
-  const user = useSelector((state) => state?.user?.currentUser);
+  const user = useSelector((state) => state?.user?.authenticUser);
   if (!user) {
     toastify(
       "info",
@@ -37,7 +29,7 @@ export const UnAuthProtectedRoute = ({ children }) => {
 };
 
 export const UnVerifiedProtectedRoute = ({ children }) => {
-  const user = useSelector((state) => state?.user?.currentUser);
+  const user = useSelector((state) => state?.user?.authenticUser);
   if (!user) {
     toastify(
       "info",
@@ -62,11 +54,9 @@ export const UnVerifiedProtectedRoute = ({ children }) => {
 };
 
 export const VerifyProtectedRoute = ({ children }) => {
-  const userDoc = JSON.parse(localStorage.getItem("user_Doc"));
+  const userDoc = useSelector((state) => state?.user?.unAuthenticUser);
 
-  if (!userDoc) {
-    return <Navigate to={"/account/sign-up"} replace />;
+  if (userDoc) {
+    return <>{children}</>;
   }
-
-  return <>{children}</>;
 };

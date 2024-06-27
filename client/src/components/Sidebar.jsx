@@ -16,7 +16,7 @@ import { useSelector } from "react-redux";
 
 const Sidebar = ({ isOpenSidebar, setIsOpenSidebar }) => {
   const location = useLocation();
-  const { currentUser } = useSelector((state) => state?.user);
+  const { authenticUser } = useSelector((state) => state?.user);
   const [isActiveTab, setIsActiveTab] = useState(
     location.pathname.split("/")[1]
   );
@@ -101,7 +101,7 @@ const Sidebar = ({ isOpenSidebar, setIsOpenSidebar }) => {
 
           <footer className="w-full flex flex-col px-[0.8rem] py-[1.5rem] absolute z-50 bottom-0 border-t-[0.2rem] border-cyan-950">
             {/* Profile and Logout Buttons */}
-            {!currentUser && (
+            {!authenticUser && (
               <div className="w-full">
                 <Link to={"/account/sign-in"}>
                   <button
@@ -116,7 +116,7 @@ const Sidebar = ({ isOpenSidebar, setIsOpenSidebar }) => {
             )}
 
             {/* Profile and Logout Buttons */}
-            {currentUser && (
+            {authenticUser && (
               <div className="w-full flex flex-col gap-[1.5rem]">
                 <Link to={"/profile"}>
                   <button

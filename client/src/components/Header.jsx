@@ -9,7 +9,7 @@ import LogoDark from "../assets/logo-dark.png";
 import User from "../assets/user.png";
 
 const Header = ({ setIsOpenSidebar }) => {
-  const { currentUser } = useSelector((state) => state?.user);
+  const { authenticUser } = useSelector((state) => state?.user);
 
   return (
     <header className="header w-full flex items-center fixed top-0 left-0 z-[99] backdrop-blur-[20px] bg-[#fffffff0]">
@@ -56,7 +56,7 @@ const Header = ({ setIsOpenSidebar }) => {
         {/* Header Right Side */}
         <div className="rightSide flex gap-[2rem]">
           {/* Signin & Signup Buttons */}
-          {!currentUser && (
+          {!authenticUser && (
             <div className="authBtns hidden tabletSm:flex items-center gap-[1.4rem]">
               {/* Signin Button */}
               <Link to="/account/sign-in">
@@ -75,7 +75,7 @@ const Header = ({ setIsOpenSidebar }) => {
           )}
 
           {/* Profile */}
-          {currentUser && (
+          {authenticUser && (
             <div className="profile relative hidden tabletSm:flex items-center gap-[1rem] px-[0.5rem] tabletSm:px-0">
               {/* Profile Image */}
               <div className="profileImage">

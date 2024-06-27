@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { registerUserVerification } from "../api/authAPIs";
+import { useDispatch } from "react-redux";
+
+// Import Error Checking Handler Functions
 import {
   signupClientErrorHandler,
   signupServerErrorHandler,
@@ -16,6 +19,7 @@ import GoogleIcon from "../assets/google.png";
 import Loader from "./Loader";
 
 const Signup = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const routeLocation = location.pathname.split("/")[2];
@@ -80,16 +84,16 @@ const Signup = () => {
         };
 
         // Call Signup User API Function
-        await registerUserVerification(userCredentials, navigate);
+        await registerUserVerification(userCredentials, dispatch, navigate);
 
         setError("");
         setLoading(false);
-        // setRegisterFormData({
-        //   username: "",
-        //   email: "",
-        //   password: "",
-        //   confirmPassword: "",
-        // });
+        setRegisterFormData({
+          username: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        });
       }
     } catch (err) {
       console.log(err);

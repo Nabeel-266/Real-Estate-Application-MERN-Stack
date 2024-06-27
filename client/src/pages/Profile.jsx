@@ -29,7 +29,7 @@ import { HiMiniXMark } from "react-icons/hi2";
 import EditProfile from "../components/EditProfile";
 
 const Profile = () => {
-  const user = useSelector((state) => state?.user?.currentUser);
+  const user = useSelector((state) => state?.user?.authenticUser);
   const [isActiveTab, setIsActiveTab] = useState("saved");
   const [isOpenAccStngDropdown, setIsOpenAccStngDropdown] = useState(false);
   const [isOpenEditProfileModal, setIsOpenEditProfileModal] = useState(false);

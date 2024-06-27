@@ -18,7 +18,6 @@ import Loader from "./Loader";
 
 const Signin = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const location = useLocation();
   const routeLocation = location.pathname.split("/")[2];
   const { pending } = useSelector((state) => state?.user);

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { registerVerifyUser, resendOTPtoUser } from "../api/authAPIs";
-import { checkOtpVerificationHandler } from "../utils/authErrors";
 import { useDispatch, useSelector } from "react-redux";
 import toastify from "../utils/toastify";
 
@@ -19,39 +18,43 @@ const VerifyAccount = () => {
   const [OTPCode, setOTPCode] = useState("");
   const [otpLoading, setOtpLoading] = useState(false);
   const { pending } = useSelector((state) => state?.user);
-  let userDoc = JSON.parse(localStorage.getItem("user_Doc"));
+  const { unAuthenticUser } = useSelector((state) => state?.user);
 
-  console.log(userDoc);
+  console.log(unAuthenticUser);
 
-  // If remove user_Doc from Storage so navigate to signup
+  // If user_Doc not found so navigate to signup
   useEffect(() => {
-    if (!userDoc) {
-      const handleStorageChange = (event) => {
-        if (event.key === "user_Doc") {
-          const signupUserDoc = JSON.parse(localStorage.getItem("user_Doc"));
-          userDoc = signupUserDoc;
-          if (!signupUserDoc) {
-            navigate("/account/sign-up");
-          }
-        }
-      };
+    const handleStorageChange = (event) => {
+      if (event.key === "persist:root" && event.newValue === null) {
+        navigate("/account/sign-up");
+      }
+    };
 
-      window.addEventListener("storage", handleStorageChange);
+    window.addEventListener("storage", handleStorageChange);
 
-      return () => window.removeEventListener("storage", handleStorageChange);
-    }
-  }, [userDoc]);
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
 
   // Signup Verification Handler
   const signupVerificationHandler = async (e) => {
     e.preventDefault();
 
     try {
-      const isOtpOk = checkOtpVerificationHandler(userDoc, OTPCode);
+      const isOtpExpire = unAuthenticUser.otpExpiry < Date.now();
 
-      if (isOtpOk) {
+      if (!isOtpExpire) {
         // Call Register Verify_User API Function
-        await registerVerifyUser(userDoc, OTPCode, dispatch);
+        await registerVerifyUser(unAuthenticUser, OTPCode, dispatch);
+      } else {
+        toastify(
+          "error",
+          "Your OTP code has been expired, please request a new OTP code",
+          "top-right",
+          "dark",
+          6000
+        );
       }
     } catch (error) {
       toastify(
@@ -70,11 +73,11 @@ const VerifyAccount = () => {
     setOtpLoading(true);
 
     try {
-      const isOtpExpire = userDoc.otpExpiry < Date.now();
+      const isOtpExpire = unAuthenticUser.otpExpiry < Date.now();
 
       if (isOtpExpire) {
         // Call Resend OTP API Function
-        await resendOTPtoUser(userDoc);
+        await resendOTPtoUser(unAuthenticUser, dispatch);
       } else {
         toastify(
           "info",

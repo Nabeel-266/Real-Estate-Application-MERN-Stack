@@ -1,5 +1,7 @@
 import axios from "axios";
 import toastify from "../utils/toastify";
+
+// Import Routes
 import {
   SIGN_IN,
   SIGN_UP,
@@ -8,19 +10,26 @@ import {
   CHECK_TOKEN,
   SIGN_UP_VERIFICATION,
 } from "../constants/apisRoute";
+
+// Import Actions
 import {
-  checkTokenSuccess,
   signinFailure,
   signinPending,
   signinSuccess,
   signupFailure,
   signupPending,
   signupSuccess,
-  verifyAccountSuccess,
+  verificationCodeSuccess,
+  checkTokenSuccess,
+  resendOTPSuccess,
 } from "../app/actions/userActions";
 
 // For SIGNUP_USER VERIFICATION
-export const registerUserVerification = async (userCredentials, navigate) => {
+export const registerUserVerification = async (
+  userCredentials,
+  dispatch,
+  navigate
+) => {
   try {
     const response = await axios.post(
       `${SIGN_UP_VERIFICATION}`,
@@ -30,7 +39,7 @@ export const registerUserVerification = async (userCredentials, navigate) => {
 
     // If User Doc updated with an OTP
     if (userDoc.status === "Success") {
-      localStorage.setItem("user_Doc", JSON.stringify(userDoc.data));
+      dispatch(verificationCodeSuccess(userDoc.data));
 
       toastify("success", `${userDoc.message}`, "top-right", "dark", 4000);
 
@@ -54,17 +63,20 @@ export const registerVerifyUser = async (userDoc, OTP, dispatch) => {
       user: userDoc,
     });
     const newUser = response?.data?.data;
-    dispatch(signupSuccess(newUser));
 
-    localStorage.removeItem("user_Doc");
+    if (response.data.status === "Success") {
+      dispatch(signupSuccess(newUser));
 
-    toastify(
-      "success",
-      `${newUser.username}! Your Account Created Successfully`,
-      "top-right",
-      "dark",
-      4000
-    );
+      toastify(
+        "success",
+        `${newUser.username}! Your Account Created Successfully`,
+        "top-right",
+        "dark",
+        4000
+      );
+    } else {
+      toastify("error", `${response.data.message}`, "top-right", "dark", 4000);
+    }
   } catch (error) {
     dispatch(signupFailure());
     throw error;
@@ -93,47 +105,19 @@ export const loginUser = async (userCredentials, dispatch) => {
   }
 };
 
-// For VERIFY USER
-export const verifyUser = async (OTP, dispatch, navigate) => {
-  try {
-    const response = await axios.post(
-      `${VERIFY_ACCOUNT}`,
-      { otp: OTP },
-      { withCredentials: true }
-    );
-    const verifiedUser = response?.data?.data;
-    // console.log(verifiedUser);
-    dispatch(verifyAccountSuccess(verifiedUser));
-
-    toastify(
-      "success",
-      `${verifiedUser.username} ! Your Verification Successfully`,
-      "top-center",
-      "dark",
-      3000
-    );
-
-    setTimeout(() => {
-      navigate("/");
-    }, 2000);
-  } catch (error) {
-    throw error;
-  }
-};
-
 // For RESEND OTP to USER
-export const resendOTPtoUser = async (userDoc) => {
+export const resendOTPtoUser = async (userDoc, dispatch) => {
   console.log(userDoc);
   try {
     const response = await axios.post(`${RESEND_OTP}`, { userDoc });
     const updatedOTPUser = response?.data;
 
     if (updatedOTPUser.status === "Success") {
-      localStorage.setItem("user_Doc", JSON.stringify(updatedOTPUser.data));
+      dispatch(resendOTPSuccess(updatedOTPUser.data));
 
       toastify(
         "success",
-        "OTP has been resent successfully,\n Please! check your email",
+        "OTP has been resent successfully, Please! check your email",
         "top-right",
         "dark",
         6000
@@ -162,3 +146,31 @@ export const checkToken = async (dispatch) => {
     dispatch(checkTokenSuccess(null));
   }
 };
+
+// For VERIFY USER
+// export const verifyUser = async (OTP, dispatch, navigate) => {
+//   try {
+//     const response = await axios.post(
+//       `${VERIFY_ACCOUNT}`,
+//       { otp: OTP },
+//       { withCredentials: true }
+//     );
+//     const verifiedUser = response?.data?.data;
+//     // console.log(verifiedUser);
+//     dispatch(verifyAccountSuccess(verifiedUser));
+
+//     toastify(
+//       "success",
+//       `${verifiedUser.username} ! Your Verification Successfully`,
+//       "top-center",
+//       "dark",
+//       3000
+//     );
+
+//     setTimeout(() => {
+//       navigate("/");
+//     }, 2000);
+//   } catch (error) {
+//     throw error;
+//   }
+// };

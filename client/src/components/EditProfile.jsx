@@ -9,7 +9,7 @@ import { RxUpdate } from "react-icons/rx";
 import { FiUpload } from "react-icons/fi";
 
 const EditProfile = ({ setIsOpenModal }) => {
-  const user = useSelector((state) => state?.user?.currentUser);
+  const user = useSelector((state) => state?.user?.authenticUser);
   const [userImage, setUserImage] = useState(user?.profilePicture || "");
   const [userName, setUserName] = useState(user?.username || "");
   const [userMobileNumber, setUserMobileNumber] = useState(
