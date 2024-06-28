@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 // Import React Icons
@@ -9,41 +9,42 @@ import LogoDark from "../assets/logo-dark.png";
 import User from "../assets/user.png";
 
 const Header = ({ setIsOpenSidebar }) => {
+  const location = useLocation();
+  const routeLocation = location.pathname;
   const { authenticUser } = useSelector((state) => state?.user);
 
   return (
     <header className="header w-full flex items-center fixed top-0 left-0 z-[99] backdrop-blur-[20px] bg-[#fffffff0]">
-      <div className="headerWrapper w-full h-[6rem] flex items-center justify-between mx-[2%] px-[2%] border-b-[1px] border-neutral-100">
+      <div className="headerWrapper w-full h-[6rem] flex items-center justify-between mx-[2%] px-[2%] border-b-[1px] border-neutral-100 ">
         {/* Header Left Side */}
-        <div className="leftSide flex items-center gap-[3.5rem]">
+        <div className="leftSide flex items-center justify-between gap-[2.5rem] laptopSm:gap-[3rem]">
           {/* Logo */}
-          <div className="logo">
+          <div className="logo w-[22rem] tabletLg:w-[21rem]">
             <Link to="/">
-              <img
-                src={LogoDark}
-                alt="Logo"
-                className="w-[22rem] mb-[0.4rem]"
-              />
+              <img src={LogoDark} alt="Logo" className="w-full mb-[0.4rem]" />
             </Link>
           </div>
 
           {/* Navigations */}
           <nav className="navigations hidden tabletLg:block">
-            <ul className="flex items-center gap-[1rem]">
+            <ul className="flex items-center gap-[0.7rem] laptopSm:gap-[0.9rem]">
               {[
                 ["Explore", "/explore"],
+                ["Add Property", "/add-property"],
                 ["About", "/about"],
                 ["Contact", "/contact"],
-                ["Team", "/team"],
               ].map(([tilte, path], index) => (
                 <li
                   key={index}
-                  className="nav-item text-theme-blue relative z-[2] before:content-[''] before:absolute before:z-[1] before:bottom-[-0.2rem] before:w-full before:h-[0.3rem] before:bg-cyan-900 before:rounded-full before:transition-[all_0.5s_ease-in] before:scale-x-[0] hover:before:scale-x-[1]"
+                  className={`nav-item text-theme-blue relative z-[2] before:content-[''] before:absolute before:z-[1] before:bottom-[-0.5rem] before:w-full before:h-[0.3rem] before:rounded-full before:transition-[all_0.5s_ease-in] before:scale-x-[0] hover:before:scale-x-[1] ${
+                    routeLocation !== path
+                      ? "before:bg-cyan-950"
+                      : "before:bg-amber-500"
+                  } `}
                 >
                   <NavLink
                     to={path}
-                    className="nav-link relative z-[3] text-[1.8rem] leading-[1.8rem] font-medium text-center px-[0.5rem] py-[0.2rem]"
-                    href="#"
+                    className="nav-link relative z-[3] text-[1.8rem] leading-[1.8rem] font-medium text-center px-[0.6rem] py-[0.4rem] whitespace-nowrap"
                   >
                     {tilte}
                   </NavLink>

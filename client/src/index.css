@@ -129,7 +129,7 @@
   }
 
   .active {
-    @apply text-white bg-theme-blue rounded-[0.3rem];
+    @apply text-amber-500 rounded-[0.3rem];
   }
 
   .boxPattern {
@@ -148,9 +148,9 @@
     background-image: url("data:image/svg+xml,<svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' patternUnits='userSpaceOnUse' width='40' height='40' patternTransform='scale(1) rotate(0)'><rect x='0' y='0' width='100%' height='100%' fill='hsla(197, 74%, 12%, 1)'/><path d='M20-5V5m0 30v10m20-30v10M0 15v10'  stroke-linejoin='round' stroke-linecap='round' stroke-width='0.5' stroke='hsla(196, 64%, 24%, 1)' fill='none'/><path d='M-5 40H5M-5 0H5m30 0h10M35 40h10M15 20h10'  stroke-linejoin='round' stroke-linecap='round' stroke-width='0.5' stroke='hsla(196, 64%, 24%, 1)' fill='none'/></pattern></defs><rect width='800%' height='800%' transform='translate(-24,0)' fill='url(%23a)'/></svg>");
   }
 
-  .demandWrapper {
+  /* .demandWrapper {
     @apply relative before:content-[''] before:absolute before:-z-[1] before:w-[25rem] before:h-[25rem] before:top-[16%] laptopSm:before:top-[24%] before:left-[1%] before:bg-cyan-700 before:animate-pulse before:rounded-full after:content-[''] after:absolute after:-z-[1] after:w-[25rem] after:h-[25rem] after:bottom-[7%] laptopSm:after:bottom-[12%] after:right-[1%] after:bg-cyan-700 after:animate-pulse after:rounded-full;
-  }
+  } */
 }
 
 /* @layer utilities {} */

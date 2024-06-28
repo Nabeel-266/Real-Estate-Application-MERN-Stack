@@ -54,7 +54,9 @@ export default {
       },
       backgroundImage: {
         "about-hd-image": "url('/src/assets/About/about-bg.jpg')",
-        "profile-image": "url('/src/assets/profile-bg.png')",
+        "add-property-banner-image":
+          "url('/src/assets/add-property-banner-bg.png')",
+        "profile-page-image": "url('/src/assets/profile-bg.png')",
         "footer-image": "url('/src/assets/footer-bg.jpg')",
       },
     },

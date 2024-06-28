@@ -17,7 +17,7 @@ import Home from "./pages/Home";
 import Explore from "./pages/Explore";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import Team from "./pages/Team";
+import AddProperty from "./pages/AddProperty";
 import Profile from "./pages/Profile";
 import Auth from "./pages/Auth";
 import Header from "./components/Header";
@@ -78,6 +78,10 @@ const AppRoutes = () => {
           }
         />
 
+        <Route path="/add-property" element={<AddProperty />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+
         <Route
           path="/profile"
           element={
@@ -86,10 +90,6 @@ const AppRoutes = () => {
             </UnAuthProtectedRoute>
           }
         />
-
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/team" element={<Team />} />
 
         <Route
           path="*"

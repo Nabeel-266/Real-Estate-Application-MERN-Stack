@@ -323,8 +323,8 @@ const Home = () => {
           </div>
 
           {/* Demand Row */}
-          <div className="demandRow w-full flex justify-center bg-[#ffffff01] backdrop-blur-[75px] rounded-xl shadow-2xl">
-            <div className="demandRowWrapper shadow-xl w-full grid mobileSm:grid-rows-3 mobileSm:grid-cols-1 laptopSm:grid-rows-1 laptopSm:grid-cols-3 justify-items-center gap-[3rem] tabletRg:gap-[5rem] p-[3rem] tabletRg:p-[4rem]">
+          <div className="demandRow w-full flex justify-center">
+            <div className="demandRowWrapper w-full grid mobileSm:grid-rows-3 mobileSm:grid-cols-1 laptopSm:grid-rows-1 laptopSm:grid-cols-3 justify-items-center gap-[3rem] tabletRg:gap-[5rem] p-[2rem] tabletRg:p-[3rem]">
               {/* Demand Card */}
               {[
                 {

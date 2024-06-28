@@ -50,7 +50,7 @@ const Profile = () => {
   }, []);
 
   return (
-    <div className="profileCont w-full min-h-dvh pt-[6rem] bg-profile-image bg-cover bg-no-repeat bg-center">
+    <div className="profileCont w-full min-h-dvh pt-[6rem] bg-profile-page-image bg-cover bg-no-repeat bg-center">
       <div className="profileWrapperCont mx-[8%] pb-[5rem]">
         {/* Profile Heading */}
         <div className="profileHD w-full relative z-10 flex justify-between items-center pt-[3rem] pb-[0.8rem] px-[1rem] border-b-[0.2rem] border-neutral-300 ">

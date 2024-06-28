@@ -65,9 +65,9 @@ const Sidebar = ({ isOpenSidebar, setIsOpenSidebar }) => {
             <ul className="w-full flex flex-col gap-[0.8rem]">
               {[
                 [MdOutlineExplore, "Explore", "/explore"],
-                [MdOutlineRealEstateAgent, "About", "/about"],
+                [MdOutlineRealEstateAgent, "Add Property", "/add-property"],
+                [RiTeamLine, "About", "/about"],
                 [RiMessage2Line, "Contact", "/contact"],
-                [RiTeamLine, "Team", "/team"],
               ].map(([Icon, title, route], index) => {
                 // console.log(route.split("/")[1]);
                 return (
