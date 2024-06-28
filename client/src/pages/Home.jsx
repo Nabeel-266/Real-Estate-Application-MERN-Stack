@@ -199,34 +199,47 @@ const Home = () => {
               {[1, 2, 3, 4].map((item, index) => (
                 <div
                   key={index}
-                  className="propertyCard max-w-[35rem] min-w-[22rem] min-h-[25rem] relative bg-white overflow-hidden shadow-[0px_20px_30px_#d0d0d0] rounded-xl font-quick"
+                  className="propertyCard max-w-[35rem] min-w-[22rem] min-h-[25rem] relative bg-white overflow-hidden shadow-[0px_20px_30px_#d0d0d0] rounded-xl"
                 >
                   {/* Card Image */}
-                  <div className="imageArea relative w-full h-[18rem] object-cover before:content-[''] before:absolute before:z-[1] before:bottom-0 before:left-0 before:right-0 before:h-[50%] before:bg-gradient-to-b to-[#30303070] from-transparent before:pointer-events-none">
+                  <div className="imageArea relative w-full h-[18rem] object-cover before:content-[''] before:absolute before:z-[1] before:bottom-0 before:left-0 before:right-0 before:h-[50%] before:bg-gradient-to-b to-[#30303080] from-transparent before:pointer-events-none">
                     <img
                       src={cardImage}
                       alt="property"
                       className="cardImage w-full h-full object-cover"
                     />
+
+                    {/* Visit Btn */}
+                    <button className="absolute z-[5] bottom-[8%] right-[6%] p-[0.7rem] bg-white text-theme-blue text-[2.2rem] flex items-center justify-center rounded-full shadow-2xl hover:bg-theme-yellow transition-all">
+                      <FaArrowRightLong />
+                    </button>
                   </div>
 
                   {/* Card Content */}
-                  <div className="cardContent w-full flex flex-col gap-[0.7rem] px-[1rem] py-[0.8rem] text-neutral-900">
-                    {/* Title */}
-                    <p className="title truncate text-[1.7rem] leading-[1.9rem] font-semibold">
-                      Newly Renovated House
+                  <div className="cardContent w-full flex flex-col gap-[1rem] p-[1rem] text-neutral-700">
+                    {/* Type */}
+                    <p className="type relative flex items-center text-[1.8rem] leading-[1.8rem] font-semibold pl-[2rem] before:content-[''] before:w-[1.2rem] before:h-[1.2rem] before:bg-theme-yellow before:absolute before:left-0 before:rounded-sm">
+                      Appartment
                     </p>
 
                     {/* Price */}
-                    <span className="price text-[1.5rem] leading-[1.5rem] font-bold text-theme-blue select-none">
-                      PKR{" "}
-                      <strong className="text-[2rem] leading-[2rem] font-montAlter font-semibold">
+                    <span className="price flex items-end gap-[0.4rem] text-[1.6rem] leading-[1.6rem] font-semibold text-theme-blue select-none">
+                      <span>PKR</span>
+                      <span className="text-[2rem] leading-[2rem] font-bold">
                         450,000,00
-                      </strong>
+                      </span>
                     </span>
 
+                    {/* Location */}
+                    <div className="location flex items-center gap-[0.5rem] text-[1.4rem] text-neutral-600 mt-[0.1rem]">
+                      <HiLocationMarker />
+                      <span className="leading-[1.4rem] font-semibold">
+                        North-Karachi, Karachi
+                      </span>
+                    </div>
+
                     {/* Details */}
-                    <div className="w-full flex items-center justify-between mt-[0.4rem] text-neutral-600">
+                    <div className="w-full flex items-center justify-between mt-[0.1rem] text-neutral-600">
                       <div className="leftSide flex items-center gap-[1rem] text-[1.4rem] leading-[1.2rem] font-medium select-none">
                         {/* Bedroom */}
                         <abbr title="Bedroom" className="no-underline">
@@ -268,12 +281,12 @@ const Home = () => {
                       </div>
 
                       <span className="area text-[1.4rem] leading-[1.4rem] font-medium flex items-center gap-[0.3rem]">
-                        <BiArea /> sqft 3500
+                        <BiArea /> 3500 sqft
                       </span>
                     </div>
 
                     {/* Info */}
-                    <div className="w-full flex items-center justify-between mt-[0.4rem]">
+                    <div className="w-full flex items-center justify-between mt-[0.1rem]">
                       <span className="bg-theme-blue text-white text-[1.4rem] leading-[1.2rem] font-semibold p-[0.5rem] rounded-md">
                         For Sale
                       </span>
@@ -283,18 +296,6 @@ const Home = () => {
                       </span>
                     </div>
                   </div>
-
-                  {/* Location */}
-                  <abbr title="Sector-9, Main Disco Mor, North-Karachi">
-                    <span className="absolute top-[1rem] left-[1rem] px-[0.8rem] py-[0.6rem] bg-[#fffffff0] text-neutral-700 flex items-center gap-[0.3rem] text-[1.4rem] leading-[1.4rem] font-semibold rounded-md cursor-default">
-                      <HiLocationMarker /> North-Karachi
-                    </span>
-                  </abbr>
-
-                  {/* Visit Btn */}
-                  <button className="absolute z-[5] top-[46%] right-[6%] p-[0.5rem] bg-[#ffffff] text-neutral-800 text-[1.8rem] flex items-center justify-center rounded-full shadow-2xl">
-                    <FaArrowRightLong />
-                  </button>
                 </div>
               ))}
             </div>

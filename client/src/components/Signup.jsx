@@ -47,6 +47,17 @@ const Signup = () => {
     setError("");
   };
 
+  // Empty Form Handler
+  const emptyFormHandler = () => {
+    setError("");
+    setRegisterFormData({
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
+  };
+
   // SIGNUP Form Submission Handler
   const signupFormSubmissionHandler = async (e) => {
     e.preventDefault();
@@ -86,14 +97,8 @@ const Signup = () => {
         // Call Signup User API Function
         await registerUserVerification(userCredentials, dispatch, navigate);
 
-        setError("");
         setLoading(false);
-        setRegisterFormData({
-          username: "",
-          email: "",
-          password: "",
-          confirmPassword: "",
-        });
+        emptyFormHandler();
       }
     } catch (err) {
       console.log(err);
@@ -111,7 +116,7 @@ const Signup = () => {
           : "translate-x-[100%] opacity-0 scale-0"
       } transition-all duration-[700ms] ease-in-out`}
     >
-      <div className="signupWrapper w-full min-h-full p-[3rem] flex items-center justify-center">
+      <div className="signupWrapper w-full min-h-full p-[0rem] flex items-center justify-center">
         {/* Sign-up Form Cont */}
         <div className="signupFormCont mobileSm:w-[42rem] mobileRg:w-[46rem] tabletSm:w-[50rem] flex flex-col gap-[2.8rem] bg-white shadow-2xl px-[2rem] py-[2.5rem] rounded-lg">
           {/* Sign-up Form */}
@@ -142,7 +147,9 @@ const Signup = () => {
                     value={username}
                     autoComplete="off"
                     onChange={(e) => formDataChangeHandler(e)}
-                    className="formInput peer/input"
+                    className={`formInput peer/input ${
+                      error[0] === "Username" && "border-red-700"
+                    }`}
                   />
 
                   <label
@@ -160,7 +167,7 @@ const Signup = () => {
                 {/* Register Username Error Message */}
                 {error[0] === "Username" && (
                   <span
-                    className={`errorMsg text-[1.4rem] leading-[1.4rem] text-red-700`}
+                    className={`errorMsg text-[1.4rem] leading-[1.4rem] font-medium text-red-700`}
                   >
                     {error[1]}
                   </span>
@@ -179,7 +186,9 @@ const Signup = () => {
                     autoCorrect="off"
                     autoComplete={isEmailSuggest ? "on" : "off"}
                     onChange={(e) => formDataChangeHandler(e)}
-                    className="formInput peer/input"
+                    className={`formInput peer/input ${
+                      error[0] === "Email" && "border-red-700"
+                    }`}
                   />
 
                   <label
@@ -211,7 +220,7 @@ const Signup = () => {
                 {/* Register Email Error Message */}
                 {error[0] === "Email" && (
                   <span
-                    className={`errorMsg text-[1.4rem] leading-[1.4rem] text-red-700`}
+                    className={`errorMsg text-[1.4rem] leading-[1.4rem] font-medium text-red-700`}
                   >
                     {error[1]}
                   </span>
@@ -228,7 +237,9 @@ const Signup = () => {
                     id="signup_password"
                     value={password}
                     onChange={(e) => formDataChangeHandler(e)}
-                    className="formInput peer/input"
+                    className={`formInput peer/input ${
+                      error[0] === "Password" && "border-red-700"
+                    }`}
                   />
 
                   <label
@@ -259,7 +270,7 @@ const Signup = () => {
 
                 {/* Register Password Error Message */}
                 {error[0] === "Password" && (
-                  <span className="errorMsg text-[1.4rem] leading-[1.4rem] text-red-700">
+                  <span className="errorMsg text-[1.4rem] leading-[1.4rem] font-medium text-red-700">
                     {error[1]}
                   </span>
                 )}
@@ -275,7 +286,9 @@ const Signup = () => {
                     id="confirmPass"
                     value={confirmPassword}
                     onChange={(e) => formDataChangeHandler(e)}
-                    className="formInput peer/input"
+                    className={`formInput peer/input ${
+                      error[0] === "ConfirmPassword" && "border-red-700"
+                    }`}
                   />
 
                   <label
@@ -306,7 +319,7 @@ const Signup = () => {
 
                 {/* Register Confirm Password Error Message */}
                 {error[0] === "ConfirmPassword" && (
-                  <span className="errorMsg text-[1.4rem] leading-[1.4rem] text-red-700">
+                  <span className="errorMsg text-[1.4rem] leading-[1.4rem] font-medium text-red-700">
                     {error[1]}
                   </span>
                 )}
@@ -361,6 +374,7 @@ const Signup = () => {
               Already have an account?{" "}
               <Link
                 to="/account/sign-in"
+                onClick={() => emptyFormHandler()}
                 className="font-medium hover:underline hover:cursor-pointer hover:text-cyan-800"
               >
                 Login Now

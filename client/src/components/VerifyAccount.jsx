@@ -104,7 +104,7 @@ const VerifyAccount = () => {
 
   return (
     <div
-      className={`accountVerifyCont w-full h-full bg-white absolute z-[90] top-0 left-0 flex justify-center items-center p-[3rem] ${
+      className={`accountVerifyCont w-full h-full absolute z-[90] top-0 left-0 flex justify-center items-center p-[3rem] ${
         routeLocation === "verification"
           ? "opacity-100 scale-100 "
           : "opacity-0 scale-0"
@@ -115,17 +115,17 @@ const VerifyAccount = () => {
         {/* Verfication Cont Header */}
         <header className="pb-[1.5rem] border-b-[0.2rem] border-neutral-500">
           <h1 className="text-[2.5rem] leading-[2.5rem] text-theme-blue font-semibold">
-            Verify & Create Account
+            Verify & Register Account
           </h1>
         </header>
 
         {/* Verfication Cont Content */}
         <div className="content flex flex-col gap-[1.5rem] pt-[1rem]">
           {/* Message */}
-          <p className="text-[1.6rem] font-normal">
+          <p className="text-[1.6rem] font-medium text-neutral-800">
             We have sent <b>OTP</b> to your email to verify your account. Please
             check your email and put your <b>account verification code</b> here
-            then click on a <b>Verify & Create Account</b> Button.
+            then click on a <b>Verify & Register Account</b> Button.
           </p>
 
           {/* OTP Input */}
@@ -154,7 +154,7 @@ const VerifyAccount = () => {
               {pending ? (
                 <Loader value="Processing" color="#262626" />
               ) : (
-                "Verify & Create Account"
+                "Verify & Register Account"
               )}
             </button>
             <button

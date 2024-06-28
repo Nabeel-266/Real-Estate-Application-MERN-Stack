@@ -40,6 +40,15 @@ const Signin = () => {
     setError("");
   };
 
+  // Empty Form Handler
+  const emptyFormHandler = () => {
+    setError("");
+    setLoginFormData({
+      email: "",
+      password: "",
+    });
+  };
+
   // SIGNIN Form Submission Handler
   const signinFormSubmissionHandler = async (e) => {
     e.preventDefault();
@@ -55,11 +64,7 @@ const Signin = () => {
         // Call Signin User API Function
         await loginUser(loginFormData, dispatch);
 
-        setError("");
-        setLoginFormData({
-          email: "",
-          password: "",
-        });
+        emptyFormHandler();
       }
     } catch (err) {
       console.log(err);
@@ -76,7 +81,7 @@ const Signin = () => {
           : "translate-x-[-100%] opacity-0 scale-0"
       } transition-all duration-[700ms] ease-in-out`}
     >
-      <div className="signinWrapper w-full min-h-full p-[3rem] flex items-center justify-center">
+      <div className="signinWrapper w-full min-h-full p-[1rem] flex items-center justify-center">
         {/* Sign-in Form Cont */}
         <div className="signinFormCont mobileSm:w-[42rem] mobileRg:w-[46rem] tabletSm:w-[50rem] flex flex-col gap-[2.8rem] bg-white shadow-2xl px-[2rem] py-[2.5rem] rounded-lg">
           {/* Sign-in Form */}
@@ -98,7 +103,7 @@ const Signin = () => {
             {/* Form Fields */}
             <fieldset className="flex flex-col gap-[3rem] px-[1rem]">
               {/* For Login Email */}
-              <div className="formEmailCont w-full flex flex-col gap-[1rem]">
+              <div className="formEmailCont w-full flex flex-col gap-[0.5rem]">
                 {/* Login Email Input Cont */}
                 <div className="w-full flex items-center relative">
                   <input
@@ -109,7 +114,9 @@ const Signin = () => {
                     autoCorrect="off"
                     autoComplete={isEmailSuggest ? "on" : "off"}
                     onChange={(e) => formDataChangeHandler(e)}
-                    className="formInput peer/input"
+                    className={`formInput peer/input ${
+                      error[0] === "Email" && "border-red-700"
+                    }`}
                   />
 
                   <label
@@ -141,7 +148,7 @@ const Signin = () => {
                 {/* Login Email Error Message */}
                 {error[0] === "Email" && (
                   <span
-                    className={`errorMsg text-[1.4rem] leading-[1.4rem] text-red-700`}
+                    className={`errorMsg text-[1.4rem] leading-[1.4rem] font-medium text-red-700`}
                   >
                     {error[1]}
                   </span>
@@ -149,15 +156,18 @@ const Signin = () => {
               </div>
 
               {/* For Login Password */}
-              <div className="formPasswordCont w-full flex flex-col gap-[1rem]">
+              <div className="formPasswordCont w-full flex flex-col gap-[0.5rem]">
                 {/* Login Password Input Cont */}
                 <div className="w-full flex items-center relative">
                   <input
                     type={isPasswordVisible ? "text" : "password"}
                     name="password"
                     id="signin_password"
+                    value={password}
                     onChange={(e) => formDataChangeHandler(e)}
-                    className="formInput peer/input"
+                    className={`formInput peer/input ${
+                      error[0] === "Password" && "border-red-700"
+                    }`}
                   />
 
                   <label
@@ -188,7 +198,7 @@ const Signin = () => {
 
                 {/* Login Password Error Message */}
                 {error[0] === "Password" && (
-                  <span className="errorMsg text-[1.4rem] leading-[1.4rem] text-red-700">
+                  <span className="errorMsg text-[1.4rem] leading-[1.4rem] font-medium text-red-700">
                     {error[1]}
                   </span>
                 )}
@@ -247,6 +257,7 @@ const Signin = () => {
               Don't have an account?{" "}
               <Link
                 to="/account/sign-up"
+                onClick={() => emptyFormHandler()}
                 className="font-medium hover:underline hover:cursor-pointer hover:text-cyan-800"
               >
                 Regiter Now

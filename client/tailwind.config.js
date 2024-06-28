@@ -53,11 +53,12 @@ export default {
         },
       },
       backgroundImage: {
+        "auth-page-image": "url('/src/assets/auth-bg-image.png')",
         "about-hd-image": "url('/src/assets/About/about-bg.jpg')",
-        "add-property-banner-image":
-          "url('/src/assets/add-property-banner-bg.png')",
         "profile-page-image": "url('/src/assets/profile-bg.png')",
         "footer-image": "url('/src/assets/footer-bg.jpg')",
+        "add-property-banner-image":
+          "url('/src/assets/add-property-banner-bg.png')",
       },
     },
     fontFamily: {
