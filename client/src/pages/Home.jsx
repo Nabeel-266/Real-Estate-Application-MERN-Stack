@@ -106,7 +106,7 @@ const Home = () => {
             </button>
 
             <div className="w-full flex gap-[2.5%] mt-[3.2rem]">
-              <div className="min-w-[30%] flex flex-col gap-[0.2rem] text-white bg-theme-blue p-[1.5rem] rounded-[0.4rem] boxPattern">
+              <div className="min-w-[30%] flex flex-col gap-[0.2rem] text-white bg-theme-blue p-[1.5rem] rounded-[0.4rem] bannerBoxesPattern">
                 <span className="text-[3rem] leading-[3rem] font-semibold">
                   16+
                 </span>
@@ -115,14 +115,14 @@ const Home = () => {
                 </span>
               </div>
 
-              <div className="min-w-[30%] flex flex-col gap-[0.2rem] text-white bg-theme-blue p-[1.5rem] rounded-[0.4rem] boxPattern">
+              <div className="min-w-[30%] flex flex-col gap-[0.2rem] text-white bg-theme-blue p-[1.5rem] rounded-[0.4rem] bannerBoxesPattern">
                 <span className="text-[3rem] leading-[3rem] font-semibold">
                   200
                 </span>
                 <span className="text-[1.5rem] font-normal">Awards Gained</span>
               </div>
 
-              <div className="min-w-[30%] flex flex-col gap-[0.2rem] text-white bg-theme-blue p-[1.5rem] rounded-[0.4rem] boxPattern">
+              <div className="min-w-[30%] flex flex-col gap-[0.2rem] text-white bg-theme-blue p-[1.5rem] rounded-[0.4rem] bannerBoxesPattern">
                 <span className="text-[3rem] leading-[3rem] font-semibold">
                   1200+
                 </span>

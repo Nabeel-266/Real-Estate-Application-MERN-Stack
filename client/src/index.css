@@ -116,15 +116,15 @@
     -webkit-appearance: none;
   }
 
-  .formInput {
+  .fancyfancyFormInput {
     @apply w-full pl-[0.5rem] pr-[3.5rem] py-[0.6rem] text-neutral-600 text-[1.7rem] leading-[2rem] font-medium font-mont outline-none bg-transparent border-b-2 border-neutral-400 focus:border-cyan-700;
   }
 
-  .formInputLabel {
+  .fancyfancyFormInputLabel {
     @apply absolute px-[0.5rem] font-medium cursor-text transition-all peer-focus/input:mb-[4.5rem] peer-focus/input:text-[1.5rem] peer-focus/input:text-cyan-800 pointer-events-none;
   }
 
-  .formInputIcon {
+  .fancyfancyFormInputIcon {
     @apply p-[0.5rem] absolute right-0 text-neutral-500 z-10;
   }
 
@@ -132,7 +132,7 @@
     @apply text-amber-500 rounded-[0.3rem];
   }
 
-  .boxPattern {
+  .bannerBoxesPattern {
     background-image: radial-gradient(#0f475a 2px, transparent 2px),
       radial-gradient(#0f475a 2px, transparent 2px);
     background-size: 25px 25px;
@@ -146,6 +146,14 @@
 
   .demandCont {
     background-image: url("data:image/svg+xml,<svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' patternUnits='userSpaceOnUse' width='40' height='40' patternTransform='scale(1) rotate(0)'><rect x='0' y='0' width='100%' height='100%' fill='hsla(197, 74%, 12%, 1)'/><path d='M20-5V5m0 30v10m20-30v10M0 15v10'  stroke-linejoin='round' stroke-linecap='round' stroke-width='0.5' stroke='hsla(196, 64%, 24%, 1)' fill='none'/><path d='M-5 40H5M-5 0H5m30 0h10M35 40h10M15 20h10'  stroke-linejoin='round' stroke-linecap='round' stroke-width='0.5' stroke='hsla(196, 64%, 24%, 1)' fill='none'/></pattern></defs><rect width='800%' height='800%' transform='translate(-24,0)' fill='url(%23a)'/></svg>");
+  }
+
+  .propertyFormInputTitles {
+    @apply text-[2rem] leading-[2.6rem] font-semibold text-theme-blue;
+  }
+
+  .propertyFormInputRadioLabels {
+    @apply text-[1.4rem] leading-[1.4rem] font-medium text-neutral-800 px-[2.5rem] py-[0.8rem] border-[0.2rem] rounded-lg cursor-pointer flex items-center gap-[0.8rem] hover:shadow-lg hover:shadow-neutral-200 hover:translate-y-[-0.1rem] transition-all;
   }
 
   /* .demandWrapper {

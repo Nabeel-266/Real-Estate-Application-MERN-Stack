@@ -151,7 +151,7 @@ const Profile = () => {
           <div className="profilePropertyTab w-full flex items-end text-neutral-800 py-[2rem]">
             <span
               onClick={() => setIsActiveTab("saved")}
-              className={`text-[2rem] leading-[2rem] font-semibold relative z-0 px-[1rem] py-[0.8rem] cursor-pointer overflow-hidden before:content-[''] before:absolute before:z-[-1] before:w-full before:h-[0.3rem] before:bottom-0 before:left-0 before:bg-theme-yellow ${
+              className={`text-[1.9rem] leading-[2rem] font-semibold relative z-0 px-[1rem] py-[1.2rem] cursor-pointer overflow-hidden before:content-[''] before:absolute before:z-[-1] before:w-full before:h-[0.3rem] before:bottom-0 before:left-0 before:bg-theme-yellow ${
                 isActiveTab === "saved"
                   ? "before:translate-x-[0%]"
                   : "before:translate-x-[100%]"
@@ -162,7 +162,7 @@ const Profile = () => {
 
             <span
               onClick={() => setIsActiveTab("owned")}
-              className={`text-[2rem] leading-[2rem] font-semibold relative z-0 px-[1rem] py-[0.8rem] cursor-pointer overflow-hidden before:content-[''] before:absolute before:z-[-1] before:w-full before:h-[0.3rem] before:bottom-0 before:left-0 before:bg-theme-yellow ${
+              className={`text-[1.9rem] leading-[2rem] font-semibold relative z-0 px-[1rem] py-[1.2rem] cursor-pointer overflow-hidden before:content-[''] before:absolute before:z-[-1] before:w-full before:h-[0.3rem] before:bottom-0 before:left-0 before:bg-theme-yellow ${
                 isActiveTab === "owned"
                   ? "before:translate-x-[0%]"
                   : "before:translate-x-[-100%]"
@@ -193,7 +193,7 @@ const Profile = () => {
                 // Profile Property Card
                 <div
                   key={index}
-                  className="propertyCard w-full flex border-[0.2rem] border-neutral-200 overflow-hidden rounded-2xl shadow-lg cursor-pointer"
+                  className="propertyCard w-full flex border-[0.2rem] bg-white border-neutral-200 overflow-hidden rounded-2xl shadow-lg cursor-pointer"
                 >
                   {/* Image Side */}
                   <div className="imageSide w-[40%]">

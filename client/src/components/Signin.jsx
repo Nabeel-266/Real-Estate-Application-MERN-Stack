@@ -114,14 +114,14 @@ const Signin = () => {
                     autoCorrect="off"
                     autoComplete={isEmailSuggest ? "on" : "off"}
                     onChange={(e) => formDataChangeHandler(e)}
-                    className={`formInput peer/input ${
+                    className={`fancyFormInput peer/input ${
                       error[0] === "Email" && "border-red-700"
                     }`}
                   />
 
                   <label
                     htmlFor="email"
-                    className={`formInputLabel ${
+                    className={`fancyFormInputLabel ${
                       email
                         ? "mb-[4.5rem] text-[1.5rem] text-cyan-950"
                         : "mb-[0rem] text-[1.75rem] text-neutral-500"
@@ -134,13 +134,13 @@ const Signin = () => {
                     <IoMailOpen
                       onClick={() => setIsEmailSuggest(false)}
                       size="3.2rem"
-                      className="formInputIcon cursor-pointer"
+                      className="fancyFormInputIcon cursor-pointer"
                     />
                   ) : (
                     <IoMail
                       onClick={() => setIsEmailSuggest(true)}
                       size="3.2rem"
-                      className="formInputIcon cursor-pointer"
+                      className="fancyFormInputIcon cursor-pointer"
                     />
                   )}
                 </div>
@@ -165,14 +165,14 @@ const Signin = () => {
                     id="signin_password"
                     value={password}
                     onChange={(e) => formDataChangeHandler(e)}
-                    className={`formInput peer/input ${
+                    className={`fancyFormInput peer/input ${
                       error[0] === "Password" && "border-red-700"
                     }`}
                   />
 
                   <label
                     htmlFor="password"
-                    className={`formInputLabel ${
+                    className={`fancyFormInputLabel ${
                       password
                         ? "mb-[4.5rem] text-[1.5rem] text-cyan-950"
                         : "mb-[0rem] text-[1.75rem] text-neutral-500"
@@ -185,13 +185,13 @@ const Signin = () => {
                     <IoLockOpen
                       size="3.2rem"
                       onClick={() => setIsPasswordVisible(false)}
-                      className="formInputIcon cursor-pointer"
+                      className="fancyFormInputIcon cursor-pointer"
                     />
                   ) : (
                     <IoLockClosed
                       size="3.2rem"
                       onClick={() => setIsPasswordVisible(true)}
-                      className="formInputIcon cursor-pointer"
+                      className="fancyFormInputIcon cursor-pointer"
                     />
                   )}
                 </div>

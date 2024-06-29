@@ -147,14 +147,14 @@ const Signup = () => {
                     value={username}
                     autoComplete="off"
                     onChange={(e) => formDataChangeHandler(e)}
-                    className={`formInput peer/input ${
+                    className={`fancyFormInput peer/input ${
                       error[0] === "Username" && "border-red-700"
                     }`}
                   />
 
                   <label
                     htmlFor="username"
-                    className={`formInputLabel ${
+                    className={`fancyFormInputLabel ${
                       username
                         ? "mb-[4.5rem] text-[1.5rem] text-cyan-950"
                         : "mb-[0rem] text-[1.75rem] text-neutral-500"
@@ -186,14 +186,14 @@ const Signup = () => {
                     autoCorrect="off"
                     autoComplete={isEmailSuggest ? "on" : "off"}
                     onChange={(e) => formDataChangeHandler(e)}
-                    className={`formInput peer/input ${
+                    className={`fancyFormInput peer/input ${
                       error[0] === "Email" && "border-red-700"
                     }`}
                   />
 
                   <label
                     htmlFor="email"
-                    className={`formInputLabel ${
+                    className={`fancyFormInputLabel ${
                       email
                         ? "mb-[4.5rem] text-[1.5rem] text-cyan-950"
                         : "mb-[0rem] text-[1.75rem] text-neutral-500"
@@ -206,13 +206,13 @@ const Signup = () => {
                     <IoMailOpen
                       onClick={() => setIsEmailSuggest(false)}
                       size="3.2rem"
-                      className="formInputIcon cursor-pointer"
+                      className="fancyFormInputIcon cursor-pointer"
                     />
                   ) : (
                     <IoMail
                       onClick={() => setIsEmailSuggest(true)}
                       size="3.2rem"
-                      className="formInputIcon cursor-pointer"
+                      className="fancyFormInputIcon cursor-pointer"
                     />
                   )}
                 </div>
@@ -237,14 +237,14 @@ const Signup = () => {
                     id="signup_password"
                     value={password}
                     onChange={(e) => formDataChangeHandler(e)}
-                    className={`formInput peer/input ${
+                    className={`fancyFormInput peer/input ${
                       error[0] === "Password" && "border-red-700"
                     }`}
                   />
 
                   <label
                     htmlFor="signup_password"
-                    className={`formInputLabel ${
+                    className={`fancyFormInputLabel ${
                       password
                         ? "mb-[4.5rem] text-[1.5rem] text-cyan-950"
                         : "mb-[0rem] text-[1.75rem] text-neutral-500"
@@ -257,13 +257,13 @@ const Signup = () => {
                     <IoLockOpen
                       size="3.2rem"
                       onClick={() => setIsPasswordVisible(false)}
-                      className="formInputIcon cursor-pointer"
+                      className="fancyFormInputIcon cursor-pointer"
                     />
                   ) : (
                     <IoLockClosed
                       size="3.2rem"
                       onClick={() => setIsPasswordVisible(true)}
-                      className="formInputIcon cursor-pointer"
+                      className="fancyFormInputIcon cursor-pointer"
                     />
                   )}
                 </div>
@@ -286,14 +286,14 @@ const Signup = () => {
                     id="confirmPass"
                     value={confirmPassword}
                     onChange={(e) => formDataChangeHandler(e)}
-                    className={`formInput peer/input ${
+                    className={`fancyFormInput peer/input ${
                       error[0] === "ConfirmPassword" && "border-red-700"
                     }`}
                   />
 
                   <label
                     htmlFor="confirmPass"
-                    className={`formInputLabel ${
+                    className={`fancyFormInputLabel ${
                       confirmPassword
                         ? "mb-[4.5rem] text-[1.5rem] text-cyan-950"
                         : "mb-[0rem] text-[1.75rem] text-neutral-500"
@@ -306,13 +306,13 @@ const Signup = () => {
                     <IoLockOpen
                       size="3.2rem"
                       onClick={() => setIsConfirmPassVisible(false)}
-                      className="formInputIcon cursor-pointer"
+                      className="fancyFormInputIcon cursor-pointer"
                     />
                   ) : (
                     <IoLockClosed
                       size="3.2rem"
                       onClick={() => setIsConfirmPassVisible(true)}
-                      className="formInputIcon cursor-pointer"
+                      className="fancyFormInputIcon cursor-pointer"
                     />
                   )}
                 </div>
