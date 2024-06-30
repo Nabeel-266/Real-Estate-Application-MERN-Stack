@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
+import {
+  propertyPurposes,
+  propertyCategories,
+  propertyResidentialTypes,
+  propertyPlotTypes,
+  propertyCommercialTypes,
+} from "../constants/propertyFormData";
 
 // Import Assets
 import AddPropertyBannerImage from "../assets/add-property-banner.png";
-import RentIcon from "../assets/Property-Icons/rent.png";
-import SellIcon from "../assets/Property-Icons/sell.png";
-import HouseIcon from "../assets/Property-Icons/house.png";
-import ApartmentIcon from "../assets/Property-Icons/apartment.png";
-import PortionIcon from "../assets/Property-Icons/house-portion.png";
-import RoomIcon from "../assets/Property-Icons/room.png";
-import FarmHouseIcon from "../assets/Property-Icons/farm-house.png";
-import GusetHouseIcon from "../assets/Property-Icons/guest-house.png";
-import HostelIcon from "../assets/Property-Icons/hostel.png";
-import HotelIcon from "../assets/Property-Icons/hotel.png";
-import BasementIcon from "../assets/Property-Icons/basement.png";
 
 const AddProperty = () => {
+  const [propertyTypeOptions, setPropertyTypeOptions] = useState(
+    propertyResidentialTypes
+  );
   const [propertyDetails, setPropertyDetails] = useState({
     purpose: "",
     category: "",
@@ -31,35 +30,33 @@ const AddProperty = () => {
 
   const { purpose, category, type } = propertyDetails;
 
+  // Set Property Form Initial Values
   useEffect(() => {
-    if (purpose === "") {
-      setPropertyDetails({
-        ...propertyDetails,
-        purpose: "Sell",
-      });
-    }
-
-    if (category === "" || category === "Residential") {
-      return setPropertyDetails({
-        ...propertyDetails,
-        category: "Residential",
-        type: "House",
-      });
-    }
-
     if (category === "Plot") {
-      return setPropertyDetails({
+      setPropertyDetails({
         ...propertyDetails,
         type: "Residential Plot",
       });
+      setPropertyTypeOptions(propertyPlotTypes);
+      return;
     }
 
     if (category === "Commercial") {
-      return setPropertyDetails({
+      setPropertyDetails({
         ...propertyDetails,
         type: "Office",
       });
+      setPropertyTypeOptions(propertyCommercialTypes);
+      return;
     }
+
+    setPropertyTypeOptions(propertyResidentialTypes);
+    return setPropertyDetails({
+      ...propertyDetails,
+      purpose: "Sell",
+      category: "Residential",
+      type: "House",
+    });
   }, [category]);
 
   return (
@@ -90,7 +87,7 @@ const AddProperty = () => {
         {/* Add Property Content Cont */}
         <div className="addPropertyContentCont w-full px-[4%] py-[6rem] flex items-start">
           {/* Add Property Form Cont */}
-          <div className="addPropertyFormCont w-[100%] tabletRg:w-[60%]">
+          <div className="addPropertyFormCont w-[100%] tabletLg:w-[60%]">
             {/* Add Property Form */}
             <form className="addPropertyForm w-full flex flex-col gap-[5rem]">
               {/* Property Purpose */}
@@ -102,10 +99,7 @@ const AddProperty = () => {
 
                 {/* Inputs Cont */}
                 <div className="inputsCont flex items-center gap-[2rem] select-none">
-                  {[
-                    { value: "Sell", iconImage: SellIcon },
-                    { value: "Rent", iconImage: RentIcon },
-                  ].map(({ value, iconImage }, index) => (
+                  {propertyPurposes.map(({ value, iconImage }, index) => (
                     <div key={index} className="singleInput">
                       <label
                         htmlFor={value.toLocaleLowerCase()}
@@ -140,7 +134,7 @@ const AddProperty = () => {
 
                 {/* Property Category Inputs */}
                 <div className="propertyCategoryInputs max-w-fit flex items-center border-[0.2rem] border-neutral-300 rounded-lg overflow-hidden">
-                  {["Residential", "Plot", "Commercial"].map((value, index) => (
+                  {propertyCategories.map((value, index) => (
                     <div
                       key={index}
                       className={`singleInput flex relative z-[1] cursor-pointer overflow-x-hidden before:content-[''] before:absolute before:z-[-1] before:w-full before:h-full before:bottom-0 before:left-0 before:bg-theme-blue before:transition-all before:duration-300 before:rounded-sm ${
@@ -168,18 +162,8 @@ const AddProperty = () => {
                 </div>
 
                 {/* Property Type Inputs */}
-                <div className="propertyType w-full tabletRg:w-[90%] flex flex-wrap items-center gap-[1.5rem] mt-[1rem]">
-                  {[
-                    { value: "House", iconImage: HouseIcon },
-                    { value: "Apartment", iconImage: ApartmentIcon },
-                    { value: "Home Portion", iconImage: PortionIcon },
-                    { value: "Room", iconImage: RoomIcon },
-                    { value: "Farm House", iconImage: FarmHouseIcon },
-                    { value: "Guest House", iconImage: GusetHouseIcon },
-                    { value: "Hostel", iconImage: HostelIcon },
-                    { value: "Hotel", iconImage: HotelIcon },
-                    { value: "Basement", iconImage: BasementIcon },
-                  ].map(({ value, iconImage }, index) => (
+                <div className="propertyType w-full tabletLg:w-[80%] flex flex-wrap items-center gap-[1.5rem] mt-[1rem]">
+                  {propertyTypeOptions?.map(({ value, iconImage }, index) => (
                     <div key={index} className="singleInput select-none">
                       <label
                         htmlFor={value.toLocaleLowerCase()}
@@ -208,7 +192,7 @@ const AddProperty = () => {
           </div>
 
           {/* Add Property Preview Cont */}
-          <div className="addPropertyPreviewCont w-0 hidden tabletRg:w-[40%] tabletRg:block"></div>
+          <div className="addPropertyPreviewCont w-0 hidden tabletLg:w-[40%] tabletRg:block"></div>
         </div>
       </div>
     </div>

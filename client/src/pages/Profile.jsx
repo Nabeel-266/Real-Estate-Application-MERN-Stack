@@ -74,27 +74,28 @@ const Profile = () => {
             </button>
           )}
 
+          {/* Dropdown */}
           <div
             ref={dropdownRef}
             className={`accountSettingsDropdown absolute top-[105%] right-0 z-[-1] backdrop-blur-[1rem] bg-[#082835f0] rounded-lg overflow-hidden shadow-xl ${
               isOpenAccStngDropdown ? "h-[16.5rem]" : "h-0"
             } transition-all`}
           >
-            <ul className="h-full text-[1.7rem] leading-[1.5rem] font-semibold text-white px-[0.8rem] py-[1rem] grid grid-rows-4 gap-[0.5rem]">
+            <ul className="h-full text-[1.7rem] leading-[1rem] font-medium text-white px-[0.8rem] py-[1rem] grid grid-rows-4 gap-[0.5rem] select-none">
               <li className="flex items-center gap-[0.8rem] h-full p-[0.8rem] cursor-pointer hover:bg-theme-yellow hover:text-neutral-800 rounded-sm transition-all">
-                <TbMailCog />
+                <TbMailCog size="1.9rem" />
                 <span>Change Email</span>
               </li>
               <li className="flex items-center gap-[0.8rem] h-full p-[0.8rem] cursor-pointer hover:bg-theme-yellow hover:text-neutral-800 rounded-sm transition-all">
-                <MdPassword />
+                <MdPassword size="1.9rem" />
                 <span>Reset Password</span>
               </li>
               <li className="flex items-center gap-[0.8rem] h-full p-[0.8rem] cursor-pointer hover:bg-theme-yellow hover:text-neutral-800 rounded-sm transition-all">
-                <PiSignOutBold />
+                <PiSignOutBold size="1.9rem" />
                 <span>Logout</span>
               </li>
               <li className="flex items-center gap-[0.8rem] h-full p-[0.8rem] cursor-pointer hover:bg-red-500 rounded-sm transition-all">
-                <RiDeleteBin6Line />
+                <RiDeleteBin6Line size="1.9rem" />
                 <span>Delete Account</span>
               </li>
             </ul>

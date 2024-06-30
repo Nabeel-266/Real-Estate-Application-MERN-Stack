@@ -116,15 +116,15 @@
     -webkit-appearance: none;
   }
 
-  .fancyfancyFormInput {
+  .fancyFormInput {
     @apply w-full pl-[0.5rem] pr-[3.5rem] py-[0.6rem] text-neutral-600 text-[1.7rem] leading-[2rem] font-medium font-mont outline-none bg-transparent border-b-2 border-neutral-400 focus:border-cyan-700;
   }
 
-  .fancyfancyFormInputLabel {
+  .fancyFormInputLabel {
     @apply absolute px-[0.5rem] font-medium cursor-text transition-all peer-focus/input:mb-[4.5rem] peer-focus/input:text-[1.5rem] peer-focus/input:text-cyan-800 pointer-events-none;
   }
 
-  .fancyfancyFormInputIcon {
+  .fancyFormInputIcon {
     @apply p-[0.5rem] absolute right-0 text-neutral-500 z-10;
   }
 
