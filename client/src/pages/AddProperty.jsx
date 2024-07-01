@@ -5,12 +5,17 @@ import {
   propertyResidentialTypes,
   propertyPlotTypes,
   propertyCommercialTypes,
+  cities,
 } from "../constants/propertyFormData";
+
+// Import React Icons
+import { IoSearch } from "react-icons/io5";
 
 // Import Assets
 import AddPropertyBannerImage from "../assets/add-property-banner.png";
 
 const AddProperty = () => {
+  const [isCitiesDropdownOpen, setIsCitiesDropdownOpen] = useState(false);
   const [propertyTypeOptions, setPropertyTypeOptions] = useState(
     propertyResidentialTypes
   );
@@ -18,20 +23,22 @@ const AddProperty = () => {
     purpose: "",
     category: "",
     type: "",
+    city: "",
   });
   console.log(propertyDetails);
 
-  const propertyFormDataChangeHandler = (e) => {
+  const propertyFormDataChangeHandler = (key, value) => {
     setPropertyDetails({
       ...propertyDetails,
-      [e.target.name]: e.target.value,
+      [key]: value,
     });
   };
 
-  const { purpose, category, type } = propertyDetails;
+  const { purpose, category, type, city } = propertyDetails;
 
   // Set Property Form Initial Values
   useEffect(() => {
+    console.log("useEffect Run");
     if (category === "Plot") {
       setPropertyDetails({
         ...propertyDetails,
@@ -117,7 +124,13 @@ const AddProperty = () => {
                         name="purpose"
                         id={value.toLocaleLowerCase()}
                         value={value}
-                        onChange={(e) => propertyFormDataChangeHandler(e)}
+                        checked={value === purpose}
+                        onChange={(e) =>
+                          propertyFormDataChangeHandler(
+                            e.target.name,
+                            e.target.value
+                          )
+                        }
                         className="hidden"
                       />
                     </div>
@@ -154,7 +167,13 @@ const AddProperty = () => {
                         name="category"
                         id={value.toLocaleLowerCase()}
                         value={value}
-                        onChange={(e) => propertyFormDataChangeHandler(e)}
+                        checked={value === category}
+                        onChange={(e) =>
+                          propertyFormDataChangeHandler(
+                            e.target.name,
+                            e.target.value
+                          )
+                        }
                         className="hidden"
                       />
                     </div>
@@ -181,11 +200,70 @@ const AddProperty = () => {
                         name="type"
                         id={value.toLocaleLowerCase()}
                         value={value}
-                        onChange={(e) => propertyFormDataChangeHandler(e)}
+                        checked={value === type}
+                        onChange={(e) =>
+                          propertyFormDataChangeHandler(
+                            e.target.name,
+                            e.target.value
+                          )
+                        }
                         className="hidden"
                       />
                     </div>
                   ))}
+                </div>
+              </div>
+
+              {/* Property City */}
+              <div className="city w-full flex flex-col gap-[1.5rem] pb-[80rem]">
+                {/* Title */}
+                <h4 className="propertyFormInputTitles">
+                  Which city is your property in?
+                </h4>
+
+                {/* City Input Cont */}
+                <div className="w-full">
+                  <div className="input w-[70%] min-w-[50rem] relative">
+                    <span className="text-[2rem] absolute top-0 left-0 h-full flex items-center justify-center px-[1.5rem] pointer-events-none">
+                      <IoSearch className="text-neutral-400" />
+                    </span>
+                    <input
+                      type="text"
+                      name="city"
+                      id="city"
+                      defaultValue={city}
+                      onClick={(e) => {
+                        e.target.value = city;
+                        setIsCitiesDropdownOpen(!isCitiesDropdownOpen);
+                      }}
+                      onBlur={(e) => city === ""}
+                      className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-300 px-[4.5rem] py-[0.7rem] text-[1.5rem] rounded-md cursor-pointer"
+                    />
+                    {/* Dropdown Cities */}
+                    {isCitiesDropdownOpen && (
+                      <div className="dropdownCities shadow-lg border-[0.2rem] border-neutral-300 rounded-md absolute top-[100%] left-0 w-full flex flex-col py-[0.5rem]">
+                        <ul className="max-h-[25rem] overflow-auto scrollbar-slim">
+                          <h6 className="text-[1.6rem] leading-[1.6rem] font-semibold text-neutral-800 px-[1.5rem] py-[1rem]">
+                            Select City
+                          </h6>
+                          {cities.sort().map((city, index) => (
+                            <li
+                              key={index}
+                              onClick={(e) =>
+                                propertyFormDataChangeHandler(
+                                  "city",
+                                  e.target.textContent
+                                )
+                              }
+                              className="text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[1rem] hover:bg-theme-blue hover:text-white transition-all"
+                            >
+                              {city}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </form>

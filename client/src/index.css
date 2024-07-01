@@ -44,6 +44,20 @@
     cursor: grab;
   }
 
+  .scrollbar-slim::-webkit-scrollbar {
+    width: 0.7rem;
+  }
+
+  .scrollbar-slim::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-slim::-webkit-scrollbar-thumb {
+    background-color: #909090;
+    border-radius: 10px;
+    cursor: grab;
+  }
+
   .toast-message {
     color: #fff;
     font-size: 1.6rem;
