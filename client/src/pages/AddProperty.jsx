@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { Map, Marker, ZoomControl } from "pigeon-maps";
+import OpenCageApiClient from "opencage-api-client";
+import axios from "axios";
+
 import {
   propertyPurposes,
   propertyCategories,
@@ -10,12 +14,18 @@ import {
 
 // Import React Icons
 import { IoSearch } from "react-icons/io5";
+import { FaPlus } from "react-icons/fa6";
 
 // Import Assets
 import AddPropertyBannerImage from "../assets/add-property-banner.png";
 
 const AddProperty = () => {
   const [isCitiesDropdownOpen, setIsCitiesDropdownOpen] = useState(false);
+  const [cityCoordinates, setCityCoordinates] = useState({
+    lat: null,
+    lng: null,
+  });
+  console.log(cityCoordinates);
   const [propertyTypeOptions, setPropertyTypeOptions] = useState(
     propertyResidentialTypes
   );
@@ -32,13 +42,14 @@ const AddProperty = () => {
       ...propertyDetails,
       [key]: value,
     });
+    setIsCitiesDropdownOpen(false);
   };
 
   const { purpose, category, type, city } = propertyDetails;
 
   // Set Property Form Initial Values
   useEffect(() => {
-    console.log("useEffect Run");
+    // console.log("useEffect Run");
     if (category === "Plot") {
       setPropertyDetails({
         ...propertyDetails,
@@ -65,6 +76,20 @@ const AddProperty = () => {
       type: "House",
     });
   }, [category]);
+
+  const getCityLoactionCoordinates = async (city) => {
+    try {
+      if (city) {
+        const apiKey = "YOUR_GOOGLE_MAPS_API_KEY"; // Replace with your Google Maps API key
+        const response = await axios.get(
+          `https://maps.googleapis.com/maps/api/geocode/json?address=${city}&key=${apiKey}`
+        );
+
+        const location = response.data.results[0].geometry.location;
+        setCityCoordinates({ lat: location.lat, lng: location.lng });
+      }
+    } catch (error) {}
+  };
 
   return (
     <div className="addPropertyCont w-full pt-[6rem]">
@@ -215,47 +240,49 @@ const AddProperty = () => {
               </div>
 
               {/* Property City */}
-              <div className="city w-full flex flex-col gap-[1.5rem] pb-[80rem]">
+              <div className="city w-full flex flex-col gap-[1.5rem] pb-[0rem]">
                 {/* Title */}
                 <h4 className="propertyFormInputTitles">
                   Which city is your property in?
                 </h4>
 
                 {/* City Input Cont */}
-                <div className="w-full">
-                  <div className="input w-[70%] min-w-[50rem] relative">
-                    <span className="text-[2rem] absolute top-0 left-0 h-full flex items-center justify-center px-[1.5rem] pointer-events-none">
-                      <IoSearch className="text-neutral-400" />
-                    </span>
+                <div className="w-full space-y-2">
+                  <div className="input w-[70%] min-w-[50rem] relative z-[1]">
                     <input
                       type="text"
                       name="city"
                       id="city"
                       defaultValue={city}
-                      onClick={(e) => {
-                        e.target.value = city;
-                        setIsCitiesDropdownOpen(!isCitiesDropdownOpen);
-                      }}
-                      onBlur={(e) => city === ""}
-                      className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-300 px-[4.5rem] py-[0.7rem] text-[1.5rem] rounded-md cursor-pointer"
+                      readOnly={true}
+                      autoComplete="off"
+                      onClick={() =>
+                        setIsCitiesDropdownOpen(!isCitiesDropdownOpen)
+                      }
+                      className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-300 px-[4.5rem] py-[0.7rem] text-[1.5rem] rounded-md cursor-pointer focus:border-theme-blue peer/city"
                     />
-                    {/* Dropdown Cities */}
+                    <span className="text-[2rem] absolute top-0 left-0 h-full flex items-center justify-center px-[1.5rem] text-neutral-400 pointer-events-none peer-focus/city:text-theme-blue">
+                      <IoSearch className="" />
+                    </span>
+
+                    {/* Cities Dropdown */}
                     {isCitiesDropdownOpen && (
-                      <div className="dropdownCities shadow-lg border-[0.2rem] border-neutral-300 rounded-md absolute top-[100%] left-0 w-full flex flex-col py-[0.5rem]">
-                        <ul className="max-h-[25rem] overflow-auto scrollbar-slim">
+                      <div className="dropdownCities w-full flex flex-col py-[0.5rem] shadow-lg border-[0.2rem] bg-white border-neutral-300 rounded-md absolute z-10 top-[100%] left-0">
+                        <ul className="w-full max-h-[25rem] overflow-auto scrollbar-slim">
                           <h6 className="text-[1.6rem] leading-[1.6rem] font-semibold text-neutral-800 px-[1.5rem] py-[1rem]">
                             Select City
                           </h6>
                           {cities.sort().map((city, index) => (
                             <li
                               key={index}
-                              onClick={(e) =>
+                              onClick={(e) => {
+                                getCityLoactionCoordinates(e.target.innerText);
                                 propertyFormDataChangeHandler(
                                   "city",
-                                  e.target.textContent
-                                )
-                              }
-                              className="text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[1rem] hover:bg-theme-blue hover:text-white transition-all"
+                                  e.target.innerText
+                                );
+                              }}
+                              className="w-full text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[1rem] hover:bg-theme-blue hover:text-white transition-all"
                             >
                               {city}
                             </li>
@@ -264,6 +291,39 @@ const AddProperty = () => {
                       </div>
                     )}
                   </div>
+
+                  <p className="cityErrorMsg hidden text-[1.4rem] leading-[1.4rem] font-medium text-red-700">
+                    City is required
+                  </p>
+                </div>
+              </div>
+
+              {/* Property Area */}
+              <div className="city w-full flex flex-col gap-[1.5rem] pb-[0rem]">
+                {/* Title */}
+                <h4 className="propertyFormInputTitles">
+                  Which city is your property in?
+                </h4>
+
+                {/* Area Input Cont */}
+                <div className="w-full space-y-2">
+                  <button
+                    onClick={(e) => e.preventDefault()}
+                    className="flex items-center gap-[0.5rem] text-theme-blue border-[0.2rem] border-neutral-300 p-[1rem] rounded-lg hover:shadow-lg hover:shadow-neutral-200 hover:translate-y-[-0.1rem]"
+                  >
+                    <FaPlus className="text-[1.6rem] text-cyan-900 mb-[0.2rem]" />
+                    <span className="text-[1.6rem] leading-[1.6rem] font-semibold">
+                      Set Exact Property Location
+                    </span>
+                  </button>
+
+                  <SetPropertyLocation
+                    setCityCoordinates={setCityCoordinates}
+                  />
+
+                  <p className="areaErrorMsg hidden text-[1.4rem] leading-[1.4rem] font-medium text-red-700">
+                    Area is required
+                  </p>
                 </div>
               </div>
             </form>
@@ -278,3 +338,51 @@ const AddProperty = () => {
 };
 
 export default AddProperty;
+
+// AIzaSyCRYGFPG_pwucTj_PHPnNjRVQxofOeJxKs
+
+const SetPropertyLocation = () => {
+  const [hue, setHue] = useState(0);
+  const color = `hsl(${hue % 360}deg 39% 70%)`;
+  const [locationDetails, setLocationDetails] = useState(null);
+  const [marker, setMarker] = useState([25.1072, 67.2371]);
+  console.log(marker);
+  console.log(locationDetails);
+
+  const handleMapClick = async ({ latLng }) => {
+    setMarker(latLng);
+    try {
+      const response = await OpenCageApiClient.geocode({
+        key: "df4960c5c9f24a8ba5dd3e3c5316539c",
+        q: `${latLng[0]}, ${latLng[1]}`,
+        language: "en",
+      });
+      if (response.results.length > 0) {
+        setLocationDetails(response.results[0]);
+      } else {
+        setLocationDetails("Location details not found");
+      }
+    } catch (error) {
+      console.error("Error fetching location details:", error);
+    }
+  };
+
+  return (
+    <div className="map">
+      <Map
+        height={300}
+        defaultCenter={marker}
+        defaultZoom={10}
+        onClick={handleMapClick}
+      >
+        <Marker
+          width={50}
+          anchor={marker}
+          color={color}
+          onClick={() => setHue(hue + 20)}
+        />
+        <ZoomControl />
+      </Map>
+    </div>
+  );
+};
