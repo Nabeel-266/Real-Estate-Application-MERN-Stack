@@ -1,7 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { Map, Marker, ZoomControl } from "pigeon-maps";
-import OpenCageApiClient from "opencage-api-client";
-import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
 
 import {
   propertyPurposes,
@@ -18,14 +15,15 @@ import { FaPlus } from "react-icons/fa6";
 
 // Import Assets
 import AddPropertyBannerImage from "../assets/add-property-banner.png";
+import AddPropertyLocationModal from "../components/AddPropertyLocation";
 
 const AddProperty = () => {
+  const dropdownRef = useRef(null);
   const [isCitiesDropdownOpen, setIsCitiesDropdownOpen] = useState(false);
-  const [cityCoordinates, setCityCoordinates] = useState({
-    lat: null,
-    lng: null,
-  });
-  console.log(cityCoordinates);
+  const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
+  const [numericPrice, setNumericPrice] = useState("");
+
+  // console.log(cityCoordinates);
   const [propertyTypeOptions, setPropertyTypeOptions] = useState(
     propertyResidentialTypes
   );
@@ -34,6 +32,8 @@ const AddProperty = () => {
     category: "",
     type: "",
     city: "",
+    coordinates: "",
+    price: "",
   });
   console.log(propertyDetails);
 
@@ -45,7 +45,7 @@ const AddProperty = () => {
     setIsCitiesDropdownOpen(false);
   };
 
-  const { purpose, category, type, city } = propertyDetails;
+  const { purpose, category, type, city, price } = propertyDetails;
 
   // Set Property Form Initial Values
   useEffect(() => {
@@ -77,18 +77,89 @@ const AddProperty = () => {
     });
   }, [category]);
 
-  const getCityLoactionCoordinates = async (city) => {
-    try {
-      if (city) {
-        const apiKey = "YOUR_GOOGLE_MAPS_API_KEY"; // Replace with your Google Maps API key
-        const response = await axios.get(
-          `https://maps.googleapis.com/maps/api/geocode/json?address=${city}&key=${apiKey}`
-        );
+  // const getCityLoactionCoordinates = async (city) => {
+  //   console.log(city);
+  //   try {
+  //     if (city) {
+  //       const apiKey = "AIzaSyAB50t90jVyQ_oQ2vDl6mCjbFLA9Bxx9TI";
+  //       // const response = await axios.get(
+  //       //   `https://maps.googleapis.com/maps/api/geocode/json?address=${city}&key=${apiKey}`
+  //       // );
 
-        const location = response.data.results[0].geometry.location;
-        setCityCoordinates({ lat: location.lat, lng: location.lng });
+  //       // const location = response.data.results[0].geometry.location;
+  //       const location = response;
+  //       console.log(location);
+  //       setCityCoordinates({ lat: location.lat, lng: location.lng });
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // Dropdown Close when clicked outside of the dropdown
+  useEffect(() => {
+    const handleClickOutsideDropdown = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsCitiesDropdownOpen(false);
       }
-    } catch (error) {}
+    };
+
+    document.addEventListener("mousedown", handleClickOutsideDropdown);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutsideDropdown);
+    };
+  }, [dropdownRef]);
+
+  // Price Input Value converted in Pakistani Rupees Conversion
+  const convertPrice = (value) => {
+    let number = parseFloat(value);
+    if (isNaN(number)) return "";
+
+    if (number >= 1e15) {
+      number = number % 1e15;
+    }
+
+    let formattedNumber = "";
+    let unit = "";
+
+    if (number >= 1e11) {
+      formattedNumber = number / 1e11;
+      unit = " Kharab";
+    } else if (number >= 1e9) {
+      formattedNumber = number / 1e9;
+      unit = " Arab";
+    } else if (number >= 1e7) {
+      formattedNumber = number / 1e7;
+      unit = " Crore";
+    } else if (number >= 1e5) {
+      formattedNumber = number / 1e5;
+      unit = " Lac";
+    } else {
+      formattedNumber = number;
+    }
+
+    if (formattedNumber % 1 === 0) {
+      return formattedNumber.toFixed(0) + unit;
+    } else if ((formattedNumber * 10) % 1 === 0) {
+      return formattedNumber.toFixed(1) + unit;
+    } else {
+      return formattedNumber.toFixed(2) + unit;
+    }
+  };
+
+  const priceHandleChange = (e) => {
+    let value = e.target.value;
+    let number = parseFloat(value);
+
+    if (number >= 1e15) {
+      number = 1;
+      value = number;
+    }
+
+    setNumericPrice(value);
+    const formattedPrice = convertPrice(value);
+    propertyFormDataChangeHandler("price", formattedPrice);
   };
 
   return (
@@ -247,8 +318,8 @@ const AddProperty = () => {
                 </h4>
 
                 {/* City Input Cont */}
-                <div className="w-full space-y-2">
-                  <div className="input w-[70%] min-w-[50rem] relative z-[1]">
+                <div className="w-full space-y-[0.8rem]">
+                  <div className="input w-[70%] min-w-[50rem] relative z-[2]">
                     <input
                       type="text"
                       name="city"
@@ -259,7 +330,7 @@ const AddProperty = () => {
                       onClick={() =>
                         setIsCitiesDropdownOpen(!isCitiesDropdownOpen)
                       }
-                      className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-300 px-[4.5rem] py-[0.7rem] text-[1.5rem] rounded-md cursor-pointer focus:border-theme-blue peer/city"
+                      className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-300 font-medium px-[4.5rem] py-[0.7rem] text-[1.5rem] rounded-md cursor-pointer focus:border-theme-blue peer/city"
                     />
                     <span className="text-[2rem] absolute top-0 left-0 h-full flex items-center justify-center px-[1.5rem] text-neutral-400 pointer-events-none peer-focus/city:text-theme-blue">
                       <IoSearch className="" />
@@ -267,7 +338,10 @@ const AddProperty = () => {
 
                     {/* Cities Dropdown */}
                     {isCitiesDropdownOpen && (
-                      <div className="dropdownCities w-full flex flex-col py-[0.5rem] shadow-lg border-[0.2rem] bg-white border-neutral-300 rounded-md absolute z-10 top-[100%] left-0">
+                      <div
+                        ref={dropdownRef}
+                        className="dropdownCities w-full flex flex-col py-[0.5rem] shadow-lg border-[0.2rem] bg-white border-neutral-300 rounded-md absolute z-10 top-[100%] left-0"
+                      >
                         <ul className="w-full max-h-[25rem] overflow-auto scrollbar-slim">
                           <h6 className="text-[1.6rem] leading-[1.6rem] font-semibold text-neutral-800 px-[1.5rem] py-[1rem]">
                             Select City
@@ -275,13 +349,12 @@ const AddProperty = () => {
                           {cities.sort().map((city, index) => (
                             <li
                               key={index}
-                              onClick={(e) => {
-                                getCityLoactionCoordinates(e.target.innerText);
+                              onClick={(e) =>
                                 propertyFormDataChangeHandler(
                                   "city",
                                   e.target.innerText
-                                );
-                              }}
+                                )
+                              }
                               className="w-full text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[1rem] hover:bg-theme-blue hover:text-white transition-all"
                             >
                               {city}
@@ -298,31 +371,67 @@ const AddProperty = () => {
                 </div>
               </div>
 
-              {/* Property Area */}
-              <div className="city w-full flex flex-col gap-[1.5rem] pb-[0rem]">
+              {/* Property Location */}
+              <div className="location w-full flex flex-col gap-[1.5rem] pb-[0rem]">
                 {/* Title */}
                 <h4 className="propertyFormInputTitles">
-                  Which city is your property in?
+                  Where is your exact property location?
                 </h4>
 
-                {/* Area Input Cont */}
-                <div className="w-full space-y-2">
+                {/* Area Select Cont */}
+                <div className="w-full space-y-[0.8rem]">
                   <button
-                    onClick={(e) => e.preventDefault()}
-                    className="flex items-center gap-[0.5rem] text-theme-blue border-[0.2rem] border-neutral-300 p-[1rem] rounded-lg hover:shadow-lg hover:shadow-neutral-200 hover:translate-y-[-0.1rem]"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsLocationModalOpen(true);
+                    }}
+                    disabled={city ? false : true}
+                    className="flex items-center gap-[0.5rem] text-theme-blue border-[0.2rem] border-neutral-300 p-[1rem] rounded-lg hover:shadow-lg hover:shadow-neutral-200 hover:translate-y-[-0.1rem] disabled:opacity-80 disabled:cursor-not-allowed"
                   >
                     <FaPlus className="text-[1.6rem] text-cyan-900 mb-[0.2rem]" />
                     <span className="text-[1.6rem] leading-[1.6rem] font-semibold">
-                      Set Exact Property Location
+                      Set Exact Location
                     </span>
                   </button>
 
-                  <SetPropertyLocation
-                    setCityCoordinates={setCityCoordinates}
-                  />
-
                   <p className="areaErrorMsg hidden text-[1.4rem] leading-[1.4rem] font-medium text-red-700">
-                    Area is required
+                    Location is required
+                  </p>
+                </div>
+              </div>
+
+              {/* Property Price */}
+              <div className="city w-full flex flex-col gap-[1.5rem] pb-[0rem]">
+                {/* Title */}
+                <h4 className="propertyFormInputTitles">
+                  What is the demanding price?
+                </h4>
+
+                {/* Price Input Cont */}
+                <div className="w-full space-y-[0.8rem]">
+                  <div className="input w-[70%] min-w-[50rem] relative z-[1]">
+                    <input
+                      type="number"
+                      name="price"
+                      id="price"
+                      value={numericPrice}
+                      onChange={priceHandleChange}
+                      placeholder="0"
+                      className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-300 font-medium pl-[5.5rem] pr-[2rem] py-[0.7rem] text-[1.5rem] rounded-md cursor-pointer focus:border-theme-blue numberInput peer/price"
+                    />
+                    <span className="text-[1.5rem] font-semibold absolute top-0 left-0 h-full flex items-center justify-center px-[1.5rem] text-neutral-400 pointer-events-none peer-focus/price:text-theme-blue">
+                      PKR
+                    </span>
+                  </div>
+
+                  {price && (
+                    <p className="cityErrorMsg text-[1.4rem] leading-[1.4rem] font-medium text-neutral-800">
+                      PKR <span className="font-semibold">{price}</span>
+                    </p>
+                  )}
+
+                  <p className="cityErrorMsg hidden text-[1.4rem] leading-[1.4rem] font-medium text-red-700">
+                    City is required
                   </p>
                 </div>
               </div>
@@ -333,56 +442,16 @@ const AddProperty = () => {
           <div className="addPropertyPreviewCont w-0 hidden tabletLg:w-[40%] tabletRg:block"></div>
         </div>
       </div>
+
+      {isLocationModalOpen && (
+        <AddPropertyLocationModal
+          setIsLocationModalOpen={setIsLocationModalOpen}
+          city={city}
+          propertyFormDataChangeHandler={propertyFormDataChangeHandler}
+        />
+      )}
     </div>
   );
 };
 
 export default AddProperty;
-
-// AIzaSyCRYGFPG_pwucTj_PHPnNjRVQxofOeJxKs
-
-const SetPropertyLocation = () => {
-  const [hue, setHue] = useState(0);
-  const color = `hsl(${hue % 360}deg 39% 70%)`;
-  const [locationDetails, setLocationDetails] = useState(null);
-  const [marker, setMarker] = useState([25.1072, 67.2371]);
-  console.log(marker);
-  console.log(locationDetails);
-
-  const handleMapClick = async ({ latLng }) => {
-    setMarker(latLng);
-    try {
-      const response = await OpenCageApiClient.geocode({
-        key: "df4960c5c9f24a8ba5dd3e3c5316539c",
-        q: `${latLng[0]}, ${latLng[1]}`,
-        language: "en",
-      });
-      if (response.results.length > 0) {
-        setLocationDetails(response.results[0]);
-      } else {
-        setLocationDetails("Location details not found");
-      }
-    } catch (error) {
-      console.error("Error fetching location details:", error);
-    }
-  };
-
-  return (
-    <div className="map">
-      <Map
-        height={300}
-        defaultCenter={marker}
-        defaultZoom={10}
-        onClick={handleMapClick}
-      >
-        <Marker
-          width={50}
-          anchor={marker}
-          color={color}
-          onClick={() => setHue(hue + 20)}
-        />
-        <ZoomControl />
-      </Map>
-    </div>
-  );
-};
