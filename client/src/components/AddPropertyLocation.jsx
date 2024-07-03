@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Map, Marker, ZoomControl } from "pigeon-maps";
-import OpenCageApiClient from "opencage-api-client";
 import axios from "axios";
 
 const AddPropertyLocationModal = ({
@@ -9,8 +8,14 @@ const AddPropertyLocationModal = ({
   propertyFormDataChangeHandler,
 }) => {
   const [marker, setMarker] = useState([]);
+  const [cityBoundary, setCityBoundary] = useState({});
   const [propertyCoordinates, setPropertyCoordinates] = useState(null);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
+
   console.log(marker);
+  console.log(cityBoundary);
+  console.log(propertyCoordinates);
 
   useEffect(() => {
     const getCityLocationCoordinates = async (city) => {
@@ -22,10 +27,14 @@ const AddPropertyLocationModal = ({
           );
 
           const location = response.data.results[0].geometry;
+          const bounds = response.data.results[0].bounds;
           setMarker([location.lat, location.lng]);
+          setCityBoundary(bounds);
+          setLoading(false);
         }
       } catch (error) {
         console.log(error);
+        setLoading(false);
       }
     };
 
@@ -38,8 +47,23 @@ const AddPropertyLocationModal = ({
   };
 
   const setPropertyCoordinatesHandler = () => {
-    propertyFormDataChangeHandler("coordinates", propertyCoordinates);
-    setIsLocationModalOpen(false);
+    const { lat, lng } = propertyCoordinates;
+    const { northeast, southwest } = cityBoundary;
+
+    const isValidCoordinates =
+      lat <= northeast.lat &&
+      lat >= southwest.lat &&
+      lng <= northeast.lng &&
+      lng >= southwest.lng;
+
+    if (isValidCoordinates) {
+      propertyFormDataChangeHandler("coordinates", propertyCoordinates);
+      setIsLocationModalOpen(false);
+    } else {
+      setError(
+        `Error! Your selected property location are outside the ${city}, please select your correct property location.`
+      );
+    }
   };
 
   return (
@@ -58,21 +82,34 @@ const AddPropertyLocationModal = ({
         </header>
 
         {/* Map Container */}
-        <div className="mapContainer w-full h-[40rem] p-[1rem]">
-          <div className="map w-full h-full border-[0.2rem] border-neutral-300 rounded-md">
-            <Map
-              defaultCenter={[30.007535621781102, 69.4288508620124]}
-              defaultZoom={6}
-              onClick={handleMapClick}
-            >
-              <Marker width={40} anchor={marker} color="#082835" />
-              <ZoomControl />
-            </Map>
-          </div>
+        <div className="mapContainer w-full h-[40rem] px-[1rem] pt-[1.5rem] pb-[1rem] flex items-center justify-center">
+          {loading ? (
+            <div className="loader"></div>
+          ) : (
+            <div className="map w-full h-full border-[0.2rem] border-neutral-300 rounded-md">
+              <Map
+                defaultCenter={marker}
+                defaultZoom={10}
+                onClick={handleMapClick}
+              >
+                <Marker width={40} anchor={marker} color="#082835" />
+                <ZoomControl />
+              </Map>
+            </div>
+          )}
         </div>
 
+        {/* Location Error */}
+        {error && (
+          <div className="errorCont px-[1rem] mb-[1rem]">
+            <p className="text-[1.7rem] font-semibold text-red-800 text-center">
+              {error}
+            </p>
+          </div>
+        )}
+
         {/* Modal Button */}
-        <div className="w-full flex justify-end gap-[1rem] px-[1rem] py-[1.5rem]">
+        <div className="w-full flex justify-end gap-[1rem] px-[1rem] py-[1rem]">
           <button
             onClick={() => setIsLocationModalOpen(false)}
             className="text-[1.7rem] leading-[1.7rem] font-medium text-white px-[1rem] py-[1rem] bg-neutral-800 rounded-md flex items-center gap-[0.5rem]"
