@@ -14,12 +14,15 @@ import { Navigation } from "swiper/modules";
 import { FaBed, FaBath, FaArrowRightLong } from "react-icons/fa6";
 import { BiArea } from "react-icons/bi";
 import { MdOutlineTimer } from "react-icons/md";
+import { FaQuoteLeft } from "react-icons/fa";
+import { AiOutlinePartition } from "react-icons/ai";
+import { PiToiletBold } from "react-icons/pi";
+import { TbToolsKitchen } from "react-icons/tb";
 import {
   HiLocationMarker,
   HiOutlineArrowNarrowLeft,
   HiOutlineArrowNarrowRight,
 } from "react-icons/hi";
-import { FaQuoteLeft } from "react-icons/fa";
 
 // Import Image
 import bannerHomes from "../assets/banner-homes.png";
@@ -42,9 +45,6 @@ import person05 from "../assets/Persons/person05.jpg";
 
 // Component
 import Footer from "../components/Footer";
-import { AiOutlinePartition } from "react-icons/ai";
-import { PiToiletBold } from "react-icons/pi";
-import { TbToolsKitchen } from "react-icons/tb";
 
 const testimonials = [
   {

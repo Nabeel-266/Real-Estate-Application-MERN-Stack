@@ -12,16 +12,23 @@ import {
 // Import React Icons
 import { IoSearch } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa6";
+import { BiArea } from "react-icons/bi";
+import { IoMdArrowDropdown } from "react-icons/io";
 
 // Import Assets
 import AddPropertyBannerImage from "../assets/add-property-banner.png";
+
+// Import Component
 import AddPropertyLocationModal from "../components/AddPropertyLocation";
 
 const AddProperty = () => {
   const dropdownRef = useRef(null);
   const [isCitiesDropdownOpen, setIsCitiesDropdownOpen] = useState(false);
+  const [isSizeDropdownOpen, setIsSizeDropdownOpen] = useState(false);
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const [numericPrice, setNumericPrice] = useState("");
+  const [sizeValue, setSizeValue] = useState(0);
+  const [sizeUnit, setSizeUnit] = useState("Sq. Ft");
 
   // console.log(cityCoordinates);
   const [propertyTypeOptions, setPropertyTypeOptions] = useState(
@@ -33,6 +40,7 @@ const AddProperty = () => {
     type: "",
     city: "",
     coordinates: "",
+    size: "",
     price: "",
   });
   console.log(propertyDetails);
@@ -45,7 +53,7 @@ const AddProperty = () => {
     setIsCitiesDropdownOpen(false);
   };
 
-  const { purpose, category, type, city, price } = propertyDetails;
+  const { purpose, category, type, city, size, price } = propertyDetails;
 
   // Set Property Form Initial Values
   useEffect(() => {
@@ -77,30 +85,12 @@ const AddProperty = () => {
     });
   }, [category]);
 
-  // const getCityLoactionCoordinates = async (city) => {
-  //   console.log(city);
-  //   try {
-  //     if (city) {
-  //       const apiKey = "AIzaSyAB50t90jVyQ_oQ2vDl6mCjbFLA9Bxx9TI";
-  //       // const response = await axios.get(
-  //       //   `https://maps.googleapis.com/maps/api/geocode/json?address=${city}&key=${apiKey}`
-  //       // );
-
-  //       // const location = response.data.results[0].geometry.location;
-  //       const location = response;
-  //       console.log(location);
-  //       setCityCoordinates({ lat: location.lat, lng: location.lng });
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   // Dropdown Close when clicked outside of the dropdown
   useEffect(() => {
     const handleClickOutsideDropdown = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsCitiesDropdownOpen(false);
+        setIsSizeDropdownOpen(false);
       }
     };
 
@@ -115,10 +105,6 @@ const AddProperty = () => {
   const convertPrice = (value) => {
     let number = parseFloat(value);
     if (isNaN(number)) return "";
-
-    if (number >= 1e15) {
-      number = number % 1e15;
-    }
 
     let formattedNumber = "";
     let unit = "";
@@ -148,7 +134,8 @@ const AddProperty = () => {
     }
   };
 
-  const priceHandleChange = (e) => {
+  // Price Change Handler
+  const priceChangeHanlder = (e) => {
     let value = e.target.value;
     let number = parseFloat(value);
 
@@ -160,6 +147,22 @@ const AddProperty = () => {
     setNumericPrice(value);
     const formattedPrice = convertPrice(value);
     propertyFormDataChangeHandler("price", formattedPrice);
+  };
+
+  // Size Change Handler
+  const sizeChangeHandler = (text, value) => {
+    if (text === "sizeValue") {
+      if (value >= 1e30) {
+        setSizeValue(1);
+      } else {
+        setSizeValue(value);
+      }
+      propertyFormDataChangeHandler("size", `${value} ${sizeUnit}`);
+    } else if (text === "sizeUnit") {
+      setSizeUnit(value);
+      propertyFormDataChangeHandler("size", `${sizeValue} ${value}`);
+      setIsSizeDropdownOpen(false);
+    }
   };
 
   return (
@@ -319,7 +322,7 @@ const AddProperty = () => {
 
                 {/* City Input Cont */}
                 <div className="w-full space-y-[0.8rem]">
-                  <div className="input w-[70%] min-w-[50rem] relative z-[2]">
+                  <div className="input w-[70%] min-w-[50rem] relative z-[3]">
                     <input
                       type="text"
                       name="city"
@@ -340,9 +343,9 @@ const AddProperty = () => {
                     {isCitiesDropdownOpen && (
                       <div
                         ref={dropdownRef}
-                        className="dropdownCities w-full flex flex-col py-[0.5rem] shadow-lg border-[0.2rem] bg-white border-neutral-300 rounded-md absolute z-10 top-[100%] left-0"
+                        className="dropdownCities w-full py-[0.5rem] shadow-lg border-[0.2rem] bg-white border-neutral-300 rounded-md absolute z-10 top-[100%] left-0"
                       >
-                        <ul className="w-full max-h-[25rem] overflow-auto scrollbar-slim">
+                        <ul className="w-full max-h-[25rem] overflow-auto scrollbar-slim ">
                           <h6 className="text-[1.6rem] leading-[1.6rem] font-semibold text-neutral-800 px-[1.5rem] py-[1rem]">
                             Select City
                           </h6>
@@ -400,8 +403,86 @@ const AddProperty = () => {
                 </div>
               </div>
 
+              {/* Property Size */}
+              <div className="size w-full flex flex-col gap-[1.5rem] pb-[0rem]">
+                {/* Title */}
+                <h4 className="propertyFormInputTitles">
+                  What is the size of your property?
+                </h4>
+
+                {/* Size Input Cont */}
+                <div className="w-full space-y-[0.8rem]">
+                  <div className="input w-[70%] min-w-[50rem] relative z-[2]">
+                    <input
+                      type="number"
+                      name="size"
+                      id="size"
+                      value={sizeValue}
+                      onChange={(e) =>
+                        sizeChangeHandler("sizeValue", e.target.value)
+                      }
+                      placeholder="0"
+                      className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-300 font-medium pl-[5.5rem] pr-[11rem] py-[1rem] text-[1.5rem] leading-[1.5rem] rounded-md focus:border-theme-blue numberInput peer/size"
+                    />
+                    <span className="text-[2.2rem] font-semibold absolute top-0 left-0 h-full flex items-center justify-center px-[1.5rem] text-neutral-400 pointer-events-none peer-focus/size:text-theme-blue">
+                      <BiArea />
+                    </span>
+
+                    <div
+                      onClick={() => setIsSizeDropdownOpen(!isSizeDropdownOpen)}
+                      className="absolute top-0 right-0 h-full px-[2rem] flex items-center gap-[1rem] text-[1.5rem] font-medium text-neutral-700 cursor-pointer rounded-r-md select-none"
+                    >
+                      <span className="leading-[1.5rem]">
+                        {sizeUnit || "Sq. Ft"}
+                      </span>
+                      <IoMdArrowDropdown
+                        size={"1.8rem"}
+                        className={`${
+                          isSizeDropdownOpen ? "rotate-180" : "rotate-0"
+                        } transition-all`}
+                      />
+                    </div>
+
+                    {isSizeDropdownOpen && (
+                      <div
+                        ref={dropdownRef}
+                        className="dropdownSizeUnits py-[0.5rem] shadow-lg border-[0.2rem] bg-white  border-neutral-300 rounded-md absolute z-10 top-[110%] right-0"
+                      >
+                        <ul className="flex flex-col">
+                          {[
+                            "Sq. Ft",
+                            "Sq. M",
+                            "Sq. Yd",
+                            "Marla",
+                            "Kanal",
+                            "Acre",
+                          ].map((size, index) => (
+                            <li
+                              key={index}
+                              onClick={(e) =>
+                                sizeChangeHandler(
+                                  "sizeUnit",
+                                  e.target.innerText
+                                )
+                              }
+                              className="min-w-[15rem] text-[1.4rem] leading-[1.4rem] font-medium text-neutral-700 px-[1rem] py-[1rem] hover:bg-theme-blue hover:text-white transition-all cursor-pointer"
+                            >
+                              {size}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+
+                  <p className="sizeErrorMsg hidden text-[1.4rem] leading-[1.4rem] font-medium text-red-700">
+                    Size is required
+                  </p>
+                </div>
+              </div>
+
               {/* Property Price */}
-              <div className="city w-full flex flex-col gap-[1.5rem] pb-[0rem]">
+              <div className="price w-full flex flex-col gap-[1.5rem] pb-[0rem]">
                 {/* Title */}
                 <h4 className="propertyFormInputTitles">
                   What is the demanding price?
@@ -415,11 +496,11 @@ const AddProperty = () => {
                       name="price"
                       id="price"
                       value={numericPrice}
-                      onChange={priceHandleChange}
+                      onChange={priceChangeHanlder}
                       placeholder="0"
-                      className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-300 font-medium pl-[5.5rem] pr-[2rem] py-[0.7rem] text-[1.5rem] rounded-md cursor-pointer focus:border-theme-blue numberInput peer/price"
+                      className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-300 font-medium pl-[6.5rem] pr-[2rem] py-[0.7rem] text-[1.5rem] rounded-md focus:border-theme-blue numberInput peer/price"
                     />
-                    <span className="text-[1.5rem] font-semibold absolute top-0 left-0 h-full flex items-center justify-center px-[1.5rem] text-neutral-400 pointer-events-none peer-focus/price:text-theme-blue">
+                    <span className="text-[1.5rem] font-semibold absolute top-0 left-0 h-full flex items-center justify-center px-[1.8rem] text-neutral-400 pointer-events-none peer-focus/price:text-theme-blue">
                       PKR
                     </span>
                   </div>
@@ -430,8 +511,8 @@ const AddProperty = () => {
                     </p>
                   )}
 
-                  <p className="cityErrorMsg hidden text-[1.4rem] leading-[1.4rem] font-medium text-red-700">
-                    City is required
+                  <p className="priceErrorMsg hidden text-[1.4rem] leading-[1.4rem] font-medium text-red-700">
+                    Price is required
                   </p>
                 </div>
               </div>
@@ -443,6 +524,7 @@ const AddProperty = () => {
         </div>
       </div>
 
+      {/* Property Location Modal */}
       {isLocationModalOpen && (
         <AddPropertyLocationModal
           setIsLocationModalOpen={setIsLocationModalOpen}

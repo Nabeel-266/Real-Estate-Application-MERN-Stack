@@ -89,7 +89,7 @@ const AddPropertyLocationModal = ({
             <div className="map w-full h-full border-[0.2rem] border-neutral-300 rounded-md">
               <Map
                 defaultCenter={marker}
-                defaultZoom={10}
+                defaultZoom={11}
                 onClick={handleMapClick}
               >
                 <Marker width={40} anchor={marker} color="#082835" />
