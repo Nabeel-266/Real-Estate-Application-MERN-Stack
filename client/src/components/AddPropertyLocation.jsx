@@ -67,10 +67,10 @@ const AddPropertyLocationModal = ({
   };
 
   return (
-    <div className="editProfileModalCont w-full min-h-dvh flex items-center justify-center fixed z-[990] top-0 left-0">
+    <div className="editProfileModalCont w-full h-dvh flex items-center justify-center fixed z-[990] top-0 left-0">
       {/* Add Property Location Modal Overlay */}
       <div
-        className={`w-full h-full absolute z-0 backdrop-blur-[5px] bg-[#40404090] overflow-hidden`}
+        className={`w-full h-full absolute z-0 backdrop-blur-[2px] bg-[#404040b0] overflow-hidden`}
       ></div>
 
       <div className="w-[80rem] min-h-[30rem] relative z-20 bg-white rounded-md px-[1rem] py-[1rem] shadow-2xl">

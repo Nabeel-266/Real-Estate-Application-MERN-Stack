@@ -2,16 +2,16 @@ import { useRef, useState } from "react";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
-
 // import required module
 import { Navigation } from "swiper/modules";
 
 // Import React Icon
-import { FaBed, FaBath, FaArrowRightLong } from "react-icons/fa6";
+import { FaArrowRightLong } from "react-icons/fa6";
+import { LiaBedSolid } from "react-icons/lia";
+import { LuBath } from "react-icons/lu";
 import { BiArea } from "react-icons/bi";
 import { MdOutlineTimer } from "react-icons/md";
 import { FaQuoteLeft } from "react-icons/fa";
@@ -217,78 +217,59 @@ const Home = () => {
 
                   {/* Card Content */}
                   <div className="cardContent w-full flex flex-col gap-[1rem] p-[1rem] text-neutral-700">
-                    {/* Type */}
-                    <p className="type relative flex items-center text-[1.8rem] leading-[1.8rem] font-semibold pl-[2rem] before:content-[''] before:w-[1.2rem] before:h-[1.2rem] before:bg-theme-yellow before:absolute before:left-0 before:rounded-sm">
-                      Appartment
-                    </p>
+                    {/* Type & Purpose */}
+                    <div className="typePurpose flex">
+                      <p className="type relative flex items-center text-[1.7rem] leading-[1.7rem] font-semibold pl-[1.8rem] before:content-[''] before:w-[1rem] before:h-[1rem] before:bg-theme-yellow before:absolute before:left-0 before:rounded-full">
+                        Appartment
+                      </p>
+                    </div>
 
                     {/* Price */}
-                    <span className="price flex items-end gap-[0.4rem] text-[1.6rem] leading-[1.6rem] font-semibold text-theme-blue select-none">
+                    <div className="price flex items-end gap-[0.4rem] text-[1.6rem] leading-[1.6rem] font-semibold text-theme-blue select-none">
                       <span>PKR</span>
                       <span className="text-[2rem] leading-[2rem] font-bold">
                         450,000,00
-                      </span>
-                    </span>
-
-                    {/* Location */}
-                    <div className="location flex items-center gap-[0.5rem] text-[1.4rem] text-neutral-600 mt-[0.1rem]">
-                      <HiLocationMarker />
-                      <span className="leading-[1.4rem] font-semibold">
-                        North-Karachi, Karachi
                       </span>
                     </div>
 
                     {/* Details */}
                     <div className="w-full flex items-center justify-between mt-[0.1rem] text-neutral-600">
-                      <div className="leftSide flex items-center gap-[1rem] text-[1.4rem] leading-[1.2rem] font-medium select-none">
+                      <div className="leftSide flex items-center gap-[1rem] text-[1.5rem] leading-[1.5rem] font-semibold select-none">
                         {/* Bedroom */}
-                        <abbr title="Bedroom" className="no-underline">
-                          <span className="bed flex items-center gap-[0.3rem]">
-                            <FaBed size="1.4rem" /> 04
+                        <abbr title="Bedroom" className="no-underline ">
+                          <span className="bed flex items-center gap-[0.5rem]">
+                            <LiaBedSolid size="1.8rem" /> <span>4</span>
                           </span>
                         </abbr>
 
                         {/* Bathroom */}
-                        <abbr title="Bathroom" className="no-underline">
-                          <span className="bath flex items-center gap-[0.3rem]">
-                            <FaBath size="1.1rem" /> 03
+                        <abbr title="Bathroom" className="no-underline ">
+                          <span className="bath flex items-center gap-[0.5rem]">
+                            <LuBath /> <span>3</span>
                           </span>
                         </abbr>
 
-                        {/* Kitchen */}
-                        <abbr title="Kitchen" className="no-underline hidden">
-                          <span className="bath flex items-center gap-[0.3rem]">
-                            <TbToolsKitchen size="1.3rem" /> 03
-                          </span>
-                        </abbr>
-
-                        {/* Toilet */}
-                        <abbr title="Toilet" className="no-underline hidden">
-                          <span className="bath flex items-center gap-[0.3rem]">
-                            <PiToiletBold size="1.35rem" /> 01
-                          </span>
-                        </abbr>
-
-                        {/* Partitions */}
-                        <abbr
-                          title="Partitions"
-                          className="no-underline hidden"
-                        >
-                          <span className="bath flex items-center gap-[0.3rem]">
-                            <AiOutlinePartition size="1.35rem" /> 01
+                        {/* Size */}
+                        <abbr title="Size" className="no-underline">
+                          <span className="area flex items-center gap-[0.5rem]">
+                            <BiArea /> <span>3500 Sq.Ft</span>
                           </span>
                         </abbr>
                       </div>
+                    </div>
 
-                      <span className="area text-[1.4rem] leading-[1.4rem] font-medium flex items-center gap-[0.3rem]">
-                        <BiArea /> 3500 sqft
+                    {/* Location */}
+                    <div className="location flex items-center gap-[0.5rem] text-[1.5rem] text-neutral-600 mt-[0.1rem]">
+                      <HiLocationMarker />
+                      <span className="leading-[1.4rem] font-semibold">
+                        Karachi
                       </span>
                     </div>
 
-                    {/* Info */}
-                    <div className="w-full flex items-center justify-between mt-[0.1rem]">
-                      <span className="bg-theme-blue text-white text-[1.4rem] leading-[1.2rem] font-semibold p-[0.5rem] rounded-md">
-                        For Sale
+                    {/* Added Timing */}
+                    <div className="w-full flex items-center justify-between mt-[0.2rem]">
+                      <span className="text-neutral-600 text-[1.4rem] leading-[1.4rem] font-semibold rounded-md">
+                        Added in
                       </span>
 
                       <span className="area text-[1.4rem] leading-[1.4rem] font-semibold text-neutral-600 flex items-center gap-[0.3rem]">

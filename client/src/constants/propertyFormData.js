@@ -67,6 +67,35 @@ export const propertyCommercialTypes = [
   { value: "Factory", iconImage: FactoryIcon },
 ];
 
+export const count = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "10+"];
+
+export const propertyCondition = [
+  "Brand New",
+  "Excellent - in a good shape and well maintained",
+  "Good - in a good shape need cosmetic updates",
+  "Need Minor Work - needs a few minor renovations",
+  "Need Major Work - needs major renovations inside and out",
+];
+
+export const propertyFeaturesCategory = [
+  "Primary Features",
+  "Secondary Features",
+  "Landmarks Nearby",
+  "Utilities",
+];
+
+export const primaryFeatures = [
+  "TV Lounge",
+  "Store Room",
+  "Laundry Room",
+  "Study Room",
+  "Dining Room",
+  "Drawing Room",
+  "Servant Quater",
+  "Balcony",
+  "Kitchen",
+];
+
 export const cities = [
   "Islamabad",
   "Attock",

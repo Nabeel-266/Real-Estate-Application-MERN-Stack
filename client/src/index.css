@@ -45,7 +45,7 @@
   }
 
   .scrollbar-slim::-webkit-scrollbar {
-    width: 0.7rem;
+    width: 0.6rem;
   }
 
   .scrollbar-slim::-webkit-scrollbar-track {
@@ -186,7 +186,7 @@
   }
 
   .propertyFormInputTitles {
-    @apply text-[2rem] leading-[2.6rem] font-semibold text-theme-blue;
+    @apply text-[1.9rem] leading-[2.4rem] font-semibold text-theme-blue;
   }
 
   .propertyFormInputRadioLabels {
