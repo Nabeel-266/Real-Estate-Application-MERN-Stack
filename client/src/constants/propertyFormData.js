@@ -96,6 +96,21 @@ export const primaryFeatures = [
   "Kitchen",
 ];
 
+export const secondaryFeatures = [
+  "Corner Plot",
+  "Basement",
+  "Furnished",
+  "Semi furnished",
+  "Dirty kitchen",
+  "Swimming Pool",
+  "Lawn",
+  "Elevator/Lift",
+  "Separate Entry",
+  "Terrace",
+  "Home Theatre",
+  "Facing",
+];
+
 export const cities = [
   "Islamabad",
   "Attock",

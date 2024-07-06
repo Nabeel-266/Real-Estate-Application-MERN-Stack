@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {
   propertyFeaturesCategory,
   primaryFeatures,
+  secondaryFeatures,
 } from "../constants/propertyFormData";
 
 // Import React Icons
@@ -11,13 +12,16 @@ import { FaXmark } from "react-icons/fa6";
 
 const AddPropertyFeaturesModal = ({ setIsFeaturesModalOpen }) => {
   const [selectedPropertyFeatures, setSelectedPropertyFeatures] = useState([]);
-  console.log(selectedPropertyFeatures);
-  const [isPrimaryFeaturesOpen, setIsPrimaryFeaturesOpen] = useState(false);
+  const [whichFeaturesDropdownOpen, setWhichFeaturesDropdownOpen] = useState(
+    new Array(propertyFeaturesCategory.length).fill(false)
+  );
 
-  const featuresCategoryOnCLickHandler = (categoryName) => {
-    if (categoryName === "Primary Features") {
-      setIsPrimaryFeaturesOpen(!isPrimaryFeaturesOpen);
-    }
+  const featuresDropdownsHandler = (index) => {
+    setWhichFeaturesDropdownOpen((prevState) => {
+      const newState = [...prevState];
+      newState[index] = !newState[index];
+      return newState;
+    });
   };
 
   const propertyFeatureDataChangeHandler = (feature, condition) => {
@@ -75,7 +79,7 @@ const AddPropertyFeaturesModal = ({ setIsFeaturesModalOpen }) => {
       ></div>
 
       {/* Add Property Features Modal Cont */}
-      <div className="w-[80rem] min-h-[30rem] max-h-[90%] relative z-20 bg-white rounded-md px-[1rem] py-[1rem] shadow-2xl select-none">
+      <div className="w-[80rem] min-h-[30rem] relative z-20 bg-white rounded-md px-[1rem] py-[1rem] shadow-2xl select-none">
         {/* Add Property Features Modal Header */}
         <header className="w-full px-[1rem] py-[1rem] border-b-[0.2rem] border-neutral-300 text-theme-blue">
           <h2 className="text-[2.4rem] leading-[2.4rem] font-bold">
@@ -87,15 +91,15 @@ const AddPropertyFeaturesModal = ({ setIsFeaturesModalOpen }) => {
         <section className="w-full p-[2rem] flex flex-col gap-[2rem]">
           {/* Selected Features Display Cont */}
           <div
-            className={`w-full ${
+            className={`w-full max-h-[12.5rem] ${
               selectedPropertyFeatures.length ? "block" : "hidden"
-            }`}
+            } overflow-auto scrollbar-slim`}
           >
-            <ul className="w-full flex overflow-auto scrollbar-slim items-center gap-[1rem]">
+            <ul className="w-full flex flex-wrap items-center gap-[1rem]">
               {selectedPropertyFeatures?.map((el, index) => (
                 <li
                   key={index}
-                  className="singleFeature text-[1.4rem] leading-[1.4rem] font-medium text-white p-[1rem] flex items-center gap-[1rem] bg-theme-blue rounded-md whitespace-nowrap"
+                  className="singleFeature text-[1.4rem] leading-[1.4rem] font-medium text-theme-blue p-[1rem] flex items-center gap-[1rem] bg-theme-yellow rounded-md whitespace-nowrap"
                 >
                   <span>{el}</span>
                   <span className="cursor-pointer">
@@ -107,24 +111,26 @@ const AddPropertyFeaturesModal = ({ setIsFeaturesModalOpen }) => {
           </div>
 
           {/* Features Cont */}
-          <div className="h-[27rem] w-full flex flex-col justify-between gap-[2rem] overflow-auto scrollbar-slim">
+          <div className="h-[27rem] w-full flex flex-col justify-between gap-[2rem] overflow-auto scrollbar-slim ">
             {propertyFeaturesCategory.map((category, index) => (
               // Single Feature Category Cont
               <div
                 key={index}
-                className="singleFeatureCategoryCont w-full flex flex-col rounded-md border-[0.2rem] border-neutral-200"
+                className="singleFeatureCategoryCont w-full flex flex-col rounded-lg border-[0.2rem] border-neutral-200"
               >
                 {/* Single Feature Category Header */}
                 <div
-                  onClick={(e) =>
-                    featuresCategoryOnCLickHandler(e.target.innerText)
-                  }
-                  className="w-full text-[1.7rem] leading-[1.7rem] font-semibold text-neutral-700 flex items-center justify-between p-[1.5rem] cursor-pointer"
+                  onClick={() => featuresDropdownsHandler(index)}
+                  className={`w-full text-[1.7rem] leading-[1.7rem] font-semibold flex items-center justify-between px-[1.5rem] py-[1.2rem] rounded-t-lg cursor-pointer ${
+                    whichFeaturesDropdownOpen[index]
+                      ? "text-white bg-theme-blue"
+                      : "text-neutral-700 bg-transparent"
+                  } transition-all`}
                 >
                   <h4 className="categoryTitle">{category}</h4>
                   <IoMdArrowDropdown
-                    className={`pointer-events-none ${
-                      isPrimaryFeaturesOpen && category === "Primary Features"
+                    className={`pointer-events-none text-[2.3rem] ${
+                      whichFeaturesDropdownOpen[index]
                         ? "rotate-[180deg]"
                         : "rotate-[360deg]"
                     } transition-all duration-500`}
@@ -137,14 +143,16 @@ const AddPropertyFeaturesModal = ({ setIsFeaturesModalOpen }) => {
                   {category === "Primary Features" && (
                     <div
                       className={`primaryFeaturesCont ${
-                        isPrimaryFeaturesOpen ? "max-h-[100rem]" : "max-h-0"
+                        whichFeaturesDropdownOpen[index]
+                          ? "max-h-[100rem]"
+                          : "max-h-0"
                       } transition-all duration-500`}
                     >
                       <ul className="w-full flex flex-col gap-[1rem] p-[1rem]">
                         {primaryFeatures.map((feature, index) => (
                           <li
                             key={index}
-                            className="text-[1.6rem] leading-[1.5rem] font-medium text-neutral-700 flex items-center justify-between border-[0.2rem] border-neutral-200 px-[1rem] py-[0.8rem] cursor-default"
+                            className="text-[1.6rem] leading-[1.5rem] font-medium text-neutral-700 flex items-center justify-between border-[0.2rem] border-neutral-200 px-[1rem] py-[0.8rem] rounded-md cursor-default"
                           >
                             <span>{feature}</span>
 
@@ -191,6 +199,28 @@ const AddPropertyFeaturesModal = ({ setIsFeaturesModalOpen }) => {
                       </ul>
                     </div>
                   )}
+
+                  {/* For Secondary Features */}
+                  {category === "Secondary Features" && (
+                    <div
+                      className={`secondaryFeaturesCont ${
+                        whichFeaturesDropdownOpen[index]
+                          ? "max-h-[100rem]"
+                          : "max-h-0"
+                      } transition-all duration-500`}
+                    >
+                      <ul className="w-full flex flex-col gap-[1rem] p-[1rem]">
+                        {secondaryFeatures.map((feature, index) => (
+                          <li
+                            key={index}
+                            className="text-[1.6rem] leading-[1.5rem] font-medium text-neutral-700 flex items-center justify-between border-[0.2rem] border-neutral-200 px-[1rem] py-[1.3rem] rounded-md cursor-default"
+                          >
+                            <span>{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
@@ -201,7 +231,7 @@ const AddPropertyFeaturesModal = ({ setIsFeaturesModalOpen }) => {
         <section className="w-full flex justify-end gap-[1rem] px-[1rem] py-[1rem]">
           <button
             onClick={() => setIsFeaturesModalOpen(false)}
-            className="text-[1.7rem] leading-[1.7rem] font-medium text-white px-[2rem] py-[1rem] bg-neutral-800 rounded-md flex items-center gap-[0.5rem]"
+            className="text-[1.7rem] leading-[1.7rem] font-medium text-white px-[2rem] py-[1.2rem] bg-neutral-800 rounded-md flex items-center gap-[0.5rem]"
           >
             Close
           </button>
@@ -209,7 +239,7 @@ const AddPropertyFeaturesModal = ({ setIsFeaturesModalOpen }) => {
           <button
             // onClick={setPropertyCoordinatesHandler}
             // disabled={propertyCoordinates ? false : true}
-            className="text-[1.7rem] leading-[1.7rem] font-medium text-white px-[2rem] py-[1rem] bg-theme-blue rounded-md flex items-center gap-[0.5rem] disabled:opacity-70 disabled:cursor-not-allowed"
+            className="text-[1.7rem] leading-[1.7rem] font-medium text-white px-[2rem] py-[1.2rem] bg-theme-blue rounded-md flex items-center gap-[0.5rem] disabled:opacity-70 disabled:cursor-not-allowed"
           >
             Confirm
           </button>
