@@ -7,14 +7,63 @@ import {
 // Import React Icons
 import { IoMdArrowDropdown } from "react-icons/io";
 import { FiMinusSquare, FiPlusSquare } from "react-icons/fi";
+import { FaXmark } from "react-icons/fa6";
 
 const AddPropertyFeaturesModal = ({ setIsFeaturesModalOpen }) => {
+  const [selectedPropertyFeatures, setSelectedPropertyFeatures] = useState([]);
+  console.log(selectedPropertyFeatures);
   const [isPrimaryFeaturesOpen, setIsPrimaryFeaturesOpen] = useState(false);
 
   const featuresCategoryOnCLickHandler = (categoryName) => {
     if (categoryName === "Primary Features") {
       setIsPrimaryFeaturesOpen(!isPrimaryFeaturesOpen);
     }
+  };
+
+  const propertyFeatureDataChangeHandler = (feature, condition) => {
+    if (condition) {
+      const isGivenFeaturePresent = selectedPropertyFeatures.find((featureEl) =>
+        featureEl.includes(feature)
+      );
+
+      if (isGivenFeaturePresent) {
+        let featureCount;
+
+        if (condition === "adding") {
+          featureCount = +isGivenFeaturePresent.split(" ")[0] + 1;
+        } else if (condition === "removing") {
+          if (isGivenFeaturePresent.split(" ")[0] > 1) {
+            featureCount = +isGivenFeaturePresent.split(" ")[0] - 1;
+          } else {
+            setSelectedPropertyFeatures((prvFeatures) =>
+              prvFeatures?.filter(
+                (singleFeature) => singleFeature !== isGivenFeaturePresent
+              )
+            );
+          }
+        }
+
+        const updateSelectedFeature = `${featureCount} ${feature}`;
+        setSelectedPropertyFeatures((prvFeatures) =>
+          prvFeatures?.map((singleFeature) =>
+            singleFeature === isGivenFeaturePresent
+              ? updateSelectedFeature
+              : singleFeature
+          )
+        );
+      } else {
+        if (condition === "adding") {
+          setSelectedPropertyFeatures([
+            ...selectedPropertyFeatures,
+            `1 ${feature}`,
+          ]);
+        }
+      }
+    }
+
+    // if (!propertyFeatures.includes(feature)) {
+    //   setPropertyFeatures([...propertyFeatures, `1 ${feature}`]);
+    // }
   };
 
   return (
@@ -26,7 +75,7 @@ const AddPropertyFeaturesModal = ({ setIsFeaturesModalOpen }) => {
       ></div>
 
       {/* Add Property Features Modal Cont */}
-      <section className="w-[80rem] min-h-[30rem] max-h-[80%] relative z-20 bg-white rounded-md px-[1rem] py-[1rem] shadow-2xl select-none">
+      <div className="w-[80rem] min-h-[30rem] max-h-[90%] relative z-20 bg-white rounded-md px-[1rem] py-[1rem] shadow-2xl select-none">
         {/* Add Property Features Modal Header */}
         <header className="w-full px-[1rem] py-[1rem] border-b-[0.2rem] border-neutral-300 text-theme-blue">
           <h2 className="text-[2.4rem] leading-[2.4rem] font-bold">
@@ -35,8 +84,30 @@ const AddPropertyFeaturesModal = ({ setIsFeaturesModalOpen }) => {
         </header>
 
         {/* Add Property Features Modal Body  */}
-        <div className="w-full px-[2rem] py-[3rem]">
-          <div className="featuresCont h-[27rem] w-full flex flex-col justify-between gap-[2rem] overflow-auto scrollbar-slim">
+        <section className="w-full p-[2rem] flex flex-col gap-[2rem]">
+          {/* Selected Features Display Cont */}
+          <div
+            className={`w-full ${
+              selectedPropertyFeatures.length ? "block" : "hidden"
+            }`}
+          >
+            <ul className="w-full flex overflow-auto scrollbar-slim items-center gap-[1rem]">
+              {selectedPropertyFeatures?.map((el, index) => (
+                <li
+                  key={index}
+                  className="singleFeature text-[1.4rem] leading-[1.4rem] font-medium text-white p-[1rem] flex items-center gap-[1rem] bg-theme-blue rounded-md whitespace-nowrap"
+                >
+                  <span>{el}</span>
+                  <span className="cursor-pointer">
+                    <FaXmark />
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Features Cont */}
+          <div className="h-[27rem] w-full flex flex-col justify-between gap-[2rem] overflow-auto scrollbar-slim">
             {propertyFeaturesCategory.map((category, index) => (
               // Single Feature Category Cont
               <div
@@ -53,7 +124,7 @@ const AddPropertyFeaturesModal = ({ setIsFeaturesModalOpen }) => {
                   <h4 className="categoryTitle">{category}</h4>
                   <IoMdArrowDropdown
                     className={`pointer-events-none ${
-                      isPrimaryFeaturesOpen
+                      isPrimaryFeaturesOpen && category === "Primary Features"
                         ? "rotate-[180deg]"
                         : "rotate-[360deg]"
                     } transition-all duration-500`}
@@ -77,14 +148,41 @@ const AddPropertyFeaturesModal = ({ setIsFeaturesModalOpen }) => {
                           >
                             <span>{feature}</span>
 
-                            <div className="flex items-center gap-[0.5rem]">
-                              <button className="text-[25px] text-neutral-500">
+                            <div className="flex items-center gap-[0.2rem]">
+                              <button
+                                onClick={() =>
+                                  propertyFeatureDataChangeHandler(
+                                    feature,
+                                    "removing"
+                                  )
+                                }
+                                disabled={
+                                  selectedPropertyFeatures?.find((featureEl) =>
+                                    featureEl.includes(feature)
+                                  )
+                                    ? false
+                                    : true
+                                }
+                                className="text-[25px] text-neutral-500"
+                              >
                                 <FiMinusSquare />
                               </button>
-                              <span className="text-theme-blue font-semibold">
-                                0
+                              <span className="w-[3rem] text-center  text-theme-blue font-semibold">
+                                {selectedPropertyFeatures
+                                  ?.find((featureEl) =>
+                                    featureEl.includes(feature)
+                                  )
+                                  ?.split(" ")[0] || 0}
                               </span>
-                              <button className="text-[25px] text-neutral-500">
+                              <button
+                                onClick={() =>
+                                  propertyFeatureDataChangeHandler(
+                                    feature,
+                                    "adding"
+                                  )
+                                }
+                                className="text-[25px] text-neutral-500"
+                              >
                                 <FiPlusSquare />
                               </button>
                             </div>
@@ -97,10 +195,10 @@ const AddPropertyFeaturesModal = ({ setIsFeaturesModalOpen }) => {
               </div>
             ))}
           </div>
-        </div>
+        </section>
 
         {/* Modal Button */}
-        <div className="w-full flex justify-end gap-[1rem] px-[1rem] py-[1rem]">
+        <section className="w-full flex justify-end gap-[1rem] px-[1rem] py-[1rem]">
           <button
             onClick={() => setIsFeaturesModalOpen(false)}
             className="text-[1.7rem] leading-[1.7rem] font-medium text-white px-[2rem] py-[1rem] bg-neutral-800 rounded-md flex items-center gap-[0.5rem]"
@@ -115,8 +213,8 @@ const AddPropertyFeaturesModal = ({ setIsFeaturesModalOpen }) => {
           >
             Confirm
           </button>
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
   );
 };
