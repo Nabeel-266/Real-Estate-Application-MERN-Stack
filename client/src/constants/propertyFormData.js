@@ -111,6 +111,31 @@ export const secondaryFeatures = [
   "Facing",
 ];
 
+export const directions = [
+  "North",
+  "North East",
+  "East",
+  "South East",
+  "South",
+  "South West",
+  "West",
+  "North West",
+];
+
+export const landmarksNearby = [
+  "Schools",
+  "Hospitals",
+  "Masjid",
+  "Restaurants",
+];
+
+export const utilities = [
+  "Seperate Electric Meter",
+  "Seperate Gas Meter",
+  "Water Supply",
+  "Security",
+];
+
 export const cities = [
   "Islamabad",
   "Attock",

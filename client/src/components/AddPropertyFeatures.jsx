@@ -3,6 +3,9 @@ import {
   propertyFeaturesCategory,
   primaryFeatures,
   secondaryFeatures,
+  directions,
+  landmarksNearby,
+  utilities,
 } from "../constants/propertyFormData";
 
 // Import React Icons
@@ -12,6 +15,8 @@ import { FaXmark } from "react-icons/fa6";
 
 const AddPropertyFeaturesModal = ({ setIsFeaturesModalOpen }) => {
   const [selectedPropertyFeatures, setSelectedPropertyFeatures] = useState([]);
+  const [isFacingDropdownOpen, setIsFacingDropdownOpen] = useState(false);
+  const [propertyFacing, setPropertyFacing] = useState("");
   const [whichFeaturesDropdownOpen, setWhichFeaturesDropdownOpen] = useState(
     new Array(propertyFeaturesCategory.length).fill(false)
   );
@@ -25,11 +30,12 @@ const AddPropertyFeaturesModal = ({ setIsFeaturesModalOpen }) => {
   };
 
   const propertyFeatureDataChangeHandler = (feature, condition) => {
-    if (condition) {
-      const isGivenFeaturePresent = selectedPropertyFeatures.find((featureEl) =>
-        featureEl.includes(feature)
-      );
+    const isGivenFeaturePresent = selectedPropertyFeatures.find((featureEl) =>
+      featureEl.includes(feature)
+    );
 
+    // For Primary Features Adding or Removing
+    if (condition) {
       if (isGivenFeaturePresent) {
         let featureCount;
 
@@ -39,7 +45,7 @@ const AddPropertyFeaturesModal = ({ setIsFeaturesModalOpen }) => {
           if (isGivenFeaturePresent.split(" ")[0] > 1) {
             featureCount = +isGivenFeaturePresent.split(" ")[0] - 1;
           } else {
-            setSelectedPropertyFeatures((prvFeatures) =>
+            return setSelectedPropertyFeatures((prvFeatures) =>
               prvFeatures?.filter(
                 (singleFeature) => singleFeature !== isGivenFeaturePresent
               )
@@ -48,7 +54,7 @@ const AddPropertyFeaturesModal = ({ setIsFeaturesModalOpen }) => {
         }
 
         const updateSelectedFeature = `${featureCount} ${feature}`;
-        setSelectedPropertyFeatures((prvFeatures) =>
+        return setSelectedPropertyFeatures((prvFeatures) =>
           prvFeatures?.map((singleFeature) =>
             singleFeature === isGivenFeaturePresent
               ? updateSelectedFeature
@@ -57,7 +63,7 @@ const AddPropertyFeaturesModal = ({ setIsFeaturesModalOpen }) => {
         );
       } else {
         if (condition === "adding") {
-          setSelectedPropertyFeatures([
+          return setSelectedPropertyFeatures([
             ...selectedPropertyFeatures,
             `1 ${feature}`,
           ]);
@@ -65,9 +71,36 @@ const AddPropertyFeaturesModal = ({ setIsFeaturesModalOpen }) => {
       }
     }
 
-    // if (!propertyFeatures.includes(feature)) {
-    //   setPropertyFeatures([...propertyFeatures, `1 ${feature}`]);
-    // }
+    // For Only Secondary Facing Feature
+    if (feature.includes("Facing")) {
+      const isFacingFeaturePresent = selectedPropertyFeatures.find(
+        (featureEl) => featureEl.includes("Facing")
+      );
+
+      if (!isFacingFeaturePresent) {
+        return setSelectedPropertyFeatures([
+          ...selectedPropertyFeatures,
+          feature,
+        ]);
+      } else {
+        return setSelectedPropertyFeatures((prvFeatures) =>
+          prvFeatures?.map((singleFeature) =>
+            singleFeature === isFacingFeaturePresent ? feature : singleFeature
+          )
+        );
+      }
+    }
+
+    // Other Features
+    if (!isGivenFeaturePresent) {
+      setSelectedPropertyFeatures([...selectedPropertyFeatures, feature]);
+    } else {
+      setSelectedPropertyFeatures((prvFeatures) =>
+        prvFeatures?.filter(
+          (singleFeature) => singleFeature !== isGivenFeaturePresent
+        )
+      );
+    }
   };
 
   return (
@@ -102,7 +135,17 @@ const AddPropertyFeaturesModal = ({ setIsFeaturesModalOpen }) => {
                   className="singleFeature text-[1.4rem] leading-[1.4rem] font-medium text-theme-blue p-[1rem] flex items-center gap-[1rem] bg-theme-yellow rounded-md whitespace-nowrap"
                 >
                   <span>{el}</span>
-                  <span className="cursor-pointer">
+                  <span
+                    onClick={() => {
+                      setSelectedPropertyFeatures((prvFeatures) =>
+                        prvFeatures?.filter(
+                          (singleFeature) => singleFeature !== el
+                        )
+                      );
+                      setPropertyFacing("");
+                    }}
+                    className="cursor-pointer"
+                  >
                     <FaXmark />
                   </span>
                 </li>
@@ -152,7 +195,7 @@ const AddPropertyFeaturesModal = ({ setIsFeaturesModalOpen }) => {
                         {primaryFeatures.map((feature, index) => (
                           <li
                             key={index}
-                            className="text-[1.6rem] leading-[1.5rem] font-medium text-neutral-700 flex items-center justify-between border-[0.2rem] border-neutral-200 px-[1rem] py-[0.8rem] rounded-md cursor-default"
+                            className="text-[1.6rem] leading-[1.5rem] font-medium text-neutral-700 flex items-center justify-between border-[0.2rem] border-neutral-200 px-[1rem] py-[0.8rem] rounded-md cursor-default hover:border-theme-blue transition-all"
                           >
                             <span>{feature}</span>
 
@@ -213,7 +256,98 @@ const AddPropertyFeaturesModal = ({ setIsFeaturesModalOpen }) => {
                         {secondaryFeatures.map((feature, index) => (
                           <li
                             key={index}
-                            className="text-[1.6rem] leading-[1.5rem] font-medium text-neutral-700 flex items-center justify-between border-[0.2rem] border-neutral-200 px-[1rem] py-[1.3rem] rounded-md cursor-default"
+                            onClick={() => {
+                              feature === "Facing"
+                                ? setIsFacingDropdownOpen(!isFacingDropdownOpen)
+                                : propertyFeatureDataChangeHandler(feature);
+                            }}
+                            className="relative z-[1] text-[1.6rem] leading-[1.5rem] font-medium text-neutral-700 flex items-center justify-between border-[0.2rem] border-neutral-200 px-[1rem] py-[1.3rem] rounded-md cursor-default hover:border-theme-blue transition-all"
+                          >
+                            <span>{feature}</span>
+                            {feature === "Facing" && (
+                              <div className="dropdownTextIcon flex items-center gap-[1rem]">
+                                <span>{propertyFacing}</span>
+                                <IoMdArrowDropdown
+                                  className={`pointer-events-none text-[2.3rem] ${
+                                    isFacingDropdownOpen
+                                      ? "rotate-[180deg]"
+                                      : "rotate-[360deg]"
+                                  } transition-all duration-300`}
+                                />
+                              </div>
+                            )}
+
+                            {/* Facing Dropdown */}
+                            {feature === "Facing" && (
+                              <ul
+                                className={`scale-0 max-h-[16.5rem] overflow-auto scrollbar-slim absolute z-10 bottom-[105%] right-[2rem] py-[0.5rem] bg-white border-[0.2rem] border-neutral-300 shadow-xl rounded-lg ${
+                                  isFacingDropdownOpen && "scale-100"
+                                } transition-all duration-100`}
+                              >
+                                {directions.map((direction, index) => (
+                                  <li
+                                    key={index}
+                                    onClick={() => {
+                                      setPropertyFacing(direction);
+                                      propertyFeatureDataChangeHandler(
+                                        `${direction} ${feature}`
+                                      );
+                                    }}
+                                    className="text-[1.5rem] leading-[1.5rem] font-medium text-neutral-700 flex items-center justify-between pl-[1rem] pr-[5rem] py-[0.8rem] hover:bg-theme-blue hover:text-white transition-all cursor-pointer"
+                                  >
+                                    {direction}
+                                  </li>
+                                ))}
+                              </ul>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* For Landmarks Nearby */}
+                  {category === "Landmarks Nearby" && (
+                    <div
+                      className={`landmarksCont ${
+                        whichFeaturesDropdownOpen[index]
+                          ? "max-h-[100rem]"
+                          : "max-h-0"
+                      } transition-all duration-500`}
+                    >
+                      <ul className="w-full flex flex-col gap-[1rem] p-[1rem]">
+                        {landmarksNearby.map((feature, index) => (
+                          <li
+                            key={index}
+                            onClick={() =>
+                              propertyFeatureDataChangeHandler(feature)
+                            }
+                            className="relative z-[1] text-[1.6rem] leading-[1.5rem] font-medium text-neutral-700 flex items-center justify-between border-[0.2rem] border-neutral-200 px-[1rem] py-[1.3rem] rounded-md cursor-default hover:border-theme-blue transition-all"
+                          >
+                            <span>{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* For Utilities */}
+                  {category === "Utilities" && (
+                    <div
+                      className={`utilitiesCont ${
+                        whichFeaturesDropdownOpen[index]
+                          ? "max-h-[100rem]"
+                          : "max-h-0"
+                      } transition-all duration-500`}
+                    >
+                      <ul className="w-full flex flex-col gap-[1rem] p-[1rem]">
+                        {utilities.map((feature, index) => (
+                          <li
+                            key={index}
+                            onClick={() =>
+                              propertyFeatureDataChangeHandler(feature)
+                            }
+                            className="relative z-[1] text-[1.6rem] leading-[1.5rem] font-medium text-neutral-700 flex items-center justify-between border-[0.2rem] border-neutral-200 px-[1rem] py-[1.3rem] rounded-md cursor-default hover:border-theme-blue transition-all"
                           >
                             <span>{feature}</span>
                           </li>
