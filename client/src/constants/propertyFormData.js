@@ -78,13 +78,13 @@ export const propertyCondition = [
 ];
 
 export const propertyFeaturesCategory = [
-  "Primary Features",
-  "Secondary Features",
+  "Accountable Features",
+  "Highlighted Features",
   "Landmarks Nearby",
   "Utilities",
 ];
 
-export const primaryFeatures = [
+export const accountableFeatures = [
   "TV Lounge",
   "Store Room",
   "Laundry Room",
@@ -96,18 +96,24 @@ export const primaryFeatures = [
   "Kitchen",
 ];
 
-export const secondaryFeatures = [
+export const highlightedFeatures = [
   "Corner Plot",
   "Basement",
   "Furnished",
   "Semi furnished",
   "Dirty kitchen",
-  "Swimming Pool",
+  "Swimming pool",
   "Lawn",
   "Elevator/Lift",
   "Separate Entry",
   "Terrace",
-  "Home Theatre",
+  "Home theatre",
+  "Backup generator",
+  "Main boulevard",
+  "Park face",
+  "Parking",
+  "Underground Parking",
+  "Boundary wall",
   "Facing",
 ];
 
@@ -127,6 +133,8 @@ export const landmarksNearby = [
   "Hospitals",
   "Masjid",
   "Restaurants",
+  "Parks",
+  "Markets",
 ];
 
 export const utilities = [

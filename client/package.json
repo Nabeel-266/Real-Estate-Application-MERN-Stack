@@ -12,6 +12,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.5",
     "axios": "^1.7.2",
+    "country-data": "^0.0.31",
     "opencage-api-client": "^1.0.7",
     "pigeon-maps": "^0.21.6",
     "react": "^18.2.0",

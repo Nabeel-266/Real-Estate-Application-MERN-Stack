@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import countries from "country-data";
 
 import {
   propertyPurposes,
@@ -16,6 +17,7 @@ import { IoSearch } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa6";
 import { BiArea } from "react-icons/bi";
 import { IoMdArrowDropdown } from "react-icons/io";
+import { HiOutlineUpload } from "react-icons/hi";
 
 // Import Assets
 import AddPropertyBannerImage from "../assets/add-property-banner.png";
@@ -169,6 +171,9 @@ const AddProperty = () => {
       setIsSizeDropdownOpen(false);
     }
   };
+
+  // const countryList = CountryList.getAll();
+  console.log(countries);
 
   return (
     <div className="addPropertyCont w-full pt-[6rem]">
@@ -613,7 +618,7 @@ const AddProperty = () => {
               )}
 
               {/* Property Condition */}
-              <div className="city w-full flex flex-col gap-[1.5rem]">
+              <div className="condition w-full flex flex-col gap-[1.5rem]">
                 {/* Title */}
                 <h4 className="propertyFormInputTitles">
                   What is the condition of your property?
@@ -639,7 +644,7 @@ const AddProperty = () => {
                       <IoMdArrowDropdown />
                     </span>
 
-                    {/* Cities Dropdown */}
+                    {/* Condition Dropdown */}
                     {isConditionDropdownOpen && (
                       <div
                         ref={dropdownRef}
@@ -686,7 +691,7 @@ const AddProperty = () => {
                 </p>
 
                 {/* Add Features Button Cont */}
-                <div className="w-full mt-[1rem]">
+                <div className="w-full mt-[1rem] flex flex-col gap-[2rem] items-start">
                   <button
                     onClick={(e) => {
                       e.preventDefault();
@@ -700,6 +705,116 @@ const AddProperty = () => {
                       Add Features
                     </span>
                   </button>
+
+                  <div
+                    className={`w-full ${
+                      propertyDetails?.features?.length ? "block" : "hidden"
+                    }`}
+                  >
+                    <ul className="w-full flex flex-wrap items-center gap-[1rem]">
+                      {propertyDetails?.features?.map((el, index) => (
+                        <li
+                          key={index}
+                          className="singleFeature text-[1.4rem] leading-[1.4rem] font-medium text-theme-blue p-[1rem] flex items-center gap-[1rem] bg-neutral-200 rounded-md whitespace-nowrap"
+                        >
+                          <span>{el}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Property Description */}
+              <div className="description w-full flex flex-col gap-[1.5rem]">
+                {/* Title */}
+                <h4 className="propertyFormInputTitles">
+                  What do you like about your property?
+                </h4>
+
+                {/* Description Textarea Cont */}
+                <div className="w-full space-y-[0.8rem]">
+                  <textarea
+                    name="propertyDesc"
+                    id="propertyDesc"
+                    placeholder="Describe your property in details"
+                    className="w-[70%] min-w-[50rem] h-[11rem] max-h-[11rem] outline-none border-[0.2rem] text-neutral-800 border-neutral-300 font-medium px-[1rem] py-[1rem] text-[1.4rem] rounded-md scrollbar-slim focus:border-theme-blue"
+                  ></textarea>
+                </div>
+              </div>
+
+              {/* Property Images */}
+              <div className="city w-full flex flex-col gap-[0.5rem]">
+                {/* Title */}
+                <h4 className="propertyFormInputTitles">
+                  Upload images of your property
+                </h4>
+
+                <p className="text-[1.4rem] text-neutral-600 font-medium">
+                  Properties with images of good quality
+                </p>
+
+                <p className="text-[1.4rem] text-neutral-600 font-medium">
+                  Supported file formats: png, jpg, jpeg
+                </p>
+
+                {/* Upload Image Input Cont */}
+                <div className="w-full space-y-[0.8rem] mt-[1.5rem]">
+                  <div className="input w-[70%] min-w-[50rem]">
+                    <label
+                      htmlFor="images"
+                      className="w-full flex items-center justify-center gap-[0.8rem] outline-none border-[0.2rem] text-neutral-800 border-neutral-400 p-[1rem] text-[1.5rem] leading-[1.5rem] font-semibold rounded-md cursor-pointer hover:border-theme-blue"
+                    >
+                      <HiOutlineUpload size="2rem" />
+                      <span>UPLOAD IMAGES</span>
+                    </label>
+                    <input
+                      type="file"
+                      name="images"
+                      id="images"
+                      accept=".jpg, .png, .jpeg"
+                      // defaultValue={userImage}
+                      // onChange={(e) => setUserImage(e.target.files[0])}
+                      className="hidden"
+                    />
+                  </div>
+
+                  <p className="conditionErrorMsg hidden text-[1.4rem] leading-[1.4rem] font-medium text-red-700">
+                    Images is required
+                  </p>
+                </div>
+              </div>
+
+              {/* Property Images */}
+              <div className="city w-full flex flex-col gap-[0.5rem]">
+                {/* Title */}
+                <h4 className="propertyFormInputTitles">
+                  Upload images of your property
+                </h4>
+
+                {/* Upload Image Input Cont */}
+                <div className="w-full space-y-[0.8rem] mt-[1.5rem]">
+                  <div className="input w-[70%] min-w-[50rem]">
+                    {Object.entries(countries.countries).map(([key, value]) => {
+                      return <span>{value.emoji}</span>;
+                    })}
+                    {/* <select
+                      id="country"
+                      value={selectedCountry}
+                      onChange={handleCountryChange}
+                      options={countryOptions}
+                    >
+                      {countryOptions.map(({ value, label }, index) => (
+                        <option key={index} value={value}>
+                          {label}
+                        </option>
+                      ))}
+                    </select> */}
+                  </div>
+
+                  <p className="conditionErrorMsg hidden text-[1.4rem] leading-[1.4rem] font-medium text-red-700">
+                    Images is required
+                  </p>
                 </div>
               </div>
             </form>
@@ -723,7 +838,8 @@ const AddProperty = () => {
       {isFeaturesModalOpen && (
         <AddPropertyFeaturesModal
           setIsFeaturesModalOpen={setIsFeaturesModalOpen}
-          propertyCategory={category}
+          propertyFormDataChangeHandler={propertyFormDataChangeHandler}
+          // propertyCategory={category}
         />
       )}
     </div>
