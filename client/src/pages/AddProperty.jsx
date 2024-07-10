@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import countries from "country-data";
+import { continents, countries, languages } from "countries-list";
+import Flag from "react-world-flags";
 
 import {
   propertyPurposes,
@@ -30,12 +31,15 @@ const AddProperty = () => {
   const dropdownRef = useRef(null);
   const [isCitiesDropdownOpen, setIsCitiesDropdownOpen] = useState(false);
   const [isSizeDropdownOpen, setIsSizeDropdownOpen] = useState(false);
+  const [isCountryDropdownOpen, setIsCountryDropdownOpen] = useState(false);
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const [isFeaturesModalOpen, setIsFeaturesModalOpen] = useState(false);
   const [isConditionDropdownOpen, setIsConditionDropdownOpen] = useState(false);
   const [numericPrice, setNumericPrice] = useState("");
   const [sizeValue, setSizeValue] = useState(0);
   const [sizeUnit, setSizeUnit] = useState("Sq. Ft");
+  const [countryCallingCode, setCountryCallingCode] = useState(["PK", "+92"]);
+  const [contactNum, setContactNum] = useState("");
   const [propertyTypeOptions, setPropertyTypeOptions] = useState(
     propertyResidentialTypes
   );
@@ -51,6 +55,7 @@ const AddProperty = () => {
     bedroom,
     bathroom,
     condition,
+    contact,
   } = propertyDetails;
 
   const propertyFormDataChangeHandler = (key, value) => {
@@ -88,6 +93,9 @@ const AddProperty = () => {
       purpose: "Sell",
       category: "Residential",
       type: "House",
+      contact: {
+        code: "+92",
+      },
     });
   }, [category]);
 
@@ -98,6 +106,7 @@ const AddProperty = () => {
         setIsCitiesDropdownOpen(false);
         setIsSizeDropdownOpen(false);
         setIsConditionDropdownOpen(false);
+        setIsCountryDropdownOpen(false);
       }
     };
 
@@ -172,8 +181,24 @@ const AddProperty = () => {
     }
   };
 
-  // const countryList = CountryList.getAll();
-  console.log(countries);
+  // Contact Number Change Handler
+  const contactNumChangeHandler = (num, countryCode) => {
+    if (num.startsWith("+")) {
+      setCountryCallingCode([countryCode, num]);
+      setIsCountryDropdownOpen(false);
+      propertyFormDataChangeHandler("contact", {
+        ...contact,
+        code: num,
+      });
+    } else {
+      if (num >= 1e10 || num.startsWith(0) || num.includes(".")) {
+        setContactNum("");
+      } else {
+        setContactNum(num);
+        propertyFormDataChangeHandler("contact", { ...contact, number: num });
+      }
+    }
+  };
 
   return (
     <div className="addPropertyCont w-full pt-[6rem]">
@@ -785,35 +810,98 @@ const AddProperty = () => {
                 </div>
               </div>
 
-              {/* Property Images */}
+              {/* Property Contact Number */}
               <div className="city w-full flex flex-col gap-[0.5rem]">
                 {/* Title */}
                 <h4 className="propertyFormInputTitles">
-                  Upload images of your property
+                  Tell us how to contact you
                 </h4>
 
-                {/* Upload Image Input Cont */}
-                <div className="w-full space-y-[0.8rem] mt-[1.5rem]">
-                  <div className="input w-[70%] min-w-[50rem]">
-                    {Object.entries(countries.countries).map(([key, value]) => {
-                      return <span>{value.emoji}</span>;
-                    })}
-                    {/* <select
-                      id="country"
-                      value={selectedCountry}
-                      onChange={handleCountryChange}
-                      options={countryOptions}
+                <p className="text-[1.4rem] text-neutral-600 font-medium">
+                  Select country calling code
+                </p>
+
+                <p className="text-[1.4rem] text-neutral-600 font-medium">
+                  Enter 10 digit number except zero
+                </p>
+
+                {/* Contact Number Input Cont */}
+                <div className="w-full space-y-[0.8rem] mt-[1.5rem] pb-[80rem]">
+                  <div className="input w-[70%] min-w-[50rem] relative z-[4]">
+                    <div
+                      onClick={() =>
+                        setIsCountryDropdownOpen(!isCountryDropdownOpen)
+                      }
+                      className="absolute top-0 left-0 h-full px-[1.4rem] flex items-center gap-[1rem] text-[1.6rem] font-semibold text-neutral-700 cursor-pointer rounded-r-md select-none "
                     >
-                      {countryOptions.map(({ value, label }, index) => (
-                        <option key={index} value={value}>
-                          {label}
-                        </option>
-                      ))}
-                    </select> */}
+                      <span>
+                        <Flag
+                          code={countryCallingCode[0]}
+                          className="w-[2.5rem]"
+                        />
+                      </span>
+                      <IoMdArrowDropdown
+                        size="1.8rem"
+                        className={`${
+                          isCountryDropdownOpen ? "rotate-180" : "rotate-0"
+                        } transition-all`}
+                      />
+                      <span>{countryCallingCode[1]}</span>
+                    </div>
+
+                    <input
+                      type="number"
+                      name="contactNumber"
+                      id="contactNumber"
+                      value={contactNum}
+                      onChange={(e) => contactNumChangeHandler(e.target.value)}
+                      maxLength="10"
+                      placeholder="1234567890"
+                      className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-300 font-medium pl-[13rem] pr-[2rem] py-[0.8rem] text-[1.6rem] tracking-wider rounded-md focus:border-theme-blue numberInput peer/size"
+                    />
+
+                    {/* Country Dial Code Dropdown */}
+                    {isCountryDropdownOpen && (
+                      <div
+                        ref={dropdownRef}
+                        className="dropdownCountry w-full py-[0.5rem] shadow-lg border-[0.2rem] bg-white border-neutral-300 rounded-md absolute z-10 top-[100%] left-0"
+                      >
+                        <ul className="w-full max-h-[25rem] overflow-auto scrollbar-slim ">
+                          <h6 className="text-[1.6rem] leading-[1.6rem] font-semibold text-neutral-800 px-[1.5rem] py-[1rem]">
+                            Select Country
+                          </h6>
+                          {Object.entries(countries).map(
+                            ([countryCode, countryData], index) => (
+                              <li
+                                key={index}
+                                onClick={() => {
+                                  contactNumChangeHandler(
+                                    `+${countryData.phone[0]}`,
+                                    countryCode
+                                  );
+                                }}
+                                className="w-full flex items-center gap-[2rem] text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[1rem] hover:bg-theme-blue hover:text-white transition-all cursor-pointer"
+                              >
+                                <Flag
+                                  code={countryCode}
+                                  className="w-[2.4rem]"
+                                />
+                                <div className="flex-1 flex items-center justify-between">
+                                  <span>{countryData.name}</span>
+                                  <span className="font-semibold">
+                                    +{countryData.phone[0]}
+                                  </span>
+                                </div>
+                              </li>
+                            )
+                          )}
+                        </ul>
+                      </div>
+                    )}
                   </div>
 
-                  <p className="conditionErrorMsg hidden text-[1.4rem] leading-[1.4rem] font-medium text-red-700">
-                    Images is required
+                  <p className="contactErrorMsg hidden text-[1.4rem] leading-[1.4rem] font-medium text-red-700">
+                    not a valid phone number
                   </p>
                 </div>
               </div>
