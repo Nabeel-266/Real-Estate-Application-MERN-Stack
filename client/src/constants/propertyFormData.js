@@ -144,6 +144,17 @@ export const utilities = [
   "Security",
 ];
 
+export const availabiltyDays = [
+  "Anytime",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
+
 export const cities = [
   "Islamabad",
   "Attock",

@@ -72,23 +72,19 @@ const Signup = () => {
       if (isUserCredentialsOK) {
         setLoading(true);
 
-        // Username split into firstname and lastname
-        const userFullname = [
-          username?.trim().slice(0, username.trim().lastIndexOf(" ")),
-          username?.trim().slice(username.trim().lastIndexOf(" ") + 1),
-        ];
-        // User Firstname
-        const firstname =
-          userFullname[0]?.trim().charAt(0).toLocaleUpperCase() +
-          userFullname[0]?.trim().slice(1).toLocaleLowerCase();
-        // User Lastname
-        const lastname =
-          userFullname[1]?.trim().charAt(0).toLocaleUpperCase() +
-          userFullname[1]?.trim().slice(1).toLocaleLowerCase();
+        // Username Modification
+        const fullNameArray = username
+          .split(" ")
+          .filter((str) => str !== "")
+          .map(
+            (str) =>
+              str.trim().charAt(0).toLocaleUpperCase() +
+              str.trim().slice(1).toLocaleLowerCase()
+          );
 
         // User Credentials
         const userCredentials = {
-          username: `${firstname} ${lastname}`,
+          username: `${fullNameArray.join(" ")}`,
           email,
           password,
           confirmPassword,

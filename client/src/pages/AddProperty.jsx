@@ -11,6 +11,7 @@ import {
   cities,
   count,
   propertyCondition,
+  availabiltyDays,
 } from "../constants/propertyFormData";
 
 // Import React Icons
@@ -35,6 +36,7 @@ const AddProperty = () => {
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const [isFeaturesModalOpen, setIsFeaturesModalOpen] = useState(false);
   const [isConditionDropdownOpen, setIsConditionDropdownOpen] = useState(false);
+  const [isAvailableOptionsOpen, setIsAvailableOptionsOpen] = useState(false);
   const [numericPrice, setNumericPrice] = useState("");
   const [sizeValue, setSizeValue] = useState(0);
   const [sizeUnit, setSizeUnit] = useState("Sq. Ft");
@@ -55,7 +57,9 @@ const AddProperty = () => {
     bedroom,
     bathroom,
     condition,
+    username,
     contact,
+    availability,
   } = propertyDetails;
 
   const propertyFormDataChangeHandler = (key, value) => {
@@ -178,6 +182,32 @@ const AddProperty = () => {
       setSizeUnit(value);
       propertyFormDataChangeHandler("size", `${sizeValue} ${value}`);
       setIsSizeDropdownOpen(false);
+    }
+  };
+
+  // Condition Change Handler
+  const conditionChangeHandler = (e) => {
+    propertyFormDataChangeHandler("condition", e.target.innerText);
+    setIsConditionDropdownOpen(false);
+  };
+
+  // Username Change Handler
+  const usernameChangeHandler = (e) => {
+    const name = e.target.value.trim();
+    if (name && name.includes(" ")) {
+      const fullNameArray = name
+        .split(" ")
+        .filter((str) => str !== "")
+        .map(
+          (str) =>
+            str.trim().charAt(0).toLocaleUpperCase() +
+            str.trim().slice(1).toLocaleLowerCase()
+        );
+
+      const fullName = `${fullNameArray.join(" ")}`;
+      propertyFormDataChangeHandler("username", fullName.trim());
+    } else {
+      propertyFormDataChangeHandler("username", name);
     }
   };
 
@@ -682,12 +712,7 @@ const AddProperty = () => {
                           {propertyCondition.map((condition, index) => (
                             <li
                               key={index}
-                              onClick={(e) =>
-                                propertyFormDataChangeHandler(
-                                  "condition",
-                                  e.target.innerText
-                                )
-                              }
+                              onClick={conditionChangeHandler}
                               className="w-full text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[1rem] hover:bg-theme-blue hover:text-white transition-all"
                             >
                               {condition}
@@ -769,7 +794,7 @@ const AddProperty = () => {
               </div>
 
               {/* Property Images */}
-              <div className="city w-full flex flex-col gap-[0.5rem]">
+              <div className="images w-full flex flex-col gap-[0.5rem]">
                 {/* Title */}
                 <h4 className="propertyFormInputTitles">
                   Upload images of your property
@@ -811,7 +836,7 @@ const AddProperty = () => {
               </div>
 
               {/* Property Contact Number */}
-              <div className="city w-full flex flex-col gap-[0.5rem]">
+              <div className="contact w-full flex flex-col gap-[0.5rem]">
                 {/* Title */}
                 <h4 className="propertyFormInputTitles">
                   Tell us how to contact you
@@ -826,7 +851,7 @@ const AddProperty = () => {
                 </p>
 
                 {/* Contact Number Input Cont */}
-                <div className="w-full space-y-[0.8rem] mt-[1.5rem] pb-[80rem]">
+                <div className="w-full space-y-[0.8rem] mt-[1.5rem]">
                   <div className="input w-[70%] min-w-[50rem] relative z-[4]">
                     <div
                       onClick={() =>
@@ -857,7 +882,7 @@ const AddProperty = () => {
                       onChange={(e) => contactNumChangeHandler(e.target.value)}
                       maxLength="10"
                       placeholder="1234567890"
-                      className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-300 font-medium pl-[13rem] pr-[2rem] py-[0.8rem] text-[1.6rem] tracking-wider rounded-md focus:border-theme-blue numberInput peer/size"
+                      className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-300 font-medium pl-[13rem] pr-[2rem] py-[1.1rem] text-[1.6rem] leading-[1.6rem] tracking-wider rounded-md focus:border-theme-blue numberInput peer/size"
                     />
 
                     {/* Country Dial Code Dropdown */}
@@ -905,6 +930,101 @@ const AddProperty = () => {
                   </p>
                 </div>
               </div>
+
+              {/* Property Owner Name */}
+              <div className="name w-full flex flex-col gap-[1.5rem]">
+                {/* Title */}
+                <h4 className="propertyFormInputTitles">What is your name?</h4>
+
+                {/* Username Input Cont */}
+                <div className="w-full space-y-[0.8rem]">
+                  <div className="input w-[70%] min-w-[50rem]">
+                    <input
+                      type="text"
+                      name="username"
+                      id="username"
+                      onChange={usernameChangeHandler}
+                      placeholder="Enter your full name"
+                      autoComplete="off"
+                      className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-300 font-medium px-[1.5rem] py-[1.1rem] text-[1.6rem] leading-[1.6rem] rounded-md focus:border-theme-blue numberInput peer/price"
+                    />
+                  </div>
+
+                  {username && !username.includes(" ") && (
+                    <p className="priceErrorMsg text-[1.4rem] leading-[1.4rem] font-medium text-red-700">
+                      Please! enter your proper fullname with space separated
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {/* Availability */}
+              <div className="availability w-full flex flex-col gap-[0.5rem]">
+                {/* Title */}
+                <h4 className="propertyFormInputTitles w-[70%] min-w-[50rem] flex items-center justify-between">
+                  <span>Specify availability</span>
+
+                  <label
+                    htmlFor="AcceptConditions"
+                    className="relative flex items-center h-[20px] w-[36px] cursor-pointer rounded-full bg-neutral-400 transition [-webkit-tap-highlight-color:_transparent] has-[:checked]:bg-theme-blue"
+                  >
+                    <input
+                      type="checkbox"
+                      id="AcceptConditions"
+                      onChange={() =>
+                        setIsAvailableOptionsOpen(!isAvailableOptionsOpen)
+                      }
+                      className="peer sr-only"
+                    />
+
+                    <span className="absolute left-0 mx-[3px] size-[14px] rounded-full bg-white transition-all peer-checked:left-[45%]"></span>
+                  </label>
+                </h4>
+
+                <p className="text-[1.4rem] text-neutral-600 font-medium">
+                  Let us know when you are available for site visits (Optional)
+                </p>
+
+                {/* Availability Input Cont */}
+                {isAvailableOptionsOpen && (
+                  <div className="w-full flex flex-col gap-[0.5rem] py-[2.5rem]">
+                    <h6 className="text-[1.6rem] text-neutral-700 font-semibold">
+                      When can clients visit your property?
+                    </h6>
+
+                    <div className="input w-full tabletLg:w-[80%] flex flex-wrap items-center gap-[1.5rem] mt-[1rem]">
+                      {availabiltyDays?.map((day, index) => (
+                        <div key={index} className="singleInput select-none">
+                          <label
+                            htmlFor={day}
+                            className={`propertyFormInputRadioLabels px-[1.5rem] ${
+                              availability === day
+                                ? "border-theme-yellow"
+                                : "border-neutral-300"
+                            }`}
+                          >
+                            <span>{day}</span>
+                          </label>
+                          <input
+                            type="radio"
+                            name="day"
+                            id={day}
+                            value={day}
+                            checked={day === availability}
+                            onChange={(e) =>
+                              propertyFormDataChangeHandler(
+                                "availability",
+                                e.target.value
+                              )
+                            }
+                            className="hidden"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             </form>
           </div>
 
@@ -927,7 +1047,6 @@ const AddProperty = () => {
         <AddPropertyFeaturesModal
           setIsFeaturesModalOpen={setIsFeaturesModalOpen}
           propertyFormDataChangeHandler={propertyFormDataChangeHandler}
-          // propertyCategory={category}
         />
       )}
     </div>
