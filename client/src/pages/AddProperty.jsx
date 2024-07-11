@@ -20,6 +20,7 @@ import { FaPlus } from "react-icons/fa6";
 import { BiArea } from "react-icons/bi";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { HiOutlineUpload } from "react-icons/hi";
+import { FaXmark } from "react-icons/fa6";
 
 // Import Assets
 import AddPropertyBannerImage from "../assets/add-property-banner.png";
@@ -52,13 +53,13 @@ const AddProperty = () => {
     category,
     type,
     city,
-    size,
     price,
     bedroom,
     bathroom,
     condition,
-    username,
+    images,
     contact,
+    username,
     availability,
   } = propertyDetails;
 
@@ -191,23 +192,33 @@ const AddProperty = () => {
     setIsConditionDropdownOpen(false);
   };
 
-  // Username Change Handler
-  const usernameChangeHandler = (e) => {
-    const name = e.target.value.trim();
-    if (name && name.includes(" ")) {
-      const fullNameArray = name
-        .split(" ")
-        .filter((str) => str !== "")
-        .map(
-          (str) =>
-            str.trim().charAt(0).toLocaleUpperCase() +
-            str.trim().slice(1).toLocaleLowerCase()
-        );
+  // Images Change Handler
+  const imagesChangeHandler = (e) => {
+    const imageFile = e.target.files[0];
 
-      const fullName = `${fullNameArray.join(" ")}`;
-      propertyFormDataChangeHandler("username", fullName.trim());
+    if (imageFile) {
+      const imageURL = URL.createObjectURL(imageFile);
+
+      if (!propertyDetails.images) {
+        propertyFormDataChangeHandler("images", [imageURL]);
+      } else {
+        propertyFormDataChangeHandler("images", [
+          ...propertyDetails.images,
+          imageURL,
+        ]);
+      }
+    }
+  };
+
+  // Remove Image Handler
+  const removeImageHandler = (e, imageURL) => {
+    e.preventDefault();
+
+    if (images.length > 1) {
+      const updatedImages = images.filter((img) => img !== imageURL);
+      propertyFormDataChangeHandler("images", updatedImages);
     } else {
-      propertyFormDataChangeHandler("username", name);
+      setPropertyDetails((props) => delete props.images);
     }
   };
 
@@ -227,6 +238,26 @@ const AddProperty = () => {
         setContactNum(num);
         propertyFormDataChangeHandler("contact", { ...contact, number: num });
       }
+    }
+  };
+
+  // Username Change Handler
+  const usernameChangeHandler = (e) => {
+    const name = e.target.value.trim();
+    if (name && name.includes(" ")) {
+      const fullNameArray = name
+        .split(" ")
+        .filter((str) => str !== "")
+        .map(
+          (str) =>
+            str.trim().charAt(0).toLocaleUpperCase() +
+            str.trim().slice(1).toLocaleLowerCase()
+        );
+
+      const fullName = `${fullNameArray.join(" ")}`;
+      propertyFormDataChangeHandler("username", fullName.trim());
+    } else {
+      propertyFormDataChangeHandler("username", name);
     }
   };
 
@@ -781,7 +812,6 @@ const AddProperty = () => {
                       e.preventDefault();
                       setIsFeaturesModalOpen(true);
                     }}
-                    // disabled={city ? false : true}
                     className="flex items-center gap-[0.5rem] text-theme-blue border-[0.2rem] border-neutral-300 p-[1rem] rounded-lg hover:shadow-lg hover:shadow-neutral-200 hover:translate-y-[-0.1rem] disabled:opacity-80 disabled:cursor-not-allowed"
                   >
                     <FaPlus className="text-[1.6rem] text-cyan-900 mb-[0.2rem]" />
@@ -858,7 +888,7 @@ const AddProperty = () => {
                       id="images"
                       accept=".jpg, .png, .jpeg"
                       // defaultValue={userImage}
-                      // onChange={(e) => setUserImage(e.target.files[0])}
+                      onChange={imagesChangeHandler}
                       className="hidden"
                     />
                   </div>
@@ -867,6 +897,37 @@ const AddProperty = () => {
                     Images is required
                   </p>
                 </div>
+
+                {/* Images Display Cont */}
+                {images && (
+                  <>
+                    <div className="w-[70%] min-w-[50rem] grid grid-cols-3 gap-[1.5rem] mt-[1.5rem]">
+                      {images?.map((imageURL, index) => (
+                        // Each Image Cont
+                        <div
+                          key={index}
+                          className="eachImageCont w-[100%] h-[11rem] relative rounded-xl overflow-hidden hover:shadow-lg transition-all"
+                        >
+                          <img
+                            src={imageURL}
+                            alt="PropertyPic"
+                            className="object-cover size-full rounded-md"
+                          />
+                          <button
+                            onClick={(e) => removeImageHandler(e, imageURL)}
+                            className="absolute top-[0.8rem] right-[0.8rem] flex items-center justify-center p-[0.2rem] bg-white text-[1.5rem] text-neutral-800 rounded-full hover:shadow-lg hover:bg-theme-yellow transition-all"
+                          >
+                            <FaXmark />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+
+                    <p className="text-[1.4rem] text-neutral-800 font-semibold mt-[1rem]">
+                      Total Images : {images.length}
+                    </p>
+                  </>
+                )}
               </div>
 
               {/* Property Contact Number */}
@@ -1051,6 +1112,17 @@ const AddProperty = () => {
                     </div>
                   </div>
                 )}
+              </div>
+
+              {/* Form Action Button */}
+              <div className="buttonCont w-full flex items-center justify-between mt-[2rem]">
+                <button className="outline-none border-[0.2rem] text-theme-blue border-theme-blue p-[1.1rem] text-[1.55rem] leading-[1.5rem] font-semibold rounded-md cursor-pointer hover:bg-theme-blue hover:text-white hover:translate-y-[-0.1rem] hover:shadow-lg hover:shadow-neutral-200 transition-all">
+                  SAVE AS DRAFT
+                </button>
+
+                <button className="outline-none border-[0.2rem] text-white border-theme-blue p-[1.1rem] text-[1.6rem] leading-[1.5rem] font-medium rounded-md cursor-pointer bg-theme-blue hover:translate-y-[-0.1rem] hover:shadow-lg hover:shadow-neutral-200 transition-all">
+                  SUBMIT FOR REVIEW
+                </button>
               </div>
             </form>
           </div>
