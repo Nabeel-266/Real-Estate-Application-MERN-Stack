@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { continents, countries, languages } from "countries-list";
+import { countries } from "countries-list";
 import Flag from "react-world-flags";
 
 import {
@@ -227,6 +227,40 @@ const AddProperty = () => {
         setContactNum(num);
         propertyFormDataChangeHandler("contact", { ...contact, number: num });
       }
+    }
+  };
+
+  // Toggle Availability Options Handler
+  const toggleAvailabilityOptionsHandler = () => {
+    setIsAvailableOptionsOpen(!isAvailableOptionsOpen);
+
+    if (!isAvailableOptionsOpen) {
+      propertyFormDataChangeHandler("availability", ["Everyday"]);
+    } else if (isAvailableOptionsOpen && propertyDetails.availability) {
+      const { availability, ...restPropertyDetails } = propertyDetails;
+      setPropertyDetails(restPropertyDetails);
+    }
+  };
+
+  // Client Visit Availability Change Handler
+  const availabilityChangeHandler = (e) => {
+    const day = e.target.value;
+
+    if (day === "Everyday") {
+      propertyFormDataChangeHandler("availability", [day]);
+    } else {
+      let updatedDays;
+      if (availability?.includes(day)) {
+        updatedDays = availability?.filter((d) => d !== day);
+      } else {
+        updatedDays = [...availability?.filter((d) => d !== "Everyday"), day];
+      }
+
+      if (updatedDays.length === 0) {
+        updatedDays = ["Everyday"];
+      }
+
+      propertyFormDataChangeHandler("availability", updatedDays);
     }
   };
 
@@ -971,9 +1005,7 @@ const AddProperty = () => {
                     <input
                       type="checkbox"
                       id="AcceptConditions"
-                      onChange={() =>
-                        setIsAvailableOptionsOpen(!isAvailableOptionsOpen)
-                      }
+                      onChange={toggleAvailabilityOptionsHandler}
                       className="peer sr-only"
                     />
 
@@ -998,7 +1030,7 @@ const AddProperty = () => {
                           <label
                             htmlFor={day}
                             className={`propertyFormInputRadioLabels px-[1.5rem] ${
-                              availability === day
+                              availability?.includes(day)
                                 ? "border-theme-yellow"
                                 : "border-neutral-300"
                             }`}
@@ -1006,17 +1038,12 @@ const AddProperty = () => {
                             <span>{day}</span>
                           </label>
                           <input
-                            type="radio"
+                            type="checkbox"
                             name="day"
                             id={day}
                             value={day}
-                            checked={day === availability}
-                            onChange={(e) =>
-                              propertyFormDataChangeHandler(
-                                "availability",
-                                e.target.value
-                              )
-                            }
+                            checked={availability?.includes(day)}
+                            onChange={availabilityChangeHandler}
                             className="hidden"
                           />
                         </div>
