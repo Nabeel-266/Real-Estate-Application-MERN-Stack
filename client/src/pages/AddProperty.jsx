@@ -28,6 +28,7 @@ import AddPropertyBannerImage from "../assets/add-property-banner.png";
 // Import Component
 import AddPropertyLocationModal from "../components/AddPropertyLocation";
 import AddPropertyFeaturesModal from "../components/AddPropertyFeatures";
+import AddPropertyReview from "../components/AddPropertyReview";
 
 const AddProperty = () => {
   const dropdownRef = useRef(null);
@@ -57,18 +58,24 @@ const AddProperty = () => {
     bedroom,
     bathroom,
     condition,
+    features,
     images,
     contact,
     username,
     availability,
   } = propertyDetails;
 
-  const propertyFormDataChangeHandler = (key, value) => {
-    setPropertyDetails({
-      ...propertyDetails,
-      [key]: value,
-    });
-    setIsCitiesDropdownOpen(false);
+  const propertyFormDataChangeHandler = (action, key, value) => {
+    if (action === "added") {
+      setPropertyDetails({
+        ...propertyDetails,
+        [key]: value,
+      });
+    } else if (action === "deleted") {
+      const updatedPropertyDetails = { ...propertyDetails };
+      delete updatedPropertyDetails[key];
+      setPropertyDetails(updatedPropertyDetails);
+    }
   };
 
   // Set Property Form Initial Values
@@ -167,7 +174,11 @@ const AddProperty = () => {
 
     setNumericPrice(value);
     const formattedPrice = convertPrice(value);
-    propertyFormDataChangeHandler("price", formattedPrice);
+    if (formattedPrice) {
+      propertyFormDataChangeHandler("added", "price", formattedPrice);
+    } else {
+      propertyFormDataChangeHandler("deleted", "price");
+    }
   };
 
   // Size Change Handler
@@ -178,18 +189,38 @@ const AddProperty = () => {
       } else {
         setSizeValue(value);
       }
-      propertyFormDataChangeHandler("size", `${value} ${sizeUnit}`);
+
+      if (value >= 1) {
+        propertyFormDataChangeHandler("added", "size", `${value} ${sizeUnit}`);
+      } else {
+        propertyFormDataChangeHandler("deleted", "size");
+      }
     } else if (text === "sizeUnit") {
       setSizeUnit(value);
-      propertyFormDataChangeHandler("size", `${sizeValue} ${value}`);
-      setIsSizeDropdownOpen(false);
+
+      if (sizeValue) {
+        propertyFormDataChangeHandler("added", "size", `${sizeValue} ${value}`);
+        setIsSizeDropdownOpen(false);
+      }
     }
   };
 
   // Condition Change Handler
   const conditionChangeHandler = (e) => {
-    propertyFormDataChangeHandler("condition", e.target.innerText);
+    propertyFormDataChangeHandler("added", "condition", e.target.innerText);
     setIsConditionDropdownOpen(false);
+  };
+
+  // Remove Property Features Handler
+  const removePropertyFeaturesHandler = (el) => {
+    if (features?.length > 1) {
+      const updatedFeatures = features?.filter(
+        (singleFeature) => singleFeature !== el
+      );
+      propertyFormDataChangeHandler("added", "features", updatedFeatures);
+    } else {
+      propertyFormDataChangeHandler("deleted", "features");
+    }
   };
 
   // Images Change Handler
@@ -200,9 +231,9 @@ const AddProperty = () => {
       const imageURL = URL.createObjectURL(imageFile);
 
       if (!propertyDetails.images) {
-        propertyFormDataChangeHandler("images", [imageURL]);
+        propertyFormDataChangeHandler("added", "images", [imageURL]);
       } else {
-        propertyFormDataChangeHandler("images", [
+        propertyFormDataChangeHandler("added", "images", [
           ...propertyDetails.images,
           imageURL,
         ]);
@@ -216,9 +247,9 @@ const AddProperty = () => {
 
     if (images.length > 1) {
       const updatedImages = images.filter((img) => img !== imageURL);
-      propertyFormDataChangeHandler("images", updatedImages);
+      propertyFormDataChangeHandler("added", "images", updatedImages);
     } else {
-      setPropertyDetails((props) => delete props.images);
+      propertyFormDataChangeHandler("deleted", "images");
     }
   };
 
@@ -227,7 +258,7 @@ const AddProperty = () => {
     if (num.startsWith("+")) {
       setCountryCallingCode([countryCode, num]);
       setIsCountryDropdownOpen(false);
-      propertyFormDataChangeHandler("contact", {
+      propertyFormDataChangeHandler("added", "contact", {
         ...contact,
         code: num,
       });
@@ -236,7 +267,10 @@ const AddProperty = () => {
         setContactNum("");
       } else {
         setContactNum(num);
-        propertyFormDataChangeHandler("contact", { ...contact, number: num });
+        propertyFormDataChangeHandler("added", "contact", {
+          ...contact,
+          number: num,
+        });
       }
     }
   };
@@ -255,9 +289,9 @@ const AddProperty = () => {
         );
 
       const fullName = `${fullNameArray.join(" ")}`;
-      propertyFormDataChangeHandler("username", fullName.trim());
+      propertyFormDataChangeHandler("added", "username", fullName.trim());
     } else {
-      propertyFormDataChangeHandler("username", name);
+      propertyFormDataChangeHandler("added", "username", name);
     }
   };
 
@@ -266,10 +300,9 @@ const AddProperty = () => {
     setIsAvailableOptionsOpen(!isAvailableOptionsOpen);
 
     if (!isAvailableOptionsOpen) {
-      propertyFormDataChangeHandler("availability", ["Everyday"]);
+      propertyFormDataChangeHandler("added", "availability", ["Everyday"]);
     } else if (isAvailableOptionsOpen && propertyDetails.availability) {
-      const { availability, ...restPropertyDetails } = propertyDetails;
-      setPropertyDetails(restPropertyDetails);
+      propertyFormDataChangeHandler("deleted", "availability");
     }
   };
 
@@ -278,7 +311,7 @@ const AddProperty = () => {
     const day = e.target.value;
 
     if (day === "Everyday") {
-      propertyFormDataChangeHandler("availability", [day]);
+      propertyFormDataChangeHandler("added", "availability", [day]);
     } else {
       let updatedDays;
       if (availability?.includes(day)) {
@@ -291,7 +324,7 @@ const AddProperty = () => {
         updatedDays = ["Everyday"];
       }
 
-      propertyFormDataChangeHandler("availability", updatedDays);
+      propertyFormDataChangeHandler("added", "availability", updatedDays);
     }
   };
 
@@ -321,7 +354,7 @@ const AddProperty = () => {
         </section>
 
         {/* Add Property Content Cont */}
-        <div className="addPropertyContentCont w-full px-[4%] py-[6rem] flex items-start">
+        <div className="addPropertyContentCont w-full px-[4%] py-[6rem] flex items-start justify-between">
           {/* Add Property Form Cont */}
           <div className="addPropertyFormCont w-[100%] tabletLg:w-[60%]">
             {/* Add Property Form */}
@@ -356,6 +389,7 @@ const AddProperty = () => {
                         checked={value === purpose}
                         onChange={(e) =>
                           propertyFormDataChangeHandler(
+                            "added",
                             e.target.name,
                             e.target.value
                           )
@@ -399,6 +433,7 @@ const AddProperty = () => {
                         checked={value === category}
                         onChange={(e) =>
                           propertyFormDataChangeHandler(
+                            "added",
                             e.target.name,
                             e.target.value
                           )
@@ -432,6 +467,7 @@ const AddProperty = () => {
                         checked={value === type}
                         onChange={(e) =>
                           propertyFormDataChangeHandler(
+                            "added",
                             e.target.name,
                             e.target.value
                           )
@@ -758,10 +794,14 @@ const AddProperty = () => {
                       onClick={() =>
                         setIsConditionDropdownOpen(!isConditionDropdownOpen)
                       }
-                      className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-300 font-medium pl-[1.5rem] pr-[4rem] py-[0.9rem] text-[1.4rem] rounded-md cursor-pointer focus:border-theme-blue peer/city"
+                      className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-300 font-medium pl-[1.5rem] pr-[4rem] py-[0.9rem] text-[1.4rem] rounded-md cursor-pointer focus:border-theme-blue"
                     />
-                    <span className="text-[2rem] absolute top-0 right-0 h-full flex items-center justify-center px-[1.5rem] text-neutral-400 pointer-events-none peer-focus/city:text-theme-blue">
-                      <IoMdArrowDropdown />
+                    <span className="text-[2rem] absolute top-0 right-0 h-full flex items-center justify-center px-[1.5rem] text-theme-blue pointer-events-none">
+                      <IoMdArrowDropdown
+                        className={`${
+                          isConditionDropdownOpen ? "rotate-180" : "rotate-0"
+                        } transition-all`}
+                      />
                     </span>
 
                     {/* Condition Dropdown */}
@@ -806,7 +846,7 @@ const AddProperty = () => {
                 </p>
 
                 {/* Add Features Button Cont */}
-                <div className="w-full mt-[1rem] flex flex-col gap-[2rem] items-start">
+                <div className="w-full mt-[1rem]">
                   <button
                     onClick={(e) => {
                       e.preventDefault();
@@ -819,23 +859,30 @@ const AddProperty = () => {
                       Add Features
                     </span>
                   </button>
+                </div>
 
-                  <div
-                    className={`w-full ${
-                      propertyDetails?.features?.length ? "block" : "hidden"
-                    }`}
-                  >
-                    <ul className="w-full flex flex-wrap items-center gap-[1rem]">
-                      {propertyDetails?.features?.map((el, index) => (
-                        <li
-                          key={index}
-                          className="singleFeature text-[1.4rem] leading-[1.4rem] font-medium text-theme-blue p-[1rem] flex items-center gap-[1rem] bg-neutral-200 rounded-md whitespace-nowrap"
+                {/* Dipslay Selected Features Cont */}
+                <div
+                  className={`w-full mt-[1.5rem] ${
+                    features?.length ? "block" : "hidden"
+                  }`}
+                >
+                  <ul className="w-full flex flex-wrap items-center gap-[1rem]">
+                    {features?.map((el, index) => (
+                      <li
+                        key={index}
+                        className="singleFeature text-[1.4rem] leading-[1.4rem] font-medium text-theme-blue p-[1rem] flex items-center gap-[1rem] bg-neutral-200 rounded-md whitespace-nowrap"
+                      >
+                        <span>{el}</span>
+                        <span
+                          onClick={() => removePropertyFeaturesHandler(el)}
+                          className="cursor-pointer"
                         >
-                          <span>{el}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                          <FaXmark />
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
 
@@ -1128,7 +1175,13 @@ const AddProperty = () => {
           </div>
 
           {/* Add Property Preview Cont */}
-          <div className="addPropertyPreviewCont w-0 hidden tabletLg:w-[40%] tabletRg:block"></div>
+          <div className="addPropertyPreviewCont w-0 hidden relative laptopSm:w-[35%] laptopSm:flex flex-col items-center gap-[2rem]">
+            <h3 className="w-full text-[2.2rem] leading-[2.2rem] text-neutral-800 font-semibold">
+              Preview
+            </h3>
+
+            <AddPropertyReview propertyDetails={propertyDetails} />
+          </div>
         </div>
       </div>
 
@@ -1146,6 +1199,7 @@ const AddProperty = () => {
         <AddPropertyFeaturesModal
           setIsFeaturesModalOpen={setIsFeaturesModalOpen}
           propertyFormDataChangeHandler={propertyFormDataChangeHandler}
+          propertyDetails={propertyDetails}
         />
       )}
     </div>

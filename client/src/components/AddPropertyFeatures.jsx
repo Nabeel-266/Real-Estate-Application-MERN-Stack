@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   propertyFeaturesCategory,
   accountableFeatures,
@@ -16,6 +16,7 @@ import { FaXmark } from "react-icons/fa6";
 const AddPropertyFeaturesModal = ({
   setIsFeaturesModalOpen,
   propertyFormDataChangeHandler,
+  propertyDetails,
 }) => {
   const [selectedPropertyFeatures, setSelectedPropertyFeatures] = useState([]);
   const [isFacingDropdownOpen, setIsFacingDropdownOpen] = useState(false);
@@ -23,6 +24,22 @@ const AddPropertyFeaturesModal = ({
   const [whichFeaturesDropdownOpen, setWhichFeaturesDropdownOpen] = useState(
     new Array(propertyFeaturesCategory.length).fill(false)
   );
+
+  useEffect(() => {
+    if (propertyDetails?.features) {
+      setSelectedPropertyFeatures(propertyDetails.features);
+
+      const isFacingFeatureInclude = propertyDetails?.features?.find(
+        (feature) => feature.includes("Facing")
+      );
+
+      if (isFacingFeatureInclude) {
+        const facingFeature = isFacingFeatureInclude.split(" ");
+        facingFeature.pop(facingFeature.length - 1);
+        setPropertyFacing(facingFeature.join(" "));
+      }
+    }
+  }, [propertyDetails]);
 
   const featuresDropdownsHandler = (index) => {
     setWhichFeaturesDropdownOpen((prevState) => {
@@ -33,7 +50,7 @@ const AddPropertyFeaturesModal = ({
   };
 
   const propertyFeatureDataChangeHandler = (feature, condition) => {
-    const isGivenFeaturePresent = selectedPropertyFeatures.find((featureEl) =>
+    const isGivenFeaturePresent = selectedPropertyFeatures?.find((featureEl) =>
       featureEl.includes(feature)
     );
 
@@ -76,7 +93,7 @@ const AddPropertyFeaturesModal = ({
 
     // For Only Secondary Facing Feature
     if (feature.includes("Facing")) {
-      const isFacingFeaturePresent = selectedPropertyFeatures.find(
+      const isFacingFeaturePresent = selectedPropertyFeatures?.find(
         (featureEl) => featureEl.includes("Facing")
       );
 
@@ -107,9 +124,28 @@ const AddPropertyFeaturesModal = ({
   };
 
   const setPropertyFeaturesHandler = () => {
-    if (selectedPropertyFeatures.length) {
-      propertyFormDataChangeHandler("features", selectedPropertyFeatures);
-      setIsFeaturesModalOpen(false);
+    if (selectedPropertyFeatures?.length) {
+      propertyFormDataChangeHandler(
+        "added",
+        "features",
+        selectedPropertyFeatures
+      );
+    } else {
+      propertyFormDataChangeHandler("deleted", "features");
+    }
+    setIsFeaturesModalOpen(false);
+  };
+
+  const removeFeaturesHandler = (el) => {
+    if (!el.includes("Facing")) {
+      setSelectedPropertyFeatures((prvFeatures) =>
+        prvFeatures?.filter((singleFeature) => singleFeature !== el)
+      );
+    } else {
+      setSelectedPropertyFeatures((prvFeatures) =>
+        prvFeatures?.filter((singleFeature) => singleFeature !== el)
+      );
+      setPropertyFacing("");
     }
   };
 
@@ -135,7 +171,7 @@ const AddPropertyFeaturesModal = ({
           {/* Selected Features Display Cont */}
           <div
             className={`w-full max-h-[12.5rem] ${
-              selectedPropertyFeatures.length ? "block" : "hidden"
+              selectedPropertyFeatures?.length ? "block" : "hidden"
             } overflow-auto scrollbar-slim`}
           >
             <ul className="w-full flex flex-wrap items-center gap-[1rem]">
@@ -146,14 +182,7 @@ const AddPropertyFeaturesModal = ({
                 >
                   <span>{el}</span>
                   <span
-                    onClick={() => {
-                      setSelectedPropertyFeatures((prvFeatures) =>
-                        prvFeatures?.filter(
-                          (singleFeature) => singleFeature !== el
-                        )
-                      );
-                      setPropertyFacing("");
-                    }}
+                    onClick={() => removeFeaturesHandler(el)}
                     className="cursor-pointer"
                   >
                     <FaXmark />
@@ -206,7 +235,7 @@ const AddPropertyFeaturesModal = ({
                           <li
                             key={index}
                             className={`text-[1.6rem] leading-[1.5rem] font-medium text-neutral-700 flex items-center justify-between border-[0.2rem] border-neutral-200 px-[1rem] py-[0.8rem] rounded-md cursor-default hover:border-theme-blue transition-all ${
-                              selectedPropertyFeatures.some((el) =>
+                              selectedPropertyFeatures?.some((el) =>
                                 el.includes(feature)
                               )
                                 ? "bg-neutral-200"
@@ -278,7 +307,7 @@ const AddPropertyFeaturesModal = ({
                                 : propertyFeatureDataChangeHandler(feature);
                             }}
                             className={`relative z-[1] text-[1.6rem] leading-[1.5rem] font-medium text-neutral-700 flex items-center justify-between border-[0.2rem] border-neutral-200 px-[1rem] py-[1.3rem] rounded-md cursor-default hover:border-theme-blue transition-all ${
-                              selectedPropertyFeatures.some((el) =>
+                              selectedPropertyFeatures?.some((el) =>
                                 el.includes(feature)
                               )
                                 ? "bg-neutral-200"
@@ -345,7 +374,7 @@ const AddPropertyFeaturesModal = ({
                               propertyFeatureDataChangeHandler(feature)
                             }
                             className={`text-[1.6rem] leading-[1.5rem] font-medium text-neutral-700 flex items-center justify-between border-[0.2rem] border-neutral-200 px-[1rem] py-[1.3rem] rounded-md cursor-default hover:border-theme-blue transition-all ${
-                              selectedPropertyFeatures.some((el) =>
+                              selectedPropertyFeatures?.some((el) =>
                                 el.includes(feature)
                               )
                                 ? "bg-neutral-200"
@@ -376,7 +405,7 @@ const AddPropertyFeaturesModal = ({
                               propertyFeatureDataChangeHandler(feature)
                             }
                             className={`text-[1.6rem] leading-[1.5rem] font-medium text-neutral-700 flex items-center justify-between border-[0.2rem] border-neutral-200 px-[1rem] py-[1.3rem] rounded-md cursor-default hover:border-theme-blue transition-all ${
-                              selectedPropertyFeatures.some((el) =>
+                              selectedPropertyFeatures?.some((el) =>
                                 el.includes(feature)
                               )
                                 ? "bg-neutral-200"
@@ -399,15 +428,14 @@ const AddPropertyFeaturesModal = ({
         <section className="w-full flex justify-end gap-[1rem] px-[1rem] py-[1rem]">
           <button
             onClick={() => setIsFeaturesModalOpen(false)}
-            className="text-[1.7rem] leading-[1.7rem] font-medium text-white px-[2rem] py-[1.2rem] bg-neutral-800 rounded-md flex items-center gap-[0.5rem]"
+            className="text-[1.7rem] leading-[1.7rem] font-medium text-white px-[2rem] py-[1.2rem] bg-neutral-800 rounded-md"
           >
             Close
           </button>
 
           <button
             onClick={setPropertyFeaturesHandler}
-            disabled={selectedPropertyFeatures?.length ? false : true}
-            className="text-[1.7rem] leading-[1.7rem] font-medium text-white px-[2rem] py-[1.2rem] bg-theme-blue rounded-md flex items-center gap-[0.5rem] disabled:opacity-50 disabled:cursor-not-allowed"
+            className="text-[1.7rem] leading-[1.7rem] font-medium text-white px-[2rem] py-[1.2rem] bg-theme-blue rounded-md"
           >
             Confirm
           </button>
