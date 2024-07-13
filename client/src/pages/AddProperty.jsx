@@ -350,7 +350,7 @@ const AddProperty = () => {
     <div className="addPropertyCont w-full pt-[6rem]">
       <div className="addPropertyContWrapper mx-[3%] tabletSm:mx-[4%] py-[1rem]">
         {/* Add Property Banner Cont */}
-        <section className="addPropertyBannerCont w-full h-[28rem] tabletSm:h-[30rem] tabletLg:h-[33rem] laptopRg:h-[35rem] relative z-[1] pt-[5rem]">
+        <section className="addPropertyBannerCont w-full h-[30rem] tabletLg:h-[33rem] laptopRg:h-[35rem] relative z-[1] pt-[5rem]">
           {/* Text Cont */}
           <div className="textCont w-full h-full flex flex-col justify-center gap-[1rem] px-[2.5rem] tabletLg:px-[3rem] laptopSm:px-[4rem] laptopRg:px-[5rem] bg-theme-blue bg-add-property-banner-image bg-cover bg-no-repeat bg-center rounded-3xl text-white">
             <h1 className="w-[65%] tabletSm:w-[70%] tabletLg:w-full text-[3.2rem] tabletLg:text-[3.5rem] leading-[4rem] font-bold ">
@@ -372,9 +372,9 @@ const AddProperty = () => {
         </section>
 
         {/* Add Property Content Cont */}
-        <div className="addPropertyContentCont w-full px-[4%] py-[6rem] flex items-start justify-between">
+        <div className="addPropertyContentCont w-full px-[2%] tabletSm:px-[3%] laptopRg:px-[4%] py-[6rem] flex items-start justify-between">
           {/* Add Property Form Cont */}
-          <div className="addPropertyFormCont w-[100%] tabletLg:w-[60%]">
+          <div className="addPropertyFormCont w-[100%] laptopSm:w-[60%]">
             {/* Add Property Form */}
             <form className="addPropertyForm w-full flex flex-col gap-[5rem]">
               {/* Property Purpose */}
@@ -463,7 +463,7 @@ const AddProperty = () => {
                 </div>
 
                 {/* Property Type Inputs */}
-                <div className="propertyType w-full tabletLg:w-[80%] flex flex-wrap items-center gap-[1.5rem] mt-[1rem]">
+                <div className="propertyType w-full laptopSm:w-[80%] flex flex-wrap items-center gap-[1.5rem] mt-[1rem]">
                   {propertyTypeOptions?.map(({ value, iconImage }, index) => (
                     <div key={index} className="singleInput select-none">
                       <label
@@ -506,7 +506,7 @@ const AddProperty = () => {
 
                 {/* City Input Cont */}
                 <div className="w-full space-y-[0.8rem]">
-                  <div className="input w-[70%] min-w-[50rem] relative z-[3]">
+                  <div className="input w-full tabletSm:w-[70%] tabletSm:min-w-[50rem] relative z-[3]">
                     <input
                       type="text"
                       name="city"
@@ -591,7 +591,7 @@ const AddProperty = () => {
 
                 {/* Size Input Cont */}
                 <div className="w-full space-y-[0.8rem]">
-                  <div className="input w-[70%] min-w-[50rem] relative z-[2]">
+                  <div className="input w-full tabletSm:w-[70%] tabletSm:min-w-[50rem] relative z-[2]">
                     <input
                       type="number"
                       name="size"
@@ -669,7 +669,7 @@ const AddProperty = () => {
 
                 {/* Price Input Cont */}
                 <div className="w-full space-y-[0.8rem]">
-                  <div className="input w-[70%] min-w-[50rem] relative z-[1]">
+                  <div className="input w-full tabletSm:w-[70%] tabletSm:min-w-[50rem] relative z-[1]">
                     <input
                       type="number"
                       name="price"
@@ -706,7 +706,7 @@ const AddProperty = () => {
                     </h4>
 
                     {/* Property Bedroom Inputs */}
-                    <div className="propertyBedroom w-full tabletLg:w-[80%] flex flex-wrap items-center gap-[1.5rem]">
+                    <div className="propertyBedroom w-full laptopSm:w-[80%] flex flex-wrap items-center gap-[1.5rem]">
                       {count?.map((value, index) => (
                         <div key={index} className="singleInput select-none">
                           <label
@@ -750,7 +750,7 @@ const AddProperty = () => {
                     </h4>
 
                     {/* Property Bathroom Inputs */}
-                    <div className="propertyBatroom w-full tabletLg:w-[80%] flex flex-wrap items-center gap-[1.5rem]">
+                    <div className="propertyBatroom w-full laptopSm:w-[80%] flex flex-wrap items-center gap-[1.5rem]">
                       {count?.map((value, index) => (
                         <div key={index} className="singleInput select-none">
                           <label
@@ -797,7 +797,7 @@ const AddProperty = () => {
 
                 {/* Condition Input Cont */}
                 <div className="w-full space-y-[0.8rem]">
-                  <div className="input w-[70%] min-w-[50rem] relative z-[3]">
+                  <div className="input w-full tabletSm:w-[70%] tabletSm:min-w-[50rem] relative z-[3]">
                     <input
                       type="text"
                       name="condition"
@@ -915,7 +915,7 @@ const AddProperty = () => {
                     id="propertyDesc"
                     onChange={(e) => descriptionChangeHandler(e)}
                     placeholder="Describe your property in details"
-                    className="w-[70%] min-w-[50rem] h-[11rem] max-h-[11rem] outline-none border-[0.2rem] text-neutral-800 border-neutral-300 font-medium px-[1rem] py-[1rem] text-[1.4rem] rounded-md scrollbar-slim focus:border-theme-blue"
+                    className="w-full tabletSm:w-[70%] tabletSm:min-w-[50rem] h-[11rem] max-h-[11rem] outline-none border-[0.2rem] text-neutral-800 border-neutral-300 font-medium px-[1rem] py-[1rem] text-[1.4rem] rounded-md scrollbar-slim focus:border-theme-blue"
                   ></textarea>
                 </div>
               </div>
@@ -937,7 +937,7 @@ const AddProperty = () => {
 
                 {/* Upload Image Input Cont */}
                 <div className="w-full space-y-[0.8rem] mt-[1.5rem]">
-                  <div className="input w-[70%] min-w-[50rem]">
+                  <div className="input w-full tabletSm:w-[70%] tabletSm:min-w-[50rem]">
                     <label
                       htmlFor="images"
                       className="w-full flex items-center justify-center gap-[0.8rem] outline-none border-[0.2rem] text-neutral-800 border-neutral-400 p-[1rem] text-[1.5rem] leading-[1.5rem] font-semibold rounded-md cursor-pointer hover:border-theme-blue"
@@ -1010,7 +1010,7 @@ const AddProperty = () => {
 
                 {/* Contact Number Input Cont */}
                 <div className="w-full space-y-[0.8rem] mt-[1.5rem]">
-                  <div className="input w-[70%] min-w-[50rem] relative z-[4]">
+                  <div className="input w-full tabletSm:w-[70%] tabletSm:min-w-[50rem] relative z-[4]">
                     <div
                       onClick={() =>
                         setIsCountryDropdownOpen(!isCountryDropdownOpen)
@@ -1096,7 +1096,7 @@ const AddProperty = () => {
 
                 {/* Username Input Cont */}
                 <div className="w-full space-y-[0.8rem]">
-                  <div className="input w-[70%] min-w-[50rem]">
+                  <div className="input w-full tabletSm:w-[70%] tabletSm:min-w-[50rem]">
                     <input
                       type="text"
                       name="username"
@@ -1119,7 +1119,7 @@ const AddProperty = () => {
               {/* Availability */}
               <div className="availability w-full flex flex-col gap-[0.5rem]">
                 {/* Title */}
-                <h4 className="propertyFormInputTitles w-[70%] min-w-[50rem] flex items-center justify-between">
+                <h4 className="propertyFormInputTitles w-full tabletSm:w-[70%] tabletSm:min-w-[50rem] flex items-center justify-between">
                   <span>Specify availability</span>
 
                   <label
@@ -1148,7 +1148,7 @@ const AddProperty = () => {
                       When can clients visit your property?
                     </h6>
 
-                    <div className="input w-full tabletLg:w-[80%] flex flex-wrap items-center gap-[1.5rem] mt-[1rem]">
+                    <div className="input w-full laptopSm:w-[80%] flex flex-wrap items-center gap-[1.5rem] mt-[1rem]">
                       {availabiltyDays?.map((day, index) => (
                         <div key={index} className="singleInput select-none">
                           <label
@@ -1178,7 +1178,7 @@ const AddProperty = () => {
               </div>
 
               {/* Form Action Button */}
-              <div className="buttonCont w-full flex items-center justify-between mt-[2rem]">
+              <div className="buttonCont w-full flex flex-wrap items-center justify-between gap-[2rem] mt-[2rem]">
                 <button className="outline-none border-[0.2rem] text-theme-blue border-theme-blue p-[1.1rem] text-[1.55rem] leading-[1.5rem] font-semibold rounded-md cursor-pointer hover:bg-theme-blue hover:text-white hover:translate-y-[-0.1rem] hover:shadow-lg hover:shadow-neutral-200 transition-all">
                   SAVE AS DRAFT
                 </button>
@@ -1191,7 +1191,7 @@ const AddProperty = () => {
           </div>
 
           {/* Add Property Preview Cont */}
-          <div className="addPropertyPreviewCont w-0 hidden relative laptopSm:w-[35%] laptopSm:flex flex-col items-center gap-[2rem]">
+          <div className="addPropertyPreviewCont w-0 hidden relative laptopSm:w-[40%] laptopSm:flex flex-col items-center gap-[2rem]">
             <h3 className="w-full text-[2.2rem] leading-[2.2rem] text-neutral-800 font-semibold">
               Preview
             </h3>

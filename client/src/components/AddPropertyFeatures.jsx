@@ -158,7 +158,7 @@ const AddPropertyFeaturesModal = ({
       ></div>
 
       {/* Add Property Features Modal Cont */}
-      <div className="w-[80rem] min-h-[30rem] relative z-20 bg-white rounded-md px-[1rem] py-[1rem] shadow-2xl select-none">
+      <div className="w-[90%] tabletRg:w-[70%] laptopSm:w-[60%] min-h-[40rem] relative z-20 bg-white rounded-md px-[1rem] py-[1rem] shadow-2xl select-none">
         {/* Add Property Features Modal Header */}
         <header className="w-full px-[1rem] py-[1rem] border-b-[0.2rem] border-neutral-300 text-theme-blue">
           <h2 className="text-[2.4rem] leading-[2.4rem] font-bold">
@@ -425,17 +425,17 @@ const AddPropertyFeaturesModal = ({
         </section>
 
         {/* Modal Button */}
-        <section className="w-full flex justify-end gap-[1rem] px-[1rem] py-[1rem]">
+        <section className="w-full flex items-end justify-end gap-[1rem] px-[1rem] py-[1rem]">
           <button
             onClick={() => setIsFeaturesModalOpen(false)}
-            className="text-[1.7rem] leading-[1.7rem] font-medium text-white px-[2rem] py-[1.2rem] bg-neutral-800 rounded-md"
+            className="text-[1.7rem] leading-[1.7rem] font-medium text-white px-[2rem] py-[1rem] bg-neutral-800 rounded-md"
           >
             Close
           </button>
 
           <button
             onClick={setPropertyFeaturesHandler}
-            className="text-[1.7rem] leading-[1.7rem] font-medium text-white px-[2rem] py-[1.2rem] bg-theme-blue rounded-md"
+            className="text-[1.7rem] leading-[1.7rem] font-medium text-white px-[2rem] py-[1rem] bg-theme-blue rounded-md"
           >
             Confirm
           </button>

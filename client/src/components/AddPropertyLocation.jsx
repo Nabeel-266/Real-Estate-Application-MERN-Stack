@@ -77,7 +77,7 @@ const AddPropertyLocationModal = ({
         className={`w-full h-full absolute z-0 backdrop-blur-[2px] bg-[#404040b0] overflow-hidden`}
       ></div>
 
-      <div className="w-[80rem] min-h-[30rem] relative z-20 bg-white rounded-md px-[1rem] py-[1rem] shadow-2xl">
+      <div className="w-[90%] tabletRg:w-[70%] laptopSm:w-[60%] min-h-[30rem] relative z-20 bg-white rounded-md px-[1rem] py-[1rem] shadow-2xl">
         {/* Add Property Location Modal Header */}
         <header className="w-full px-[1rem] py-[1rem] border-b-[0.2rem] border-neutral-300 text-theme-blue">
           <h2 className="text-[2.4rem] leading-[2.4rem] font-bold">
