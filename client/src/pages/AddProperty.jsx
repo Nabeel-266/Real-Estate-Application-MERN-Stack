@@ -129,6 +129,12 @@ const AddProperty = () => {
     };
   }, [dropdownRef]);
 
+  // City Change Handler
+  const cityChangeHandler = (e) => {
+    propertyFormDataChangeHandler("added", "city", e.target.innerText);
+    setIsCitiesDropdownOpen(false);
+  };
+
   // Price Input Value converted in Pakistani Rupees Conversion
   const convertPrice = (value) => {
     let number = parseFloat(value);
@@ -184,8 +190,9 @@ const AddProperty = () => {
   // Size Change Handler
   const sizeChangeHandler = (text, value) => {
     if (text === "sizeValue") {
-      if (value >= 1e30) {
+      if (value >= 1e10) {
         setSizeValue(1);
+        value = 1;
       } else {
         setSizeValue(value);
       }
@@ -220,6 +227,17 @@ const AddProperty = () => {
       propertyFormDataChangeHandler("added", "features", updatedFeatures);
     } else {
       propertyFormDataChangeHandler("deleted", "features");
+    }
+  };
+
+  // Description Change Handler
+  const descriptionChangeHandler = (e) => {
+    const descriptionText = e.target.value;
+
+    if (descriptionText) {
+      propertyFormDataChangeHandler("added", "description", descriptionText);
+    } else {
+      propertyFormDataChangeHandler("deleted", "description");
     }
   };
 
@@ -300,7 +318,7 @@ const AddProperty = () => {
     setIsAvailableOptionsOpen(!isAvailableOptionsOpen);
 
     if (!isAvailableOptionsOpen) {
-      propertyFormDataChangeHandler("added", "availability", ["Everyday"]);
+      propertyFormDataChangeHandler("added", "availability", ["Anyday"]);
     } else if (isAvailableOptionsOpen && propertyDetails.availability) {
       propertyFormDataChangeHandler("deleted", "availability");
     }
@@ -310,18 +328,18 @@ const AddProperty = () => {
   const availabilityChangeHandler = (e) => {
     const day = e.target.value;
 
-    if (day === "Everyday") {
+    if (day === "Anyday") {
       propertyFormDataChangeHandler("added", "availability", [day]);
     } else {
       let updatedDays;
       if (availability?.includes(day)) {
         updatedDays = availability?.filter((d) => d !== day);
       } else {
-        updatedDays = [...availability?.filter((d) => d !== "Everyday"), day];
+        updatedDays = [...availability?.filter((d) => d !== "Anyday"), day];
       }
 
       if (updatedDays.length === 0) {
-        updatedDays = ["Everyday"];
+        updatedDays = ["Anyday"];
       }
 
       propertyFormDataChangeHandler("added", "availability", updatedDays);
@@ -518,12 +536,7 @@ const AddProperty = () => {
                           {cities.sort().map((city, index) => (
                             <li
                               key={index}
-                              onClick={(e) =>
-                                propertyFormDataChangeHandler(
-                                  "city",
-                                  e.target.innerText
-                                )
-                              }
+                              onClick={(e) => cityChangeHandler(e)}
                               className="w-full text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[1rem] hover:bg-theme-blue hover:text-white transition-all"
                             >
                               {city}
@@ -713,6 +726,7 @@ const AddProperty = () => {
                             value={value}
                             onChange={(e) =>
                               propertyFormDataChangeHandler(
+                                "added",
                                 e.target.name,
                                 e.target.value
                               )
@@ -756,6 +770,7 @@ const AddProperty = () => {
                             value={value}
                             onChange={(e) =>
                               propertyFormDataChangeHandler(
+                                "added",
                                 e.target.name,
                                 e.target.value
                               )
@@ -898,6 +913,7 @@ const AddProperty = () => {
                   <textarea
                     name="propertyDesc"
                     id="propertyDesc"
+                    onChange={(e) => descriptionChangeHandler(e)}
                     placeholder="Describe your property in details"
                     className="w-[70%] min-w-[50rem] h-[11rem] max-h-[11rem] outline-none border-[0.2rem] text-neutral-800 border-neutral-300 font-medium px-[1rem] py-[1rem] text-[1.4rem] rounded-md scrollbar-slim focus:border-theme-blue"
                   ></textarea>

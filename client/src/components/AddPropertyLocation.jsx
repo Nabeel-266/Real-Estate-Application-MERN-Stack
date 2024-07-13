@@ -57,7 +57,11 @@ const AddPropertyLocationModal = ({
       lng >= southwest.lng;
 
     if (isValidCoordinates) {
-      propertyFormDataChangeHandler("coordinates", propertyCoordinates);
+      propertyFormDataChangeHandler(
+        "added",
+        "coordinates",
+        propertyCoordinates
+      );
       setIsLocationModalOpen(false);
     } else {
       setError(

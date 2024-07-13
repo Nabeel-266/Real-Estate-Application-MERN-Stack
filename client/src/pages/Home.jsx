@@ -19,7 +19,7 @@ import { AiOutlinePartition } from "react-icons/ai";
 import { PiToiletBold } from "react-icons/pi";
 import { TbToolsKitchen } from "react-icons/tb";
 import {
-  HiLocationMarker,
+  HiOutlineLocationMarker,
   HiOutlineArrowNarrowLeft,
   HiOutlineArrowNarrowRight,
 } from "react-icons/hi";
@@ -219,9 +219,15 @@ const Home = () => {
                   <div className="cardContent w-full flex flex-col gap-[1rem] p-[1rem] text-neutral-700">
                     {/* Type & Purpose */}
                     <div className="typePurpose flex">
+                      {/* Type */}
                       <p className="type relative flex items-center text-[1.7rem] leading-[1.7rem] font-semibold pl-[1.8rem] before:content-[''] before:w-[1rem] before:h-[1rem] before:bg-theme-yellow before:absolute before:left-0 before:rounded-full">
                         Appartment
                       </p>
+
+                      {/* Purpose */}
+                      {/* <span className="text-[1.3rem] leading-[1.5rem] font-semibold rounded-sm bg-theme-blue text-white px-[0.5rem] py-[0.2rem]">
+                        For Sale
+                      </span> */}
                     </div>
 
                     {/* Price */}
@@ -260,7 +266,7 @@ const Home = () => {
 
                     {/* Location */}
                     <div className="location flex items-center gap-[0.5rem] text-[1.5rem] text-neutral-600 mt-[0.1rem]">
-                      <HiLocationMarker />
+                      <HiOutlineLocationMarker />
                       <span className="leading-[1.4rem] font-semibold">
                         Karachi
                       </span>

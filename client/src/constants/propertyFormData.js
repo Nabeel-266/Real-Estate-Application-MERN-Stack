@@ -145,7 +145,7 @@ export const utilities = [
 ];
 
 export const availabiltyDays = [
-  "Everyday",
+  "Anyday",
   "Monday",
   "Tuesday",
   "Wednesday",
