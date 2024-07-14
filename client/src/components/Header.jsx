@@ -30,7 +30,7 @@ const Header = ({ setIsOpenSidebar }) => {
             <ul className="flex items-center gap-[0.7rem] laptopSm:gap-[0.9rem]">
               {[
                 ["Explore", "/explore"],
-                ["Add Property", "/add-property"],
+                // ["Add Property", "/add-property"],
                 ["About", "/about"],
                 ["Contact", "/contact"],
               ].map(([tilte, path], index) => (
@@ -61,7 +61,7 @@ const Header = ({ setIsOpenSidebar }) => {
             <div className="authBtns hidden tabletSm:flex items-center gap-[1.4rem]">
               {/* Signin Button */}
               <Link to="/account/sign-in">
-                <button className="signinBtn text-[1.7rem] leading-[1.6rem] font-semibold text-theme-blue p-[1rem] rounded-md hover:text-theme-yellow transition-all ">
+                <button className="signinBtn text-[1.7rem] leading-[1.6rem] font-semibold text-theme-blue p-[0.8rem] rounded-md hover:text-theme-yellow border-[0.2rem] border-theme-yellow transition-all ">
                   Sign in
                 </button>
               </Link>
@@ -78,25 +78,32 @@ const Header = ({ setIsOpenSidebar }) => {
           {/* Profile */}
           {authenticUser && (
             <div className="profile relative hidden tabletSm:flex items-center gap-[1rem] px-[0.5rem] tabletSm:px-0">
+              {/* Add Property Button */}
+              <Link to="/add-property">
+                <button className="addPropertyBtn text-[1.6rem] leading-[1.5rem] font-semibold bg-theme-yellow text-theme-blue px-[1.2rem] py-[0.9rem] rounded-md hover:bg-theme-blue hover:text-white transition-all ">
+                  Add Property
+                </button>
+              </Link>
+
               {/* Profile Image */}
               <div className="profileImage">
                 <img
                   src={User}
                   alt="profile"
-                  className="w-[3rem] rounded-full bg-theme-blue border-[0.2rem] border-neutral-300"
+                  className="w-[3.4rem] rounded-full bg-theme-blue border-[0.2rem] border-neutral-300"
                 />
               </div>
 
-              {/* Profile Button */}
+              {/* Profile Button
               <Link to="/profile">
                 <button className="profileBtn text-[1.7rem] leading-[1.7rem] font-semibold text-theme-blue px-[1.6rem] py-[0.8rem] bg-theme-yellow rounded-md hidden tabletSm:block">
                   Profile
                 </button>
-              </Link>
+              </Link> */}
 
-              <span className="flex items-center justify-center min-w-[2rem] min-h-[2rem] p-[0.4rem] absolute top-[-0.8rem] right-[-0.8rem] text-[1.2rem] leading-[1rem] font-semibold font-quick text-white bg-red-500 rounded-full overflow-hidden">
+              {/* <span className="flex items-center justify-center min-w-[2rem] min-h-[2rem] p-[0.4rem] absolute top-[-0.8rem] right-[-0.8rem] text-[1.2rem] leading-[1rem] font-semibold font-quick text-white bg-red-500 rounded-full overflow-hidden">
                 99+
-              </span>
+              </span> */}
             </div>
           )}
 
