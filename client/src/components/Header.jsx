@@ -1,8 +1,14 @@
+import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 // Import React Icons
 import { CgMenuRight } from "react-icons/cg";
+import { FaPlus } from "react-icons/fa6";
+import { FiUser } from "react-icons/fi";
+import { RiAccountBoxLine } from "react-icons/ri";
+import { MdOutlineMapsHomeWork } from "react-icons/md";
+import { PiSignOutBold } from "react-icons/pi";
 
 // Import Assets
 import LogoDark from "../assets/logo-dark.png";
@@ -12,6 +18,22 @@ const Header = ({ setIsOpenSidebar }) => {
   const location = useLocation();
   const routeLocation = location.pathname;
   const { authenticUser } = useSelector((state) => state?.user);
+  const [isOpenProfileDropdown, setIsOpenProfileDropdown] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const handleClickOutsideDropdown = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsOpenProfileDropdown(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutsideDropdown);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutsideDropdown);
+    };
+  }, []);
 
   return (
     <header className="header w-full flex items-center fixed top-0 left-0 z-[99] backdrop-blur-[20px] bg-[#fffffff0]">
@@ -30,13 +52,12 @@ const Header = ({ setIsOpenSidebar }) => {
             <ul className="flex items-center gap-[0.7rem] laptopSm:gap-[0.9rem]">
               {[
                 ["Explore", "/explore"],
-                // ["Add Property", "/add-property"],
                 ["About", "/about"],
                 ["Contact", "/contact"],
               ].map(([tilte, path], index) => (
                 <li
                   key={index}
-                  className={`nav-item text-theme-blue relative z-[2] before:content-[''] before:absolute before:z-[1] before:bottom-[-0.5rem] before:w-full before:h-[0.3rem] before:rounded-full before:transition-[all_0.5s_ease-in] before:scale-x-[0] hover:before:scale-x-[1] ${
+                  className={`nav-item text-theme-blue relative z-[2] before:content-[''] before:absolute before:z-[1] before:bottom-[-0.4rem] before:w-full before:h-[0.3rem] before:rounded-full before:transition-[all_0.5s_ease-in] before:scale-x-[0] hover:before:scale-x-[1] ${
                     routeLocation !== path
                       ? "before:bg-cyan-950"
                       : "before:bg-amber-500"
@@ -75,23 +96,58 @@ const Header = ({ setIsOpenSidebar }) => {
             </div>
           )}
 
-          {/* Profile */}
+          {/*  Add Property Button & Profile Avatar */}
           {authenticUser && (
-            <div className="profile relative hidden tabletSm:flex items-center gap-[1rem] px-[0.5rem] tabletSm:px-0">
+            <div className="profile relative hidden tabletSm:flex items-center gap-[1.5rem] px-[0.5rem] tabletSm:px-0">
               {/* Add Property Button */}
               <Link to="/add-property">
-                <button className="addPropertyBtn text-[1.6rem] leading-[1.5rem] font-semibold bg-theme-yellow text-theme-blue px-[1.2rem] py-[0.9rem] rounded-md hover:bg-theme-blue hover:text-white transition-all ">
-                  Add Property
+                <button className="addPropertyBtn  hidden tabletLg:flex items-center gap-[0.5rem] text-[1.6rem] leading-[1rem] font-semibold bg-theme-yellow text-theme-blue px-[1.2rem] py-[1rem] rounded-md hover:bg-theme-blue hover:text-white transition-all ">
+                  <FaPlus size={"1.6rem"} />
+                  <span>Add Property</span>
                 </button>
               </Link>
 
-              {/* Profile Image */}
-              <div className="profileImage">
+              {/* Profile Image & Dropdown */}
+              <div className="profileImageCont select-none relative z-10">
                 <img
                   src={User}
                   alt="profile"
-                  className="w-[3.4rem] rounded-full bg-theme-blue border-[0.2rem] border-neutral-300"
+                  className="w-[3.2rem] rounded-full bg-theme-blue object-cover cursor-pointer"
+                  onClick={() => setIsOpenProfileDropdown(true)}
                 />
+
+                {/* Dropdown */}
+                <div
+                  ref={dropdownRef}
+                  onMouseLeave={() => setIsOpenProfileDropdown(false)}
+                  className={`accountDropdown absolute top-[145%] right-0 z-[-1] bg-white rounded-lg overflow-hidden shadow-xl ${
+                    isOpenProfileDropdown
+                      ? "h-[16rem] opacity-100"
+                      : "h-0 opacity-0"
+                  } transition-all`}
+                >
+                  <ul className="w-[20rem] h-full text-[1.6rem] leading-[1.6rem] font-semibold text-theme-blue p-[0.6rem] grid grid-rows-4 gap-[0.2rem] select-none border-[0.2rem] border-neutral-200">
+                    <li className="flex items-center gap-[0.8rem] h-full p-[0.8rem] cursor-pointer hover:bg-neutral-100 hover:text-neutral-800 rounded-sm transition-all whitespace-nowrap ">
+                      <FiUser size="1.8rem" />
+                      <span>Profile</span>
+                    </li>
+
+                    <li className="flex items-center gap-[0.8rem] h-full p-[0.8rem] cursor-pointer hover:bg-neutral-100 hover:text-neutral-800 rounded-sm transition-all whitespace-nowrap">
+                      <RiAccountBoxLine size="1.9rem" />
+                      <span>Account</span>
+                    </li>
+
+                    <li className="flex items-center gap-[0.8rem] h-full p-[0.8rem] cursor-pointer hover:bg-neutral-100 hover:text-neutral-800 rounded-sm transition-all whitespace-nowrap">
+                      <MdOutlineMapsHomeWork size="1.8rem" />
+                      <span>My Properties</span>
+                    </li>
+
+                    <li className="flex items-center gap-[0.8rem] h-full p-[0.8rem] cursor-pointer hover:bg-neutral-100 hover:text-neutral-800 rounded-sm transition-all whitespace-nowrap">
+                      <PiSignOutBold size="1.8rem" />
+                      <span>Logout</span>
+                    </li>
+                  </ul>
+                </div>
               </div>
 
               {/* Profile Button

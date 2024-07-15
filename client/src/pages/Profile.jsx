@@ -31,8 +31,8 @@ import EditProfile from "../components/EditProfile";
 const Profile = () => {
   const user = useSelector((state) => state?.user?.authenticUser);
   const [isActiveTab, setIsActiveTab] = useState("saved");
-  const [isOpenAccStngDropdown, setIsOpenAccStngDropdown] = useState(false);
   const [isOpenEditProfileModal, setIsOpenEditProfileModal] = useState(false);
+  const [isOpenAccStngDropdown, setIsOpenAccStngDropdown] = useState(false);
   const dropdownRef = useRef(null);
 
   const handleClickOutsideDropdown = (event) => {
