@@ -1,7 +1,7 @@
 // Import Components
-import Signin from "../components/Signin";
-import Signup from "../components/Signup";
-import VerifyAccount from "../components/VerifyAccount";
+import Signin from "../components/Authentication/Signin";
+import Signup from "../components/Authentication/Signup";
+import VerifyAccount from "../components/Authentication/VerifyAccount";
 import {
   AuthProtectedRoute,
   VerifyProtectedRoute,

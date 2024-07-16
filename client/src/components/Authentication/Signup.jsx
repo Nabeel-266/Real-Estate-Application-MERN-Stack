@@ -1,22 +1,22 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { registerUserVerification } from "../api/authAPIs";
+import { registerUserVerification } from "../../api/authAPIs";
 import { useDispatch } from "react-redux";
 
 // Import Error Checking Handler Functions
 import {
   signupClientErrorHandler,
   signupServerErrorHandler,
-} from "../utils/authErrors";
+} from "../../utils/authErrors";
 
 // Import React Icons
 import { IoMail, IoMailOpen, IoLockClosed, IoLockOpen } from "react-icons/io5";
 
 // Import Asset
-import GoogleIcon from "../assets/google.png";
+import GoogleIcon from "../../assets/google.png";
 
 // Component
-import Loader from "./Loader";
+import Loader from "../Loader";
 
 const Signup = () => {
   const dispatch = useDispatch();

@@ -68,34 +68,31 @@ const Sidebar = ({ isOpenSidebar, setIsOpenSidebar }) => {
                 [MdOutlineRealEstateAgent, "Add Property", "/add-property"],
                 [RiTeamLine, "About", "/about"],
                 [RiMessage2Line, "Contact", "/contact"],
-              ].map(([Icon, title, route], index) => {
-                // console.log(route.split("/")[1]);
-                return (
-                  <li
-                    key={index}
+              ].map(([Icon, title, route], index) => (
+                <li
+                  key={index}
+                  className={`${
+                    isActiveTab === route.split("/")[1]
+                      ? "before:translate-x-[-20%]"
+                      : "before:translate-x-[-100%] hover:before:translate-x-[0%]"
+                  } w-full relative overflow-hidden before:content-[''] before:w-[100%] before:h-[100%] before:z-0 before:absolute before:top-0 before:left-0 before:bg-[#0c2e38] before:rounded-e-full before:transition before:ease-out before:duration-[0.4s] peer/navItem`}
+                >
+                  <Link
+                    to={route}
+                    onClick={() => setIsOpenSidebar(!isOpenSidebar)}
                     className={`${
                       isActiveTab === route.split("/")[1]
-                        ? "before:translate-x-[-20%]"
-                        : "before:translate-x-[-100%] hover:before:translate-x-[0%]"
-                    } w-full relative overflow-hidden before:content-[''] before:w-[100%] before:h-[100%] before:z-0 before:absolute before:top-0 before:left-0 before:bg-[#0c2e38] before:rounded-e-full before:transition before:ease-out before:duration-[0.4s] peer/navItem`}
+                        ? "text-theme-yellow border-theme-yellow border-l-[0.3rem]"
+                        : "text-white border-white hover:border-l-[0.3rem]"
+                    } w-full relative z-10 flex items-center gap-[1.5rem] px-[1.5rem] py-[1rem]`}
                   >
-                    <Link
-                      to={route}
-                      onClick={() => setIsOpenSidebar(!isOpenSidebar)}
-                      className={`${
-                        isActiveTab === route.split("/")[1]
-                          ? "text-theme-yellow border-theme-yellow border-l-[0.3rem]"
-                          : "text-white border-white hover:border-l-[0.3rem]"
-                      } w-full relative z-10 flex items-center gap-[1.5rem] px-[1.5rem] py-[1rem]`}
-                    >
-                      <Icon className="text-[2.6rem]" />
-                      <span className="text-[2.3rem] leading-[2rem] font-semibold">
-                        {title}
-                      </span>
-                    </Link>
-                  </li>
-                );
-              })}
+                    <Icon className="text-[2.6rem]" />
+                    <span className="text-[2.3rem] leading-[2rem] font-semibold">
+                      {title}
+                    </span>
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

@@ -1,20 +1,20 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../api/authAPIs";
+import { loginUser } from "../../api/authAPIs";
 import {
   signinClientErrorHandler,
   signinServerErrorHandler,
-} from "../utils/authErrors";
+} from "../../utils/authErrors";
 
 // Import React Icons
 import { IoMail, IoMailOpen, IoLockClosed, IoLockOpen } from "react-icons/io5";
 
 // Import Image
-import GoogleIcon from "../assets/google.png";
+import GoogleIcon from "../../assets/google.png";
 
 // Import Component
-import Loader from "./Loader";
+import Loader from "../Loader";
 
 const Signin = () => {
   const dispatch = useDispatch();

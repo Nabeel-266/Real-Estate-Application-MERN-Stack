@@ -82,14 +82,14 @@ const Header = ({ setIsOpenSidebar }) => {
             <div className="authBtns hidden tabletSm:flex items-center gap-[1.4rem]">
               {/* Signin Button */}
               <Link to="/account/sign-in">
-                <button className="signinBtn text-[1.7rem] leading-[1.6rem] font-semibold text-theme-blue p-[0.8rem] rounded-md hover:text-theme-yellow border-[0.2rem] border-theme-yellow transition-all ">
+                <button className="signinBtn text-[1.7rem] leading-[1.6rem] font-semibold text-theme-blue p-[0.8rem] rounded-md hover:text-theme-yellow border-[0.2rem] border-theme-blue hover:bg-theme-blue hover:text-white transition-all ">
                   Sign in
                 </button>
               </Link>
 
               {/* Signup Button */}
               <Link to="/account/sign-up">
-                <button className="signupBtn text-[1.7rem] leading-[1.6rem] font-semibold text-theme-blue p-[1rem] bg-theme-yellow rounded-md hover:bg-theme-blue hover:text-theme-yellow transition-all">
+                <button className="signupBtn text-[1.7rem] leading-[1.6rem] font-semibold text-theme-blue p-[1rem] bg-theme-yellow rounded-md transition-all">
                   Sign up
                 </button>
               </Link>
@@ -120,29 +120,33 @@ const Header = ({ setIsOpenSidebar }) => {
                 <div
                   ref={dropdownRef}
                   onMouseLeave={() => setIsOpenProfileDropdown(false)}
-                  className={`accountDropdown absolute top-[145%] right-0 z-[-1] bg-white rounded-lg overflow-hidden shadow-xl ${
+                  className={`accountDropdown absolute top-[148%] right-0 z-[-1] bg-white rounded-lg overflow-hidden shadow-xl p-[0.6rem] flex flex-col gap-[0.5rem] ${
                     isOpenProfileDropdown
-                      ? "h-[16rem] opacity-100"
+                      ? "h-[19rem] opacity-100"
                       : "h-0 opacity-0"
                   } transition-all`}
                 >
-                  <ul className="w-[20rem] h-full text-[1.6rem] leading-[1.6rem] font-semibold text-theme-blue p-[0.6rem] grid grid-rows-4 gap-[0.2rem] select-none border-[0.2rem] border-neutral-200">
-                    <li className="flex items-center gap-[0.8rem] h-full p-[0.8rem] cursor-pointer hover:bg-neutral-100 hover:text-neutral-800 rounded-sm transition-all whitespace-nowrap ">
+                  <h6 className="text-[1.6rem] leading-[1.6rem] font-bold text-theme-blue px-[0.8rem] pt-[0.8rem] pb-[0.8rem] border-b-[0.2rem] border-neutral-200">
+                    My Account
+                  </h6>
+
+                  <ul className="w-[20rem] text-[1.6rem] leading-[1.6rem] font-semibold text-theme-blue flex flex-col gap-[0.2rem] select-none ">
+                    <li className="flex items-center gap-[0.8rem] p-[0.8rem] cursor-pointer hover:bg-neutral-100 hover:text-neutral-800 rounded-sm transition-all whitespace-nowrap ">
                       <FiUser size="1.8rem" />
                       <span>Profile</span>
                     </li>
 
-                    <li className="flex items-center gap-[0.8rem] h-full p-[0.8rem] cursor-pointer hover:bg-neutral-100 hover:text-neutral-800 rounded-sm transition-all whitespace-nowrap">
+                    <li className="flex items-center gap-[0.8rem] p-[0.8rem] cursor-pointer hover:bg-neutral-100 hover:text-neutral-800 rounded-sm transition-all whitespace-nowrap">
                       <RiAccountBoxLine size="1.9rem" />
                       <span>Account</span>
                     </li>
 
-                    <li className="flex items-center gap-[0.8rem] h-full p-[0.8rem] cursor-pointer hover:bg-neutral-100 hover:text-neutral-800 rounded-sm transition-all whitespace-nowrap">
+                    <li className="flex items-center gap-[0.8rem] p-[0.8rem] cursor-pointer hover:bg-neutral-100 hover:text-neutral-800 rounded-sm transition-all whitespace-nowrap">
                       <MdOutlineMapsHomeWork size="1.8rem" />
                       <span>My Properties</span>
                     </li>
 
-                    <li className="flex items-center gap-[0.8rem] h-full p-[0.8rem] cursor-pointer hover:bg-neutral-100 hover:text-neutral-800 rounded-sm transition-all whitespace-nowrap">
+                    <li className="flex items-center gap-[0.8rem] p-[0.8rem] cursor-pointer hover:bg-neutral-100 hover:text-neutral-800 rounded-sm transition-all whitespace-nowrap">
                       <PiSignOutBold size="1.8rem" />
                       <span>Logout</span>
                     </li>

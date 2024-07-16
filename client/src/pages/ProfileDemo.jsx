@@ -28,7 +28,7 @@ import { HiMiniXMark } from "react-icons/hi2";
 // Import Component
 import EditProfile from "../components/EditProfile";
 
-const Profile = () => {
+const ProfileDemo = () => {
   const user = useSelector((state) => state?.user?.authenticUser);
   const [isActiveTab, setIsActiveTab] = useState("saved");
   const [isOpenEditProfileModal, setIsOpenEditProfileModal] = useState(false);
@@ -310,4 +310,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default ProfileDemo;

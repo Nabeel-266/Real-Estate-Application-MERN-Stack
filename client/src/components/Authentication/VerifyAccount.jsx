@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { registerVerifyUser, resendOTPtoUser } from "../api/authAPIs";
+import { registerVerifyUser, resendOTPtoUser } from "../../api/authAPIs";
 import { useDispatch, useSelector } from "react-redux";
-import toastify from "../utils/toastify";
+import toastify from "../../utils/toastify";
 
 // Import React Icon
 import { FaArrowRotateRight } from "react-icons/fa6";
 
 // Component
-import Loader from "./Loader";
+import Loader from "../Loader";
 
 const VerifyAccount = () => {
   const dispatch = useDispatch();

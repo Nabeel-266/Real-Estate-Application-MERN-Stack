@@ -26,9 +26,9 @@ import { FaXmark } from "react-icons/fa6";
 import AddPropertyBannerImage from "../assets/add-property-banner.png";
 
 // Import Component
-import AddPropertyLocationModal from "../components/AddPropertyLocation";
-import AddPropertyFeaturesModal from "../components/AddPropertyFeatures";
-import AddPropertyReview from "../components/AddPropertyReview";
+import AddPropertyLocationModal from "../components/AddProperty/AddPropertyLocation";
+import AddPropertyFeaturesModal from "../components/AddProperty/AddPropertyFeatures";
+import AddPropertyReview from "../components/AddProperty/AddPropertyReview";
 
 const AddProperty = () => {
   const dropdownRef = useRef(null);

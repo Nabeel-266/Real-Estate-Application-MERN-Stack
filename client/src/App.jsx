@@ -18,13 +18,17 @@ import Explore from "./pages/Explore";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import AddProperty from "./pages/AddProperty";
-import Profile from "./pages/Profile";
+import ProfileDemo from "./pages/ProfileDemo";
 import Auth from "./pages/Auth";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
-import Signin from "./components/Signin";
-import Signup from "./components/Signup";
-import VerifyAccount from "./components/VerifyAccount";
+import Signin from "./components/Authentication/Signin";
+import Signup from "./components/Authentication/Signup";
+import VerifyAccount from "./components/Authentication/VerifyAccount";
+import User from "./pages/User";
+import Profile from "./components/User/Profile";
+import Account from "./components/User/Account";
+import MyProperties from "./components/User/MyProperties";
 
 const AppRoutes = () => {
   const location = useLocation();
@@ -69,6 +73,12 @@ const AppRoutes = () => {
           <Route path="/account/verification" element={<VerifyAccount />} />
         </Route>
 
+        <Route path="/user/" element={<User />}>
+          <Route path="profile" element={<Profile />} />
+          <Route path="account" element={<Account />} />
+          <Route path="properties" element={<MyProperties />} />
+        </Route>
+
         <Route
           path="/explore"
           element={
@@ -83,10 +93,10 @@ const AppRoutes = () => {
         <Route path="/contact" element={<Contact />} />
 
         <Route
-          path="/profile"
+          path="/profileDemo"
           element={
             <UnAuthProtectedRoute>
-              <Profile />
+              <ProfileDemo />
             </UnAuthProtectedRoute>
           }
         />
