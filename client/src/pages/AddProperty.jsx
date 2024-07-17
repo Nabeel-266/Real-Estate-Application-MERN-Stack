@@ -1104,7 +1104,7 @@ const AddProperty = () => {
                       onChange={usernameChangeHandler}
                       placeholder="Enter your full name"
                       autoComplete="off"
-                      className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-300 font-medium px-[1.5rem] py-[1.1rem] text-[1.6rem] leading-[1.6rem] rounded-md focus:border-theme-blue numberInput peer/price"
+                      className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-300 font-medium px-[1.5rem] py-[1.1rem] text-[1.6rem] leading-[1.6rem] rounded-md focus:border-theme-blue"
                     />
                   </div>
 
@@ -1118,7 +1118,7 @@ const AddProperty = () => {
 
               {/* Availability */}
               <div className="availability w-full flex flex-col gap-[0.5rem]">
-                {/* Title */}
+                {/* Title and Toggle */}
                 <h4 className="propertyFormInputTitles w-full tabletSm:w-[70%] tabletSm:min-w-[50rem] flex items-center justify-between">
                   <span>Specify availability</span>
 

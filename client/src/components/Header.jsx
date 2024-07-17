@@ -82,7 +82,7 @@ const Header = ({ setIsOpenSidebar }) => {
             <div className="authBtns hidden tabletSm:flex items-center gap-[1.4rem]">
               {/* Signin Button */}
               <Link to="/account/sign-in">
-                <button className="signinBtn text-[1.7rem] leading-[1.6rem] font-semibold text-theme-blue p-[0.8rem] rounded-md hover:text-theme-yellow border-[0.2rem] border-theme-blue hover:bg-theme-blue hover:text-white transition-all ">
+                <button className="signinBtn text-[1.7rem] leading-[1.6rem] font-semibold text-theme-blue p-[0.8rem] rounded-md border-[0.2rem] border-theme-blue hover:bg-theme-blue hover:text-theme-yellow transition-all ">
                   Sign in
                 </button>
               </Link>
@@ -98,7 +98,7 @@ const Header = ({ setIsOpenSidebar }) => {
 
           {/*  Add Property Button & Profile Avatar */}
           {authenticUser && (
-            <div className="profile relative hidden tabletSm:flex items-center gap-[1.5rem] px-[0.5rem] tabletSm:px-0">
+            <div className="relative hidden tabletSm:flex items-center gap-[1.5rem] px-[0.5rem] tabletSm:px-0">
               {/* Add Property Button */}
               <Link to="/add-property">
                 <button className="addPropertyBtn  hidden tabletLg:flex items-center gap-[0.5rem] text-[1.6rem] leading-[1rem] font-semibold bg-theme-yellow text-theme-blue px-[1.2rem] py-[1rem] rounded-md hover:bg-theme-blue hover:text-white transition-all ">
@@ -112,7 +112,7 @@ const Header = ({ setIsOpenSidebar }) => {
                 <img
                   src={User}
                   alt="profile"
-                  className="w-[3.2rem] rounded-full bg-theme-blue object-cover cursor-pointer"
+                  className="w-[3.2rem] rounded-full bg-neutral-200 object-cover cursor-pointer"
                   onClick={() => setIsOpenProfileDropdown(true)}
                 />
 
@@ -120,9 +120,9 @@ const Header = ({ setIsOpenSidebar }) => {
                 <div
                   ref={dropdownRef}
                   onMouseLeave={() => setIsOpenProfileDropdown(false)}
-                  className={`accountDropdown absolute top-[148%] right-0 z-[-1] bg-white rounded-lg overflow-hidden shadow-xl p-[0.6rem] flex flex-col gap-[0.5rem] ${
+                  className={`accountDropdown absolute top-[148%] right-0 z-[-1] bg-white rounded-lg overflow-hidden shadow-xl p-[0.6rem] flex flex-col gap-[0.6rem] ${
                     isOpenProfileDropdown
-                      ? "h-[19rem] opacity-100"
+                      ? "h-[20rem] opacity-100"
                       : "h-0 opacity-0"
                   } transition-all`}
                 >
@@ -130,19 +130,19 @@ const Header = ({ setIsOpenSidebar }) => {
                     My Account
                   </h6>
 
-                  <ul className="w-[20rem] text-[1.6rem] leading-[1.6rem] font-semibold text-theme-blue flex flex-col gap-[0.2rem] select-none ">
+                  <ul className="w-[20rem] text-[1.6rem] leading-[2rem] font-semibold text-theme-blue flex flex-col gap-[0.1rem] select-none ">
                     <li className="flex items-center gap-[0.8rem] p-[0.8rem] cursor-pointer hover:bg-neutral-100 hover:text-neutral-800 rounded-sm transition-all whitespace-nowrap ">
                       <FiUser size="1.8rem" />
                       <span>Profile</span>
                     </li>
 
                     <li className="flex items-center gap-[0.8rem] p-[0.8rem] cursor-pointer hover:bg-neutral-100 hover:text-neutral-800 rounded-sm transition-all whitespace-nowrap">
-                      <RiAccountBoxLine size="1.9rem" />
+                      <RiAccountBoxLine size="2rem" />
                       <span>Account</span>
                     </li>
 
                     <li className="flex items-center gap-[0.8rem] p-[0.8rem] cursor-pointer hover:bg-neutral-100 hover:text-neutral-800 rounded-sm transition-all whitespace-nowrap">
-                      <MdOutlineMapsHomeWork size="1.8rem" />
+                      <MdOutlineMapsHomeWork size="1.9rem" />
                       <span>My Properties</span>
                     </li>
 

@@ -73,7 +73,14 @@ const AppRoutes = () => {
           <Route path="/account/verification" element={<VerifyAccount />} />
         </Route>
 
-        <Route path="/user/" element={<User />}>
+        <Route
+          path="/user/"
+          element={
+            <UnAuthProtectedRoute>
+              <User />
+            </UnAuthProtectedRoute>
+          }
+        >
           <Route path="profile" element={<Profile />} />
           <Route path="account" element={<Account />} />
           <Route path="properties" element={<MyProperties />} />
