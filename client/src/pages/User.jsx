@@ -18,9 +18,9 @@ const User = () => {
 
   return (
     <div className="userCont w-full h-dvh relative pt-[6rem]">
-      <div className="userContWrapper h-full flex items-center mx-[4%]">
-        <aside className="w-[25rem] h-[calc(100dvh-12rem)] border-r-[0.2rem] border-neutral-200">
-          <ul className="w-[100%] flex flex-col gap-[0.2rem]">
+      <div className="userContWrapper h-full flex items-start">
+        <aside className="w-[30rem] h-full flex items-center border-r-[0.2rem] border-neutral-200 pl-[4%]">
+          <ul className="w-[100%] h-[calc(100dvh-12rem)] flex flex-col gap-[0.2rem]">
             {[
               [FiUser, "Profile", "profile"],
               [RiAccountBoxLine, "Account", "account"],
@@ -52,7 +52,7 @@ const User = () => {
           </ul>
         </aside>
 
-        <main className="flex-1 h-full overflow-auto scrollbar pt-[3rem]">
+        <main className="flex-1 h-full overflow-auto scrollbar pt-[3rem] pr-[4%]">
           <Outlet />
         </main>
       </div>

@@ -27,7 +27,6 @@ const AddPropertyReview = ({ propertyDetails }) => {
 
   const {
     purpose,
-    category,
     type,
     city,
     size,
@@ -310,10 +309,8 @@ const AddPropertyReview = ({ propertyDetails }) => {
                   Contact Number
                 </span>
 
-                {contact?.number ? (
-                  <span className="text-[1.4rem] font-medium">
-                    {`${contact?.code} ${contact?.number}`}
-                  </span>
+                {contact ? (
+                  <span className="text-[1.4rem] font-medium">{contact}</span>
                 ) : (
                   <span className="text-[1.4rem] font-medium">
                     Your contact number

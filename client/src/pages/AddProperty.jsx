@@ -42,13 +42,16 @@ const AddProperty = () => {
   const [numericPrice, setNumericPrice] = useState("");
   const [sizeValue, setSizeValue] = useState(0);
   const [sizeUnit, setSizeUnit] = useState("Sq. Ft");
-  const [countryCallingCode, setCountryCallingCode] = useState(["PK", "+92"]);
-  const [contactNum, setContactNum] = useState("");
+  const [contactNumInfo, setContactNumInfo] = useState({
+    ISOCode: "PK",
+    callingCode: "+92",
+    callingNumber: "",
+  });
+  const { ISOCode, callingCode, callingNumber } = contactNumInfo;
   const [propertyTypeOptions, setPropertyTypeOptions] = useState(
     propertyResidentialTypes
   );
   const [propertyDetails, setPropertyDetails] = useState({});
-  console.log(propertyDetails);
   const {
     purpose,
     category,
@@ -64,6 +67,8 @@ const AddProperty = () => {
     username,
     availability,
   } = propertyDetails;
+
+  console.log(propertyDetails);
 
   const propertyFormDataChangeHandler = (action, key, value) => {
     if (action === "added") {
@@ -105,9 +110,6 @@ const AddProperty = () => {
       purpose: "Sell",
       category: "Residential",
       type: "House",
-      contact: {
-        code: "+92",
-      },
     });
   }, [category]);
 
@@ -272,22 +274,49 @@ const AddProperty = () => {
   };
 
   // Contact Number Change Handler
-  const contactNumChangeHandler = (num, countryCode) => {
-    if (num.startsWith("+")) {
-      setCountryCallingCode([countryCode, num]);
-      setIsCountryDropdownOpen(false);
-      propertyFormDataChangeHandler("added", "contact", {
-        ...contact,
-        code: num,
-      });
-    } else {
-      if (num >= 1e10 || num.startsWith(0) || num.includes(".")) {
-        setContactNum("");
-      } else {
-        setContactNum(num);
-        propertyFormDataChangeHandler("added", "contact", {
-          ...contact,
-          number: num,
+  const contactNumChangeHandler = (key, value) => {
+    if (key === "code") {
+      if (!callingNumber) {
+        setContactNumInfo({
+          ...contactNumInfo,
+          ISOCode: value.ISOCode,
+          callingCode: value.callingCode,
+        });
+        setIsCountryDropdownOpen(false);
+      } else if (callingNumber) {
+        propertyFormDataChangeHandler(
+          "added",
+          "contact",
+          `${value.callingCode} ${callingNumber}`
+        );
+        setContactNumInfo({
+          ...contactNumInfo,
+          ISOCode: value.ISOCode,
+          callingCode: value.callingCode,
+        });
+        setIsCountryDropdownOpen(false);
+      }
+    } else if (key === "number") {
+      if (
+        value.length > 10 ||
+        value.length < 1 ||
+        value.startsWith(0) ||
+        value.includes(".")
+      ) {
+        setContactNumInfo({
+          ...contactNumInfo,
+          callingNumber: "",
+        });
+        propertyFormDataChangeHandler("deleted", "contact");
+      } else if (value.length <= 10) {
+        propertyFormDataChangeHandler(
+          "added",
+          "contact",
+          `${callingCode} ${value}`
+        );
+        setContactNumInfo({
+          ...contactNumInfo,
+          callingNumber: value,
         });
       }
     }
@@ -1011,17 +1040,28 @@ const AddProperty = () => {
                 {/* Contact Number Input Cont */}
                 <div className="w-full space-y-[0.8rem] mt-[1.5rem]">
                   <div className="input w-full tabletSm:w-[70%] tabletSm:min-w-[50rem] relative z-[4]">
+                    <input
+                      type="number"
+                      name="contactNumber"
+                      id="contactNumber"
+                      value={callingNumber}
+                      onChange={(e) =>
+                        contactNumChangeHandler("number", e.target.value)
+                      }
+                      maxLength="10"
+                      placeholder="1234567890"
+                      className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-300 font-medium pl-[13rem] pr-[2rem] py-[0.9rem] text-[1.6rem] tracking-wider rounded-md focus:border-theme-blue numberInput"
+                    />
+
+                    {/* Input Flag and Calling Code Display Area */}
                     <div
                       onClick={() =>
                         setIsCountryDropdownOpen(!isCountryDropdownOpen)
                       }
-                      className="absolute top-0 left-0 h-full px-[1.4rem] flex items-center gap-[1rem] text-[1.6rem] font-semibold text-neutral-700 cursor-pointer rounded-r-md select-none "
+                      className="absolute top-[0.2rem] left-[0.2rem] bottom-[0.2rem] px-[1.4rem] flex items-center gap-[1rem] text-[1.6rem] leading-[1.6rem] font-semibold text-neutral-700 cursor-pointer select-none"
                     >
                       <span>
-                        <Flag
-                          code={countryCallingCode[0]}
-                          className="w-[2.5rem]"
-                        />
+                        <Flag code={ISOCode} className="w-[2.5rem]" />
                       </span>
                       <IoMdArrowDropdown
                         size="1.8rem"
@@ -1029,19 +1069,8 @@ const AddProperty = () => {
                           isCountryDropdownOpen ? "rotate-180" : "rotate-0"
                         } transition-all`}
                       />
-                      <span>{countryCallingCode[1]}</span>
+                      <span>{callingCode}</span>
                     </div>
-
-                    <input
-                      type="number"
-                      name="contactNumber"
-                      id="contactNumber"
-                      value={contactNum}
-                      onChange={(e) => contactNumChangeHandler(e.target.value)}
-                      maxLength="10"
-                      placeholder="1234567890"
-                      className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-300 font-medium pl-[13rem] pr-[2rem] py-[1.1rem] text-[1.6rem] leading-[1.6rem] tracking-wider rounded-md focus:border-theme-blue numberInput peer/size"
-                    />
 
                     {/* Country Dial Code Dropdown */}
                     {isCountryDropdownOpen && (
@@ -1058,10 +1087,10 @@ const AddProperty = () => {
                               <li
                                 key={index}
                                 onClick={() => {
-                                  contactNumChangeHandler(
-                                    `+${countryData.phone[0]}`,
-                                    countryCode
-                                  );
+                                  contactNumChangeHandler("code", {
+                                    ISOCode: countryCode,
+                                    callingCode: `+${countryData.phone[0]}`,
+                                  });
                                 }}
                                 className="w-full flex items-center gap-[2rem] text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[1rem] hover:bg-theme-blue hover:text-white transition-all cursor-pointer"
                               >
