@@ -12,7 +12,7 @@ import {
   count,
   propertyCondition,
   availabiltyDays,
-} from "../constants/propertyFormData";
+} from "../constants/data";
 
 // Import React Icons
 import { IoSearch } from "react-icons/io5";
