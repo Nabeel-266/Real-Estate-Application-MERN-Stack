@@ -122,28 +122,43 @@ const Header = ({ setIsOpenSidebar }) => {
                   onMouseLeave={() => setIsOpenProfileDropdown(false)}
                   className={`accountDropdown absolute top-[148%] right-0 z-[-1] bg-white rounded-lg overflow-hidden shadow-xl p-[0.6rem] flex flex-col gap-[0.6rem] ${
                     isOpenProfileDropdown
-                      ? "h-[20rem] opacity-100"
+                      ? "h-[20.2rem] opacity-100"
                       : "h-0 opacity-0"
                   } transition-all`}
                 >
-                  <h6 className="text-[1.6rem] leading-[1.6rem] font-bold text-theme-blue px-[0.8rem] pt-[0.8rem] pb-[0.8rem] border-b-[0.2rem] border-neutral-200">
-                    My Account
+                  <h6 className="text-[1.6rem] leading-[1.6rem] font-bold text-theme-blue px-[0.8rem] pt-[1rem] pb-[1rem] border-b-[0.2rem] border-neutral-200">
+                    My Credentials
                   </h6>
 
                   <ul className="w-[20rem] text-[1.6rem] leading-[2rem] font-semibold text-theme-blue flex flex-col gap-[0.1rem] select-none ">
-                    <li className="flex items-center gap-[0.8rem] p-[0.8rem] cursor-pointer hover:bg-neutral-100 hover:text-neutral-800 rounded-sm transition-all whitespace-nowrap ">
-                      <FiUser size="1.8rem" />
-                      <span>Profile</span>
+                    <li className="w-full hover:bg-neutral-100 hover:text-neutral-800 rounded-md">
+                      <Link
+                        to="/user/profile"
+                        className="flex items-center gap-[0.8rem] p-[0.8rem] cursor-pointer transition-all whitespace-nowrap"
+                      >
+                        <FiUser size="1.8rem" />
+                        <span>Profile</span>
+                      </Link>
                     </li>
 
-                    <li className="flex items-center gap-[0.8rem] p-[0.8rem] cursor-pointer hover:bg-neutral-100 hover:text-neutral-800 rounded-sm transition-all whitespace-nowrap">
-                      <RiAccountBoxLine size="2rem" />
-                      <span>Account</span>
+                    <li className="w-full hover:bg-neutral-100 hover:text-neutral-800 rounded-md">
+                      <Link
+                        to="/user/account"
+                        className="flex items-center gap-[0.8rem] p-[0.8rem] cursor-pointer transition-all whitespace-nowrap"
+                      >
+                        <RiAccountBoxLine size="2rem" />
+                        <span>Account</span>
+                      </Link>
                     </li>
 
-                    <li className="flex items-center gap-[0.8rem] p-[0.8rem] cursor-pointer hover:bg-neutral-100 hover:text-neutral-800 rounded-sm transition-all whitespace-nowrap">
-                      <MdOutlineMapsHomeWork size="1.9rem" />
-                      <span>My Properties</span>
+                    <li className="w-full hover:bg-neutral-100 hover:text-neutral-800 rounded-md">
+                      <Link
+                        to="/user/properties"
+                        className="flex items-center gap-[0.8rem] p-[0.8rem] cursor-pointer transition-all whitespace-nowrap"
+                      >
+                        <MdOutlineMapsHomeWork size="1.9rem" />
+                        <span>My Properties</span>
+                      </Link>
                     </li>
 
                     <li className="flex items-center gap-[0.8rem] p-[0.8rem] cursor-pointer hover:bg-neutral-100 hover:text-neutral-800 rounded-sm transition-all whitespace-nowrap">

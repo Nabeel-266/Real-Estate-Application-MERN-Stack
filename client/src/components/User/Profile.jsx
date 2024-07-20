@@ -28,7 +28,6 @@ const Profile = () => {
   const { ISOCode, callingCode, callingNumber } = mobileNumInfo;
 
   console.log(userProfile);
-  console.log(isEditProfile);
 
   // Set Current User Profile Properties to User Profile Object
   useEffect(() => {
@@ -208,15 +207,15 @@ const Profile = () => {
       {/* Profile Header */}
       <div className="header text-neutral-800 border-b-[0.2rem] border-neutral-200 pb-[1rem]">
         <h1 className="text-[2.5rem] leading-[3rem] font-bold">Profile</h1>
-        <p className="text-[1.4rem] font-medium">Manage your Profile</p>
+        <p className="text-[1.4rem] font-medium">Manage your profile</p>
       </div>
 
-      <div className="profileBody w-full">
+      <div className="body w-full">
         <form className="w-full flex justify-between">
           <div className="w-[50%] min-w-[40rem] flex flex-col gap-[3.5rem] py-[3rem]">
             {/* Profile Image */}
             <div className="flex flex-col items-start gap-[1rem] px-[0.5rem]">
-              <h3 className="text-[1.8rem] leading-[2rem] font-semibold">
+              <h3 className="text-[1.9rem] leading-[2rem] font-semibold">
                 Profile Picture
               </h3>
               <div className="relative">
@@ -247,7 +246,7 @@ const Profile = () => {
             <div className="flex flex-col items-start gap-[1rem]">
               <label
                 htmlFor="username"
-                className="text-[1.8rem] leading-[2rem] font-semibold px-[0.5rem]"
+                className="text-[1.9rem] leading-[2rem] font-semibold px-[0.5rem]"
               >
                 Your Name
               </label>
@@ -269,7 +268,7 @@ const Profile = () => {
 
             {/* Mobile Number */}
             <div className="flex flex-col items-start gap-[1rem]">
-              <h3 className="text-[1.8rem] leading-[2rem] font-semibold px-[0.5rem]">
+              <h3 className="text-[1.9rem] leading-[2rem] font-semibold px-[0.5rem]">
                 Mobile Number
               </h3>
 
@@ -354,7 +353,7 @@ const Profile = () => {
             {/* Where You Live */}
             <div className="flex flex-col items-start gap-[1rem]">
               {/* Title */}
-              <h3 className="text-[1.8rem] leading-[2rem] font-semibold px-[0.5rem]">
+              <h3 className="text-[1.9rem] leading-[2rem] font-semibold px-[0.5rem]">
                 Where you live in Pakistan?
               </h3>
 
