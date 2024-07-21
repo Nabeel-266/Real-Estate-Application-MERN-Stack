@@ -9,10 +9,10 @@ import { generateToken } from "../helpers/token.js";
 import resMessages from "../constants/responsesMessages.js";
 const { compareSync, hashSync, genSaltSync } = pkg;
 
-//* --> For Signup Verification <--
+//* --> For Signup <--
 //? @route --> POST --> api/auth/signupVerification
 //  @access --> PUBLIC
-export const signupVerification = async (req, res, next) => {
+export const signup = async (req, res, next) => {
   console.log("Signup Verifiaction Controller");
   console.log(req.body);
 
@@ -107,10 +107,10 @@ export const signupVerification = async (req, res, next) => {
   }
 };
 
-//* --> For Signup <--
+//* --> For Signup Verification <--
 //? @route --> POST --> api/auth/register
 //  @access --> PRIVATE
-export const signup = async (req, res, next) => {
+export const signupVerification = async (req, res, next) => {
   console.log("Signup Controller");
   console.log(req.body);
 
@@ -342,7 +342,7 @@ export const resendOTP = async (req, res, next) => {
   console.log(req.body, "==> Request User");
 
   try {
-    let { userDoc } = req.body;
+    let userDoc = req.body;
 
     // If User not found
     if (!userDoc) {

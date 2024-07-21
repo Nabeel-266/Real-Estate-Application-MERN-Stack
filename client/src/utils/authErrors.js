@@ -74,7 +74,13 @@ const signupServerErrorHandler = (errorMsg, setError) => {
   } else if (errorMsg === "Passwords are not match") {
     setError(["ConfirmPassword", "Please! Verify your Password, don't match"]);
   } else {
-    toastify("error", `${errorMsg}`, "top-right", "dark", 5000);
+    toastify(
+      "error",
+      `Your request has failed due to a server error. Please try again in a few minutes.`,
+      "top-right",
+      "dark",
+      5000
+    );
   }
 };
 

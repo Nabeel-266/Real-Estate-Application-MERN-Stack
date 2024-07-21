@@ -15,11 +15,11 @@ import {
 
 const authRouter = express.Router();
 
-// For Signup Account Verification
-authRouter.post("/signupVerification", signupVerification);
-
 // For Signup
 authRouter.post("/signup", signup);
+
+// For Signup Account Verification
+authRouter.post("/signupVerification", signupVerification);
 
 // For Signin
 authRouter.post("/signin", signin);

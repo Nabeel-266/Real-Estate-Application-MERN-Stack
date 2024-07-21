@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { registerUserVerification } from "../../api/authAPIs";
+import { registerUser } from "../../api/authAPIs";
 import { useDispatch } from "react-redux";
 
 // Import Error Checking Handler Functions
@@ -91,7 +91,7 @@ const Signup = () => {
         };
 
         // Call Signup User API Function
-        await registerUserVerification(userCredentials, dispatch, navigate);
+        await registerUser(userCredentials, dispatch, navigate);
 
         setLoading(false);
         emptyFormHandler();

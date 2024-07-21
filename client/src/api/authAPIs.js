@@ -24,17 +24,10 @@ import {
   resendOTPSuccess,
 } from "../app/actions/userActions";
 
-// For SIGNUP_USER VERIFICATION
-export const registerUserVerification = async (
-  userCredentials,
-  dispatch,
-  navigate
-) => {
+// For SIGNUP USER_CREDENTIALS
+export const registerUser = async (userCredentials, dispatch, navigate) => {
   try {
-    const response = await axios.post(
-      `${SIGN_UP_VERIFICATION}`,
-      userCredentials
-    );
+    const response = await axios.post(`${SIGN_UP}`, userCredentials);
     const userDoc = response?.data;
 
     // If User Doc updated with an OTP
@@ -53,12 +46,12 @@ export const registerUserVerification = async (
   }
 };
 
-// For SIGNUP VERIFY_USER
-export const registerVerifyUser = async (userDoc, OTP, dispatch) => {
+// For SIGNUP USER_VERIFICATION
+export const registerUserVerification = async (userDoc, OTP, dispatch) => {
   dispatch(signupPending());
 
   try {
-    const response = await axios.post(`${SIGN_UP}`, {
+    const response = await axios.post(`${SIGN_UP_VERIFICATION}`, {
       enteredOTP: OTP,
       user: userDoc,
     });
@@ -109,7 +102,7 @@ export const loginUser = async (userCredentials, dispatch) => {
 export const resendOTPtoUser = async (userDoc, dispatch) => {
   console.log(userDoc);
   try {
-    const response = await axios.post(`${RESEND_OTP}`, { userDoc });
+    const response = await axios.post(`${RESEND_OTP}`, userDoc);
     const updatedOTPUser = response?.data;
 
     if (updatedOTPUser.status === "Success") {

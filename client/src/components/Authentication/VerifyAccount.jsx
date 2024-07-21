@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { registerVerifyUser, resendOTPtoUser } from "../../api/authAPIs";
+import { registerUserVerification, resendOTPtoUser } from "../../api/authAPIs";
 import { useDispatch, useSelector } from "react-redux";
 import toastify from "../../utils/toastify";
 
@@ -45,8 +45,8 @@ const VerifyAccount = () => {
       const isOtpExpire = unAuthenticUser.otpExpiry < Date.now();
 
       if (!isOtpExpire) {
-        // Call Register Verify_User API Function
-        await registerVerifyUser(unAuthenticUser, OTPCode, dispatch);
+        // Call Signup User_Verification API Function
+        await registerUserVerification(unAuthenticUser, OTPCode, dispatch);
       } else {
         toastify(
           "error",
@@ -172,12 +172,11 @@ const VerifyAccount = () => {
           </div>
 
           {/* Note */}
-          <div className="w-full text-[1.45rem] font-medium">
-            <h6 className="text-red-800 text-[1.5rem] font-bold">Note :</h6>
+          <div className="w-full text-[1.5rem] font-medium mt-[0.5rem]">
+            <h6 className="text-red-800 text-[1.6rem] font-bold">Note :</h6>
             <p>
-              <b className="text-[2rem] leading-[1.45rem]">-</b> If your account
-              is not verified, you will not be able to see any property details
-              or take any actions such as selling property, etc.
+              <b className="text-[2rem] leading-[2rem]">-</b> If your account is
+              not verified, you will not be able to create an account.
             </p>
           </div>
         </div>
