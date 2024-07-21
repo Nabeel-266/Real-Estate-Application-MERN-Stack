@@ -130,7 +130,7 @@ const Header = ({ setIsOpenSidebar }) => {
                     My Credentials
                   </h6>
 
-                  <ul className="w-[20rem] text-[1.6rem] leading-[2rem] font-semibold text-theme-blue flex flex-col gap-[0.1rem] select-none ">
+                  <ul className="w-[20rem] text-[1.6rem] leading-[2rem] font-semibold text-neutral-600 flex flex-col gap-[0.1rem] select-none ">
                     <li className="w-full hover:bg-neutral-100 hover:text-neutral-800 rounded-md">
                       <Link
                         to="/user/profile"

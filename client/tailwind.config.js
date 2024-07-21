@@ -59,6 +59,7 @@ export default {
         "footer-image": "url('/src/assets/footer-bg.jpg')",
         "add-property-banner-image":
           "url('/src/assets/add-property-banner-bg.png')",
+        "no-property-found-image": "url('/src/assets/no-property-found.png')",
       },
     },
     fontFamily: {

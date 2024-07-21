@@ -212,7 +212,7 @@ const Profile = () => {
 
       <div className="body w-full">
         <form className="w-full flex justify-between">
-          <div className="w-[50%] min-w-[40rem] flex flex-col gap-[3.5rem] py-[3rem]">
+          <div className="w-[50%] min-w-[40rem] flex flex-col gap-[3.5rem] pt-[2.5rem] pb-[5rem]">
             {/* Profile Image */}
             <div className="flex flex-col items-start gap-[1rem] px-[0.5rem]">
               <h3 className="text-[1.9rem] leading-[2rem] font-semibold">
@@ -404,7 +404,7 @@ const Profile = () => {
             </div>
           </div>
 
-          {/* Submit Button */}
+          {/* Update Profile Button */}
           <div className="flex items-start justify-end py-[2.5rem]">
             <button
               type="button"
