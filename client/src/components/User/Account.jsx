@@ -10,7 +10,7 @@ const Account = () => {
   const currentUser = useSelector((state) => state?.user?.authenticUser);
 
   return (
-    <div className="w-full px-[2rem]">
+    <div className="w-full px-[5%] laptopSm:px-[2%]">
       {/* Account Header */}
       <div className="header text-neutral-800 border-b-[0.2rem] border-neutral-200 pb-[1rem]">
         <h1 className="text-[2.5rem] leading-[3rem] font-bold">Account</h1>
@@ -34,7 +34,7 @@ const Account = () => {
             </span>
           </p>
 
-          <button className="text-[1.6rem] leading-[1.6rem] font-medium text-theme-blue mt-[1rem] hover:underline underline-offset-2">
+          <button className="text-[1.7rem] leading-[1.8rem] font-medium text-theme-blue mt-[1rem] hover:underline underline-offset-2">
             Change your account email?
           </button>
         </section>
@@ -45,7 +45,7 @@ const Account = () => {
             Recovery Email
           </h3>
 
-          <p className="text-[1.5rem] leading-[2rem] text-neutral-800 font-medium">
+          <p className="text-[1.6rem] leading-[2.2rem] text-neutral-800 font-medium">
             Add your recovery email, if you change your account email address.
           </p>
 
@@ -56,12 +56,12 @@ const Account = () => {
             </span>
           </p> */}
 
-          <button className="flex items-center gap-[0.5rem] text-[1.6rem] leading-[1.8rem] font-medium text-theme-blue mt-[1.2rem]">
-            <FaPlus size="1.5rem" />
+          <button className="flex items-center gap-[0.5rem] text-[1.7rem] leading-[1.8rem] font-medium text-theme-blue mt-[1.2rem]">
+            <FaPlus size="1.6rem" />
             <span>Add recovery email</span>
           </button>
 
-          <button className="hidden text-[1.6rem] leading-[2rem] font-medium text-theme-blue mt-[1rem] hover:underline underline-offset-2">
+          <button className="hidden text-[1.7rem] leading-[1.8rem] font-medium text-theme-blue mt-[1rem] hover:underline underline-offset-2">
             Change account recovery email
           </button>
         </section>
@@ -72,8 +72,8 @@ const Account = () => {
             Reset Password
           </h3>
 
-          <button className="flex items-center gap-[0.8rem] text-[1.6rem] leading-[1.8rem] font-medium text-theme-blue mt-[1rem]">
-            <MdOutlinePassword size="1.5rem" />
+          <button className="flex items-center gap-[0.8rem] text-[1.7rem] leading-[1.8rem] font-medium text-theme-blue mt-[1rem]">
+            <MdOutlinePassword size="1.8rem" />
             <span>Change Password</span>
           </button>
         </section>
@@ -84,7 +84,7 @@ const Account = () => {
             Delete Account
           </h3>
 
-          <p className="text-[1.5rem] leading-[2rem] text-neutral-800 font-medium">
+          <p className="text-[1.6rem] leading-[2.2rem] text-neutral-800 font-medium">
             <span className="text-red-800">Danger!</span>{" "}
             <span>
               once you delete your account, there is no going back. Please be

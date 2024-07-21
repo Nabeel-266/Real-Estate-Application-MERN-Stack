@@ -172,7 +172,7 @@ const AddPropertyFeaturesModal = ({
           <div
             className={`w-full max-h-[12.5rem] ${
               selectedPropertyFeatures?.length ? "block" : "hidden"
-            } overflow-auto scrollbar-slim`}
+            } overflow-auto scrollbar-slim-y`}
           >
             <ul className="w-full flex flex-wrap items-center gap-[1rem]">
               {selectedPropertyFeatures?.map((el, index) => (
@@ -193,7 +193,7 @@ const AddPropertyFeaturesModal = ({
           </div>
 
           {/* Features Cont */}
-          <div className="h-[27rem] w-full flex flex-col justify-between gap-[2rem] overflow-auto scrollbar-slim ">
+          <div className="h-[27rem] w-full flex flex-col justify-between gap-[2rem] overflow-auto scrollbar-slim-y ">
             {propertyFeaturesCategory.map((category, index) => (
               // Single Feature Category Cont
               <div
@@ -331,7 +331,7 @@ const AddPropertyFeaturesModal = ({
                             {/* Facing Dropdown */}
                             {feature === "Facing" && (
                               <ul
-                                className={`scale-0 max-h-[16.5rem] overflow-auto scrollbar-slim absolute z-10 bottom-[105%] right-[2rem] py-[0.5rem] bg-white border-[0.2rem] border-neutral-300 shadow-xl rounded-lg ${
+                                className={`scale-0 max-h-[16.5rem] overflow-auto scrollbar-slim-y absolute z-10 bottom-[105%] right-[2rem] py-[0.5rem] bg-white border-[0.2rem] border-neutral-300 shadow-xl rounded-lg ${
                                   isFacingDropdownOpen && "scale-100"
                                 } transition-all duration-100`}
                               >

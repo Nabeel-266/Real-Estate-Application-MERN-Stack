@@ -19,7 +19,7 @@ const User = () => {
   return (
     <div className="userCont w-full h-dvh relative pt-[6rem]">
       <div className="userContWrapper h-full flex items-start">
-        <aside className="w-[20%] min-w-[28rem] h-full flex items-center pl-[4%]">
+        <aside className="w-[20%] min-w-[26rem] h-full hidden laptopSm:flex items-center pl-[2%] desktopSm:pl-[4%]">
           <ul className="w-[100%] h-[calc(100%-6rem)] flex flex-col gap-[0.2rem] border-r-[0.2rem] border-neutral-200 ">
             {[
               [FiUser, "Profile", "profile"],
@@ -42,8 +42,8 @@ const User = () => {
                       : "text-neutral-500 font-semibold"
                   } w-full relative z-10 flex items-center gap-[1rem] px-[1rem] py-[0.8rem]`}
                 >
-                  <Icon className="text-[2.1rem]" />
-                  <span className="text-[1.75rem] leading-[1.8rem]">
+                  <Icon className="text-[2rem]" />
+                  <span className="text-[1.7rem] leading-[1.8rem]">
                     {title}
                   </span>
                 </Link>
@@ -52,7 +52,7 @@ const User = () => {
           </ul>
         </aside>
 
-        <main className="flex-1 h-full overflow-auto scrollbar pt-[3rem] pr-[4%]">
+        <main className="flex-1 h-full overflow-auto scrollbar pt-[3rem] desktopSm:pr-[4%]">
           <Outlet />
         </main>
       </div>

@@ -244,7 +244,7 @@ const About = () => {
       {/* Why Choose Us Cont */}
       <div className="chooseUsCont w-full">
         <section className="chooseUsWrapper flex flex-col items-start justify-start gap-[5rem] mx-[4%] py-[2rem]">
-          <h2 className="text-[3rem] leading-[3rem] font-semibold relative text-theme-blue before:content-[''] before:absolute before:bottom-[-0.6rem] before:left-0 before:w-full before:h-[0.3rem] before:bg-theme-yellow before:rounded-full after:content-[''] after:absolute after:bottom-[-1.1rem] after:left-0 after:w-[75%] after:h-[0.2rem] after:bg-theme-yellow after:rounded-full">
+          <h2 className="text-[2.8rem] leading-[3rem] font-semibold relative text-theme-blue before:content-[''] before:absolute before:bottom-[-0.6rem] before:left-0 before:w-full before:h-[0.3rem] before:bg-theme-yellow before:rounded-full after:content-[''] after:absolute after:bottom-[-1.1rem] after:left-0 after:w-[75%] after:h-[0.2rem] after:bg-theme-yellow after:rounded-full">
             Why Choose Us Our Service
           </h2>
 

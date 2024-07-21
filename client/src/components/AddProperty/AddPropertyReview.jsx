@@ -104,7 +104,7 @@ const AddPropertyReview = ({ propertyDetails }) => {
         </header>
 
         {/* Mobile View Screen */}
-        <div className="screenCont w-full flex-1 overflow-auto scrollbar-slim select-none">
+        <div className="screenCont w-full flex-1 overflow-auto scrollbar-slim-y select-none">
           {/* Property Image Cont */}
           <div className="w-full h-[18rem] border-b-[0.2rem] border-neutral-200">
             {!images ? (

@@ -44,16 +44,30 @@
     cursor: grab;
   }
 
-  .scrollbar-slim::-webkit-scrollbar {
+  .scrollbar-slim-y::-webkit-scrollbar {
     width: 0.6rem;
   }
 
-  .scrollbar-slim::-webkit-scrollbar-track {
+  .scrollbar-slim-y::-webkit-scrollbar-track {
     background: transparent;
   }
 
-  .scrollbar-slim::-webkit-scrollbar-thumb {
+  .scrollbar-slim-y::-webkit-scrollbar-thumb {
     background-color: #909090;
+    border-radius: 10px;
+    cursor: grab;
+  }
+
+  .scrollbar-slim-x::-webkit-scrollbar {
+    height: 0.7rem;
+  }
+
+  .scrollbar-slim-x::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-slim-x::-webkit-scrollbar-thumb {
+    background-color: #808080;
     border-radius: 10px;
     cursor: grab;
   }
@@ -72,7 +86,7 @@
   /* ----> Mobile Small <---- */
   @media (max-width: 375px) {
     html {
-      font-size: 7.4px;
+      font-size: 7.6px;
     }
   }
 

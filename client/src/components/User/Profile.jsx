@@ -203,7 +203,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="w-full px-[2rem]">
+    <div className="w-full px-[5%] laptopSm:px-[2%]">
       {/* Profile Header */}
       <div className="header text-neutral-800 border-b-[0.2rem] border-neutral-200 pb-[1rem]">
         <h1 className="text-[2.5rem] leading-[3rem] font-bold">Profile</h1>
@@ -211,8 +211,8 @@ const Profile = () => {
       </div>
 
       <div className="body w-full">
-        <form className="w-full flex justify-between">
-          <div className="w-[50%] min-w-[40rem] flex flex-col gap-[3.5rem] pt-[2.5rem] pb-[5rem]">
+        <form className="w-full flex flex-col tabletRg:flex-row justify-between">
+          <div className="w-[50%] min-w-[40rem] flex flex-col gap-[3.5rem] pt-[2.5rem] tabletRg:pb-[5rem]">
             {/* Profile Image */}
             <div className="flex flex-col items-start gap-[1rem] px-[0.5rem]">
               <h3 className="text-[1.9rem] leading-[2rem] font-semibold">
@@ -311,7 +311,7 @@ const Profile = () => {
                       ref={dropdownRef}
                       className="dropdownCountry w-full py-[0.5rem] shadow-lg border-[0.2rem] bg-white border-neutral-300 rounded-md absolute z-10 bottom-[110%] left-0"
                     >
-                      <ul className="w-full max-h-[25rem] overflow-auto scrollbar-slim ">
+                      <ul className="w-full max-h-[25rem] overflow-auto scrollbar-slim-y ">
                         <h6 className="text-[1.6rem] leading-[1.6rem] font-semibold text-neutral-800 px-[1.5rem] py-[1rem]">
                           Select Country
                         </h6>
@@ -384,7 +384,7 @@ const Profile = () => {
                     ref={dropdownRef}
                     className="dropdownCities w-full py-[0.5rem] shadow-lg border-[0.2rem] bg-white border-neutral-300 rounded-md absolute z-10 bottom-[110%] left-0"
                   >
-                    <ul className="w-full max-h-[25rem] overflow-auto scrollbar-slim ">
+                    <ul className="w-full max-h-[25rem] overflow-auto scrollbar-slim-y ">
                       <h6 className="text-[1.6rem] leading-[1.6rem] font-semibold text-neutral-800 px-[1.5rem] py-[1rem]">
                         Select City
                       </h6>
@@ -405,7 +405,7 @@ const Profile = () => {
           </div>
 
           {/* Update Profile Button */}
-          <div className="flex items-start justify-end py-[2.5rem]">
+          <div className="flex items-start justify-end py-[5rem] tabletRg:py-[2.5rem]">
             <button
               type="button"
               disabled={!isEditProfile}

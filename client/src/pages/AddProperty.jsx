@@ -558,7 +558,7 @@ const AddProperty = () => {
                         ref={dropdownRef}
                         className="dropdownCities w-full py-[0.5rem] shadow-lg border-[0.2rem] bg-white border-neutral-300 rounded-md absolute z-10 top-[100%] left-0"
                       >
-                        <ul className="w-full max-h-[25rem] overflow-auto scrollbar-slim ">
+                        <ul className="w-full max-h-[25rem] overflow-auto scrollbar-slim-y ">
                           <h6 className="text-[1.6rem] leading-[1.6rem] font-semibold text-neutral-800 px-[1.5rem] py-[1rem]">
                             Select City
                           </h6>
@@ -854,7 +854,7 @@ const AddProperty = () => {
                         ref={dropdownRef}
                         className="dropdownCities w-full py-[0.5rem] shadow-lg border-[0.2rem] bg-white border-neutral-300 rounded-md absolute z-10 top-[100%] left-0"
                       >
-                        <ul className="w-full max-h-[25rem] overflow-auto scrollbar-slim ">
+                        <ul className="w-full max-h-[25rem] overflow-auto scrollbar-slim-y ">
                           <h6 className="text-[1.6rem] leading-[1.6rem] font-semibold text-neutral-800 px-[1.5rem] py-[1rem]">
                             Select the condition
                           </h6>
@@ -944,7 +944,7 @@ const AddProperty = () => {
                     id="propertyDesc"
                     onChange={(e) => descriptionChangeHandler(e)}
                     placeholder="Describe your property in details"
-                    className="w-full tabletSm:w-[70%] tabletSm:min-w-[50rem] h-[11rem] max-h-[11rem] outline-none border-[0.2rem] text-neutral-800 border-neutral-300 font-medium px-[1rem] py-[1rem] text-[1.4rem] rounded-md scrollbar-slim focus:border-theme-blue"
+                    className="w-full tabletSm:w-[70%] tabletSm:min-w-[50rem] h-[11rem] max-h-[11rem] outline-none border-[0.2rem] text-neutral-800 border-neutral-300 font-medium px-[1rem] py-[1rem] text-[1.4rem] rounded-md scrollbar-slim-y focus:border-theme-blue"
                   ></textarea>
                 </div>
               </div>
@@ -1078,7 +1078,7 @@ const AddProperty = () => {
                         ref={dropdownRef}
                         className="dropdownCountry w-full py-[0.5rem] shadow-lg border-[0.2rem] bg-white border-neutral-300 rounded-md absolute z-10 top-[100%] left-0"
                       >
-                        <ul className="w-full max-h-[25rem] overflow-auto scrollbar-slim ">
+                        <ul className="w-full max-h-[25rem] overflow-auto scrollbar-slim-y ">
                           <h6 className="text-[1.6rem] leading-[1.6rem] font-semibold text-neutral-800 px-[1.5rem] py-[1rem]">
                             Select Country
                           </h6>
