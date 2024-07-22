@@ -7,8 +7,8 @@ import { StatusCodes } from "http-status-codes";
 import resMessages from "../constants/responsesMessages.js";
 import { sendError } from "../utils/responses.js";
 
-export const generateToken = ({ data }) => {
-  return sign({ result: data }, process.env.JWT_SECRET_KEY, {
+export const generateToken = ({ userId }) => {
+  return sign({ result: userId }, process.env.JWT_SECRET_KEY, {
     expiresIn: process.env.JWT_TOKEN_EXPIRY,
   });
 };

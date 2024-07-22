@@ -16,6 +16,15 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    mobileNumber: {
+      type: String,
+    },
+    profilePicture: {
+      type: String,
+    },
+    liveInCity: {
+      type: String,
+    },
   },
   {
     timestamps: true,

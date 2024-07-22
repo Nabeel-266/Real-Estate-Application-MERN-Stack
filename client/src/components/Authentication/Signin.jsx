@@ -10,11 +10,9 @@ import {
 // Import React Icons
 import { IoMail, IoMailOpen, IoLockClosed, IoLockOpen } from "react-icons/io5";
 
-// Import Image
-import GoogleIcon from "../../assets/google.png";
-
 // Import Component
 import Loader from "../Loader";
+import GoogleOAuthBtn from "./GoogleOAuth";
 
 const Signin = () => {
   const dispatch = useDispatch();
@@ -83,7 +81,7 @@ const Signin = () => {
     >
       <div className="signinWrapper w-full min-h-full p-[1rem] flex items-center justify-center">
         {/* Sign-in Form Cont */}
-        <div className="signinFormCont mobileSm:w-[42rem] mobileRg:w-[46rem] tabletSm:w-[50rem] flex flex-col gap-[2.8rem] bg-white shadow-2xl px-[2rem] py-[2.5rem] rounded-lg">
+        <div className="signinFormCont mobileSm:w-[42rem] mobileRg:w-[46rem] tabletSm:w-[50rem] flex flex-col gap-[2.8rem] bg-white shadow-xl px-[2rem] py-[2.5rem] rounded-lg">
           {/* Sign-in Form */}
           <form
             onSubmit={signinFormSubmissionHandler}
@@ -240,17 +238,8 @@ const Signin = () => {
               </span>
             </div>
 
-            {/* Google Login Btn */}
-            <button
-              className={`w-full flex items-center justify-center gap-[1rem] py-[0.8rem] text-[2rem] font-semibold text-white bg-cyan-950 active:scale-[0.98] cursor-pointer rounded-full transition-all mt-[0.4rem]`}
-            >
-              <img
-                src={GoogleIcon}
-                alt="GoogleIcon"
-                className="size-[2.5rem]"
-              />
-              Continue with Google
-            </button>
+            {/* Google OAuth Btn */}
+            <GoogleOAuthBtn />
 
             {/* Don't have an Account */}
             <p className="text-[1.6rem] text-neutral-600 font-semibold">

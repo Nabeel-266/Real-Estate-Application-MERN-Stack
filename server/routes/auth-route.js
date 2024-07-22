@@ -8,6 +8,7 @@ import {
   signupVerification,
   signup,
   signin,
+  signGoogleOAuth,
   verifyAccount,
   resendOTP,
   refreshToken,
@@ -23,6 +24,9 @@ authRouter.post("/signupVerification", signupVerification);
 
 // For Signin
 authRouter.post("/signin", signin);
+
+// For Signin
+authRouter.post("/signGoogleOAuth", signGoogleOAuth);
 
 // For Verify Account
 authRouter.post("/verifyAccount", validateToken, verifyAccount);

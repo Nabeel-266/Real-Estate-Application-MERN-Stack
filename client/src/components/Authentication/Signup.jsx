@@ -12,11 +12,9 @@ import {
 // Import React Icons
 import { IoMail, IoMailOpen, IoLockClosed, IoLockOpen } from "react-icons/io5";
 
-// Import Asset
-import GoogleIcon from "../../assets/google.png";
-
 // Component
 import Loader from "../Loader";
+import GoogleOAuthBtn from "./GoogleOAuth";
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -73,24 +71,25 @@ const Signup = () => {
         setLoading(true);
 
         // Username Modification
-        const fullNameArray = username
+        const fullName = username
           .split(" ")
           .filter((str) => str !== "")
           .map(
             (str) =>
               str.trim().charAt(0).toLocaleUpperCase() +
               str.trim().slice(1).toLocaleLowerCase()
-          );
+          )
+          .join(" ");
 
         // User Credentials
         const userCredentials = {
-          username: `${fullNameArray.join(" ")}`,
+          username: fullName,
           email,
           password,
           confirmPassword,
         };
 
-        // Call Signup User API Function
+        // Call User Signup API Function
         await registerUser(userCredentials, dispatch, navigate);
 
         setLoading(false);
@@ -353,17 +352,8 @@ const Signup = () => {
 
           {/* For Other Options */}
           <div className="formActions w-full px-[1rem] flex flex-col gap-[2.5rem]">
-            {/* Google Register Btn */}
-            <button
-              className={`w-full flex items-center justify-center gap-[1rem] py-[0.8rem] text-[2.1rem] font-semibold text-white bg-cyan-950 active:scale-[0.98] cursor-pointer rounded-full transition-all`}
-            >
-              <img
-                src={GoogleIcon}
-                alt="GoogleIcon"
-                className="size-[2.5rem]"
-              />
-              Continue with Google
-            </button>
+            {/* Google OAuth Btn */}
+            <GoogleOAuthBtn />
 
             {/* Don't have an Account */}
             <p className="text-[1.6rem] text-neutral-600 font-semibold">

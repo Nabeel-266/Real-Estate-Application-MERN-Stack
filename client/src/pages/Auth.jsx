@@ -11,7 +11,7 @@ const Auth = () => {
   // before:bg-gradient-to-b to-[#082835] from-transparent
   return (
     <div className="authCont w-dvw h-dvh">
-      <div className="authWrapper w-full h-full relative overflow-hidden bg-auth-page-image bg-cover bg-no-repeat">
+      <div className="authWrapper w-full h-full relative z-[1] overflow-hidden bg-auth-page-image bg-cover bg-no-repeat bg-center before:content-[''] before:absolute before:w-full before:h-full before:top-0 before:left-0 before:backdrop-blur-[0.3rem]">
         <AuthProtectedRoute>
           <Signin />
           <Signup />

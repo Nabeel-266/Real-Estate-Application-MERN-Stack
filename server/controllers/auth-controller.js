@@ -7,10 +7,11 @@ import { StatusCodes } from "http-status-codes";
 import { sendError, sendSuccess } from "../utils/responses.js";
 import { generateToken } from "../helpers/token.js";
 import resMessages from "../constants/responsesMessages.js";
+import { generateRandomPassword } from "../helpers/password.js";
 const { compareSync, hashSync, genSaltSync } = pkg;
 
 //* --> For Signup <--
-//? @route --> POST --> api/auth/signupVerification
+//? @route --> POST --> api/auth/signup
 //  @access --> PUBLIC
 export const signup = async (req, res, next) => {
   console.log("Signup Verifiaction Controller");
@@ -108,7 +109,7 @@ export const signup = async (req, res, next) => {
 };
 
 //* --> For Signup Verification <--
-//? @route --> POST --> api/auth/register
+//? @route --> POST --> api/auth/signupVerification
 //  @access --> PRIVATE
 export const signupVerification = async (req, res, next) => {
   console.log("Signup Controller");
@@ -176,13 +177,15 @@ export const signupVerification = async (req, res, next) => {
     // Generate Token for User
     const token = generateToken({ data: newUser._id });
 
-    res.cookie("token", token, { httpOnly: true, maxAge: 12 * 60 * 60 * 1000 });
-    res.status(StatusCodes.CREATED).send(
-      sendSuccess({
-        message: resMessages.SUCCESS_REGISTRATION,
-        data: newUser,
-      })
-    );
+    res
+      .cookie("token", token, { httpOnly: true, maxAge: 12 * 60 * 60 * 1000 })
+      .status(StatusCodes.CREATED)
+      .send(
+        sendSuccess({
+          message: resMessages.SUCCESS_REGISTRATION,
+          data: newUser,
+        })
+      );
   } catch (error) {
     console.log(error.message, "==> error in registeration");
     next(error);
@@ -190,7 +193,7 @@ export const signupVerification = async (req, res, next) => {
 };
 
 //* --> For Signin <--
-//? @route --> POST --> api/auth/login
+//? @route --> POST --> api/auth/signin
 //  @access --> PUBLIC
 export const signin = async (req, res, next) => {
   console.log("Signin Controller");
@@ -251,15 +254,86 @@ export const signin = async (req, res, next) => {
     // Generate Token for User
     const token = generateToken({ data: user._id });
 
-    res.cookie("token", token, { httpOnly: true, maxAge: 12 * 60 * 60 * 1000 });
-    res.status(StatusCodes.OK).send(
-      sendSuccess({
-        message: resMessages.SUCCESS_LOGIN,
-        data: user,
-      })
-    );
+    res
+      .cookie("token", token, { httpOnly: true, maxAge: 12 * 60 * 60 * 1000 })
+      .status(StatusCodes.OK)
+      .send(
+        sendSuccess({
+          message: resMessages.SUCCESS_LOGIN,
+          data: user,
+        })
+      );
   } catch (error) {
     console.log(error.message, "==> error in login");
+    next(error);
+  }
+};
+
+//* --> For Google OAuth <--
+//? @route --> POST --> api/auth/signGoogleOAuth
+//  @access --> PUBLIC
+export const signGoogleOAuth = async (req, res, next) => {
+  try {
+    const userCredentials = req.body;
+    const user = await User.findOne({ email: userCredentials.email });
+
+    if (user) {
+      // Removed Password From User Document
+      const { password, ...restUser } = user._doc;
+
+      // Generate Token for User
+      const token = generateToken({ userId: user._id });
+
+      // Give Response
+      res
+        .cookie("token", token, {
+          httpOnly: true,
+          maxAge: 12 * 60 * 60 * 1000,
+        })
+        .status(StatusCodes.OK)
+        .send(
+          sendSuccess({
+            message: resMessages.SUCCESS_LOGIN,
+            data: restUser,
+          })
+        );
+    } else {
+      // Generate a Random Password
+      const randomPassword = generateRandomPassword(
+        process.env.RANDOM_PASSWORD_LENGTH
+      );
+
+      // Hashed Password
+      const passwordSalt = genSaltSync(10);
+      const hashedPassword = hashSync(randomPassword, passwordSalt);
+
+      // Create New User in Database
+      const user_Doc = new User({
+        ...userCredentials,
+        password: hashedPassword,
+      });
+
+      // New User Saved in Db
+      const newUser = await user_Doc.save();
+
+      // Removed Password From New User Document
+      const { password, ...restUser } = newUser._doc;
+
+      // Generate Token for User
+      const token = generateToken({ userId: newUser._id });
+
+      res
+        .cookie("token", token, { httpOnly: true, maxAge: 12 * 60 * 60 * 1000 })
+        .status(StatusCodes.CREATED)
+        .send(
+          sendSuccess({
+            message: resMessages.SUCCESS_REGISTRATION,
+            data: restUser,
+          })
+        );
+    }
+  } catch (error) {
+    console.log(error.message, "==> error in GoogleOAuth");
     next(error);
   }
 };
@@ -437,13 +511,15 @@ export const refreshToken = async (req, res, next) => {
     // Generate Token for User
     const token = generateToken({ data: user._id });
 
-    res.cookie("token", token, { httpOnly: true, maxAge: 12 * 60 * 60 * 1000 });
-    res.status(StatusCodes.OK).send(
-      sendSuccess({
-        message: resMessages.SUCCESS_REFRESH_TOKEN,
-        data: user,
-      })
-    );
+    res
+      .cookie("token", token, { httpOnly: true, maxAge: 12 * 60 * 60 * 1000 })
+      .status(StatusCodes.OK)
+      .send(
+        sendSuccess({
+          message: resMessages.SUCCESS_REFRESH_TOKEN,
+          data: user,
+        })
+      );
   } catch (error) {
     console.log(error.message, "==> error in refresh token");
     next(error);

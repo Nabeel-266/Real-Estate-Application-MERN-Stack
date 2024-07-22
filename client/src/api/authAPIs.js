@@ -3,12 +3,12 @@ import toastify from "../utils/toastify";
 
 // Import Routes
 import {
-  SIGN_IN,
   SIGN_UP,
-  VERIFY_ACCOUNT,
+  SIGN_UP_VERIFICATION,
+  SIGN_IN,
+  GOOGLE_AUTH,
   RESEND_OTP,
   CHECK_TOKEN,
-  SIGN_UP_VERIFICATION,
 } from "../constants/apisRoute";
 
 // Import Actions
@@ -88,6 +88,28 @@ export const loginUser = async (userCredentials, dispatch) => {
     toastify(
       "success",
       `${loggedInUser.username} ! You Login Successfully`,
+      "top-right",
+      "dark",
+      4000
+    );
+  } catch (error) {
+    dispatch(signinFailure());
+    throw error;
+  }
+};
+
+// For GOOGLE AUTHENTIC USER
+export const googleAuth = async (userCredentials, dispatch) => {
+  dispatch(signinPending());
+
+  try {
+    const response = await axios.post(`${GOOGLE_AUTH}`, userCredentials);
+    const authenticUser = response?.data?.data;
+    dispatch(signinSuccess(authenticUser));
+
+    toastify(
+      "success",
+      `${authenticUser.username} ! You Login Successfully`,
       "top-right",
       "dark",
       4000
