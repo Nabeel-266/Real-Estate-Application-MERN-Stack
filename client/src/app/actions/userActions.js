@@ -39,10 +39,9 @@ export const signinFailure = () => (dispatch) => {
 };
 
 // //* For Google Auth User Actions
-// export const googleAuthSuccess = (user) => (dispatch) => {
-//   dispatch(setLoading(false));
-//   dispatch(setAuthUser(user));
-// };
+export const googleAuthSuccess = (user) => (dispatch) => {
+  dispatch(setAuthUser(user));
+};
 
 //* For User Verification Code Action
 export const verificationCodeSuccess = (user) => (dispatch) => {

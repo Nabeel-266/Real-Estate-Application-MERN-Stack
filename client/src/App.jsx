@@ -29,6 +29,7 @@ import User from "./pages/User";
 import Profile from "./components/User/Profile";
 import Account from "./components/User/Account";
 import MyProperties from "./components/User/MyProperties";
+import ForgotPassword from "./components/Authentication/ForgotPassword";
 
 const AppRoutes = () => {
   const location = useLocation();
@@ -40,7 +41,8 @@ const AppRoutes = () => {
   const isHeaderShow =
     routeLocation !== "/account/sign-in" &&
     routeLocation !== "/account/sign-up" &&
-    routeLocation !== "/account/verification";
+    routeLocation !== "/account/verification" &&
+    routeLocation !== "/account/forgot-password";
 
   // Check User Token Authorization
   const memoizedCheckToken = useCallback(
@@ -71,6 +73,7 @@ const AppRoutes = () => {
           <Route path="/account/sign-in" element={<Signin />} />
           <Route path="/account/sign-up" element={<Signup />} />
           <Route path="/account/verification" element={<VerifyAccount />} />
+          <Route path="/account/forgot-password" element={<ForgotPassword />} />
         </Route>
 
         <Route

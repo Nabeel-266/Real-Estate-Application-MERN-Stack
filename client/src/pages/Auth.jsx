@@ -1,4 +1,5 @@
 // Import Components
+import ForgotPassword from "../components/Authentication/ForgotPassword";
 import Signin from "../components/Authentication/Signin";
 import Signup from "../components/Authentication/Signup";
 import VerifyAccount from "../components/Authentication/VerifyAccount";
@@ -18,6 +19,7 @@ const Auth = () => {
           <VerifyProtectedRoute>
             <VerifyAccount />
           </VerifyProtectedRoute>
+          <ForgotPassword />
         </AuthProtectedRoute>
       </div>
     </div>

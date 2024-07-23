@@ -22,6 +22,7 @@ import {
   verificationCodeSuccess,
   checkTokenSuccess,
   resendOTPSuccess,
+  googleAuthSuccess,
 } from "../app/actions/userActions";
 
 // For SIGNUP USER_CREDENTIALS
@@ -100,12 +101,10 @@ export const loginUser = async (userCredentials, dispatch) => {
 
 // For GOOGLE AUTHENTIC USER
 export const googleAuth = async (userCredentials, dispatch) => {
-  dispatch(signinPending());
-
   try {
     const response = await axios.post(`${GOOGLE_AUTH}`, userCredentials);
     const authenticUser = response?.data?.data;
-    dispatch(signinSuccess(authenticUser));
+    dispatch(googleAuthSuccess(authenticUser));
 
     toastify(
       "success",

@@ -110,7 +110,7 @@ const Header = ({ setIsOpenSidebar }) => {
               {/* Profile Image & Dropdown */}
               <div className="profileImageCont select-none relative z-10">
                 <img
-                  src={authenticUser.profilePicture || User}
+                  src={authenticUser?.profilePicture || User}
                   alt="profile"
                   className="w-[3.2rem] rounded-full bg-neutral-200 object-cover cursor-pointer"
                   onClick={() => setIsOpenProfileDropdown(true)}

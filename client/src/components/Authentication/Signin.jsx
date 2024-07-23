@@ -225,9 +225,12 @@ const Signin = () => {
             {/* Forget Password */}
             <p className="text-[1.6rem] text-neutral-600 font-semibold">
               Forgot Password?{" "}
-              <span className="font-medium hover:underline hover:cursor-pointer hover:text-cyan-800">
+              <Link
+                to="/account/forgot-password"
+                className="font-medium hover:underline hover:cursor-pointer hover:text-cyan-800"
+              >
                 verify your credentials
-              </span>
+              </Link>
             </p>
 
             {/* OR */}
