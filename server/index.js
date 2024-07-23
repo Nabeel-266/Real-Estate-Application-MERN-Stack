@@ -4,6 +4,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
+import { fileURLToPath } from "url";
+import path from "path";
 dotenv.config();
 
 // Import Routes
@@ -27,6 +29,14 @@ const PORT = process.env.PORT || 8000;
     // process.exit(1);
   }
 })();
+
+// Set dirname for ES Module Scope
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+app.use(express.static(path.join(__dirname, "public")));
 
 // Middlewares
 app.use(cookieParser());

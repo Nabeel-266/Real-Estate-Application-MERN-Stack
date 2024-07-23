@@ -9,6 +9,7 @@ import {
   GOOGLE_AUTH,
   RESEND_OTP,
   CHECK_TOKEN,
+  FORGOT_PASSWORD,
 } from "../constants/apisRoute";
 
 // Import Actions
@@ -30,6 +31,7 @@ export const registerUser = async (userCredentials, dispatch, navigate) => {
   try {
     const response = await axios.post(`${SIGN_UP}`, userCredentials);
     const userDoc = response?.data;
+    console.log(userDoc);
 
     // If User Doc updated with an OTP
     if (userDoc.status === "Success") {
@@ -68,8 +70,6 @@ export const registerUserVerification = async (userDoc, OTP, dispatch) => {
         "dark",
         4000
       );
-    } else {
-      toastify("error", `${response.data.message}`, "top-right", "dark", 4000);
     }
   } catch (error) {
     dispatch(signupFailure());
@@ -158,6 +158,26 @@ export const checkToken = async (dispatch) => {
     }
   } catch (error) {
     dispatch(checkTokenSuccess(null));
+  }
+};
+
+export const forgotPassword = async (email) => {
+  try {
+    const response = await axios.post(`${FORGOT_PASSWORD}`, { email });
+    const resetPasswordLink = response?.data;
+    console.log(resetPasswordLink);
+
+    if (resetPasswordLink.status === "Success") {
+      toastify(
+        "success",
+        "Reset Password Link has been sent successfully, Please! check your email",
+        "top-right",
+        "dark",
+        6000
+      );
+    }
+  } catch (error) {
+    throw error;
   }
 };
 

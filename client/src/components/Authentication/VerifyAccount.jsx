@@ -20,8 +20,6 @@ const VerifyAccount = () => {
   const { pending } = useSelector((state) => state?.user);
   const { unAuthenticUser } = useSelector((state) => state?.user);
 
-  console.log(unAuthenticUser);
-
   // If user_Doc not found so navigate to signup
   useEffect(() => {
     const handleStorageChange = (event) => {

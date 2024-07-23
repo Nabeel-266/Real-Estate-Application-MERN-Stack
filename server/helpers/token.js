@@ -4,12 +4,18 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import { StatusCodes } from "http-status-codes";
-import resMessages from "../constants/responsesMessages.js";
 import { sendError } from "../utils/responses.js";
+import resMessages from "../constants/responsesMessages.js";
 
 export const generateToken = ({ userId }) => {
   return sign({ result: userId }, process.env.JWT_SECRET_KEY, {
     expiresIn: process.env.JWT_TOKEN_EXPIRY,
+  });
+};
+
+export const generateTokenForLink = ({ userId }) => {
+  return sign({ result: userId }, process.env.JWT_SECRET_KEY, {
+    expiresIn: process.env.JWT_LINK_TOKEN_EXPIRY,
   });
 };
 

@@ -1,14 +1,16 @@
 import User from "../Models/user-schema.js";
+import dotenv from "dotenv";
 import pkg from "bcryptjs";
 import { v4 as uuidv4 } from "uuid";
-import { sendEmailOTP } from "../utils/nodemailer.js";
+import { sendEmailLink, sendEmailOTP } from "../helpers/nodemailer.js";
 import { emailRegex } from "../utils/emailRegex.js";
 import { StatusCodes } from "http-status-codes";
 import { sendError, sendSuccess } from "../utils/responses.js";
-import { generateToken } from "../helpers/token.js";
+import { generateToken, generateTokenForLink } from "../helpers/token.js";
 import resMessages from "../constants/responsesMessages.js";
 import { generateRandomPassword } from "../helpers/password.js";
 const { compareSync, hashSync, genSaltSync } = pkg;
+dotenv.config();
 
 //* --> For Signup <--
 //? @route --> POST --> api/auth/signup
@@ -175,7 +177,7 @@ export const signupVerification = async (req, res, next) => {
     newUser.password = undefined;
 
     // Generate Token for User
-    const token = generateToken({ data: newUser._id });
+    const token = generateToken({ userId: newUser._id });
 
     res
       .cookie("token", token, { httpOnly: true, maxAge: 12 * 60 * 60 * 1000 })
@@ -252,7 +254,7 @@ export const signin = async (req, res, next) => {
     user.password = undefined;
 
     // Generate Token for User
-    const token = generateToken({ data: user._id });
+    const token = generateToken({ userId: user._id });
 
     res
       .cookie("token", token, { httpOnly: true, maxAge: 12 * 60 * 60 * 1000 })
@@ -393,7 +395,7 @@ export const verifyAccount = async (req, res, next) => {
     updatedUser.password = undefined;
 
     // Generate Token for User
-    const token = generateToken({ data: updatedUser._id });
+    const token = generateToken({ userId: updatedUser._id });
 
     res.cookie("token", token, { httpOnly: true, maxAge: 12 * 60 * 60 * 1000 });
     res.status(StatusCodes.ACCEPTED).send(
@@ -472,7 +474,7 @@ export const resendOTP = async (req, res, next) => {
 
 //* --> For Refresh Token <--
 //? @route --> GET --> api/auth/refreshToken
-//  @access --> PUBLIC
+//  @access --> PRIVATE
 export const refreshToken = async (req, res, next) => {
   console.log("Refresh Token Controller");
   console.log(req.user, "==> Request User");
@@ -509,7 +511,7 @@ export const refreshToken = async (req, res, next) => {
     }
 
     // Generate Token for User
-    const token = generateToken({ data: user._id });
+    const token = generateToken({ userId: user._id });
 
     res
       .cookie("token", token, { httpOnly: true, maxAge: 12 * 60 * 60 * 1000 })
@@ -522,6 +524,64 @@ export const refreshToken = async (req, res, next) => {
       );
   } catch (error) {
     console.log(error.message, "==> error in refresh token");
+    next(error);
+  }
+};
+
+//* --> For Forgot Password <--
+//? @route --> POST --> api/auth/forgotPassword
+//  @access --> PUBLIC
+export const forgotPassword = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    console.log(user);
+
+    if (!user) {
+      return res.status(StatusCodes.NOT_FOUND).send(
+        sendError({
+          statusCode: StatusCodes.NOT_FOUND,
+          message: resMessages.EMAIL_NOT_EXIST,
+        })
+      );
+    }
+
+    // Generate Token for User
+    const token = generateTokenForLink({ userId: user._id });
+
+    const link = `${process.env.SERVER_URL}/api/auth/reset-password/${user._id}/${token}`;
+
+    console.log(link);
+
+    // Send Reset Password Link to User Email
+    const emailResponse = await sendEmailLink(user.username, user.email, link);
+    console.log(emailResponse);
+
+    // Remove Password from User_Doc for response
+    user.password = undefined;
+
+    res.status(StatusCodes.OK).send(
+      sendSuccess({
+        message: emailResponse,
+        data: user,
+      })
+    );
+  } catch (error) {
+    console.log(error.message, "==> error in forgot password");
+    next(error);
+  }
+};
+
+//* --> For Reset Password URL <--
+//? @route --> GET --> /api/auth/reset-password/:id/:token
+//  @access --> PUBLIC
+export const resetPasswordURL = async (req, res, next) => {
+  try {
+    const { id, token } = req.params;
+    console.log(id, token);
+    res.render("page/reset-password", { id: id });
+  } catch (error) {
+    console.log(error.message, "==> error in reset password");
     next(error);
   }
 };

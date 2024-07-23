@@ -5,4 +5,5 @@ export const SIGN_IN = "/api/auth/signin";
 export const GOOGLE_AUTH = "/api/auth/signGoogleOAuth";
 export const RESEND_OTP = "/api/auth/resendOTP";
 export const CHECK_TOKEN = "/api/auth/checkToken";
+export const FORGOT_PASSWORD = "/api/auth/forgotPassword";
 // export const VERIFY_ACCOUNT = "/api/auth/verifyAccount";

@@ -45,14 +45,14 @@ const AppRoutes = () => {
     routeLocation !== "/account/forgot-password";
 
   // Check User Token Authorization
-  const memoizedCheckToken = useCallback(
-    () => checkToken(dispatch),
-    [dispatch]
-  );
+  // const memoizedCheckToken = useCallback(
+  //   () => checkToken(dispatch),
+  //   [dispatch]
+  // );
 
-  useEffect(() => {
-    memoizedCheckToken();
-  }, [memoizedCheckToken]);
+  // useEffect(() => {
+  //   memoizedCheckToken();
+  // }, [memoizedCheckToken]);
 
   return (
     <div className="app bg-white relative overflow-hidden">

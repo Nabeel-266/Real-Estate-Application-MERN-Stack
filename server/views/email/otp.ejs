@@ -46,14 +46,6 @@
         font-weight: 800;
         color: #fff;
       }
-      /* .button {
-        display: inline-block;
-        padding: 10px 20px;
-        color: #fff;
-        background-color: #28a745;
-        text-decoration: none;
-        border-radius: 5px;
-      } */
     </style>
   </head>
   <body>
@@ -65,7 +57,7 @@
 
         <div class="section">
           <h2 class="title">Verify Your Email for Nab Estate Account</h2>
-          <p style="font-weight: 600">Dear ${username},</p>
+          <p style="font-weight: 600">Dear <%= username %>,</p>
           <p style="font-weight: 600">Welcome to Nab Estate family!</p>
         </div>
 
@@ -74,7 +66,8 @@
             Please use the OTP below to verify your email address
           </p>
           <p style="font-weight: 500">
-            OTP Code: <span style="font-weight: 700; color: white">${otp}</span>
+            OTP Code:
+            <span style="font-weight: 700; color: white"><%= otp %></span>
           </p>
         </div>
 

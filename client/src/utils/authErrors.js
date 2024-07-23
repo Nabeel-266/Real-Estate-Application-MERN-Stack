@@ -1,9 +1,10 @@
 import toastify from "../utils/toastify";
 
+const emailPattern =
+  /^(?:[^@\s]+@(?:gmail\.com|hotmail\.com|yahoo\.com|outlook\.com|zoho\.com|icloud\.com|protonmail\.com|aol\.com))$/;
+
 const signupClientErrorHandler = (registerFormData, setError) => {
   const { username, email, password, confirmPassword } = registerFormData;
-  const emailPattern =
-    /^(?:[^@\s]+@(?:gmail\.com|hotmail\.com|yahoo\.com|outlook\.com|zoho\.com|icloud\.com|protonmail\.com|aol\.com))$/;
 
   if (username && email && password && confirmPassword) {
     if (!username.includes(" ")) {
@@ -86,8 +87,6 @@ const signupServerErrorHandler = (errorMsg, setError) => {
 
 const signinClientErrorHandler = (loginFormData, setError) => {
   const { email, password } = loginFormData;
-  const emailPattern =
-    /^(?:[^@\s]+@(?:gmail\.com|hotmail\.com|yahoo\.com|outlook\.com|zoho\.com|icloud\.com|protonmail\.com|aol\.com))$/;
 
   if (email && password) {
     if (!emailPattern.test(email)) {
@@ -123,9 +122,24 @@ const signinServerErrorHandler = (errorMsg, setError) => {
   }
 };
 
+const forgotPasswordErrorHandler = (email, setError) => {
+  if (email) {
+    if (!emailPattern.test(email)) {
+      setError("Please! enter a valid Email address, your Email is invalid");
+      return false;
+    } else {
+      return true;
+    }
+  } else {
+    setError("Email is required!");
+    return false;
+  }
+};
+
 export {
   signupClientErrorHandler,
   signupServerErrorHandler,
   signinClientErrorHandler,
   signinServerErrorHandler,
+  forgotPasswordErrorHandler,
 };

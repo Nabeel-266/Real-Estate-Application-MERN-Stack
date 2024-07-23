@@ -20,6 +20,7 @@ const resMessages = {
   SUCCESS_REGISTRATION: "User Registration Successfull",
   SUCCESS_VERIFICATION: "User Verification Successfull",
   SUCCESS_RESEND_OTP: "OTP has been resent successfully",
+  SUCCESS_FORGOT_PASSWORD: "Reset Password Link has been sent successfully",
   SUCCESS_DEACTIVATE: "User Deactivation Successfull",
   SUCCESS_ACTIVATE: "User Activation Successfull",
   NO_USER: "User not found",

@@ -1,10 +1,58 @@
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { forgotPasswordErrorHandler } from "../../utils/authErrors";
+import { forgotPassword } from "../../api/authAPIs";
+
+// Import React Icons
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { BsFillSendFill } from "react-icons/bs";
+
+// Import Component
+import Loader from "../Loader";
+import toastify from "../../utils/toastify";
 
 const ForgotPassword = () => {
   const location = useLocation();
   const routeLocation = location.pathname.split("/")[2];
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  // Email Change Handler
+  const emailChangeHandler = (e) => {
+    setEmail(e.target.value);
+    setError("");
+  };
+
+  // Forgot Password Handler
+  const forgotPasswordHandler = async (e) => {
+    e.preventDefault();
+
+    try {
+      // For Detecting Email Errors
+      const isValidEmail = forgotPasswordErrorHandler(email, setError);
+
+      if (isValidEmail) {
+        setLoading(true);
+
+        // Call Forgot Password API Function
+        await forgotPassword(email);
+
+        setLoading(false);
+      }
+    } catch (err) {
+      console.log(err);
+      toastify(
+        "error",
+        `${err?.response?.data?.message}`,
+        "top-right",
+        "dark",
+        4000
+      );
+      //   const errorMsg = err?.response?.data?.message || err.message;
+      setLoading(false);
+    }
+  };
 
   return (
     <div
@@ -42,40 +90,54 @@ const ForgotPassword = () => {
             Please! Enter the email address associated with your account
           </p>
 
-          {/* Email Input */}
-          <input
-            type="text"
-            name="email"
-            id="email"
-            placeholder="Enter your email address"
-            autoComplete="off"
-            // onChange={(e) => setOTPCode(e.target.value)}
-            maxLength={8}
-            className="w-full py-[0.6rem] text-neutral-600 text-[1.6rem] leading-[1.6rem] font-medium font-mont outline-none bg-transparent border-b-2 border-neutral-400 focus:border-cyan-900 placeholder:font-montAlter"
-          />
-
-          {/* ${
-              OTPCode?.length === 8
-                ? "bg-theme-yellow text-neutral-800 cursor-pointer active:scale-[0.98]"
-                : "bg-neutral-500 text-white cursor-not-allowed"
-            } */}
+          {/* Email Input Cont */}
+          <div className="w-full flex flex-col gap-[0.5rem]">
+            <input
+              type="text"
+              name="email"
+              id="email"
+              placeholder="Enter your email address"
+              autoComplete="off"
+              onChange={emailChangeHandler}
+              className="w-full py-[0.6rem] text-neutral-600 text-[1.6rem] leading-[1.6rem] font-medium font-mont outline-none bg-transparent border-b-2 border-neutral-400 focus:border-cyan-900 placeholder:font-montAlter"
+            />
+            {/* Forgot Password Email Error Message */}
+            {error && (
+              <span
+                className={`errorMsg text-[1.4rem] leading-[1.4rem] font-medium text-red-700`}
+              >
+                {error}
+              </span>
+            )}
+          </div>
 
           {/* Action Buttons */}
           <div className="actionBtns w-full flex flex-col gap-[1rem] mt-[1rem]">
             <button
-              // onClick={(e) => signupVerificationHandler(e)}
-              // disabled={OTPCode?.length === 8 ? false : true}
-              className={`w-full flex justify-center items-center gap-[0.8rem] bg-theme-blue text-white cursor-pointer active:scale-[0.98] text-[1.7rem] leading-[1.6rem] font-semibold px-[2rem] py-[1.2rem] rounded-md hover:shadow-lg transition-all`}
+              onClick={(e) => forgotPasswordHandler(e)}
+              disabled={email ? false : true}
+              className={`w-full flex justify-center items-center gap-[0.8rem] text-[1.8rem] leading-[1.8rem] font-semibold px-[2rem] py-[1.3rem] rounded-full hover:shadow-lg active:scale-[0.98] transition-all ${
+                email
+                  ? "bg-theme-blue text-white cursor-pointer"
+                  : "bg-neutral-500 text-white cursor-not-allowed"
+              }`}
             >
-              <BsFillSendFill />
-              <span>Send Reset Password Link</span>
+              {loading ? (
+                <Loader value="Sending" color="white" />
+              ) : (
+                <>
+                  <BsFillSendFill />
+                  <span>Send Reset Password Link</span>
+                </>
+              )}
             </button>
 
-            <Link to="/account/sign-in">
-              <button className="w-full flex justify-center items-center gap-[0.8rem] text-[1.6rem] leading-[1.6rem] font-semibold px-[1.5rem] py-[1rem] border-[0.2rem] border-theme-blue text-theme-blue rounded-md hover:shadow-lg active:scale-[0.98] transition-all">
-                <FaArrowLeftLong />
-                <span>Back to Login</span>
-              </button>
+            <Link
+              to="/account/sign-in"
+              className="w-full flex justify-center items-center gap-[0.8rem] text-[1.8rem] leading-[1.8rem] font-semibold px-[1.5rem] py-[1.2rem] border-[0.2rem] border-theme-blue text-theme-blue rounded-full hover:shadow-lg active:scale-[0.98] transition-all"
+            >
+              <FaArrowLeftLong />
+              <span>Back to Login</span>
             </Link>
           </div>
 

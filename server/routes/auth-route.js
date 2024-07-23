@@ -12,6 +12,8 @@ import {
   verifyAccount,
   resendOTP,
   refreshToken,
+  forgotPassword,
+  resetPasswordURL,
 } from "../controllers/auth-controller.js";
 
 const authRouter = express.Router();
@@ -36,5 +38,11 @@ authRouter.post("/resendOTP", resendOTP);
 
 // For Refresh Token
 authRouter.get("/checkToken", validateToken, refreshToken);
+
+// For Forgot Password
+authRouter.post("/forgotPassword", forgotPassword);
+
+// For Reset Password URL
+authRouter.get("/reset-password/:id/:token", resetPasswordURL);
 
 export default authRouter;
