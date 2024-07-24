@@ -14,6 +14,7 @@ import {
   refreshToken,
   forgotPassword,
   resetPasswordURL,
+  resetPassword,
 } from "../controllers/auth-controller.js";
 
 const authRouter = express.Router();
@@ -44,5 +45,8 @@ authRouter.post("/forgotPassword", forgotPassword);
 
 // For Reset Password URL
 authRouter.get("/reset-password/:id/:token", resetPasswordURL);
+
+// For Reset Password
+authRouter.post("/reset-password/:id", resetPassword);
 
 export default authRouter;

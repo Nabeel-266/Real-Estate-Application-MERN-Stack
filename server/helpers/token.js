@@ -19,9 +19,9 @@ export const generateTokenForLink = ({ userId }) => {
   });
 };
 
-// export const verifyToken = (token) => {
-//   return verify(token, process.env.JWT_SECRET_KEY);
-// };
+export const verifyToken = (token) => {
+  return verify(token, process.env.JWT_SECRET_KEY);
+};
 
 // export const validateToken = ({ token, key }) => {
 //   return verify(token, key);
@@ -45,7 +45,7 @@ export const validateToken = async (req, res, next) => {
 
   try {
     // Decoded Token
-    const decoded = verify(token, process.env.JWT_SECRET_KEY);
+    const decoded = verifyToken(token);
     console.log(decoded, "====>> Decoded Token INFO");
 
     // Check Token Expiry

@@ -6,7 +6,11 @@ import { sendEmailLink, sendEmailOTP } from "../helpers/nodemailer.js";
 import { emailRegex } from "../utils/emailRegex.js";
 import { StatusCodes } from "http-status-codes";
 import { sendError, sendSuccess } from "../utils/responses.js";
-import { generateToken, generateTokenForLink } from "../helpers/token.js";
+import {
+  generateToken,
+  generateTokenForLink,
+  verifyToken,
+} from "../helpers/token.js";
 import resMessages from "../constants/responsesMessages.js";
 import { generateRandomPassword } from "../helpers/password.js";
 const { compareSync, hashSync, genSaltSync } = pkg;
@@ -535,7 +539,6 @@ export const forgotPassword = async (req, res, next) => {
   try {
     const { email } = req.body;
     const user = await User.findOne({ email });
-    console.log(user);
 
     if (!user) {
       return res.status(StatusCodes.NOT_FOUND).send(
@@ -574,12 +577,86 @@ export const forgotPassword = async (req, res, next) => {
 
 //* --> For Reset Password URL <--
 //? @route --> GET --> /api/auth/reset-password/:id/:token
-//  @access --> PUBLIC
-export const resetPasswordURL = async (req, res, next) => {
+//  @access --> PRIVATE
+export const resetPasswordURL = async (req, res) => {
+  const { id, token } = req.params;
+
   try {
-    const { id, token } = req.params;
-    console.log(id, token);
-    res.render("page/reset-password", { id: id });
+    const user = await User.findOne({ _id: id });
+
+    if (!user) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .send("UnAuthenticated User! user not found");
+    }
+
+    const verifyUser = verifyToken(token);
+    console.log(verifyUser);
+
+    res.render("page/reset-password", {
+      name: user.username,
+      email: user.email,
+      id: user._id,
+    });
+  } catch (error) {
+    console.log(error.message, "==> error in reset password URL");
+    if (error === "jwt expired") {
+      res.render("page/error", {
+        message: "Access denied due to request timeout",
+      });
+    }
+  }
+};
+
+//* --> For Reset Password <--
+//? @route --> POST --> /api/auth/reset-password/:id/:token
+//  @access --> PRIVATE
+export const resetPassword = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const user = await User.findOne({ _id: id });
+
+    if (!user) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .send("UnAuthenticated User! user not found");
+    }
+
+    const { password, confirmPassword } = req.body;
+
+    // Password Lenght Verification
+    if (password.length < 8) {
+      return res.status(StatusCodes.LENGTH_REQUIRED).send(
+        sendError({
+          statusCode: StatusCodes.LENGTH_REQUIRED,
+          message: resMessages.PASSWORD_LENGTH_SHORT,
+        })
+      );
+    }
+
+    // Password Match Verification
+    if (password !== confirmPassword) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.UN_MATCH_PASSWORDS,
+        })
+      );
+    }
+
+    // Hashed Password
+    const passwordSalt = genSaltSync(10);
+    const hashedPassword = hashSync(password, passwordSalt);
+
+    // await User.updateOne({ _id: id }, { $set: { password: hashedPassword } });
+
+    res.status(StatusCodes.OK).send(
+      sendSuccess({
+        message: resMessages.SUCCESS_RESET_PASSWORD,
+        data: user,
+      })
+    );
   } catch (error) {
     console.log(error.message, "==> error in reset password");
     next(error);
