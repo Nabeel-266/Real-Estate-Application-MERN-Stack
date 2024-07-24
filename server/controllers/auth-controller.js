@@ -247,9 +247,9 @@ export const signin = async (req, res, next) => {
 
     // If Password is not correct
     if (!isPasswordCorrect) {
-      return res.status(StatusCodes.UNAUTHORIZED).send(
+      return res.status(StatusCodes.BAD_REQUEST).send(
         sendError({
-          statusCode: StatusCodes.UNAUTHORIZED,
+          statusCode: StatusCodes.BAD_REQUEST,
           message: resMessages.INCORRECT_PASSWORD,
         })
       );
@@ -600,9 +600,21 @@ export const resetPasswordURL = async (req, res) => {
     });
   } catch (error) {
     console.log(error.message, "==> error in reset password URL");
-    if (error === "jwt expired") {
-      res.render("page/error", {
-        message: "Access denied due to request timeout",
+    if (error.message === "jwt expired") {
+      res.status(StatusCodes.UNAUTHORIZED).render("page/error", {
+        statusCode: "401",
+        statusText: "Un-Authorized User",
+        message: "Access denied!",
+        reason:
+          "Your Reset Password URL has been expired, please try again to request a new Reset Password URL.",
+      });
+    } else {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).render("page/error", {
+        statusCode: "500",
+        statusText: "Internal Server Error",
+        message: "Something went wrong!",
+        reason:
+          "We’re sorry, but something went wrong on our end, Please try again later or contact support if the issue persists.",
       });
     }
   }
@@ -649,7 +661,8 @@ export const resetPassword = async (req, res, next) => {
     const passwordSalt = genSaltSync(10);
     const hashedPassword = hashSync(password, passwordSalt);
 
-    // await User.updateOne({ _id: id }, { $set: { password: hashedPassword } });
+    // Update Password in User_Doc and Save to DB
+    await User.updateOne({ _id: id }, { $set: { password: hashedPassword } });
 
     res.status(StatusCodes.OK).send(
       sendSuccess({
