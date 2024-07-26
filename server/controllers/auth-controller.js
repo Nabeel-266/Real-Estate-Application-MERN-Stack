@@ -554,8 +554,6 @@ export const forgotPassword = async (req, res, next) => {
 
     const link = `${process.env.SERVER_URL}/api/auth/reset-password/${user._id}/${token}`;
 
-    console.log(link);
-
     // Send Reset Password Link to User Email
     const emailResponse = await sendEmailLink(user.username, user.email, link);
     console.log(emailResponse);
@@ -607,6 +605,17 @@ export const resetPasswordURL = async (req, res) => {
         message: "Access denied!",
         reason:
           "Your Reset Password URL has been expired, please try again to request a new Reset Password URL.",
+      });
+    } else if (
+      error.message.includes("Cast to ObjectId failed") ||
+      error.message === "invalid token"
+    ) {
+      res.status(StatusCodes.BAD_REQUEST).render("page/error", {
+        statusCode: "400",
+        statusText: "Un-Authentic User",
+        message: "Access denied!",
+        reason:
+          "Your Reset Password URL has been invalid, please try again to request a new Reset Password URL.",
       });
     } else {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).render("page/error", {

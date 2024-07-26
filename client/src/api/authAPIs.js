@@ -164,10 +164,10 @@ export const checkToken = async (dispatch) => {
 export const forgotPassword = async (email) => {
   try {
     const response = await axios.post(`${FORGOT_PASSWORD}`, { email });
-    const resetPasswordLink = response?.data;
-    console.log(resetPasswordLink);
+    const resetPasswordLinkStatus = response?.data?.status;
+    console.log(resetPasswordLinkStatus);
 
-    if (resetPasswordLink.status === "Success") {
+    if (resetPasswordLinkStatus === "Success") {
       toastify(
         "success",
         "Reset Password Link has been sent successfully, Please! check your email",
@@ -176,6 +176,8 @@ export const forgotPassword = async (email) => {
         6000
       );
     }
+
+    return response?.data;
   } catch (error) {
     throw error;
   }
