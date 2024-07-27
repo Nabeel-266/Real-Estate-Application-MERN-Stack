@@ -1,10 +1,11 @@
 import express from "express";
 
 // Import Controllers
-import { user } from "../controllers/user-controller.js";
+import { updateProfile } from "../controllers/user-controller.js";
 
 const userRouter = express.Router();
 
-userRouter.get("/", user);
+// For Update User Profile
+userRouter.post("/updateProfile/:id", updateProfile);
 
 export default userRouter;

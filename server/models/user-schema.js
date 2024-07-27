@@ -18,12 +18,15 @@ const userSchema = new mongoose.Schema(
     },
     mobileNumber: {
       type: String,
+      default: "",
     },
     profilePicture: {
       type: String,
+      default: "",
     },
     liveInCity: {
       type: String,
+      default: "",
     },
   },
   {

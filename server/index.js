@@ -60,8 +60,8 @@ app.use((err, req, res, next) => {
 });
 
 // Routes
-app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/user", userRouter);
 
 // process.on("SIGINT", async function () {
 //   console.log("App is terminating");

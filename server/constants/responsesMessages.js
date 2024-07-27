@@ -21,8 +21,10 @@ const resMessages = {
   SUCCESS_REGISTRATION: "User Registration Successfull",
   SUCCESS_VERIFICATION: "User Verification Successfull",
   SUCCESS_RESEND_OTP: "OTP has been resent successfully",
-  SUCCESS_FORGOT_PASSWORD: "Reset Password Link has been sent successfully",
+  SUCCESS_RESET_PASSWORD_LINK:
+    "Reset Password Link Email Send... Please Check your Email",
   SUCCESS_RESET_PASSWORD: "Password has been reset successfully",
+  SUCCESS_UPDATE_PROFILE: "Profile has been updated successfully",
   SUCCESS_DEACTIVATE: "User Deactivation Successfull",
   SUCCESS_ACTIVATE: "User Activation Successfull",
   NO_USER: "User not found",
@@ -41,7 +43,6 @@ const resMessages = {
   PASSWORD_FAILED: "Password is same as before",
   PASSWORD_UPDATED: "Password reset Successfully",
   PASSWORD_LENGTH_SHORT: "Password must be at least 8 characters long.",
-  RESET_LINK_SUCCESS: "Reset Email Send... Please Check your Email",
   MISSING_FIELD_EMAIL: "Email Field is Required",
   SUCCESS_CATEGORY: "Category Added Successful",
   INVITATION_UNSUCCESS:

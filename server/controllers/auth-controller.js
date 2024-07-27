@@ -563,7 +563,7 @@ export const forgotPassword = async (req, res, next) => {
 
     res.status(StatusCodes.OK).send(
       sendSuccess({
-        message: emailResponse,
+        message: resMessages.SUCCESS_RESET_PASSWORD_LINK,
         data: user,
       })
     );
@@ -638,6 +638,7 @@ export const resetPassword = async (req, res, next) => {
   try {
     const user = await User.findOne({ _id: id });
 
+    // If User not found
     if (!user) {
       return res
         .status(StatusCodes.NOT_FOUND)

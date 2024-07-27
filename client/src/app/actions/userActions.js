@@ -38,7 +38,7 @@ export const signinFailure = () => (dispatch) => {
   dispatch(setError(true));
 };
 
-// //* For Google Auth User Actions
+// //* For Google Auth User Action
 export const googleAuthSuccess = (user) => (dispatch) => {
   dispatch(setAuthUser(user));
 };
@@ -56,6 +56,22 @@ export const resendOTPSuccess = (user) => (dispatch) => {
 //* For Check User Token Action
 export const checkTokenSuccess = (user) => (dispatch) => {
   dispatch(setAuthUser(user));
+};
+
+//* For Update User Profile Actions
+export const updateProfilePending = () => (dispatch) => {
+  dispatch(setLoading(true));
+  dispatch(setError(false));
+};
+
+export const updateProfileSuccess = (user) => (dispatch) => {
+  dispatch(setLoading(false));
+  dispatch(setAuthUser(user));
+};
+
+export const updateProfileFailure = () => (dispatch) => {
+  dispatch(setLoading(false));
+  dispatch(setError(true));
 };
 
 // export const logout = () => (dispatch) => {
