@@ -37,8 +37,6 @@ const Profile = () => {
   });
   const { ISOCode, callingCode, callingNumber } = mobileNumInfo;
 
-  console.log(userProfile);
-
   // Current User Profile Properties set into User_Profile Object
   useEffect(() => {
     const { username, profilePicture, mobileNumber, liveInCity } = currentUser;
@@ -271,7 +269,7 @@ const Profile = () => {
                       userPflPicTemporaryURL || profilePicture || ProfileAvatar
                     }
                     alt="Profile Pic"
-                    className="w-[12rem] h-[12rem] rounded-full object-cover bg-neutral-200 border-[0.3rem] border-neutral-300"
+                    className="size-[12rem] rounded-full object-cover bg-neutral-200 border-[0.3rem] border-neutral-300"
                   />
 
                   <label
@@ -286,7 +284,7 @@ const Profile = () => {
                       onChange={profilePicChangeHandler}
                       className="hidden"
                     />
-                    <FaCameraRetro className="text-[1.8rem] text-neutral-200" />
+                    <FaCameraRetro className="text-[1.8rem] text-theme-yellow" />
                   </label>
                 </div>
               </div>

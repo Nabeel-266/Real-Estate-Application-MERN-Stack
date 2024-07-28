@@ -9,7 +9,7 @@ import {
 
 // For UPDATE USER_PROFILE
 export const updateUserProfile = async (userId, updatedFields, dispatch) => {
-  // dispatch(updateProfilePending());
+  dispatch(updateProfilePending());
 
   try {
     let response;
@@ -22,7 +22,6 @@ export const updateUserProfile = async (userId, updatedFields, dispatch) => {
         `${UPLOAD_PROFILE_PIC}`,
         formData
       );
-      console.log(uploadImageResponse);
 
       // If Upload Image is successfull then update profile
       if (uploadImageResponse?.data?.status === "Success") {

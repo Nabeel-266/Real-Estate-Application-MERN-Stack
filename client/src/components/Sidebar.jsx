@@ -44,7 +44,7 @@ const Sidebar = ({ isOpenSidebar, setIsOpenSidebar }) => {
           <div className="headerWrapper w-full flex items-center justify-between py-[2rem] border-b-[0.2rem] border-cyan-950">
             <div className="logo flex items-center gap-[0.6rem]">
               <Link to="/" onClick={() => setIsOpenSidebar(!isOpenSidebar)}>
-                <img src={LogoLight} alt="Logo" className="w-[23rem]" />
+                <img src={LogoLight} alt="Logo" className="w-[22rem]" />
               </Link>
             </div>
 

@@ -39,16 +39,16 @@ const Header = ({ setIsOpenSidebar }) => {
     <header className="header w-full flex items-center fixed top-0 left-0 z-[99] backdrop-blur-[20px] bg-[#fffffff0]">
       <div className="headerWrapper w-full h-[6rem] flex items-center justify-between mx-[2%] px-[2%] border-b-[1px] border-neutral-100 ">
         {/* Header Left Side */}
-        <div className="leftSide flex items-center justify-between gap-[2.5rem] laptopSm:gap-[3rem]">
+        <div className="leftSide bg-slate- flex items-center justify-between gap-[2.5rem] laptopSm:gap-[3rem]">
           {/* Logo */}
-          <div className="logo w-[22rem] tabletLg:w-[21rem]">
+          <div className="logo w-[21rem] tabletLg:w-[19rem]">
             <Link to="/">
               <img src={LogoDark} alt="Logo" className="w-full mb-[0.4rem]" />
             </Link>
           </div>
 
           {/* Navigations */}
-          <nav className="navigations hidden tabletLg:block">
+          <nav className="navigations hidden tabletLg:block mt-[0.3rem]">
             <ul className="flex items-center gap-[0.7rem] laptopSm:gap-[0.9rem]">
               {[
                 ["Explore", "/explore"],
@@ -112,7 +112,7 @@ const Header = ({ setIsOpenSidebar }) => {
                 <img
                   src={authenticUser?.profilePicture || User}
                   alt="profile"
-                  className="w-[3.2rem] rounded-full bg-neutral-200 object-cover cursor-pointer"
+                  className="size-[3.5rem] rounded-full bg-neutral-200 object-cover cursor-pointer"
                   onClick={() => setIsOpenProfileDropdown(true)}
                 />
 

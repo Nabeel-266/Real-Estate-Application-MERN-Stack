@@ -20,7 +20,7 @@ const Footer = () => {
         <section className="footerTop w-full grid grid-cols-12 gap-[3rem] laptopSm:grid-cols-5 laptopSm:gap-[2rem] pt-[4rem] pb-[3rem]">
           {/* Objective */}
           <div className="objective col-span-12 tabletSm:col-span-12 laptopSm:col-span-2 flex flex-col gap-[1rem] text-[1.5rem] leading-[1.9rem] font-sans font-normal text-neutral-200 pr-[0%] tabletSm:pr-[15%]">
-            <img src={LogoLight} alt="Logo" className="w-[20rem]" />
+            <img src={LogoLight} alt="Logo" className="w-[18rem]" />
 
             <p className="tracking-[-0.05rem]">
               <b className="text-neutral-100">Nab Estate</b> is your premier
