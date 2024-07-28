@@ -20,7 +20,7 @@ const User = () => {
     <div className="userCont w-full h-dvh relative pt-[6rem]">
       <div className="userContWrapper h-full flex items-start">
         <aside className="w-[20%] min-w-[26rem] h-full hidden laptopSm:flex items-center pl-[2%] desktopSm:pl-[4%]">
-          <ul className="w-[100%] h-[calc(100%-6rem)] flex flex-col gap-[0.2rem] border-r-[0.2rem] border-neutral-200 ">
+          <ul className="w-[100%] h-[calc(100%-6rem)] flex flex-col gap-[0.3rem] border-r-[0.2rem] border-neutral-200 ">
             {[
               [FiUser, "Profile", "profile"],
               [RiAccountBoxLine, "Account", "account"],

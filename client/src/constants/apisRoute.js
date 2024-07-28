@@ -3,9 +3,10 @@ export const SIGN_UP = "/api/auth/signup";
 export const SIGN_UP_VERIFICATION = "/api/auth/signupVerification";
 export const SIGN_IN = "/api/auth/signin";
 export const GOOGLE_AUTH = "/api/auth/signGoogleOAuth";
+export const FORGOT_PASSWORD = "/api/auth/forgotPassword";
 export const RESEND_OTP = "/api/auth/resendOTP";
 export const CHECK_TOKEN = "/api/auth/checkToken";
-export const FORGOT_PASSWORD = "/api/auth/forgotPassword";
+export const LOGOUT = "/api/auth/signout";
 // export const VERIFY_ACCOUNT = "/api/auth/verifyAccount";
 
 // USER API's End Points

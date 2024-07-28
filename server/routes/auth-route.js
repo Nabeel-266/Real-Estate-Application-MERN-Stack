@@ -14,6 +14,7 @@ import {
   forgotPassword,
   resetPasswordURL,
   resetPassword,
+  signout,
   // verifyAccount,
 } from "../controllers/auth-controller.js";
 
@@ -28,14 +29,11 @@ authRouter.post("/signupVerification", signupVerification);
 // For Signin
 authRouter.post("/signin", signin);
 
-// For Signin
+// For Signin with Google Account
 authRouter.post("/signGoogleOAuth", signGoogleOAuth);
 
 // For Resend OTP
 authRouter.post("/resendOTP", resendOTP);
-
-// For Refresh Token
-authRouter.get("/checkToken", validateToken, refreshToken);
 
 // For Forgot Password
 authRouter.post("/forgotPassword", forgotPassword);
@@ -45,6 +43,12 @@ authRouter.get("/reset-password/:id/:token", resetPasswordURL);
 
 // For Reset Password
 authRouter.post("/reset-password/:id", resetPassword);
+
+// For Refresh Token
+authRouter.get("/checkToken", validateToken, refreshToken);
+
+// For Signout
+authRouter.post("/signout", signout);
 
 // For Verify Account
 // authRouter.post("/verifyAccount", validateToken, verifyAccount);

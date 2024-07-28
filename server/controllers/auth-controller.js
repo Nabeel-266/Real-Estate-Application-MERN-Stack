@@ -273,7 +273,7 @@ export const signin = async (req, res, next) => {
   }
 };
 
-//* --> For Google OAuth <--
+//* --> For Sign with Google OAuth <--
 //? @route --> POST --> api/auth/signGoogleOAuth
 //  @access --> PUBLIC
 export const signGoogleOAuth = async (req, res, next) => {
@@ -609,6 +609,50 @@ export const refreshToken = async (req, res, next) => {
     console.log(error.message, "==> error in refresh token");
     next(error);
   }
+};
+
+//* --> For Signout <--
+//? @route --> GET --> api/auth/signout
+//  @access --> PUBLIC
+export const signout = (req, res) => {
+  console.log("Signout Controller");
+
+  try {
+    // Get Token
+    const token = req.cookies?.token;
+
+    if (token) {
+      res
+        .cookie("token", "", { httpOnly: true, maxAge: 0 })
+        .status(StatusCodes.OK)
+        .send(
+          sendSuccess({
+            message: resMessages.SUCCESS_LOGOUT,
+            data: null,
+          })
+        );
+    } else {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: "Un-Authorized User",
+        })
+      );
+    }
+  } catch (error) {
+    console.log(error.message, "==> error in signout");
+    next(error);
+  }
+
+  res
+    .cookie("token", "", { httpOnly: true, maxAge: 0 })
+    .status(StatusCodes.OK)
+    .send(
+      sendSuccess({
+        message: resMessages.SUCCESS_LOGOUT,
+        data: null,
+      })
+    );
 };
 
 // // --> For Verify Account <--

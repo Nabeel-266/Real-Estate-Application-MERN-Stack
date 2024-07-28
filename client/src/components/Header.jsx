@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../api/authAPIs";
 
 // Import React Icons
 import { CgMenuRight } from "react-icons/cg";
@@ -15,17 +16,12 @@ import LogoDark from "../assets/logo-dark.png";
 import User from "../assets/user.png";
 
 const Header = ({ setIsOpenSidebar }) => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const routeLocation = location.pathname;
   const { authenticUser } = useSelector((state) => state?.user);
   const [isOpenProfileDropdown, setIsOpenProfileDropdown] = useState(false);
   const dropdownRef = useRef(null);
-
-  const handleClickOutsideDropdown = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setIsOpenProfileDropdown(false);
-    }
-  };
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutsideDropdown);
@@ -34,6 +30,20 @@ const Header = ({ setIsOpenSidebar }) => {
       document.removeEventListener("mousedown", handleClickOutsideDropdown);
     };
   }, []);
+
+  const handleClickOutsideDropdown = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsOpenProfileDropdown(false);
+    }
+  };
+
+  const logoutHandler = async () => {
+    try {
+      await logoutUser(dispatch);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <header className="header w-full flex items-center fixed top-0 left-0 z-[99] backdrop-blur-[20px] bg-[#fffffff0]">
@@ -112,8 +122,8 @@ const Header = ({ setIsOpenSidebar }) => {
                 <img
                   src={authenticUser?.profilePicture || User}
                   alt="profile"
-                  className="size-[3.5rem] rounded-full bg-neutral-200 object-cover cursor-pointer"
                   onClick={() => setIsOpenProfileDropdown(true)}
+                  className="size-[3.5rem] rounded-full bg-neutral-200 object-cover cursor-pointer"
                 />
 
                 {/* Dropdown */}
@@ -161,7 +171,10 @@ const Header = ({ setIsOpenSidebar }) => {
                       </Link>
                     </li>
 
-                    <li className="flex items-center gap-[0.8rem] p-[0.8rem] cursor-pointer hover:bg-neutral-100 hover:text-neutral-800 rounded-sm transition-all whitespace-nowrap">
+                    <li
+                      onClick={logoutHandler}
+                      className="flex items-center gap-[0.8rem] p-[0.8rem] cursor-pointer hover:bg-neutral-100 hover:text-neutral-800 rounded-sm transition-all whitespace-nowrap"
+                    >
                       <PiSignOutBold size="1.8rem" />
                       <span>Logout</span>
                     </li>

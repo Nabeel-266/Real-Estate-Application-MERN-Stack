@@ -58,6 +58,13 @@ export const checkTokenSuccess = (user) => (dispatch) => {
   dispatch(setAuthUser(user));
 };
 
+//* For Signout User Action
+export const signoutSuccess = () => (dispatch) => {
+  dispatch(setAuthUser(null));
+  dispatch(setLoading(false));
+  dispatch(setError(false));
+};
+
 //* For Update User Profile Actions
 export const updateProfilePending = () => (dispatch) => {
   dispatch(setLoading(true));

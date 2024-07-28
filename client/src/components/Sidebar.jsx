@@ -12,9 +12,11 @@ import { RiAccountBoxLine, RiMessage2Line } from "react-icons/ri";
 import { RiTeamLine } from "react-icons/ri";
 import { FaXmark } from "react-icons/fa6";
 import { PiSignOutBold, PiSignInBold } from "react-icons/pi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../api/authAPIs";
 
 const Sidebar = ({ isOpenSidebar, setIsOpenSidebar }) => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const { authenticUser } = useSelector((state) => state?.user);
   const [isActiveTab, setIsActiveTab] = useState(location.pathname);
@@ -22,6 +24,15 @@ const Sidebar = ({ isOpenSidebar, setIsOpenSidebar }) => {
   useEffect(() => {
     setIsActiveTab(location.pathname);
   }, [location]);
+
+  const logoutHandler = async () => {
+    try {
+      await logoutUser(dispatch);
+      setIsOpenSidebar(!isOpenSidebar);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
@@ -142,7 +153,7 @@ const Sidebar = ({ isOpenSidebar, setIsOpenSidebar }) => {
 
                 {/* Logout Button */}
                 <button
-                  onClick={() => setIsOpenSidebar(!isOpenSidebar)}
+                  onClick={logoutHandler}
                   className="w-full relative flex items-center gap-[1rem] px-[1.4rem] py-[0.7rem] text-[2.2rem] leading-[3.2rem] text-cyan-950 font-semibold bg-white cursor-pointer rounded-full transition-all hover:bg-theme-yellow active:scale-[0.98]"
                 >
                   <PiSignOutBold size={"3rem"} />

@@ -10,6 +10,7 @@ import {
   RESEND_OTP,
   CHECK_TOKEN,
   FORGOT_PASSWORD,
+  LOGOUT,
 } from "../constants/apisRoute";
 
 // Import Actions
@@ -24,6 +25,7 @@ import {
   checkTokenSuccess,
   resendOTPSuccess,
   googleAuthSuccess,
+  signoutSuccess,
 } from "../app/actions/userActions";
 
 // For SIGNUP USER_CREDENTIALS
@@ -167,6 +169,24 @@ export const checkToken = async (dispatch) => {
     }
   } catch (error) {
     dispatch(checkTokenSuccess(null));
+  }
+};
+
+// For LOGOUT USER
+export const logoutUser = async (dispatch) => {
+  try {
+    const response = await axios.post(`${LOGOUT}`);
+    const responseData = response?.data;
+
+    if (responseData?.status === "Success") {
+      setTimeout(() => {
+        dispatch(signoutSuccess());
+      }, 1000);
+    } else {
+      throw new Error("Failed to Logout");
+    }
+  } catch (error) {
+    throw error;
   }
 };
 
