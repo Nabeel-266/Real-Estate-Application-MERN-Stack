@@ -1,12 +1,20 @@
 import express from "express";
 import mongoose from "mongoose";
+import { v2 as cloudinary } from "cloudinary";
 import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import { fileURLToPath } from "url";
 import path from "path";
+
+// Configuration
 dotenv.config();
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 // Import Routes
 import userRouter from "./routes/user-route.js";

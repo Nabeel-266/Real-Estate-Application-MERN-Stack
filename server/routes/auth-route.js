@@ -9,12 +9,12 @@ import {
   signup,
   signin,
   signGoogleOAuth,
-  verifyAccount,
   resendOTP,
   refreshToken,
   forgotPassword,
   resetPasswordURL,
   resetPassword,
+  // verifyAccount,
 } from "../controllers/auth-controller.js";
 
 const authRouter = express.Router();
@@ -31,9 +31,6 @@ authRouter.post("/signin", signin);
 // For Signin
 authRouter.post("/signGoogleOAuth", signGoogleOAuth);
 
-// For Verify Account
-authRouter.post("/verifyAccount", validateToken, verifyAccount);
-
 // For Resend OTP
 authRouter.post("/resendOTP", resendOTP);
 
@@ -48,5 +45,8 @@ authRouter.get("/reset-password/:id/:token", resetPasswordURL);
 
 // For Reset Password
 authRouter.post("/reset-password/:id", resetPassword);
+
+// For Verify Account
+// authRouter.post("/verifyAccount", validateToken, verifyAccount);
 
 export default authRouter;

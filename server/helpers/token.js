@@ -7,26 +7,26 @@ import { StatusCodes } from "http-status-codes";
 import { sendError } from "../utils/responses.js";
 import resMessages from "../constants/responsesMessages.js";
 
+//* GENERATE TOKEN
 export const generateToken = ({ userId }) => {
   return sign({ result: userId }, process.env.JWT_SECRET_KEY, {
     expiresIn: process.env.JWT_TOKEN_EXPIRY,
   });
 };
 
+//* GENERATE TOKEN FOR LINK
 export const generateTokenForLink = ({ userId }) => {
   return sign({ result: userId }, process.env.JWT_SECRET_KEY, {
     expiresIn: process.env.JWT_LINK_TOKEN_EXPIRY,
   });
 };
 
+//* VERIFY TOKEN
 export const verifyToken = (token) => {
   return verify(token, process.env.JWT_SECRET_KEY);
 };
 
-// export const validateToken = ({ token, key }) => {
-//   return verify(token, key);
-// };
-
+//* VALIDATE TOKEN
 export const validateToken = async (req, res, next) => {
   console.log(req.cookies?.token, "==> Request Cookies");
 
@@ -54,7 +54,7 @@ export const validateToken = async (req, res, next) => {
       return res.status(StatusCodes.UNAUTHORIZED).send(
         sendError({
           statusCode: StatusCodes.UNAUTHORIZED,
-          message: resMessages.TOKEN_EXPIRED,
+          message: resMessages.EXPIRED_TOKEN,
         })
       );
     }

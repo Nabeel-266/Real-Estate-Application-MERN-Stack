@@ -24,56 +24,37 @@ import {
   HiOutlineArrowNarrowRight,
 } from "react-icons/hi";
 
-// Import Image
-import bannerHomes from "../assets/banner-homes.png";
-import bannerRoom from "../assets/banner-room.jpg";
-import bannerBalcony from "../assets/banner-balcony.jpg";
-import cardImage from "../assets/home.jpg";
-import buy from "../assets/buy.png";
-import sell from "../assets/sell.png";
-import rent from "../assets/rent.png";
-import agent01 from "../assets/Agents/agent01.jpg";
-import agent02 from "../assets/Agents/agent02.png";
-import agent03 from "../assets/Agents/agent03.png";
-import agent04 from "../assets/Agents/agent04.png";
-import feedbackImage from "../assets/feedback-image.jpg";
-import person01 from "../assets/Persons/person01.jpg";
-import person02 from "../assets/Persons/person02.jpg";
-import person03 from "../assets/Persons/person03.jpeg";
-import person04 from "../assets/Persons/person04.jpeg";
-import person05 from "../assets/Persons/person05.jpg";
-
 // Component
 import Footer from "../components/Footer";
 
 const testimonials = [
   {
     id: 1,
-    image: person01,
+    image: "/src/assets/Persons/person01.jpg",
     name: "Azlan Farooq",
     designation: "Our Trusted Client",
   },
   {
     id: 2,
-    image: person02,
+    image: "/src/assets/Persons/person02.jpg",
     name: "Sheraz Iqbal",
     designation: "Our Trusted Client",
   },
   {
     id: 3,
-    image: person03,
+    image: "/src/assets/Persons/person03.jpeg",
     name: "Najam Iftikhar",
     designation: "Our Trusted Client",
   },
   {
     id: 4,
-    image: person04,
+    image: "/src/assets/Persons/person04.jpeg",
     name: "Muhammad Ibad",
     designation: "Our Trusted Client",
   },
   {
     id: 5,
-    image: person05,
+    image: "/src/assets/Persons/person05.jpg",
     name: "Junaid Rehman",
     designation: "Our Trusted Client",
   },
@@ -137,20 +118,20 @@ const Home = () => {
           <section className="sideSecond w-full laptopSm:w-[45%] laptopRg:w-[50%]">
             <div className="sideTwoWrapper w-full relative flex items-center justify-center">
               <img
-                src={bannerHomes}
+                src="/src/assets/banner-homes.png"
                 alt="Homes"
                 className="min-w-[34rem] w-[50%] laptopSm:w-[75%] laptopRg:w-[68%] desktopSm:w-[62%] laptopRg:ml-[4%] shadow-2xl shadow-[#33333390] select-none rounded-[1rem_10rem_1rem_10rem] object-cover border-white border-y-[0.4rem] border-l-[0.3rem]"
               />
 
               <img
-                src={bannerBalcony}
-                alt="Homes"
+                src="/src/assets/banner-balcony.jpg"
+                alt="balcony"
                 className="min-w-[15rem] w-[27%] tabletSm:w-[25%] laptopSm:w-[32%] laptopRg:w-[28%] shadow-xl shadow-[#33333330] absolute top-[-11%] laptopSm:top-[-8%] laptopRg:top-[-4%] left-[5%] tabletSm:left-[10%] laptopSm:left-[2%] laptopRg:left-[8%] drop-shadow-xl select-none rounded-full object-cover border-theme-blue border-y-[0.3rem] border-l-[0.5rem] border-dashed animate-holding"
               />
 
               <img
-                src={bannerRoom}
-                alt="Homes"
+                src="/src/assets/banner-room.jpg"
+                alt="room"
                 className="min-w-[22rem] w-[42%] tabletSm:w-[40%] laptopSm:w-[53%] laptopRg:w-[50%] shadow-xl shadow-[#33333330] overflow-hidden absolute bottom-[-10%] right-[5%] laptopSm:bottom-[-8%] laptopSm:right-0 drop-shadow-xl select-none rounded-full object-cover border-theme-blue border-y-[0.6rem] border-r-[0.8rem] border-double animate-holding"
               />
             </div>
@@ -204,7 +185,7 @@ const Home = () => {
                   {/* Card Image */}
                   <div className="imageArea relative w-full h-[18rem] object-cover before:content-[''] before:absolute before:z-[1] before:bottom-0 before:left-0 before:right-0 before:h-[50%] before:bg-gradient-to-b to-[#30303080] from-transparent before:pointer-events-none">
                     <img
-                      src={cardImage}
+                      src="/src/assets/home.jpg"
                       alt="property"
                       className="cardImage w-full h-full object-cover"
                     />
@@ -316,19 +297,19 @@ const Home = () => {
               {/* Demand Card */}
               {[
                 {
-                  image: buy,
+                  image: "/src/assets/buy.png",
                   title: "Buy a property",
                   text: "Find your perfect place where you meet happiness",
                   buttonText: "FIND PROPERTY",
                 },
                 {
-                  image: sell,
+                  image: "/src/assets/sell.png",
                   title: "Sell a property",
                   text: "Get the best value of your property in any economy",
                   buttonText: "ADD DETAILS",
                 },
                 {
-                  image: rent,
+                  image: "/src/assets/rent.png",
                   title: "Rent a property",
                   text: "Live where you can love with perfect lovely rental",
                   buttonText: "FIND RENTALS",
@@ -344,7 +325,7 @@ const Home = () => {
                       src={image}
                       alt="buy"
                       className={`${
-                        image === sell
+                        image.includes("sell.png")
                           ? "mobileSm:w-[22rem] tabletRg:w-[29rem] laptopSm:w-[17rem]"
                           : "mobileSm:w-[22rem] tabletRg:w-[30rem] laptopSm:w-[18rem]"
                       } object-cover`}
@@ -397,19 +378,19 @@ const Home = () => {
               {[
                 {
                   name: "Kinza Arsalan",
-                  image: agent01,
+                  image: "/src/assets/Agents/agent01.jpg",
                 },
                 {
                   name: "Hammad Khan",
-                  image: agent02,
+                  image: "/src/assets/Agents/agent02.png",
                 },
                 {
                   name: "Bilal Siddique",
-                  image: agent03,
+                  image: "/src/assets/Agents/agent03.png",
                 },
                 {
                   name: "Muhammad Raza",
-                  image: agent04,
+                  image: "/src/assets/Agents/agent04.png",
                 },
               ]
                 .reverse()
@@ -530,7 +511,7 @@ const Home = () => {
             {/* Feedback Image */}
             <div className="imageSide w-[100%] mobileRg:w-[90%] tabletSm:w-[80%] tabletLg:w-[46%] self-end tabletLg:self-center tabletLg:max-h-[40rem] relative z-[1] flex items-center justify-center before:content-[''] before:absolute before:z-10 before:w-full before:h-full before:bg-gradient-to-r before:to-[#22222260] before:from-transparent before:rounded-xl after:content-[''] after:absolute after:z-[-1] after:right-[-11%] after:bottom-[-10%] after:w-[60%] after:h-[120%] after:bg-theme-yellow after:rounded-tl-xl after:rounded-bl-xl">
               <img
-                src={feedbackImage}
+                src="/src/assets/feedback-image.jpg"
                 alt="feedback"
                 className="w-full h-full tabletLg:min-h-[35rem] object-cover select-none rounded-xl"
               />

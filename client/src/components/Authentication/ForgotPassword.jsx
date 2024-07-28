@@ -18,7 +18,7 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [responseData, setResponseData] = useState("");
+  const [responseUser, setResponseUser] = useState("");
 
   // Email Change Handler
   const emailChangeHandler = (e) => {
@@ -39,8 +39,7 @@ const ForgotPassword = () => {
 
         // Call Forgot Password API Function
         const response = await forgotPassword(email);
-        console.log(response);
-        setResponseData(response?.data);
+        setResponseUser(response?.data);
 
         setLoading(false);
       }
@@ -71,7 +70,7 @@ const ForgotPassword = () => {
 
         {/* Verfication Body */}
         <div className="w-full flex flex-col gap-[1rem] pt-[1rem]">
-          {!responseData ? (
+          {!responseUser ? (
             // Sending Verification Link Content
             <div className="w-full flex flex-col gap-[1rem]">
               {/* Message Cont */}
@@ -144,9 +143,9 @@ const ForgotPassword = () => {
 
               <p className="text-[1.5rem] font-medium text-center text-neutral-800">
                 Dear{" "}
-                <span className="font-semibold">{responseData.username}</span>,
+                <span className="font-semibold">{responseUser.username}</span>,
                 we have sent a password reset link to your email{" "}
-                <span className="font-semibold">{responseData.email}</span>.
+                <span className="font-semibold">{responseUser.email}</span>.
                 Please check your inbox to proceed with resetting your NAB
                 Estate account password.
               </p>

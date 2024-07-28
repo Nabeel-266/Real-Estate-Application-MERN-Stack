@@ -14,13 +14,13 @@ import {
 
 // Import Actions
 import {
-  signinFailure,
-  signinPending,
-  signinSuccess,
+  signupVerifyOtpSendSuccess,
   signupFailure,
   signupPending,
   signupSuccess,
-  verificationCodeSuccess,
+  signinFailure,
+  signinPending,
+  signinSuccess,
   checkTokenSuccess,
   resendOTPSuccess,
   googleAuthSuccess,
@@ -30,19 +30,15 @@ import {
 export const registerUser = async (userCredentials, dispatch, navigate) => {
   try {
     const response = await axios.post(`${SIGN_UP}`, userCredentials);
-    const userDoc = response?.data;
-    console.log(userDoc);
+    const responseData = response?.data;
 
-    // If User Doc updated with an OTP
-    if (userDoc.status === "Success") {
-      dispatch(verificationCodeSuccess(userDoc.data));
+    if (responseData.status === "Success") {
+      dispatch(signupVerifyOtpSendSuccess(responseData.result));
 
-      toastify("success", `${userDoc.message}`, "top-right", "dark", 4000);
+      toastify("success", responseData.message, "top-right", "dark", 4000);
 
       // Navigate to the verification page
       navigate("/account/verification");
-    } else {
-      toastify("error", `${userDoc.message}`, "top-right", "dark", 4000);
     }
   } catch (error) {
     throw error;
@@ -58,14 +54,14 @@ export const registerUserVerification = async (userDoc, OTP, dispatch) => {
       enteredOTP: OTP,
       user: userDoc,
     });
-    const newUser = response?.data?.data;
+    const responseData = response?.data;
 
-    if (response.data.status === "Success") {
-      dispatch(signupSuccess(newUser));
+    if (responseData?.status === "Success") {
+      dispatch(signupSuccess(responseData.result));
 
       toastify(
         "success",
-        `${newUser.username}! Your Account Created Successfully`,
+        `${responseData.result.username}! Your Account Created Successfully`,
         "top-right",
         "dark",
         4000
@@ -83,16 +79,19 @@ export const loginUser = async (userCredentials, dispatch) => {
 
   try {
     const response = await axios.post(`${SIGN_IN}`, userCredentials);
-    const loggedInUser = response?.data?.data;
-    dispatch(signinSuccess(loggedInUser));
+    const responseData = response?.data;
 
-    toastify(
-      "success",
-      `${loggedInUser.username} ! You Login Successfully`,
-      "top-right",
-      "dark",
-      4000
-    );
+    if (responseData?.status === "Success") {
+      dispatch(signinSuccess(responseData.result));
+
+      toastify(
+        "success",
+        `${responseData.result.username} ! You Login Successfully`,
+        "top-right",
+        "dark",
+        4000
+      );
+    }
   } catch (error) {
     dispatch(signinFailure());
     throw error;
@@ -103,16 +102,19 @@ export const loginUser = async (userCredentials, dispatch) => {
 export const googleAuth = async (userCredentials, dispatch) => {
   try {
     const response = await axios.post(`${GOOGLE_AUTH}`, userCredentials);
-    const authenticUser = response?.data?.data;
-    dispatch(googleAuthSuccess(authenticUser));
+    const responseData = response?.data;
 
-    toastify(
-      "success",
-      `${authenticUser.username} ! You Login Successfully`,
-      "top-right",
-      "dark",
-      4000
-    );
+    if (responseData?.status === "Success") {
+      dispatch(googleAuthSuccess(responseData.result));
+
+      toastify(
+        "success",
+        `${responseData.result.username} ! You Login Successfully`,
+        "top-right",
+        "dark",
+        4000
+      );
+    }
   } catch (error) {
     dispatch(signinFailure());
     throw error;
@@ -121,24 +123,32 @@ export const googleAuth = async (userCredentials, dispatch) => {
 
 // For RESEND OTP to USER
 export const resendOTPtoUser = async (userDoc, dispatch) => {
-  console.log(userDoc);
   try {
     const response = await axios.post(`${RESEND_OTP}`, userDoc);
-    const updatedOTPUser = response?.data;
+    const responseData = response?.data;
 
-    if (updatedOTPUser.status === "Success") {
-      dispatch(resendOTPSuccess(updatedOTPUser.data));
+    if (responseData?.status === "Success") {
+      dispatch(resendOTPSuccess(responseData.result));
 
-      toastify(
-        "success",
-        "OTP has been resent successfully, Please! check your email",
-        "top-right",
-        "dark",
-        6000
-      );
+      toastify("success", responseData.message, "top-right", "dark", 6000);
     } else {
       toastify("error", `${updatedOTPUser.message}`, "top-right", "dark", 4000);
     }
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const forgotPassword = async (email) => {
+  try {
+    const response = await axios.post(`${FORGOT_PASSWORD}`, { email });
+    const responseData = response?.data;
+
+    if (responseData?.status === "Success") {
+      toastify("success", responseData.message, "top-right", "dark", 6000);
+    }
+
+    return responseData;
   } catch (error) {
     throw error;
   }
@@ -148,38 +158,15 @@ export const resendOTPtoUser = async (userDoc, dispatch) => {
 export const checkToken = async (dispatch) => {
   try {
     const response = await axios.get(`${CHECK_TOKEN}`);
-    const refreshUser = response.data.data;
-    // console.log(refreshUser);
+    const responseData = response?.data;
 
-    if (response.data.status === "Success") {
-      dispatch(checkTokenSuccess(refreshUser));
+    if (responseData?.status === "Success") {
+      dispatch(checkTokenSuccess(responseData.result));
     } else {
       dispatch(checkTokenSuccess(null));
     }
   } catch (error) {
     dispatch(checkTokenSuccess(null));
-  }
-};
-
-export const forgotPassword = async (email) => {
-  try {
-    const response = await axios.post(`${FORGOT_PASSWORD}`, { email });
-    const resetPasswordLinkStatus = response?.data?.status;
-    console.log(resetPasswordLinkStatus);
-
-    if (resetPasswordLinkStatus === "Success") {
-      toastify(
-        "success",
-        "Reset Password Link has been sent successfully, Please! check your email",
-        "top-right",
-        "dark",
-        6000
-      );
-    }
-
-    return response?.data;
-  } catch (error) {
-    throw error;
   }
 };
 

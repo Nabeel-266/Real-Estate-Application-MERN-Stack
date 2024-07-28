@@ -25,6 +25,7 @@ const Profile = () => {
   );
   const [userProfile, setUserProfile] = useState({});
   const { username, profilePicture, liveInCity, mobileNumber } = userProfile;
+  const [userPflPicTemporaryURL, setUserPflPicTemporaryURL] = useState("");
   const [error, setError] = useState([]);
   const [isCountryDropdownOpen, setIsCountryDropdownOpen] = useState(false);
   const [isCitiesDropdownOpen, setIsCitiesDropdownOpen] = useState(false);
@@ -35,6 +36,8 @@ const Profile = () => {
     callingNumber: "",
   });
   const { ISOCode, callingCode, callingNumber } = mobileNumInfo;
+
+  console.log(userProfile);
 
   // Current User Profile Properties set into User_Profile Object
   useEffect(() => {
@@ -99,9 +102,10 @@ const Profile = () => {
 
     if (imageFile) {
       const imageURL = URL.createObjectURL(imageFile);
+      setUserPflPicTemporaryURL(imageURL);
       setUserProfile({
         ...userProfile,
-        profilePicture: imageURL,
+        profilePicture: imageFile,
       });
     }
   };
@@ -219,9 +223,6 @@ const Profile = () => {
 
     try {
       if (isUserProfileDocOK()) {
-        console.log("Update Profile Handler Working");
-        console.log(userProfile);
-
         // User Profile Updated Properties
         let filterUpdatedProperties = {};
 
@@ -235,8 +236,6 @@ const Profile = () => {
           }
         });
 
-        console.log(filterUpdatedProperties);
-
         // Call Update User_Profile API Function
         await updateUserProfile(
           currentUser._id,
@@ -244,14 +243,6 @@ const Profile = () => {
           dispatch
         );
       }
-
-      // toastify(
-      //   "error",
-      //   `Your request has failed due to a server error. Please try again in a few minutes.`,
-      //   "top-right",
-      //   "dark",
-      //   5000
-      // );
     } catch (err) {
       console.error("Error updating user profile:", err);
     }
@@ -276,7 +267,9 @@ const Profile = () => {
                 </h3>
                 <div className="relative">
                   <img
-                    src={profilePicture || ProfileAvatar}
+                    src={
+                      userPflPicTemporaryURL || profilePicture || ProfileAvatar
+                    }
                     alt="Profile Pic"
                     className="w-[12rem] h-[12rem] rounded-full object-cover bg-neutral-200 border-[0.3rem] border-neutral-300"
                   />

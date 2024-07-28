@@ -1,12 +1,15 @@
 import User from "../Models/user-schema.js";
+import { v2 as cloudinary } from "cloudinary";
 import { StatusCodes } from "http-status-codes";
 import { sendError, sendSuccess } from "../utils/responses.js";
 import resMessages from "../constants/responsesMessages.js";
+import fs from "fs";
 
 //* --> For Update User Profile <--
 //? @route --> POST --> /api/auth/updateProfile
 //  @access --> PRIVATE
 export const updateProfile = async (req, res, next) => {
+  console.log("Update Profile Controller");
   const { id } = req.params;
   const updatedFields = req.body;
 
@@ -69,6 +72,35 @@ export const updateProfile = async (req, res, next) => {
     );
   } catch (error) {
     console.log(error.message, "==> error in update profile");
+    next(error);
+  }
+};
+
+//* --> For Upload User Profile Pic <--
+//? @route --> POST --> /api/auth/uploadProfilePic
+//  @access --> PRIVATE
+export const uploadProfilePic = async (req, res, next) => {
+  console.log(req.file);
+
+  try {
+    const filePath = req.file.path;
+    const cloudinaryResult = await cloudinary.uploader.upload(filePath, {
+      folder: "NAB Estate/User",
+    });
+
+    console.log(cloudinaryResult, "==> Upload Image In To Cloudinary Result");
+
+    // Delete the file from uploads folder after uploading to Cloudinary
+    fs.unlinkSync(filePath);
+
+    res.status(StatusCodes.OK).send(
+      sendSuccess({
+        message: resMessages.SUCCESS_UPLOAD_IMAGE,
+        data: cloudinaryResult.secure_url,
+      })
+    );
+  } catch (error) {
+    console.log(error.message, "==> error in uploading profile pic");
     next(error);
   }
 };

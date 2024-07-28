@@ -10,3 +10,4 @@ export const FORGOT_PASSWORD = "/api/auth/forgotPassword";
 
 // USER API's End Points
 export const UPDATE_PROFILE = "/api/user/updateProfile";
+export const UPLOAD_PROFILE_PIC = "/api/user/uploadProfilePic";

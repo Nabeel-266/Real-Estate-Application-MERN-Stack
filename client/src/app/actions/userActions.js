@@ -5,6 +5,11 @@ import {
   setUnAuthUser,
 } from "../slices/userSlice.js";
 
+//* For Signup User Verification Action
+export const signupVerifyOtpSendSuccess = (user) => (dispatch) => {
+  dispatch(setUnAuthUser(user));
+};
+
 //* For Signup User Actions
 export const signupPending = () => (dispatch) => {
   dispatch(setLoading(true));
@@ -41,11 +46,6 @@ export const signinFailure = () => (dispatch) => {
 // //* For Google Auth User Action
 export const googleAuthSuccess = (user) => (dispatch) => {
   dispatch(setAuthUser(user));
-};
-
-//* For User Verification Code Action
-export const verificationCodeSuccess = (user) => (dispatch) => {
-  dispatch(setUnAuthUser(user));
 };
 
 //* For Resend OTP to User Action

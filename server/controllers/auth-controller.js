@@ -1,19 +1,17 @@
 import User from "../Models/user-schema.js";
 import dotenv from "dotenv";
-import pkg from "bcryptjs";
-import { v4 as uuidv4 } from "uuid";
-import { sendEmailLink, sendEmailOTP } from "../helpers/nodemailer.js";
-import { emailRegex } from "../utils/emailRegex.js";
 import { StatusCodes } from "http-status-codes";
+import { emailRegex } from "../utils/emailRegex.js";
+import resMessages from "../constants/responsesMessages.js";
 import { sendError, sendSuccess } from "../utils/responses.js";
+import { sendEmailLink, sendEmailOTP } from "../helpers/nodemailer.js";
+import { generateCode, generatePassword } from "../helpers/password.js";
+import { compare, encrypted } from "../helpers/crypted.js";
 import {
   generateToken,
   generateTokenForLink,
   verifyToken,
 } from "../helpers/token.js";
-import resMessages from "../constants/responsesMessages.js";
-import { generateRandomPassword } from "../helpers/password.js";
-const { compareSync, hashSync, genSaltSync } = pkg;
 dotenv.config();
 
 //* --> For Signup <--
@@ -87,12 +85,10 @@ export const signup = async (req, res, next) => {
     }
 
     // Create OTP
-    const otp = uuidv4().slice(0, 8);
-    console.log(otp);
+    const otp = generateCode(8);
 
     // Hashed OTP
-    const OTPSalt = genSaltSync(10);
-    const hashedOTP = hashSync(otp, OTPSalt);
+    const hashedOTP = encrypted(otp, 10);
 
     // Set OTP and OTP Expiry in USER_Credentials
     user_Credentials.otp = hashedOTP;
@@ -104,7 +100,7 @@ export const signup = async (req, res, next) => {
 
     res.status(StatusCodes.OK).send(
       sendSuccess({
-        message: emailResponse,
+        message: resMessages.SUCCESS_REGISTRATION_OTP,
         data: user_Credentials,
       })
     );
@@ -145,7 +141,7 @@ export const signupVerification = async (req, res, next) => {
     }
 
     // Check OTP is Correct
-    const isOtpValid = compareSync(enteredOTP, user.otp);
+    const isOtpValid = compare(enteredOTP, user.otp);
 
     // If OTP invalid
     if (!isOtpValid) {
@@ -170,14 +166,15 @@ export const signupVerification = async (req, res, next) => {
     const { username, email, password } = user;
 
     // Hashed Password
-    const passwordSalt = genSaltSync(10);
-    const hashedPassword = hashSync(password, passwordSalt);
+    const hashedPassword = encrypted(password, 10);
 
     // Create New User in Database
     const user_Doc = new User({ username, email, password: hashedPassword });
 
     // New User Saved in Db
     const newUser = await user_Doc.save();
+
+    // Remove password from User_Document for give response
     newUser.password = undefined;
 
     // Generate Token for User
@@ -243,7 +240,7 @@ export const signin = async (req, res, next) => {
     }
 
     // Check Password is Correct
-    const isPasswordCorrect = compareSync(password, user.password);
+    const isPasswordCorrect = compare(password, user.password);
 
     // If Password is not correct
     if (!isPasswordCorrect) {
@@ -255,6 +252,7 @@ export const signin = async (req, res, next) => {
       );
     }
 
+    // Remove password from User_Document for give response
     user.password = undefined;
 
     // Generate Token for User
@@ -305,13 +303,12 @@ export const signGoogleOAuth = async (req, res, next) => {
         );
     } else {
       // Generate a Random Password
-      const randomPassword = generateRandomPassword(
+      const randomPassword = generatePassword(
         process.env.RANDOM_PASSWORD_LENGTH
       );
 
       // Hashed Password
-      const passwordSalt = genSaltSync(10);
-      const hashedPassword = hashSync(randomPassword, passwordSalt);
+      const hashedPassword = encrypted(randomPassword, 10);
 
       // Create New User in Database
       const user_Doc = new User({
@@ -340,76 +337,6 @@ export const signGoogleOAuth = async (req, res, next) => {
     }
   } catch (error) {
     console.log(error.message, "==> error in GoogleOAuth");
-    next(error);
-  }
-};
-
-//* --> For Verify Account <--
-//? @route --> POST --> api/auth/verifyAccount
-//  @access --> PRIVATE
-export const verifyAccount = async (req, res, next) => {
-  console.log("Verify Account Controller");
-  console.log(req.body, "==> Request Body");
-  console.log(req.user, "==> Request User ID");
-
-  try {
-    const { otp } = req.body;
-
-    // If OTP not found
-    if (!otp) {
-      return res.status(StatusCodes.BAD_REQUEST).send(
-        sendError({
-          statusCode: StatusCodes.BAD_REQUEST,
-          message: resMessages.MISSING_FIELDS,
-        })
-      );
-    }
-
-    // Find User with OTP and Req.User.ID
-    const user = await User.findOne({ otp: otp, _id: req.user });
-
-    // If User not found
-    if (!user) {
-      return res.status(StatusCodes.UNAUTHORIZED).send(
-        sendError({
-          statusCode: StatusCodes.UNAUTHORIZED,
-          message: resMessages.INVALID_OTP,
-        })
-      );
-    }
-
-    console.log(user, "==> Find USer with OTP and ID");
-
-    // If OTP Expired
-    if (user.otpExpiry < Date.now()) {
-      return res.status(StatusCodes.FORBIDDEN).send(
-        sendError({
-          statusCode: StatusCodes.FORBIDDEN,
-          message: resMessages.OTP_EXPIRED,
-        })
-      );
-    }
-
-    user.isVerified = true;
-    user.otp = undefined;
-    user.otpExpiry = undefined;
-
-    // Update User after Verification
-    const updatedUser = await user.save();
-    updatedUser.password = undefined;
-
-    // Generate Token for User
-    const token = generateToken({ userId: updatedUser._id });
-
-    res.cookie("token", token, { httpOnly: true, maxAge: 12 * 60 * 60 * 1000 });
-    res.status(StatusCodes.ACCEPTED).send(
-      sendSuccess({
-        message: resMessages.SUCCESS_VERIFICATION,
-        data: updatedUser,
-      })
-    );
-  } catch (error) {
-    console.log(error.message, "==> error in user verfication");
     next(error);
   }
 };
@@ -445,12 +372,10 @@ export const resendOTP = async (req, res, next) => {
     }
 
     // Create OTP
-    const otp = uuidv4().slice(0, 8);
-    console.log(otp);
+    const otp = generateCode(8);
 
     // Hashed OTP
-    const OTPSalt = genSaltSync(10);
-    const hashedOTP = hashSync(otp, OTPSalt);
+    const hashedOTP = encrypted(otp, 10);
 
     // Set OTP and OTP Expiry in USER_Document
     userDoc.otp = hashedOTP;
@@ -462,7 +387,6 @@ export const resendOTP = async (req, res, next) => {
       userDoc.email,
       otp
     );
-    console.log(emailResponse);
 
     res.status(StatusCodes.OK).send(
       sendSuccess({
@@ -472,62 +396,6 @@ export const resendOTP = async (req, res, next) => {
     );
   } catch (error) {
     console.log(error.message, "==> error in resend Otp");
-    next(error);
-  }
-};
-
-//* --> For Refresh Token <--
-//? @route --> GET --> api/auth/refreshToken
-//  @access --> PRIVATE
-export const refreshToken = async (req, res, next) => {
-  console.log("Refresh Token Controller");
-  console.log(req.user, "==> Request User");
-  console.log(req.tokenExp, "==> Request Token Expiry");
-
-  try {
-    const user = await User.findById({ _id: req.user });
-    console.log(user, "==> Find User with ID");
-
-    if (!user) {
-      return res.status(StatusCodes.NOT_FOUND).send(
-        sendError({
-          statusCode: StatusCodes.NOT_FOUND,
-          message: resMessages.NO_USER,
-        })
-      );
-    }
-
-    // User Password Remove for giving Response
-    user.password = undefined;
-
-    const tokenExpiry = req.tokenExp;
-    const currentTime = Math.floor(Date.now() / 1000); // current time in seconds
-    const checktokenExpiryIsGreaterThan3Hours =
-      tokenExpiry > currentTime + 3 * 60 * 60;
-
-    if (checktokenExpiryIsGreaterThan3Hours) {
-      return res.status(StatusCodes.OK).send(
-        sendSuccess({
-          message: "Current Token is Fine",
-          data: user,
-        })
-      );
-    }
-
-    // Generate Token for User
-    const token = generateToken({ userId: user._id });
-
-    res
-      .cookie("token", token, { httpOnly: true, maxAge: 12 * 60 * 60 * 1000 })
-      .status(StatusCodes.OK)
-      .send(
-        sendSuccess({
-          message: resMessages.SUCCESS_REFRESH_TOKEN,
-          data: user,
-        })
-      );
-  } catch (error) {
-    console.log(error.message, "==> error in refresh token");
     next(error);
   }
 };
@@ -558,7 +426,7 @@ export const forgotPassword = async (req, res, next) => {
     const emailResponse = await sendEmailLink(user.username, user.email, link);
     console.log(emailResponse);
 
-    // Remove Password from User_Doc for response
+    // Remove Password from User_Doc for give response
     user.password = undefined;
 
     res.status(StatusCodes.OK).send(
@@ -591,7 +459,7 @@ export const resetPasswordURL = async (req, res) => {
     const verifyUser = verifyToken(token);
     console.log(verifyUser);
 
-    res.render("page/reset-password", {
+    res.status(StatusCodes.OK).render("page/reset-password", {
       name: user.username,
       email: user.email,
       id: user._id,
@@ -634,18 +502,20 @@ export const resetPasswordURL = async (req, res) => {
 //  @access --> PRIVATE
 export const resetPassword = async (req, res, next) => {
   const { id } = req.params;
+  const { password, confirmPassword } = req.body;
 
   try {
     const user = await User.findOne({ _id: id });
 
     // If User not found
     if (!user) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .send("UnAuthenticated User! user not found");
+      return res.status(StatusCodes.NOT_FOUND).send(
+        sendError({
+          statusCode: StatusCodes.NOT_FOUND,
+          message: resMessages.NO_USER,
+        })
+      );
     }
-
-    const { password, confirmPassword } = req.body;
 
     // Password Lenght Verification
     if (password.length < 8) {
@@ -668,8 +538,7 @@ export const resetPassword = async (req, res, next) => {
     }
 
     // Hashed Password
-    const passwordSalt = genSaltSync(10);
-    const hashedPassword = hashSync(password, passwordSalt);
+    const hashedPassword = encrypted(password, 10);
 
     // Update Password in User_Doc and Save to DB
     await User.updateOne({ _id: id }, { $set: { password: hashedPassword } });
@@ -677,7 +546,7 @@ export const resetPassword = async (req, res, next) => {
     res.status(StatusCodes.OK).send(
       sendSuccess({
         message: resMessages.SUCCESS_RESET_PASSWORD,
-        data: user,
+        data: null,
       })
     );
   } catch (error) {
@@ -685,3 +554,129 @@ export const resetPassword = async (req, res, next) => {
     next(error);
   }
 };
+
+//* --> For Refresh Token <--
+//? @route --> GET --> api/auth/refreshToken
+//  @access --> PROTECTED
+export const refreshToken = async (req, res, next) => {
+  console.log("Refresh Token Controller");
+  console.log(req.user, "==> Request User");
+  console.log(req.tokenExp, "==> Request Token Expiry");
+
+  try {
+    const user = await User.findById({ _id: req.user });
+    console.log(user, "==> Find User with ID");
+
+    if (!user) {
+      return res.status(StatusCodes.NOT_FOUND).send(
+        sendError({
+          statusCode: StatusCodes.NOT_FOUND,
+          message: resMessages.NO_USER,
+        })
+      );
+    }
+
+    // Remove password from User_Document for give response
+    user.password = undefined;
+
+    const tokenExpiry = req.tokenExp;
+    const currentTime = Math.floor(Date.now() / 1000); // current time in seconds
+    const checktokenExpiryIsGreaterThan3Hours =
+      tokenExpiry > currentTime + 3 * 60 * 60;
+
+    if (checktokenExpiryIsGreaterThan3Hours) {
+      return res.status(StatusCodes.OK).send(
+        sendSuccess({
+          message: "Current Token is Fine",
+          data: user,
+        })
+      );
+    }
+
+    // Generate Token for User
+    const token = generateToken({ userId: user._id });
+
+    res
+      .cookie("token", token, { httpOnly: true, maxAge: 12 * 60 * 60 * 1000 })
+      .status(StatusCodes.OK)
+      .send(
+        sendSuccess({
+          message: resMessages.SUCCESS_REFRESH_TOKEN,
+          data: user,
+        })
+      );
+  } catch (error) {
+    console.log(error.message, "==> error in refresh token");
+    next(error);
+  }
+};
+
+// // --> For Verify Account <--
+// // @route --> POST --> api/auth/verifyAccount
+// //  @access --> PRIVATE
+// export const verifyAccount = async (req, res, next) => {
+//   console.log("Verify Account Controller");
+//   console.log(req.body, "==> Request Body");
+//   console.log(req.user, "==> Request User ID");
+
+//   try {
+//     const { otp } = req.body;
+
+//     // If OTP not found
+//     if (!otp) {
+//       return res.status(StatusCodes.BAD_REQUEST).send(
+//         sendError({
+//           statusCode: StatusCodes.BAD_REQUEST,
+//           message: resMessages.MISSING_FIELDS,
+//         })
+//       );
+//     }
+
+//     // Find User with OTP and Req.User.ID
+//     const user = await User.findOne({ otp: otp, _id: req.user });
+
+//     // If User not found
+//     if (!user) {
+//       return res.status(StatusCodes.UNAUTHORIZED).send(
+//         sendError({
+//           statusCode: StatusCodes.UNAUTHORIZED,
+//           message: resMessages.INVALID_OTP,
+//         })
+//       );
+//     }
+
+//     console.log(user, "==> Find USer with OTP and ID");
+
+//     // If OTP Expired
+//     if (user.otpExpiry < Date.now()) {
+//       return res.status(StatusCodes.FORBIDDEN).send(
+//         sendError({
+//           statusCode: StatusCodes.FORBIDDEN,
+//           message: resMessages.OTP_EXPIRED,
+//         })
+//       );
+//     }
+
+//     user.isVerified = true;
+//     user.otp = undefined;
+//     user.otpExpiry = undefined;
+
+//     // Update User after Verification
+//     const updatedUser = await user.save();
+//     updatedUser.password = undefined;
+
+//     // Generate Token for User
+//     const token = generateToken({ userId: updatedUser._id });
+
+//     res.cookie("token", token, { httpOnly: true, maxAge: 12 * 60 * 60 * 1000 });
+//     res.status(StatusCodes.ACCEPTED).send(
+//       sendSuccess({
+//         message: resMessages.SUCCESS_VERIFICATION,
+//         data: updatedUser,
+//       })
+//     );
+//   } catch (error) {
+//     console.log(error.message, "==> error in user verfication");
+//     next(error);
+//   }
+// };

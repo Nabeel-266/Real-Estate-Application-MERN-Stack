@@ -22,9 +22,6 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { HiOutlineUpload } from "react-icons/hi";
 import { FaXmark } from "react-icons/fa6";
 
-// Import Assets
-import AddPropertyBannerImage from "../assets/add-property-banner.png";
-
 // Import Component
 import AddPropertyLocationModal from "../components/AddProperty/AddPropertyLocation";
 import AddPropertyFeaturesModal from "../components/AddProperty/AddPropertyFeatures";
@@ -393,7 +390,7 @@ const AddProperty = () => {
           {/* Image Cont */}
           <div className="imageCont h-full absolute z-[10] right-0 bottom-0">
             <img
-              src={AddPropertyBannerImage}
+              src="/src/assets/add-property-banner.png"
               alt="AddPropertyBanner"
               className="h-full object-cover"
             />

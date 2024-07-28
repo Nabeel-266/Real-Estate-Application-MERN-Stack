@@ -1,15 +1,5 @@
 import { useState } from "react";
 
-// Import Assets
-import aboutUsImage from "../assets/About/about-us.png";
-import ourMissionImage from "../assets/About/mission.png";
-import ourVisionImage from "../assets/About/vision.png";
-import ourSolutionImage from "../assets/About/solution.png";
-import expertiseImage from "../assets/About/expertise.png";
-import personalizedImage from "../assets/About/personalized.png";
-import insuranceImage from "../assets/About/insurance.png";
-import profitImage from "../assets/About/profit.png";
-
 // Import React Icons
 import { FaRegLightbulb, FaLightbulb } from "react-icons/fa6";
 
@@ -52,28 +42,28 @@ const solutions = [
 const services = [
   {
     id: 1,
-    iconImage: expertiseImage,
+    iconImage: "/src/assets/About/expertise.png",
     title: "Expertise and Experience",
     description:
       "With years of experience in the real estate industry, our team brings a wealth of knowledge and expertise to every transaction. We have a deep understanding of the market trends and are adept at navigating complex real estate scenarios.",
   },
   {
     id: 2,
-    iconImage: personalizedImage,
+    iconImage: "/src/assets/About/personalized.png",
     title: "Personalized Service",
     description:
       "We believe that every client is unique, and so are their real estate needs. Our dedicated professionals provide tailored solutions to match your specific requirements, ensuring a personalized and satisfactory experience.",
   },
   {
     id: 3,
-    iconImage: insuranceImage,
+    iconImage: "/src/assets/About/insurance.png",
     title: "Property Insurance",
     description:
       "We prioritize your property's safety with comprehensive insurance solutions. NAB Estate partners with leading insurers to offer tailored coverage, protecting your investment from unforeseen events and providing you with peace of mind and security.",
   },
   {
     id: 4,
-    iconImage: profitImage,
+    iconImage: "/src/assets/About/profit.png",
     title: "Lowest Commission",
     description:
       "NAB Estate offers the lowest commission rates in the market, ensuring cost-effective real estate transactions. Save money while receiving top-notch service, maximizing your investment returns with our expert and personalized approach.",
@@ -99,7 +89,7 @@ const About = () => {
         <section className="aboutUsWrapper flex flex-col-reverse gap-[4rem] laptopRg:gap-0 laptopRg:flex-row laptopRg:items-start items-center justify-between mx-[4%] pb-[2rem]">
           <div className="imageSide w-[100%] tabletSm:w-[55rem] laptopRg:w-[42%] flex items-center justify-center">
             <img
-              src={aboutUsImage}
+              src="/src/assets/About/about-us.png"
               alt="aboutUs"
               className="w-full h-full object-cover select-none animate-holding drop-shadow-xl"
             />
@@ -132,7 +122,7 @@ const About = () => {
         <section className="ourMissionWrapper flex flex-col-reverse gap-[3rem] laptopRg:gap-0 laptopRg:flex-row-reverse items-center justify-between mx-[4%] pt-[2rem] pb-[1rem] laptopRg:py-[1rem]">
           <div className="imageSide w-[100%] tabletSm:w-[55rem] laptopRg:w-[42%] flex items-center justify-center">
             <img
-              src={ourMissionImage}
+              src="/src/assets/About/mission.png"
               alt="OurMission"
               className="w-full h-full object-cover select-none animate-holding"
             />
@@ -161,7 +151,7 @@ const About = () => {
         <section className="ourVisionWrapper flex flex-col-reverse gap-[2.5rem] laptopRg:gap-0 laptopRg:flex-row items-center justify-between mx-[4%] py-[1rem]">
           <div className="imageSide w-[100%] tabletSm:w-[55rem] laptopRg:w-[43%] flex items-center justify-center">
             <img
-              src={ourVisionImage}
+              src="/src/assets/About/vision.png"
               alt="OurVision"
               className="w-full h-full object-cover select-none animate-holding"
             />
@@ -188,7 +178,7 @@ const About = () => {
         <section className="ourSolutionWrapper flex flex-row-reverse items-center justify-between mx-[4%] py-[2rem]">
           <div className="imageSide hidden laptopRg:w-[45%] laptopRg:flex items-center justify-center">
             <img
-              src={ourSolutionImage}
+              src="/src/assets/About/solution.png"
               alt="OurSolution"
               className="w-full object-cover select-none animate-holding"
             />

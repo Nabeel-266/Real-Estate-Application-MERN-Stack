@@ -3,21 +3,21 @@ export const sendSuccess = ({ message, data, token, count = null }) => {
     return {
       status: "Success",
       message,
-      data,
+      result: data,
       token,
     };
   } else if (count) {
     return {
       status: "Success",
       message,
-      data,
+      result: data,
       count,
     };
   } else {
     return {
       status: "Success",
       message,
-      data,
+      result: data,
     };
   }
 };
@@ -29,7 +29,7 @@ export const sendError = ({ statusCode, message }) => {
     statusCode,
     status: "Failed",
     message,
-    data: null,
+    result: null,
   };
 };
 
