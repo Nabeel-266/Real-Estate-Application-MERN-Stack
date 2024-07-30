@@ -1,9 +1,12 @@
 import User from "../Models/user-schema.js";
+import fs from "fs";
 import { v2 as cloudinary } from "cloudinary";
 import { StatusCodes } from "http-status-codes";
 import { sendError, sendSuccess } from "../utils/responses.js";
 import resMessages from "../constants/responsesMessages.js";
-import fs from "fs";
+import { compare, encrypted } from "../helpers/crypted.js";
+import { generateCode } from "../helpers/password.js";
+import { sendEmailOTP } from "../helpers/nodemailer.js";
 
 //* --> For Update User Profile <--
 //? @route --> POST --> /api/auth/updateProfile
@@ -101,6 +104,80 @@ export const uploadProfilePic = async (req, res, next) => {
     );
   } catch (error) {
     console.log(error.message, "==> error in uploading profile pic");
+    next(error);
+  }
+};
+
+//* --> For Send User Recovery Email OTP <--
+//? @route --> POST --> /api/auth/sendRecoveryEmailOTP
+//  @access --> PUBLIC
+export const sendRecoveryEmailOTP = async (req, res, next) => {
+  console.log(req.body);
+
+  try {
+    const { userId, userEmail, recoveryEmail, accountPassword } = req.body;
+
+    // All Fields Required Verification
+    if (!userId || !userEmail || !recoveryEmail || !password) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.MISSING_FIELDS,
+        })
+      );
+    }
+
+    // Find User in Database
+    const user = await User.findOne({ _id: userId, email: userEmail });
+
+    // If USER not exist
+    if (!user) {
+      return res.status(StatusCodes.NOT_FOUND).send(
+        sendError({
+          statusCode: StatusCodes.NOT_FOUND,
+          message: resMessages.NO_USER,
+        })
+      );
+    }
+
+    // Check Password is Correct
+    const isPasswordCorrect = compare(password, user.password);
+
+    // If Password is not correct
+    if (!isPasswordCorrect) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.INCORRECT_PASSWORD,
+        })
+      );
+    }
+
+    // Generate OTP
+    const otp = generateCode(8);
+
+    // Hashed OTP
+    const hashedOTP = encrypted(otp, 10);
+
+    // send OTP to User Recovery Email
+    const emailResponse = await sendEmailOTP(user.username, recoveryEmail, otp);
+    console.log(emailResponse);
+
+    // Create a response data
+    const responseData = {
+      recoveryEmail,
+      otp: hashedOTP,
+      otpExpiry: Date.now() + 90000,
+    };
+
+    res.status(StatusCodes.OK).send(
+      sendSuccess({
+        message: resMessages.SUCCESS_SEND_OTP_EMAIL,
+        data: responseData,
+      })
+    );
+  } catch (error) {
+    console.log(error.message, "==> error in add recovery email");
     next(error);
   }
 };

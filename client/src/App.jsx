@@ -9,7 +9,10 @@ import { useDispatch } from "react-redux";
 import { checkToken } from "./api/authAPIs";
 
 // Import Protected Route Components
-import { UnAuthProtectedRoute } from "./secure/Protected_Route";
+import {
+  AuthProtectedRoute,
+  UnAuthProtectedRoute,
+} from "./secure/Protected_Route";
 
 // Import Pages & Components
 import { ToastContainer } from "react-toastify";
@@ -69,7 +72,13 @@ const AppRoutes = () => {
       <Routes>
         <Route path="/" element={<Home />} />
 
-        <Route element={<Auth />}>
+        <Route
+          element={
+            <AuthProtectedRoute>
+              <Auth />
+            </AuthProtectedRoute>
+          }
+        >
           <Route path="/account/sign-in" element={<Signin />} />
           <Route path="/account/sign-up" element={<Signup />} />
           <Route path="/account/verification" element={<VerifyAccount />} />

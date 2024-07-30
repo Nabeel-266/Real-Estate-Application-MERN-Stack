@@ -30,20 +30,20 @@ export const verifyToken = (token) => {
 export const validateToken = async (req, res, next) => {
   console.log(req.cookies?.token, "==> Request Cookies");
 
-  // Get Token
-  const token = req.cookies?.token;
-
-  // If Token Not Found
-  if (!token) {
-    return res.status(StatusCodes.UNAUTHORIZED).send(
-      sendError({
-        statusCode: StatusCodes.UNAUTHORIZED,
-        message: resMessages.UN_ACCESS_TOKEN,
-      })
-    );
-  }
-
   try {
+    // Get Token
+    const token = req.cookies?.token;
+
+    // If Token Not Found
+    if (!token) {
+      return res.status(StatusCodes.UNAUTHORIZED).send(
+        sendError({
+          statusCode: StatusCodes.UNAUTHORIZED,
+          message: resMessages.UN_ACCESS_TOKEN,
+        })
+      );
+    }
+
     // Decoded Token
     const decoded = verifyToken(token);
     console.log(decoded, "====>> Decoded Token INFO");

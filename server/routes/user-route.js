@@ -6,6 +6,7 @@ import {
   updateProfile,
   uploadProfilePic,
 } from "../controllers/user-controller.js";
+import { validateToken } from "../helpers/token.js";
 
 const userRouter = express.Router();
 
@@ -18,5 +19,9 @@ userRouter.post(
   upload.single("Profile_Pic"),
   uploadProfilePic
 );
+
+// For Add User Recovery Email
+
+userRouter.post("/sendRecoveryEmailOTP", validateToken, sendRecoveryEmailOTP);
 
 export default userRouter;

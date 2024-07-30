@@ -14,15 +14,9 @@ export const AuthProtectedRoute = ({ children }) => {
 
 export const UnAuthProtectedRoute = ({ children }) => {
   const user = useSelector((state) => state?.user?.authenticUser);
+
   if (!user) {
-    toastify(
-      "info",
-      `Welcome to NAB Estate! Please LOGIN to your account`,
-      "top-right",
-      "dark",
-      10000
-    );
-    return <Navigate to="/account/sign-in" replace />;
+    return <Navigate to="/" replace />;
   }
 
   return <>{children}</>;

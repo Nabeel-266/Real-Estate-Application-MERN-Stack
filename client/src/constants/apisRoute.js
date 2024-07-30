@@ -12,3 +12,4 @@ export const LOGOUT = "/api/auth/signout";
 // USER API's End Points
 export const UPDATE_PROFILE = "/api/user/updateProfile";
 export const UPLOAD_PROFILE_PIC = "/api/user/uploadProfilePic";
+export const SEND_RECOVERY_EMAIL_OTP = "/api/user/sendRecoveryEmailOTP";

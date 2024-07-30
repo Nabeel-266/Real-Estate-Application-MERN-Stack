@@ -1,6 +1,10 @@
 import axios from "axios";
 import toastify from "../utils/toastify";
-import { UPDATE_PROFILE, UPLOAD_PROFILE_PIC } from "../constants/apisRoute";
+import {
+  SEND_RECOVERY_EMAIL_OTP,
+  UPDATE_PROFILE,
+  UPLOAD_PROFILE_PIC,
+} from "../constants/apisRoute";
 import {
   updateProfilePending,
   updateProfileSuccess,
@@ -51,6 +55,25 @@ export const updateUserProfile = async (userId, updatedFields, dispatch) => {
     }
   } catch (error) {
     dispatch(updateProfileFailure());
+    throw error;
+  }
+};
+
+// For ADD USER_RECOVERY_EMAIL
+export const sendUserRecoveryEmailOTP = async (credentials, dispatch) => {
+  try {
+    const response = await axios.post(
+      `${SEND_RECOVERY_EMAIL_OTP}`,
+      credentials
+    );
+    const responseData = response?.data;
+    console.log(responseData);
+
+    if (responseData?.status === "Success") {
+      // toastify("success", `${responseData.message}`, "top-right", "dark", 4000);
+    }
+  } catch (error) {
+    console.log(error, "==> error in Add User Recovery Email");
     throw error;
   }
 };

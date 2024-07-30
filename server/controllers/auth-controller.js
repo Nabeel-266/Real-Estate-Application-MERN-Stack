@@ -100,7 +100,7 @@ export const signup = async (req, res, next) => {
 
     res.status(StatusCodes.OK).send(
       sendSuccess({
-        message: resMessages.SUCCESS_REGISTRATION_OTP,
+        message: resMessages.SUCCESS_SEND_OTP_EMAIL,
         data: user_Credentials,
       })
     );
@@ -227,7 +227,6 @@ export const signin = async (req, res, next) => {
 
     // Find User to Email
     const user = await User.findOne({ email });
-    console.log(user);
 
     // If USER not exist
     if (!user) {
