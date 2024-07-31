@@ -73,7 +73,10 @@ const Account = () => {
                 <span>Add recovery email</span>
               </button>
             ) : (
-              <button className="text-[1.7rem] leading-[1.8rem] font-medium text-theme-blue mt-[1rem] hover:underline underline-offset-2">
+              <button
+                onClick={() => setIsRecoveryEmailModalOpen(true)}
+                className="text-[1.7rem] leading-[1.8rem] font-medium text-theme-blue mt-[1rem] hover:underline underline-offset-2"
+              >
                 Change your account recovery email?
               </button>
             )}

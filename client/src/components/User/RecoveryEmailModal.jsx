@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
-import {
-  recoveryEmailClientErrorHandler,
-  recoveryEmailServerErrorHandler,
-} from "../../utils/accountErrors";
+import { useDispatch, useSelector } from "react-redux";
 import {
   sendUserRecoveryEmailOTP,
   verifyUserRecoveryEmailOTP,
 } from "../../api/userAPIs";
+import {
+  recoveryEmailClientErrorHandler,
+  recoveryEmailServerErrorHandler,
+} from "../../utils/accountErrors";
 
 // Import React Icons
 import { FaXmark } from "react-icons/fa6";
@@ -15,17 +15,16 @@ import { FaArrowRightLong } from "react-icons/fa6";
 
 // Import Component
 import Loader from "../Loader";
-import toastify from "../../utils/toastify";
 
 const RecoveryEmailModal = ({ isModalOpen }) => {
   const dispatch = useDispatch();
+  const currentUser = useSelector((state) => state?.user?.authenticUser);
   const [recoveryStep, setRecoveryStep] = useState("STEP-01");
   const [timeLeft, setTimeLeft] = useState(null);
   const intervalRef = useRef(null);
   const [responseData, setResponseData] = useState("");
   const [error, setError] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [OTPCode, setOTPCode] = useState("");
   const [recoveryEmailCredentials, setRecoveryEmailCredentials] = useState({
     recoveryEmail: "",
     accountPassword: "",
@@ -89,6 +88,18 @@ const RecoveryEmailModal = ({ isModalOpen }) => {
   // Send Recovery Email OTP Handler
   const sendRecoveryEmailOTPHandler = async (e) => {
     e.preventDefault();
+
+    // For checking recovery email is not same as current account email & recovery email
+    if (
+      currentUser?.email === recoveryEmail ||
+      currentUser?.recoveryEmail === recoveryEmail
+    ) {
+      setError([
+        "Email",
+        "This recovery email is already in use for your account.",
+      ]);
+      return;
+    }
 
     try {
       setLoading(true);
@@ -156,7 +167,9 @@ const RecoveryEmailModal = ({ isModalOpen }) => {
         {/* Recovery Email Modal Header */}
         <header className="w-full px-[1rem] pt-[2rem] pb-[1rem] border-b-[0.2rem] border-neutral-200 text-theme-blue flex items-center justify-between">
           <h2 className="text-[2.5rem] leading-[2.5rem] font-bold">
-            Set Recovery Email
+            {currentUser?.recoveryEmail
+              ? "Change Recovery Email"
+              : "Set Recovery Email"}
           </h2>
           <button
             onClick={() => isModalOpen(false)}
@@ -183,7 +196,11 @@ const RecoveryEmailModal = ({ isModalOpen }) => {
                   name="recoveryEmail"
                   value={recoveryEmail}
                   onChange={recoveryEmailChangeHandler}
-                  placeholder="Enter Recovery Email here..."
+                  placeholder={
+                    currentUser?.recoveryEmail
+                      ? "Enter New Recovery Email here..."
+                      : "Enter Recovery Email here..."
+                  }
                   className={`w-full tabletSm:w-[90%] px-[0.8rem] py-[0.8rem] text-neutral-700 text-[1.6rem] leading-[2rem] font-medium font-mont outline-none bg-transparent border-[0.2rem] border-neutral-500 rounded-md focus:border-theme-blue placeholder:font-montAlter placeholder:text-neutral-700 ${
                     error[0] === "Email" && "border-red-700"
                   }`}
@@ -191,7 +208,7 @@ const RecoveryEmailModal = ({ isModalOpen }) => {
 
                 {/* Recovery Email Error Message */}
                 {error[0] === "Email" && (
-                  <span className="errorMsg text-[1.4rem] leading-[1.4rem] font-medium text-red-700 mt-[0.5rem]">
+                  <span className="errorMsg text-[1.4rem] leading-[1.8rem] font-medium text-red-700 mt-[0.5rem]">
                     {error[1]}
                   </span>
                 )}
