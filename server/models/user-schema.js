@@ -16,6 +16,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    recoveryEmail: {
+      type: String,
+      default: "",
+    },
     mobileNumber: {
       type: String,
       default: "",

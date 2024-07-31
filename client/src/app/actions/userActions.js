@@ -81,6 +81,11 @@ export const updateProfileFailure = () => (dispatch) => {
   dispatch(setError(true));
 };
 
+//* For Add User Recovery Email Action
+export const addRecoveryEmailSuccess = (user) => (dispatch) => {
+  dispatch(setAuthUser(user));
+};
+
 // export const logout = () => (dispatch) => {
 //   dispatch(resetAuthUser());
 // };

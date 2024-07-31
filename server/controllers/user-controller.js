@@ -113,12 +113,14 @@ export const uploadProfilePic = async (req, res, next) => {
 //  @access --> PUBLIC
 export const sendRecoveryEmailOTP = async (req, res, next) => {
   console.log(req.body);
+  console.log(req.userId, "==> Request User ID");
 
   try {
-    const { userId, userEmail, recoveryEmail, accountPassword } = req.body;
+    const userId = req.userId;
+    const { recoveryEmail, accountPassword } = req.body;
 
     // All Fields Required Verification
-    if (!userId || !userEmail || !recoveryEmail || !password) {
+    if (!recoveryEmail || !accountPassword) {
       return res.status(StatusCodes.BAD_REQUEST).send(
         sendError({
           statusCode: StatusCodes.BAD_REQUEST,
@@ -128,7 +130,7 @@ export const sendRecoveryEmailOTP = async (req, res, next) => {
     }
 
     // Find User in Database
-    const user = await User.findOne({ _id: userId, email: userEmail });
+    const user = await User.findOne({ _id: userId });
 
     // If USER not exist
     if (!user) {
@@ -141,7 +143,7 @@ export const sendRecoveryEmailOTP = async (req, res, next) => {
     }
 
     // Check Password is Correct
-    const isPasswordCorrect = compare(password, user.password);
+    const isPasswordCorrect = compare(accountPassword, user.password);
 
     // If Password is not correct
     if (!isPasswordCorrect) {
@@ -154,30 +156,100 @@ export const sendRecoveryEmailOTP = async (req, res, next) => {
     }
 
     // Generate OTP
-    const otp = generateCode(8);
+    const otp = generateCode(6);
 
     // Hashed OTP
     const hashedOTP = encrypted(otp, 10);
 
     // send OTP to User Recovery Email
-    const emailResponse = await sendEmailOTP(user.username, recoveryEmail, otp);
+    const emailResponse = await sendEmailOTP(
+      user.username,
+      recoveryEmail,
+      otp,
+      "Recovery Email"
+    );
     console.log(emailResponse);
 
     // Create a response data
     const responseData = {
+      userId: user._id,
       recoveryEmail,
       otp: hashedOTP,
-      otpExpiry: Date.now() + 90000,
+      otpExpiry: Date.now() + 120000,
     };
 
     res.status(StatusCodes.OK).send(
       sendSuccess({
-        message: resMessages.SUCCESS_SEND_OTP_EMAIL,
+        message: resMessages.SUCCESS_SEND_OTP,
         data: responseData,
       })
     );
   } catch (error) {
     console.log(error.message, "==> error in add recovery email");
+    next(error);
+  }
+};
+
+//* --> For Verify User Recovery Email OTP <--
+//? @route --> POST --> /api/auth/verifyRecoveryEmailOTP
+//  @access --> PRIVATE
+export const verifyRecoveryEmailOTP = async (req, res, next) => {
+  console.log(req.body);
+
+  try {
+    const { userId, recoveryEmail, otp, otpExpiry, enteredOTP } = req.body;
+
+    // If user OTP not given
+    if (!enteredOTP) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.MISSING_FIELD,
+        })
+      );
+    }
+
+    // Check OTP is Correct
+    const isOtpValid = compare(enteredOTP, otp);
+
+    // If OTP invalid
+    if (!isOtpValid) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.INVALID_OTP,
+        })
+      );
+    }
+
+    // If OTP Expired
+    if (otpExpiry < Date.now()) {
+      return res.status(StatusCodes.FORBIDDEN).send(
+        sendError({
+          statusCode: StatusCodes.FORBIDDEN,
+          message: resMessages.OTP_EXPIRED,
+        })
+      );
+    }
+
+    // Update USER in the database
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: userId },
+      { $set: { recoveryEmail } },
+      { returnDocument: "after" }
+    );
+
+    // Remove updated user password for given response
+    updatedUser.password = undefined;
+
+    res.status(StatusCodes.OK).send(
+      sendSuccess({
+        message: resMessages.SUCCESS_ADD_RECOVERY_EMAIL,
+        data: updatedUser,
+      })
+    );
+  } catch (error) {
+    console.log(error.message, "==> error in verify recovery email");
     next(error);
   }
 };

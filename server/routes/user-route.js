@@ -5,6 +5,8 @@ import { upload } from "../helpers/storage.js";
 import {
   updateProfile,
   uploadProfilePic,
+  sendRecoveryEmailOTP,
+  verifyRecoveryEmailOTP,
 } from "../controllers/user-controller.js";
 import { validateToken } from "../helpers/token.js";
 
@@ -21,7 +23,8 @@ userRouter.post(
 );
 
 // For Add User Recovery Email
-
 userRouter.post("/sendRecoveryEmailOTP", validateToken, sendRecoveryEmailOTP);
+
+userRouter.post("/verifyRecoveryEmailOTP", verifyRecoveryEmailOTP);
 
 export default userRouter;

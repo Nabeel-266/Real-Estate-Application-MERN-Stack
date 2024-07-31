@@ -55,24 +55,28 @@ const Account = () => {
               Add your recovery email, if you change your account email address.
             </p>
 
-            {/* <p className="flex items-center gap-[0.5rem]">
-            <MdOutlineMailOutline className="text-[1.8rem] text-theme-blue" />
-            <span className="text-[1.6rem] leading-[2rem] text-neutral-800 font-medium">
-              {currentUser?.email}
-            </span>
-          </p> */}
+            {currentUser?.recoveryEmail && (
+              <p className="flex items-center gap-[0.5rem]">
+                <MdOutlineMailOutline className="text-[1.8rem] text-theme-blue" />
+                <span className="text-[1.6rem] leading-[2rem] text-neutral-800 font-medium">
+                  {currentUser?.recoveryEmail}
+                </span>
+              </p>
+            )}
 
-            <button
-              onClick={() => setIsRecoveryEmailModalOpen(true)}
-              className="flex items-center gap-[0.5rem] text-[1.7rem] leading-[1.8rem] font-medium text-theme-blue mt-[1.2rem]"
-            >
-              <FaPlus size="1.6rem" />
-              <span>Add recovery email</span>
-            </button>
-
-            <button className="hidden text-[1.7rem] leading-[1.8rem] font-medium text-theme-blue mt-[1rem] hover:underline underline-offset-2">
-              Change account recovery email
-            </button>
+            {!currentUser?.recoveryEmail ? (
+              <button
+                onClick={() => setIsRecoveryEmailModalOpen(true)}
+                className="flex items-center gap-[0.5rem] text-[1.7rem] leading-[1.8rem] font-medium text-theme-blue mt-[1.2rem]"
+              >
+                <FaPlus size="1.6rem" />
+                <span>Add recovery email</span>
+              </button>
+            ) : (
+              <button className="text-[1.7rem] leading-[1.8rem] font-medium text-theme-blue mt-[1rem] hover:underline underline-offset-2">
+                Change your account recovery email?
+              </button>
+            )}
           </section>
 
           {/* Reset Password */}
@@ -110,7 +114,7 @@ const Account = () => {
       </div>
 
       {isRecoveryEmailModalOpen && (
-        <RecoveryEmailModal closeModal={setIsRecoveryEmailModalOpen} />
+        <RecoveryEmailModal isModalOpen={setIsRecoveryEmailModalOpen} />
       )}
     </>
   );

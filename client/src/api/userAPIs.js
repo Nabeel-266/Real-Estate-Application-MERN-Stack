@@ -4,11 +4,13 @@ import {
   SEND_RECOVERY_EMAIL_OTP,
   UPDATE_PROFILE,
   UPLOAD_PROFILE_PIC,
+  VERIFY_RECOVERY_EMAIL_OTP,
 } from "../constants/apisRoute";
 import {
   updateProfilePending,
   updateProfileSuccess,
   updateProfileFailure,
+  addRecoveryEmailSuccess,
 } from "../app/actions/userActions";
 
 // For UPDATE USER_PROFILE
@@ -59,8 +61,8 @@ export const updateUserProfile = async (userId, updatedFields, dispatch) => {
   }
 };
 
-// For ADD USER_RECOVERY_EMAIL
-export const sendUserRecoveryEmailOTP = async (credentials, dispatch) => {
+// For SEND USER_RECOVERY_EMAIL OTP
+export const sendUserRecoveryEmailOTP = async (credentials) => {
   try {
     const response = await axios.post(
       `${SEND_RECOVERY_EMAIL_OTP}`,
@@ -70,10 +72,37 @@ export const sendUserRecoveryEmailOTP = async (credentials, dispatch) => {
     console.log(responseData);
 
     if (responseData?.status === "Success") {
-      // toastify("success", `${responseData.message}`, "top-right", "dark", 4000);
+      return responseData.result;
     }
   } catch (error) {
     console.log(error, "==> error in Add User Recovery Email");
+    throw error;
+  }
+};
+
+// For VERIFY OTP & ADD USER_RECOVERY_EMAIL
+export const verifyUserRecoveryEmailOTP = async (credentials, dispatch) => {
+  try {
+    const response = await axios.post(
+      `${VERIFY_RECOVERY_EMAIL_OTP}`,
+      credentials
+    );
+    const responseData = response?.data;
+    console.log(responseData);
+
+    if (responseData?.status === "Success") {
+      dispatch(addRecoveryEmailSuccess(responseData.result));
+
+      toastify(
+        "success",
+        `Dear ${responseData.result.username}, \nYour Recovery Email added successfully in your account`,
+        "top-right",
+        "dark",
+        4000
+      );
+    }
+  } catch (error) {
+    console.log(error, "==> error in Verify User Recovery Email");
     throw error;
   }
 };

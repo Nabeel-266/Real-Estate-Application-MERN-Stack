@@ -122,7 +122,7 @@ const VerifyAccount = () => {
           {/* Message */}
           <p className="text-[1.6rem] font-medium text-neutral-800">
             We have sent <b>OTP</b> to your email to verify your account. Please
-            check your email and put your <b>account verification code</b> here
+            check your email and put your account verification OTP code here
             then click on a <b>Verify & Register Account</b> Button.
           </p>
 

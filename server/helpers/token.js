@@ -28,7 +28,7 @@ export const verifyToken = (token) => {
 
 //* VALIDATE TOKEN
 export const validateToken = async (req, res, next) => {
-  console.log(req.cookies?.token, "==> Request Cookies");
+  // console.log(req.cookies?.token, "==> Request Cookies");
 
   try {
     // Get Token
@@ -46,7 +46,7 @@ export const validateToken = async (req, res, next) => {
 
     // Decoded Token
     const decoded = verifyToken(token);
-    console.log(decoded, "====>> Decoded Token INFO");
+    // console.log(decoded, "====>> Decoded Token INFO");
 
     // Check Token Expiry
     const currentTime = Math.floor(Date.now() / 1000); // current time in seconds
@@ -59,8 +59,7 @@ export const validateToken = async (req, res, next) => {
       );
     }
 
-    // Req.User is equal to Verify Token Result ID
-    req.user = decoded.result;
+    req.userId = decoded.result;
     req.tokenExp = decoded.exp;
     next();
   } catch (error) {

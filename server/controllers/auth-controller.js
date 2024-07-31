@@ -100,7 +100,7 @@ export const signup = async (req, res, next) => {
 
     res.status(StatusCodes.OK).send(
       sendSuccess({
-        message: resMessages.SUCCESS_SEND_OTP_EMAIL,
+        message: resMessages.SUCCESS_SEND_OTP,
         data: user_Credentials,
       })
     );
@@ -559,11 +559,11 @@ export const resetPassword = async (req, res, next) => {
 //  @access --> PROTECTED
 export const refreshToken = async (req, res, next) => {
   console.log("Refresh Token Controller");
-  console.log(req.user, "==> Request User");
+  console.log(req.userId, "==> Request User ID");
   console.log(req.tokenExp, "==> Request Token Expiry");
 
   try {
-    const user = await User.findById({ _id: req.user });
+    const user = await User.findById({ _id: req.userId });
     console.log(user, "==> Find User with ID");
 
     if (!user) {

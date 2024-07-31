@@ -21,14 +21,14 @@ const resMessages = {
   SUCCESS_REGISTRATION: "User Registration Successfull",
   SUCCESS_VERIFICATION: "User Verification Successfull",
   SUCCESS_LOGOUT: "User Logout Successfull",
-  SUCCESS_SEND_OTP_EMAIL:
-    "OTP has been sent via email, Please Check your Email",
+  SUCCESS_SEND_OTP: "OTP has been sent via email, Please Check your Email",
   SUCCESS_RESEND_OTP: "OTP has been resent via email, Please Check your Email",
   SUCCESS_RESET_PASSWORD_LINK:
     "Reset Password Link has been sent via email, Please Check your Email",
   SUCCESS_RESET_PASSWORD: "Password has been reset successfully",
   SUCCESS_UPDATE_PROFILE: "Profile has been updated successfully",
   SUCCESS_UPLOAD_IMAGE: "Image has been uploaded successfully",
+  SUCCESS_ADD_RECOVERY_EMAIL: "Recovery Email has been added successfully",
   SUCCESS_DEACTIVATE: "User Deactivation Successfull",
   SUCCESS_ACTIVATE: "User Activation Successfull",
   NO_USER: "User not found",

@@ -18,7 +18,7 @@ const emailConfig = {
   },
 };
 
-export async function sendEmailOTP(username, userEmail, otp) {
+export async function sendEmailOTP(username, userEmail, otp, title) {
   try {
     // Create a transporter object using the email configuration
     const transporter = nodemailer.createTransport(emailConfig);
@@ -26,10 +26,15 @@ export async function sendEmailOTP(username, userEmail, otp) {
     // Render the email template with the given data and attachments
     let mailOptions = {};
 
+    const subject =
+      title === "Recovery Email"
+        ? "Recovery Email Verification of Nab Estate Account"
+        : "Verify Your Email for Nab Estate Account";
+
     // Read the email template and set mail options
     ejs.renderFile(
       path.join(__dirname, "../views/email/otp.ejs"),
-      { username, otp },
+      { username, otp, subject },
       (err, data) => {
         if (err) throw err;
 
@@ -37,7 +42,7 @@ export async function sendEmailOTP(username, userEmail, otp) {
         mailOptions = {
           from: process.env.PORTAL_EMAIL,
           to: userEmail,
-          subject: "Verify Your Email for Nab Estate Account",
+          subject,
           html: data,
           attachments: [
             {

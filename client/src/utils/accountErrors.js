@@ -39,22 +39,10 @@ const recoveryEmailClientErrorHandler = (
 };
 
 const recoveryEmailServerErrorHandler = (errorMsg, setError) => {
-  if (errorMsg === "User name must be 8 to 20 letters long") {
-    setError([
-      "Username",
-      "Please! enter your name between 7 to 20 letters long",
-    ]);
-  } else if (errorMsg === "Email is invalid") {
-    setError([
-      "Email",
-      "Please! enter a valid email address, your Email is invalid",
-    ]);
-  } else if (errorMsg === "User already exist") {
-    setError(["Email", "Already! account created from this email"]);
-  } else if (errorMsg === "Password length is short") {
-    setError(["Password", "Password must be minimum 8 characters long!"]);
-  } else if (errorMsg === "Passwords are not match") {
-    setError(["ConfirmPassword", "Please! Verify your Password, don't match"]);
+  if (errorMsg === "Password is incorrect") {
+    setError(["Password", "Password is incorrect"]);
+  } else if (errorMsg === "OTP is invalid") {
+    setError(["OTP", "OTP Code is invalid"]);
   } else {
     toastify(
       "error",
