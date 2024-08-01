@@ -8,11 +8,13 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 
 // Import Components
 import RecoveryEmailModal from "./RecoveryEmailModal";
+import ChangeEmailModal from "./ChangeEmailModal";
 
 const Account = () => {
   const currentUser = useSelector((state) => state?.user?.authenticUser);
   const [isRecoveryEmailModalOpen, setIsRecoveryEmailModalOpen] =
     useState(false);
+  const [isChangeEmailModalOpen, setIsChangeEmailModalOpen] = useState(false);
 
   return (
     <>
@@ -40,7 +42,10 @@ const Account = () => {
               </span>
             </p>
 
-            <button className="text-[1.7rem] leading-[1.8rem] font-medium text-theme-blue mt-[1rem] hover:underline underline-offset-2">
+            <button
+              onClick={() => setIsChangeEmailModalOpen(true)}
+              className="text-[1.7rem] leading-[1.8rem] font-medium text-theme-blue mt-[1rem] hover:underline underline-offset-2"
+            >
               Change your account email?
             </button>
           </section>
@@ -116,8 +121,14 @@ const Account = () => {
         </div>
       </div>
 
+      {/* Recovery Email Modal */}
       {isRecoveryEmailModalOpen && (
         <RecoveryEmailModal isModalOpen={setIsRecoveryEmailModalOpen} />
+      )}
+
+      {/* Change Email Modal */}
+      {isChangeEmailModalOpen && (
+        <ChangeEmailModal isModalOpen={setIsChangeEmailModalOpen} />
       )}
     </>
   );

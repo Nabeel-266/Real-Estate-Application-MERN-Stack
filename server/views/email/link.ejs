@@ -69,28 +69,24 @@
         </div>
 
         <div class="section">
-          <h2 class="title">Reset Your Nab Estate Account Password</h2>
+          <h2 class="title"><%= subject %></h2>
           <p style="font-weight: 600">Dear <%= username %>,</p>
           <p style="font-weight: 500">
-            We received a request to reset your password for your NAB Estate
-            account.
+            We received a request to <%= topic %> for your NAB Estate account.
           </p>
         </div>
 
         <div class="section">
           <p style="font-weight: 600">
-            To reset your password, please click the Recover Password button to
-            show the password reset form page
+            To <%= topic %>, please click the below button
           </p>
           <a href="<%= link %>">
-            <button class="button">Recover Password</button>
+            <button class="button"><%= buttonText %></button>
           </a>
         </div>
 
         <div class="section">
-          <p style="font-weight: 600">
-            If you did not request this, please ignore this email.
-          </p>
+          <p style="font-weight: 600"><%= alertMessage %></p>
           <p style="font-weight: 500">Best regards,</p>
           <p style="font-weight: 500">Nab Estate Team</p>
         </div>

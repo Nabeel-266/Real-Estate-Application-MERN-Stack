@@ -1,4 +1,5 @@
 import User from "../Models/user-schema.js";
+import dotenv from "dotenv";
 import fs from "fs";
 import { v2 as cloudinary } from "cloudinary";
 import { StatusCodes } from "http-status-codes";
@@ -6,7 +7,9 @@ import { sendError, sendSuccess } from "../utils/responses.js";
 import resMessages from "../constants/responsesMessages.js";
 import { compare, encrypted } from "../helpers/crypted.js";
 import { generateCode } from "../helpers/password.js";
-import { sendEmailOTP } from "../helpers/nodemailer.js";
+import { sendEmailLink, sendEmailOTP } from "../helpers/nodemailer.js";
+import { generateTokenForLink } from "../helpers/token.js";
+dotenv.config();
 
 //* --> For Update User Profile <--
 //? @route --> POST --> /api/auth/updateProfile
@@ -129,15 +132,12 @@ export const sendRecoveryEmailOTP = async (req, res, next) => {
       );
     }
 
-    // Find User in Database
-    const user = await User.findOne({ _id: userId });
-
-    // If USER not exist
-    if (!user) {
-      return res.status(StatusCodes.NOT_FOUND).send(
+    // Verify Email Address Typography
+    if (!emailRegex.test(recoveryEmail)) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
         sendError({
-          statusCode: StatusCodes.NOT_FOUND,
-          message: resMessages.NO_USER,
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.INVALID_RECOVERY_EMAIL,
         })
       );
     }
@@ -151,6 +151,19 @@ export const sendRecoveryEmailOTP = async (req, res, next) => {
         sendError({
           statusCode: StatusCodes.BAD_REQUEST,
           message: resMessages.INCORRECT_PASSWORD,
+        })
+      );
+    }
+
+    // Find User in Database
+    const user = await User.findOne({ _id: userId });
+
+    // If USER not exist
+    if (!user) {
+      return res.status(StatusCodes.NOT_FOUND).send(
+        sendError({
+          statusCode: StatusCodes.NOT_FOUND,
+          message: resMessages.NO_USER,
         })
       );
     }
@@ -251,5 +264,178 @@ export const verifyRecoveryEmailOTP = async (req, res, next) => {
   } catch (error) {
     console.log(error.message, "==> error in verify recovery email");
     next(error);
+  }
+};
+
+//* --> For Send Change User Email Confirmation Mail <--
+//? @route --> POST --> /api/auth/changeEmailConfirmation
+//  @access --> PUBLIC
+export const changeEmailConfirmation = async (req, res, next) => {
+  console.log("Change Email Confirmation Controller");
+
+  try {
+    const userId = req.userId;
+    const { recoveryEmail, accountPassword } = req.body;
+
+    // All Fields Required Verification
+    if (!recoveryEmail || !accountPassword) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.MISSING_FIELDS,
+        })
+      );
+    }
+
+    // Verify Recovery Email Address Typography
+    if (!emailRegex.test(recoveryEmail)) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.INVALID_RECOVERY_EMAIL,
+        })
+      );
+    }
+
+    // Find User in Database
+    const user = await User.findOne({ _id: userId });
+
+    // If USER not exist
+    if (!user) {
+      return res.status(StatusCodes.NOT_FOUND).send(
+        sendError({
+          statusCode: StatusCodes.NOT_FOUND,
+          message: resMessages.NO_USER,
+        })
+      );
+    }
+
+    // Check Recovery Email is present in USER_DOC
+    if (!user.recoveryEmail) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.NO_RECOVERY_EMAIL,
+        })
+      );
+    }
+
+    // Check Recovery Email is right to USER_DOC recovery email
+    if (user.recoveryEmail === recoveryEmail) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.WRONG_RECOVERY_EMAIL,
+        })
+      );
+    }
+
+    // Check Password is Correct
+    const isPasswordCorrect = compare(accountPassword, user.password);
+
+    // If Password is not correct
+    if (!isPasswordCorrect) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.INCORRECT_PASSWORD,
+        })
+      );
+    }
+
+    // Generate Token for User Change Email URL
+    const token = generateTokenForLink({ userId: user._id });
+
+    const link = `${process.env.SERVER_URL}/api/user/change-email/${user._id}/${token}`;
+
+    // Send Reset Password Link to User Email
+    const emailResponse = await sendEmailLink(
+      user.username,
+      user.email,
+      link,
+      "Confirmation Email"
+    );
+    console.log(emailResponse);
+
+    // Remove Password from User_Doc for give response
+    user.password = undefined;
+
+    res.status(StatusCodes.OK).send(
+      sendSuccess({
+        message: resMessages.SUCCESS_CHANGE_EMAIL_LINK,
+        data: user,
+      })
+    );
+  } catch (error) {
+    console.log(error.message, "==> error in change password confirmation");
+    next(error);
+  }
+};
+
+//* --> For Change Email URL <--
+//? @route --> GET --> /api/auth/change-email/:id/:token
+//  @access --> PRIVATE
+export const changeEmailURL = async (req, res) => {
+  const { id, token } = req.params;
+
+  try {
+    // const user = await User.findOne({ _id: id });
+
+    // if (!user) {
+    //   return res
+    //     .status(StatusCodes.NOT_FOUND)
+    //     .send("UnAuthenticated User! user not found");
+    // }
+
+    // const verifyUserToken = verifyToken(token);
+    // console.log(verifyUserToken);
+
+    res.status(StatusCodes.OK).render("page/change-email", {
+      name: "Muhammad Nabeel",
+      email: "nabeel@gmail.com",
+      id: "skdflksdhf3243545sdf6s5d",
+    });
+
+    // res.status(StatusCodes.OK).render("page/change-email", {
+    //   name: user.username,
+    //   email: user.email,
+    //   id: user._id,
+    // });
+  } catch (error) {
+    console.log(error.message, "==> error in reset password URL");
+
+    // If JWT TOKEN expired error
+    if (error.message === "jwt expired") {
+      res.status(StatusCodes.UNAUTHORIZED).render("page/error", {
+        statusCode: "401",
+        statusText: "Un-Authorized User",
+        message: "Access denied!",
+        reason: "Your Change Email URL has been expired.",
+      });
+    }
+
+    // ElseIf Params Id and Token invalid error
+    else if (
+      error.message.includes("Cast to ObjectId failed") ||
+      error.message === "invalid token"
+    ) {
+      res.status(StatusCodes.BAD_REQUEST).render("page/error", {
+        statusCode: "400",
+        statusText: "Un-Authentic User",
+        message: "Access denied!",
+        reason: "Your Change Email URL has been invalid.",
+      });
+    }
+
+    // Else Server error
+    else {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).render("page/error", {
+        statusCode: "500",
+        statusText: "Internal Server Error",
+        message: "Something went wrong!",
+        reason:
+          "We’re sorry, but something went wrong, Please try again later or contact support if the issue persists.",
+      });
+    }
   }
 };

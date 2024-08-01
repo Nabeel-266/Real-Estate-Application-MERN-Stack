@@ -6,11 +6,11 @@ import { forgotPassword } from "../../api/authAPIs";
 // Import React Icons
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { BsFillSendFill } from "react-icons/bs";
+import { RiMailSendFill } from "react-icons/ri";
 
 // Import Component
 import Loader from "../Loader";
 import toastify from "../../utils/toastify";
-import { RiMailSendFill } from "react-icons/ri";
 
 const ForgotPassword = () => {
   const location = useLocation();

@@ -7,6 +7,8 @@ import {
   uploadProfilePic,
   sendRecoveryEmailOTP,
   verifyRecoveryEmailOTP,
+  changeEmailConfirmation,
+  changeEmailURL,
 } from "../controllers/user-controller.js";
 import { validateToken } from "../helpers/token.js";
 
@@ -22,9 +24,20 @@ userRouter.post(
   uploadProfilePic
 );
 
-// For Add User Recovery Email
+// For Send User Recovery Email OTP
 userRouter.post("/sendRecoveryEmailOTP", validateToken, sendRecoveryEmailOTP);
 
+// For Verify User Recovery Email OTP & Add User Recovery Email
 userRouter.post("/verifyRecoveryEmailOTP", verifyRecoveryEmailOTP);
+
+// For Send Change User Email Confirmation Mail
+userRouter.post(
+  "/changeEmailConfirmation",
+  validateToken,
+  changeEmailConfirmation
+);
+
+// For Change User Email URL
+userRouter.get("/change-email/:id/:token", changeEmailURL);
 
 export default userRouter;

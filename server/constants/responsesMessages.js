@@ -29,6 +29,8 @@ const resMessages = {
   SUCCESS_UPDATE_PROFILE: "Profile has been updated successfully",
   SUCCESS_UPLOAD_IMAGE: "Image has been uploaded successfully",
   SUCCESS_ADD_RECOVERY_EMAIL: "Recovery Email has been added successfully",
+  SUCCESS_CHANGE_EMAIL_LINK:
+    "Change Email Link has been sent via recovery email, Please Check your Recovery Email",
   SUCCESS_DEACTIVATE: "User Deactivation Successfull",
   SUCCESS_ACTIVATE: "User Activation Successfull",
   NO_USER: "User not found",
@@ -36,6 +38,12 @@ const resMessages = {
   OTP_NOT_EXPIRED: "Rejected! Your current OTP is already active",
   INVALID_OTP: "OTP is invalid",
   INVALID_EMAIL: "Email is invalid",
+  INVALID_NEW_EMAIL: "Your new email is invalid",
+  INVALID_RECOVERY_EMAIL: "Your recovery email is invalid",
+  NO_RECOVERY_EMAIL:
+    "Your account does not have a recovery email, please set recovery email first",
+  WRONG_RECOVERY_EMAIL:
+    "Your recovery email is wrong, please enter correct one",
   SUCCESS_REFRESH_TOKEN: "Token Refresh Successfull",
   INVALID_TOKEN: "Failed to authenticate token, token is invalid",
   UN_ACCESS_TOKEN: "Unauthorized User, Token is missing",
