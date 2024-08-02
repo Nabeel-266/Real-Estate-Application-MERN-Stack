@@ -6,7 +6,6 @@
     <title>OTP Email Template</title>
     <style>
       body {
-        /* font-family: Tahoma, Verdana, sans-serif; */
         font-family: Verdana, sans-serif;
       }
       .containerMain {
@@ -47,13 +46,50 @@
         font-weight: 800;
         color: #fff;
       }
+
+      /* --> Responsive Screen <-- */
+      @media (max-width: 375px) {
+        html {
+          font-size: 7.6px;
+        }
+      }
+      @media (376px <= width <= 479px) {
+        html {
+          font-size: 7.8px;
+        }
+      }
+      @media (480px <= width <= 639px) {
+        html {
+          font-size: 8.2px;
+        }
+      }
+      @media (640px <= width <= 767px) {
+        html {
+          font-size: 8.6px;
+        }
+      }
+      @media (768px <= width <= 900px) {
+        html {
+          font-size: 9px;
+        }
+      }
+      @media (901px <= width <= 1023px) {
+        html {
+          font-size: 8.8px;
+        }
+      }
+      @media (1024px <= width <= 1200px) {
+        html {
+          font-size: 9.4px;
+        }
+      }
     </style>
   </head>
   <body>
     <div class="containerMain">
       <div class="container">
         <div class="header">
-          <img src="cid:logo-image" alt="NabEstateLogo" />
+          <img src="cid:<%= imageCid %>" alt="NabEstateLogo" />
         </div>
 
         <div class="section">

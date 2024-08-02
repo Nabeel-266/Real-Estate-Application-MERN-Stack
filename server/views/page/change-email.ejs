@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NAB Real Estate</title>
+    <link rel="icon" type="image/png" href="/assets/favicon.png" />
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@200;300;400;500;600;700;800;900&family=Quicksand:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Styles -->
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        font-size: 10px;
+      }
+      body {
+        font-family: "Montserrat Alternates", sans-serif;
+      }
+      .containerMain {
+        width: 100%;
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: start;
+        background: white;
+        color: #303030;
+      }
+      .containerTop {
+        width: 100%;
+        min-height: 10rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        align-items: start;
+        padding: 2rem 4% 3rem 4%;
+        /* background-color: #082835; */
+      }
+      .containerTop img {
+        width: 23rem;
+        margin-left: 0.7%;
+        margin-bottom: 3rem;
+      }
+      .containerTop h1 {
+        width: 100%;
+        font-size: 2.8rem;
+        line-height: 4.5rem;
+        font-weight: 600;
+        margin-bottom: 2rem;
+        color: #082835;
+        border-bottom: 0.2rem solid #bbb;
+        padding: 0rem 1%;
+      }
+      .containerTop h3 {
+        font-size: 2.1rem;
+        line-height: 3rem;
+        font-weight: 700;
+        font-family: "Quicksand", sans-serif;
+        padding: 0rem 1%;
+      }
+      .containerTop p {
+        font-size: 1.8rem;
+        line-height: 1.9rem;
+        font-weight: bold;
+        letter-spacing: 0.05rem;
+        color: #505050;
+        font-family: "Quicksand", sans-serif;
+        padding: 0rem 1%;
+      }
+      .inputs-cont {
+        width: 100%;
+        padding: 1.5rem 5%;
+      }
+      .inputs-cont-wrapper {
+        width: 100%;
+        max-width: 45rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+      .email,
+      .otp-code {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .email span,
+      .otp-code span {
+        font-size: 1.8rem;
+        line-height: 1.8rem;
+        font-weight: 600;
+        color: #082835;
+      }
+      .email input,
+      .otp-code input {
+        outline: none;
+        border: 2px solid #a0a0a0;
+        border-radius: 0.4rem;
+        padding: 0.8rem 1rem;
+        font-size: 1.8rem;
+        line-height: 1.8rem;
+        font-weight: 500;
+        color: #505050;
+        font-family: "Montserrat Alternates", sans-serif;
+      }
+      .email input:focus,
+      .otp-code input:focus {
+        border-color: #082835;
+      }
+      .send-btn {
+        all: unset;
+        font-size: 2rem;
+        font-weight: 600;
+        text-align: center;
+        padding: 1rem 1rem;
+        color: white;
+        background-color: #082835;
+        margin-bottom: 1rem;
+        text-decoration: none;
+        border-radius: 100rem;
+        cursor: pointer;
+        transition: all 0.1s linear;
+      }
+      .send-btn:hover {
+        transform: scale(1.02);
+        box-shadow: 10px 10px 20px #eee;
+      }
+      .form-error {
+        color: #cf0000;
+        font-size: 1.7rem;
+        font-weight: 600;
+        display: none;
+      }
+      .error {
+        color: #cf0000;
+        font-size: 1.5rem;
+        font-weight: 500;
+      }
+      .success-message {
+        display: none;
+        font-size: 1.8rem;
+        font-weight: 600;
+      }
+      .failure-message {
+        display: none;
+        font-size: 1.8rem;
+        font-weight: 600;
+      }
+
+      /* --> Responsive Screen <-- */
+      @media (max-width: 375px) {
+        html {
+          font-size: 7.6px;
+        }
+      }
+      @media (376px <= width <= 479px) {
+        html {
+          font-size: 7.8px;
+        }
+      }
+      @media (480px <= width <= 639px) {
+        html {
+          font-size: 8.2px;
+        }
+      }
+      @media (640px <= width <= 767px) {
+        html {
+          font-size: 8.6px;
+        }
+      }
+      @media (768px <= width <= 900px) {
+        html {
+          font-size: 9px;
+        }
+      }
+      @media (901px <= width <= 1023px) {
+        html {
+          font-size: 8.8px;
+        }
+      }
+      @media (1024px <= width <= 1200px) {
+        html {
+          font-size: 9.4px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="containerMain">
+      <div class="containerTop">
+        <img src="/assets/logo-dark.png" alt="NabEstateLogo" />
+        <h1>Change Email</h1>
+        <h3>Dear <%= name%>,</h3>
+        <p>Your current email is <strong><%= email%></strong></p>
+      </div>
+
+      <div class="inputs-cont">
+        <div id="inputs-cont" class="inputs-cont-wrapper">
+          <p id="formError" class="form-error"></p>
+
+          <label for="email" class="email">
+            <span>Enter New Email Address</span>
+            <input type="email" id="email" autocomplete="off" required />
+            <div id="emailError" class="error"></div>
+          </label>
+
+          <button class="send-btn">Send Verification Code</button>
+
+          <label for="otp" class="otp-code">
+            <span>Enter OTP Code</span>
+            <input type="text" id="otp" autocomplete="off" required />
+            <div id="otpError" class="error"></div>
+          </label>
+
+          <button class="send-btn">Verify Code & Change Email</button>
+        </div>
+
+        <div id="successMessage" class="success-message">
+          <span>Dear <%= name %>,</span>
+          <br />
+          <p style="color: #72be00">
+            Your password has been reset successfully! ✔
+          </p>
+          <br />
+          <p>Lets go back to the NAB Estate and Login to your account again.</p>
+        </div>
+
+        <div id="failureMessage" class="failure-message">
+          <span>Dear <%= name %>,</span>
+          <br />
+          <p style="color: #990000">
+            An error occurred while resetting your password. Please try again in
+            a few minutes.
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<!-- <script>
+    const userId = "<%= id %>";
+
+    function passwordInputHandler() {
+      document.getElementById("passwordError").innerText = "";
+      document.getElementById("formError").style.display = "none";
+      document.getElementById("formError").innerText = "";
+    }
+
+    function confirmPasswordInputHandler() {
+      document.getElementById("confirmPasswordError").innerText = "";
+      document.getElementById("formError").style.display = "none";
+      document.getElementById("formError").innerText = "";
+    }
+
+    document
+      .getElementById("resetForm")
+      .addEventListener("submit", function (event) {
+        // Prevent form submission
+        event.preventDefault();
+
+        // Get the values of the password fields
+        let password = document.getElementById("password").value;
+        let confirmPassword =
+          document.getElementById("confirmPassword").value;
+
+        // Error messages
+        let passwordError = "";
+        let confirmPasswordError = "";
+
+        // // Check if the password is at least 8 characters long
+        if (password.length < 8) {
+          passwordError = "Password must be at least 8 characters long.";
+        }
+
+        // // Check if the password and confirm password fields match
+        else if (password !== confirmPassword) {
+          confirmPasswordError = "Passwords do not match.";
+        }
+
+        // Display error messages
+        document.getElementById("passwordError").innerText = passwordError;
+        document.getElementById("confirmPasswordError").innerText =
+          confirmPasswordError;
+
+        // If there are no errors, show the success message and hide the form
+        if (!passwordError && !confirmPasswordError) {
+          // Replace the URL with your backend API endpoint
+          fetch(`/api/auth/reset-password/${userId}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              password,
+              confirmPassword,
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data?.status === "Success") {
+                document.getElementById("resetForm").style.display = "none";
+                document.getElementById("successMessage").style.display =
+                  "block";
+              } else {
+                document.getElementById("formError").style.display = "block";
+                document.getElementById("formError").innerText =
+                  data?.message;
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              document.getElementById("resetForm").style.display = "none";
+              document.getElementById("failureMessage").style.display =
+                "block";
+            });
+        }
+      });
+  </script> -->

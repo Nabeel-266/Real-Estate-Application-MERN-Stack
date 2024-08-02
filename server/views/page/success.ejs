@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NAB Real Estate</title>
-    <link rel="icon" type="image/png" href="/assets/favicon.png" />
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -12,6 +11,7 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@200;300;400;500;600;700;800;900&family=Quicksand:wght@300..700&display=swap"
       rel="stylesheet"
     />
+    <!-- Styles -->
     <style>
       * {
         margin: 0;
@@ -24,43 +24,50 @@
       body {
         font-family: "Montserrat Alternates", sans-serif;
       }
-      .containerMain {
+      .container-main {
         width: 100%;
-        height: 100dvh;
-        max-height: 100dvh;
+        min-height: 100dvh;
         display: flex;
         flex-direction: column;
         justify-content: start;
-        align-items: center;
-        gap: 1.2rem;
+        align-items: start;
         background: white;
         color: #303030;
-        padding: 6rem 6%;
-        text-align: center;
       }
-      .containerMain h2,
-      .containerMain h4 {
-        font-size: 3.5rem;
-        line-height: 3.5rem;
-        font-weight: 700;
-        color: #082835;
+      .container-top {
+        width: 100%;
+        min-height: 10rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        align-items: start;
+        padding: 2rem 4% 2rem 4%;
+        /* background-color: #082835; */
       }
-      .containerMain p {
-        font-size: 2rem;
-        line-height: 2.5rem;
+      .container-top img {
+        width: 23rem;
+        margin-left: 0.7%;
+        margin-bottom: 3rem;
+      }
+      .container-top h1 {
+        width: 100%;
+        font-size: 2.8rem;
+        line-height: 4.5rem;
         font-weight: 600;
-        margin-top: 1rem;
+        color: #082835;
+        border-bottom: 0.2rem solid #bbb;
+        padding: 0rem 1%;
       }
-      .containerMain h1 {
-        font-size: 22rem;
-        line-height: 22rem;
-        user-select: none;
-        font-weight: 500;
-        color: white;
-        background-color: #082835;
-        padding: 0px 2rem;
-        border-radius: 0.8rem;
-        margin-top: 3rem;
+      .container-bottom {
+        width: 100%;
+        padding: 1.5rem 5%;
+      }
+      .success-message-cont {
+        font-size: 1.8rem;
+        font-weight: 600;
+      }
+      .success-message-cont h6 {
+        font-size: 2rem;
       }
 
       /* --> Responsive Screen <-- */
@@ -102,11 +109,21 @@
     </style>
   </head>
   <body>
-    <div class="containerMain">
-      <h2><%= message %></h2>
-      <h4><%= statusText %></h4>
-      <p><%= reason %></p>
-      <h1><%= statusCode %></h1>
+    <div class="container-main">
+      <div class="container-top">
+        <img src="/assets/logo-dark.png" alt="NabEstateLogo" />
+        <h1><%= title %></h1>
+      </div>
+
+      <div class="container-bottom">
+        <div class="success-message-cont">
+          <h6>Dear <%= username %>,</h6>
+
+          <p style="color: #72be00"><%= message %></p>
+          <br />
+          <p><%= guidance %></p>
+        </div>
+      </div>
     </div>
   </body>
 </html>
