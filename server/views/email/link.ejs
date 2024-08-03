@@ -6,9 +6,9 @@
     <title>Link Email Template</title>
     <style>
       body {
-        font-family: Verdana, sans-serif;
+        font-family: "Georgia", "Times New Roman", Times, serif;
       }
-      .containerMain {
+      .container-main {
         width: 100%;
         height: 100%;
         display: flex;
@@ -42,71 +42,37 @@
         color: #f0f0f0;
       }
       .section .title {
-        font-weight: 800;
-        color: #f9f9f9;
+        font-size: 21px;
+        font-weight: 700;
+        color: #fff;
       }
       .button {
         all: unset;
         border: none;
         font-size: 18px;
         font-weight: 700;
-        padding: 10px 20px;
+        padding: 8px 20px;
         color: #082835;
         background-color: #fff;
         text-decoration: none;
-        border-radius: 8px;
+        border-radius: 5px;
         margin-top: 10px;
         cursor: pointer;
-      }
-
-      /* --> Responsive Screen <-- */
-      @media (max-width: 375px) {
-        html {
-          font-size: 7.6px;
-        }
-      }
-      @media (376px <= width <= 479px) {
-        html {
-          font-size: 7.8px;
-        }
-      }
-      @media (480px <= width <= 639px) {
-        html {
-          font-size: 8.2px;
-        }
-      }
-      @media (640px <= width <= 767px) {
-        html {
-          font-size: 8.6px;
-        }
-      }
-      @media (768px <= width <= 900px) {
-        html {
-          font-size: 9px;
-        }
-      }
-      @media (901px <= width <= 1023px) {
-        html {
-          font-size: 8.8px;
-        }
-      }
-      @media (1024px <= width <= 1200px) {
-        html {
-          font-size: 9.4px;
-        }
       }
     </style>
   </head>
   <body>
-    <div class="containerMain">
+    <div class="container-main">
       <div class="container">
         <div class="header">
           <img src="cid:<%= imageCid %>" alt="NabEstateLogo" />
         </div>
 
-        <div class="section">
+        <div class="section" style="padding-top: 0px">
           <h2 class="title"><%= subject %></h2>
-          <p style="font-weight: 600">Dear <%= username %>,</p>
+          <p style="font-weight: 600; font-size: 18px; margin-bottom: 2px">
+            Dear <%= username %>,
+          </p>
           <p style="font-weight: 500">
             We received a request to <%= topic %> for your NAB Estate account.
           </p>
@@ -114,15 +80,16 @@
 
         <div class="section">
           <p style="font-weight: 600">
-            To <%= topic %>, please click the below button
+            To <%= topic %>, please click the below <%= buttonText %> button
           </p>
           <a href="<%= link %>">
             <button class="button"><%= buttonText %></button>
           </a>
         </div>
 
-        <div class="section">
+        <div class="section" style="margin-top: 10px">
           <p style="font-weight: 600"><%= alertMessage %></p>
+          <br />
           <p style="font-weight: 500">Best regards,</p>
           <p style="font-weight: 500">Nab Estate Team</p>
         </div>

@@ -1,12 +1,13 @@
 import express from "express";
 import mongoose from "mongoose";
-import { v2 as cloudinary } from "cloudinary";
 import cors from "cors";
-import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
-import { fileURLToPath } from "url";
+import dotenv from "dotenv";
 import path from "path";
+import session from "express-session";
+import { fileURLToPath } from "url";
+import { v2 as cloudinary } from "cloudinary";
 
 // Configuration
 dotenv.config();
@@ -50,6 +51,14 @@ app.use(
   cors({
     origin: "*",
     credentials: true,
+  })
+);
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET_KEY,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 5 * 60 * 1000 },
   })
 );
 app.set("view engine", "ejs");

@@ -39,7 +39,7 @@ const ForgotPassword = () => {
 
         // Call Forgot Password API Function
         const response = await forgotPassword(email);
-        setResponseUser(response?.data);
+        setResponseUser(response?.result);
 
         setLoading(false);
       }
@@ -80,9 +80,9 @@ const ForgotPassword = () => {
                 </h6>
                 <p className="text-[1.55rem] font-medium text-neutral-800">
                   No worries! just enter your email address below, and click on{" "}
-                  <span className="font-bold">Reset Password</span> button and
-                  we will send you instructions to recover your password in your
-                  given account email.
+                  <span className="font-bold">Send Reset Password Link</span>{" "}
+                  button and we will send you instructions to recover your
+                  password in your given account email.
                 </p>
               </div>
 
@@ -99,7 +99,7 @@ const ForgotPassword = () => {
                   placeholder="Enter your email address"
                   autoComplete="off"
                   onChange={emailChangeHandler}
-                  className="w-full py-[0.6rem] text-neutral-600 text-[1.6rem] leading-[1.6rem] font-medium font-mont outline-none bg-transparent border-b-2 border-neutral-400 focus:border-cyan-900 placeholder:font-montAlter"
+                  className="w-full py-[0.6rem] text-theme-blue text-[1.7rem] leading-[1.6rem] font-semibold outline-none bg-transparent border-b-2 border-neutral-400 focus:border-cyan-900 placeholder:font-montAlter"
                 />
                 {/* Forgot Password Email Error Message */}
                 {error && (
@@ -143,9 +143,9 @@ const ForgotPassword = () => {
 
               <p className="text-[1.5rem] font-medium text-center text-neutral-800">
                 Dear{" "}
-                <span className="font-semibold">{responseUser.username}</span>,
+                <span className="font-semibold">{responseUser?.username}</span>,
                 we have sent a password reset link to your email{" "}
-                <span className="font-semibold">{responseUser.email}</span>.
+                <span className="font-semibold">{responseUser?.email}</span>.
                 Please check your inbox to proceed with resetting your NAB
                 Estate account password.
               </p>

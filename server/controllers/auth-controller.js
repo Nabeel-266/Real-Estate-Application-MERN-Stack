@@ -416,24 +416,41 @@ export const forgotPassword = async (req, res, next) => {
       );
     }
 
-    // Generate Token for User
-    const token = generateTokenForLink({ userId: user._id });
+    if (!req.session.resetPasswordToken) {
+      // Generate Token for User Reset Password URL
+      const token = generateTokenForLink({ userId: user._id });
 
-    const link = `${process.env.SERVER_URL}/api/auth/reset-password/${user._id}/${token}`;
+      // Set Cookies to store in Session for given durations
+      req.session.resetPasswordToken = true;
+      req.session.resetPasswordSuccess = false;
 
-    // Send Reset Password Link to User Email
-    const emailResponse = await sendEmailLink(user.username, user.email, link);
-    console.log(emailResponse);
+      const link = `${process.env.SERVER_URL}/api/auth/reset-password/${user._id}/${token}`;
 
-    // Remove Password from User_Doc for give response
-    user.password = undefined;
+      // Send Reset Password Link to User Email
+      const emailResponse = await sendEmailLink(
+        user.username,
+        user.email,
+        link
+      );
+      console.log(emailResponse);
 
-    res.status(StatusCodes.OK).send(
-      sendSuccess({
-        message: resMessages.SUCCESS_RESET_PASSWORD_LINK,
-        data: user,
-      })
-    );
+      // Remove Password from User_Doc for give response
+      user.password = undefined;
+
+      res.status(StatusCodes.OK).send(
+        sendSuccess({
+          message: resMessages.SUCCESS_SEND_RESET_PASSWORD_LINK,
+          data: user,
+        })
+      );
+    } else {
+      res.status(StatusCodes.OK).send(
+        sendSuccess({
+          message: `Already sent a Reset Password Link via email, Please check your email`,
+          data: user,
+        })
+      );
+    }
   } catch (error) {
     console.log(error.message, "==> error in forgot password");
     next(error);
@@ -455,42 +472,64 @@ export const resetPasswordURL = async (req, res) => {
         .send("UnAuthenticated User! user not found");
     }
 
-    const verifyUser = verifyToken(token);
-    console.log(verifyUser);
+    // Verify Reset Password URL Token
+    const verifyURLToken = verifyToken(token);
 
-    res.status(StatusCodes.OK).render("page/reset-password", {
-      name: user.username,
-      email: user.email,
-      id: user._id,
-    });
+    if (verifyURLToken.result !== user._id.toString()) {
+      throw new Error("Authentication Failed");
+    }
+
+    if (req.session.resetPasswordSuccess) {
+      res.status(StatusCodes.OK).render("page/success", {
+        username: user.username,
+        title: "Reset Password",
+        message: "Your password has been reset successfully! ✔",
+        guidance:
+          "Lets go back to the NAB Estate and Login to your account again.",
+      });
+    } else {
+      res.status(StatusCodes.OK).render("page/reset-password", {
+        name: user.username,
+        email: user.email,
+        id,
+        token,
+      });
+    }
   } catch (error) {
     console.log(error.message, "==> error in reset password URL");
+
+    // If JWT TOKEN expired error
     if (error.message === "jwt expired") {
       res.status(StatusCodes.UNAUTHORIZED).render("page/error", {
         statusCode: "401",
         statusText: "Un-Authorized User",
         message: "Access denied!",
-        reason:
-          "Your Reset Password URL has been expired, please try again to request a new Reset Password URL.",
+        reason: "Your Reset Password URL has been expired",
       });
-    } else if (
+    }
+
+    // ElseIf Params Id and Token invalid error
+    else if (
       error.message.includes("Cast to ObjectId failed") ||
-      error.message === "invalid token"
+      error.message === "invalid token" ||
+      error.message === "Authentication Failed"
     ) {
       res.status(StatusCodes.BAD_REQUEST).render("page/error", {
         statusCode: "400",
         statusText: "Un-Authentic User",
         message: "Access denied!",
-        reason:
-          "Your Reset Password URL has been invalid, please try again to request a new Reset Password URL.",
+        reason: "Your Reset Password URL has been invalid.",
       });
-    } else {
+    }
+
+    // Else Server error
+    else {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).render("page/error", {
         statusCode: "500",
         statusText: "Internal Server Error",
         message: "Something went wrong!",
         reason:
-          "We’re sorry, but something went wrong on our end, Please try again later or contact support if the issue persists.",
+          "An error occurred while resetting your password, Please try again later or contact support if the issue persists.",
       });
     }
   }
@@ -499,8 +538,8 @@ export const resetPasswordURL = async (req, res) => {
 //* --> For Reset Password <--
 //? @route --> POST --> /api/auth/reset-password/:id/:token
 //  @access --> PRIVATE
-export const resetPassword = async (req, res, next) => {
-  const { id } = req.params;
+export const resetPassword = async (req, res) => {
+  const { id, token } = req.params;
   const { password, confirmPassword } = req.body;
 
   try {
@@ -512,6 +551,19 @@ export const resetPassword = async (req, res, next) => {
         sendError({
           statusCode: StatusCodes.NOT_FOUND,
           message: resMessages.NO_USER,
+        })
+      );
+    }
+
+    // Verify Reset Password URL Token
+    verifyToken(token);
+
+    // Check Is Password and Confirm Password given
+    if (!password || !confirmPassword) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.MISSING_FIELDS,
         })
       );
     }
@@ -542,15 +594,39 @@ export const resetPassword = async (req, res, next) => {
     // Update Password in User_Doc and Save to DB
     await User.updateOne({ _id: id }, { $set: { password: hashedPassword } });
 
-    res.status(StatusCodes.OK).send(
-      sendSuccess({
-        message: resMessages.SUCCESS_RESET_PASSWORD,
-        data: null,
-      })
-    );
+    // If user reset password successfully then session making true
+    // because the user didn't send a reset password request again under same page
+    req.session.resetPasswordSuccess = true;
+    res.status(StatusCodes.OK).render("page/success", {
+      username: user.username,
+      title: "Reset Password",
+      message: "Your password has been reset successfully! ✔",
+      guidance:
+        "Lets go back to the NAB Estate and Login to your account again.",
+    });
   } catch (error) {
     console.log(error.message, "==> error in reset password");
-    next(error);
+
+    // If JWT TOKEN expired error
+    if (error.message === "jwt expired") {
+      res.status(StatusCodes.UNAUTHORIZED).render("page/error", {
+        statusCode: "401",
+        statusText: "Un-Authorized User",
+        message: "Access denied!",
+        reason: "Your Reset Password URL has been expired",
+      });
+    }
+
+    // Else Server error
+    else {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).render("page/error", {
+        statusCode: "500",
+        statusText: "Internal Server Error",
+        message: "Something went wrong!",
+        reason:
+          "An error occurred while resetting your password, Please try again later or contact support if the issue persists.",
+      });
+    }
   }
 };
 
@@ -613,9 +689,7 @@ export const refreshToken = async (req, res, next) => {
 //* --> For Signout <--
 //? @route --> GET --> api/auth/signout
 //  @access --> PUBLIC
-export const signout = (req, res) => {
-  console.log("Signout Controller");
-
+export const signout = (req, res, next) => {
   try {
     // Get Token
     const token = req.cookies?.token;
@@ -642,16 +716,6 @@ export const signout = (req, res) => {
     console.log(error.message, "==> error in signout");
     next(error);
   }
-
-  res
-    .cookie("token", "", { httpOnly: true, maxAge: 0 })
-    .status(StatusCodes.OK)
-    .send(
-      sendSuccess({
-        message: resMessages.SUCCESS_LOGOUT,
-        data: null,
-      })
-    );
 };
 
 // // --> For Verify Account <--

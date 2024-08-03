@@ -20,34 +20,34 @@ import {
 
 const authRouter = express.Router();
 
-// For Signup
+//* For Signup
 authRouter.post("/signup", signup);
 
-// For Signup Account Verification
+//* For Signup Account Verification
 authRouter.post("/signupVerification", signupVerification);
 
-// For Signin
+//* For Signin
 authRouter.post("/signin", signin);
 
-// For Signin with Google Account
+//* For Signin with Google Account
 authRouter.post("/signGoogleOAuth", signGoogleOAuth);
 
-// For Resend OTP
+//* For Resend OTP
 authRouter.post("/resendOTP", resendOTP);
 
-// For Forgot Password
+//* For Forgot Password
 authRouter.post("/forgotPassword", forgotPassword);
 
-// For Reset Password URL
+//* For Reset Password URL
 authRouter.get("/reset-password/:id/:token", resetPasswordURL);
 
-// For Reset Password
-authRouter.post("/reset-password/:id", resetPassword);
+//* For Reset Password
+authRouter.post("/reset-password/:id/:token", resetPassword);
 
-// For Refresh Token
+//* For Refresh Token
 authRouter.get("/checkToken", validateToken, refreshToken);
 
-// For Signout
+//* For Signout
 authRouter.post("/signout", signout);
 
 // For Verify Account

@@ -8,7 +8,8 @@ import resMessages from "../constants/responsesMessages.js";
 import { compare, encrypted } from "../helpers/crypted.js";
 import { generateCode } from "../helpers/password.js";
 import { sendEmailLink, sendEmailOTP } from "../helpers/nodemailer.js";
-import { generateTokenForLink } from "../helpers/token.js";
+import { generateTokenForLink, verifyToken } from "../helpers/token.js";
+import { emailRegex } from "../utils/emailRegex.js";
 dotenv.config();
 
 //* --> For Update User Profile <--
@@ -174,7 +175,7 @@ export const sendRecoveryEmailOTP = async (req, res, next) => {
     // Hashed OTP
     const hashedOTP = encrypted(otp, 10);
 
-    // send OTP to User Recovery Email
+    // send OTP to verify User Recovery Email
     const emailResponse = await sendEmailOTP(
       user.username,
       recoveryEmail,
@@ -212,12 +213,12 @@ export const verifyRecoveryEmailOTP = async (req, res, next) => {
   try {
     const { userId, recoveryEmail, otp, otpExpiry, enteredOTP } = req.body;
 
-    // If user OTP not given
-    if (!enteredOTP) {
+    // Check is any field missing
+    if (!userId || !recoveryEmail || !otp || !otpExpiry || !enteredOTP) {
       return res.status(StatusCodes.BAD_REQUEST).send(
         sendError({
           statusCode: StatusCodes.BAD_REQUEST,
-          message: resMessages.MISSING_FIELD,
+          message: resMessages.MISSING_FIELDS,
         })
       );
     }
@@ -267,15 +268,28 @@ export const verifyRecoveryEmailOTP = async (req, res, next) => {
   }
 };
 
-//* --> For Send Change User Email Confirmation Mail <--
+//* --> For Send Confirmation Mail to Change User Email <--
 //? @route --> POST --> /api/auth/changeEmailConfirmation
 //  @access --> PUBLIC
 export const changeEmailConfirmation = async (req, res, next) => {
-  console.log("Change Email Confirmation Controller");
+  console.log("Send Confirmation Controller");
 
   try {
     const userId = req.userId;
     const { recoveryEmail, accountPassword } = req.body;
+
+    // Find User in Database
+    const user = await User.findOne({ _id: userId });
+
+    // If USER not exist
+    if (!user) {
+      return res.status(StatusCodes.NOT_FOUND).send(
+        sendError({
+          statusCode: StatusCodes.NOT_FOUND,
+          message: resMessages.NO_USER,
+        })
+      );
+    }
 
     // All Fields Required Verification
     if (!recoveryEmail || !accountPassword) {
@@ -297,19 +311,6 @@ export const changeEmailConfirmation = async (req, res, next) => {
       );
     }
 
-    // Find User in Database
-    const user = await User.findOne({ _id: userId });
-
-    // If USER not exist
-    if (!user) {
-      return res.status(StatusCodes.NOT_FOUND).send(
-        sendError({
-          statusCode: StatusCodes.NOT_FOUND,
-          message: resMessages.NO_USER,
-        })
-      );
-    }
-
     // Check Recovery Email is present in USER_DOC
     if (!user.recoveryEmail) {
       return res.status(StatusCodes.BAD_REQUEST).send(
@@ -320,8 +321,8 @@ export const changeEmailConfirmation = async (req, res, next) => {
       );
     }
 
-    // Check Recovery Email is right to USER_DOC recovery email
-    if (user.recoveryEmail === recoveryEmail) {
+    // Check Recovery Email is same as USER_DOC recovery email
+    if (user.recoveryEmail !== recoveryEmail) {
       return res.status(StatusCodes.BAD_REQUEST).send(
         sendError({
           statusCode: StatusCodes.BAD_REQUEST,
@@ -343,29 +344,45 @@ export const changeEmailConfirmation = async (req, res, next) => {
       );
     }
 
-    // Generate Token for User Change Email URL
-    const token = generateTokenForLink({ userId: user._id });
+    if (!req.session.changeEmailToken) {
+      // Generate Token for User Change Email URL
+      const token = generateTokenForLink({ userId: user._id });
 
-    const link = `${process.env.SERVER_URL}/api/user/change-email/${user._id}/${token}`;
+      // Set Cookies to store in Session for given duration
+      req.session.changeEmailToken = true;
+      req.session.changeEmailSuccess = false;
 
-    // Send Reset Password Link to User Email
-    const emailResponse = await sendEmailLink(
-      user.username,
-      user.email,
-      link,
-      "Confirmation Email"
-    );
-    console.log(emailResponse);
+      const link = `${process.env.SERVER_URL}/api/user/change-email/${user._id}/${token}`;
 
-    // Remove Password from User_Doc for give response
-    user.password = undefined;
+      // Send Reset Password Link to User Email
+      const emailResponse = await sendEmailLink(
+        user.username,
+        user.email,
+        link,
+        "Confirmation Email"
+      );
+      console.log(emailResponse);
 
-    res.status(StatusCodes.OK).send(
-      sendSuccess({
-        message: resMessages.SUCCESS_CHANGE_EMAIL_LINK,
-        data: user,
-      })
-    );
+      // Remove Password from User_Doc for give response
+      user.password = undefined;
+
+      res.status(StatusCodes.OK).send(
+        sendSuccess({
+          message: resMessages.SUCCESS_SEND_CHANGE_EMAIL_LINK,
+          data: user,
+        })
+      );
+    } else {
+      // Remove Password from User_Doc for give response
+      user.password = undefined;
+
+      res.status(StatusCodes.OK).send(
+        sendSuccess({
+          message: `Already sent a Change Email Link via email, Please check your recovery email`,
+          data: user,
+        })
+      );
+    }
   } catch (error) {
     console.log(error.message, "==> error in change password confirmation");
     next(error);
@@ -379,28 +396,35 @@ export const changeEmailURL = async (req, res) => {
   const { id, token } = req.params;
 
   try {
-    // const user = await User.findOne({ _id: id });
+    const user = await User.findOne({ _id: id });
 
-    // if (!user) {
-    //   return res
-    //     .status(StatusCodes.NOT_FOUND)
-    //     .send("UnAuthenticated User! user not found");
-    // }
+    if (!user) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .send("UnAuthenticated User! user not found");
+    }
 
-    // const verifyUserToken = verifyToken(token);
-    // console.log(verifyUserToken);
+    const verifyURLToken = verifyToken(token);
 
-    res.status(StatusCodes.OK).render("page/change-email", {
-      name: "Muhammad Nabeel",
-      email: "nabeel@gmail.com",
-      id: "skdflksdhf3243545sdf6s5d",
-    });
+    if (verifyURLToken.result !== user._id.toString()) {
+      throw new Error("Authentication Failed");
+    }
 
-    // res.status(StatusCodes.OK).render("page/change-email", {
-    //   name: user.username,
-    //   email: user.email,
-    //   id: user._id,
-    // });
+    if (req.session.changeEmailSuccess) {
+      res.status(StatusCodes.OK).render("page/success", {
+        username: user.username,
+        title: "Change Email",
+        message: "Your account email has been changed successfully! ✔",
+        guidance: "You can go to NAB state again. Thankyou!",
+      });
+    } else {
+      res.status(StatusCodes.OK).render("page/change-email", {
+        name: user.username,
+        email: user.email,
+        id,
+        token,
+      });
+    }
   } catch (error) {
     console.log(error.message, "==> error in reset password URL");
 
@@ -417,7 +441,8 @@ export const changeEmailURL = async (req, res) => {
     // ElseIf Params Id and Token invalid error
     else if (
       error.message.includes("Cast to ObjectId failed") ||
-      error.message === "invalid token"
+      error.message === "invalid token" ||
+      error.message === "Authentication Failed"
     ) {
       res.status(StatusCodes.BAD_REQUEST).render("page/error", {
         statusCode: "400",
@@ -434,7 +459,219 @@ export const changeEmailURL = async (req, res) => {
         statusText: "Internal Server Error",
         message: "Something went wrong!",
         reason:
-          "We’re sorry, but something went wrong, Please try again later or contact support if the issue persists.",
+          "An error occurred while changing your email, Please try again later or contact support if the issue persists.",
+      });
+    }
+  }
+};
+
+//* --> For Send User New Email OTP <--
+//? @route --> POST --> /api/auth/sendChangeEmailOTP
+//  @access --> PRIVATE
+export const sendChangeEmailOTP = async (req, res) => {
+  const { userId, email } = req.body;
+
+  try {
+    // Find User in Database
+    const user = await User.findOne({ _id: userId });
+
+    // If USER not exist
+    if (!user) {
+      return res.status(StatusCodes.NOT_FOUND).send(
+        sendError({
+          statusCode: StatusCodes.NOT_FOUND,
+          message: resMessages.NO_USER,
+        })
+      );
+    }
+
+    // Verify Email Address Typography
+    if (!emailRegex.test(email)) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.INVALID_EMAIL,
+        })
+      );
+    }
+
+    // If User new Email is same as current Email
+    if (user.email === email) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.UNCHANGED_EMAIL,
+        })
+      );
+    }
+
+    // Check User is Exist in DB
+    const isUserExistFromGivenEmail = await User.findOne({ email });
+
+    // If Email is present in USER_DOC
+    if (isUserExistFromGivenEmail) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.EMAIL_ALREADY_EXISTS,
+        })
+      );
+    }
+
+    // Generate OTP
+    const otp = generateCode(6);
+
+    // Hashed OTP
+    const hashedOTP = encrypted(otp, 10);
+
+    // send OTP to verify User New Email
+    const emailResponse = await sendEmailOTP(
+      user.username,
+      email,
+      otp,
+      "Change Email"
+    );
+    console.log(emailResponse);
+
+    // Create a response data
+    const responseData = {
+      otp: hashedOTP,
+      otpExpiry: Date.now() + 120000,
+    };
+
+    res.status(StatusCodes.OK).send(
+      sendSuccess({
+        message: resMessages.SUCCESS_SEND_OTP,
+        data: responseData,
+      })
+    );
+  } catch (error) {
+    console.log(error.message, "==> error in send change email otp");
+    next(error);
+  }
+};
+
+//* --> For Verify User New Email OTP <--
+//? @route --> POST --> /api/auth/verifyChangeEmailOTP/:id/:token
+//  @access --> PRIVATE
+export const verifyChangeEmailOTP = async (req, res) => {
+  const { id, token } = req.params;
+  const { newEmail, otp, otpExpiry, enteredOTP } = req.body;
+
+  try {
+    // Find User in Database
+    const user = await User.findOne({ _id: id });
+
+    // If USER not exist
+    if (!user) {
+      return res.status(StatusCodes.NOT_FOUND).send(
+        sendError({
+          statusCode: StatusCodes.NOT_FOUND,
+          message: resMessages.NO_USER,
+        })
+      );
+    }
+
+    // Verify Reset Password URL Token
+    verifyToken(token);
+
+    // Check is any field missing
+    if (!newEmail || !otp || !otpExpiry || !enteredOTP) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.MISSING_FIELD,
+        })
+      );
+    }
+
+    // Verify Email Address Typography
+    if (!emailRegex.test(newEmail)) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.INVALID_EMAIL,
+        })
+      );
+    }
+
+    // If User new Email is same as current Email
+    if (user.email === newEmail) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.UNCHANGED_EMAIL,
+        })
+      );
+    }
+
+    // Check User is Exist in DB
+    const isUserExistFromGivenEmail = await User.findOne({ email: newEmail });
+
+    // If Email is present in USER_DOC
+    if (isUserExistFromGivenEmail) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.EMAIL_ALREADY_EXISTS,
+        })
+      );
+    }
+
+    // Check OTP is Correct
+    const isOtpValid = compare(enteredOTP, otp);
+
+    // If OTP invalid
+    if (!isOtpValid) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.INVALID_OTP,
+        })
+      );
+    }
+
+    // If OTP Expired
+    if (otpExpiry < Date.now()) {
+      return res.status(StatusCodes.FORBIDDEN).send(
+        sendError({
+          statusCode: StatusCodes.FORBIDDEN,
+          message: resMessages.OTP_EXPIRED,
+        })
+      );
+    }
+
+    // Update USER in the database
+    await User.findOneAndUpdate({ _id: id }, { $set: { email: newEmail } });
+
+    req.session.changeEmailSuccess = true;
+    res.status(StatusCodes.OK).render("page/success", {
+      username: user.username,
+      title: "Change Email",
+      message: "Your account email has been changed successfully! ✔",
+      guidance: "You can go to NAB state again. Thankyou!",
+    });
+  } catch (error) {
+    console.log(error.message, "==> error in verify recovery email");
+
+    // If JWT TOKEN expired error
+    if (error.message === "jwt expired") {
+      res.status(StatusCodes.UNAUTHORIZED).render("page/error", {
+        statusCode: "401",
+        statusText: "Un-Authorized User",
+        message: "Access denied!",
+        reason: "Your Change Email URL has been expired.",
+      });
+    }
+
+    // Else Server error
+    else {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).render("page/error", {
+        statusCode: "500",
+        statusText: "Internal Server Error",
+        message: "Something went wrong!",
+        reason:
+          "An error occurred while changing your email, Please try again later or contact support if the issue persists.",
       });
     }
   }

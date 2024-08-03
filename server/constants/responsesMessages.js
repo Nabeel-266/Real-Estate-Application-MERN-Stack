@@ -9,6 +9,8 @@ const resMessages = {
   UPDATE_UNSUCCESS_MESSAGES: "ID not found",
   ERROR_MESSAGES: "Internal Server Error",
   EMAIL_NOT_EXIST: "Email doesn't exists",
+  EMAIL_ALREADY_EXISTS: "Email is already in use by another user",
+  UNCHANGED_EMAIL: "New email is same as current email",
   INTERNAL_ERROR_MESSAGE: "Something went wrong",
   USERNAME_LENGTH: "User name must be 7 to 20 letters long",
   USER_EXISTS: "User already exist",
@@ -23,13 +25,13 @@ const resMessages = {
   SUCCESS_LOGOUT: "User Logout Successfull",
   SUCCESS_SEND_OTP: "OTP has been sent via email, Please Check your Email",
   SUCCESS_RESEND_OTP: "OTP has been resent via email, Please Check your Email",
-  SUCCESS_RESET_PASSWORD_LINK:
+  SUCCESS_SEND_RESET_PASSWORD_LINK:
     "Reset Password Link has been sent via email, Please Check your Email",
   SUCCESS_RESET_PASSWORD: "Password has been reset successfully",
   SUCCESS_UPDATE_PROFILE: "Profile has been updated successfully",
   SUCCESS_UPLOAD_IMAGE: "Image has been uploaded successfully",
   SUCCESS_ADD_RECOVERY_EMAIL: "Recovery Email has been added successfully",
-  SUCCESS_CHANGE_EMAIL_LINK:
+  SUCCESS_SEND_CHANGE_EMAIL_LINK:
     "Change Email Link has been sent via recovery email, Please Check your Recovery Email",
   SUCCESS_DEACTIVATE: "User Deactivation Successfull",
   SUCCESS_ACTIVATE: "User Activation Successfull",

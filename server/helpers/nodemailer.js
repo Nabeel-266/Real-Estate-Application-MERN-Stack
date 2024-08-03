@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import fs from "fs";
 import ejs from "ejs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -18,43 +19,54 @@ const emailConfig = {
   },
 };
 
-export async function sendEmailOTP(username, userEmail, otp, title) {
+//* SEND OTP EMAIL
+export async function sendEmailOTP(
+  username,
+  userEmail,
+  otp,
+  title = "Verify Email"
+) {
   try {
     // Create a transporter object using the email configuration
     const transporter = nodemailer.createTransport(emailConfig);
 
-    // Render the email template with the given data and attachments
-    let mailOptions = {};
-
+    // Email Subject
     const subject =
       title === "Recovery Email"
         ? "Recovery Email Verification of Nab Estate Account"
+        : title === "Change Email"
+        ? "Verify Your New Email for Nab Estate Account"
         : "Verify Your Email for Nab Estate Account";
 
-    // Read the email template and set mail options
-    ejs.renderFile(
-      path.join(__dirname, "../views/email/otp.ejs"),
-      { username, otp, subject },
-      (err, data) => {
-        if (err) throw err;
+    // Render the email template with the given data
+    const templateData = {
+      username,
+      otp,
+      subject,
+      imageCid: "logo-image",
+    };
 
-        // Set up the email options
-        mailOptions = {
-          from: process.env.PORTAL_EMAIL,
-          to: userEmail,
-          subject,
-          html: data,
-          attachments: [
-            {
-              filename: "logo.png",
-              path: path.join(__dirname, "../public/assets/logo.png"),
-              encoding: "base64",
-              cid: "logo-image",
-            },
-          ],
-        };
-      }
+    // Render email template
+    const emailTemplate = await ejs.renderFile(
+      path.join(__dirname, "../views/email/otp.ejs"),
+      templateData
     );
+
+    // Set up the email options
+    const mailOptions = {
+      from: process.env.PORTAL_EMAIL,
+      to: userEmail,
+      subject,
+      html: emailTemplate,
+      attachments: [
+        {
+          filename: "logo.png",
+          path: path.join(__dirname, "../public/assets/logo.png"),
+          encoding: "base64",
+          cid: "logo-image",
+        },
+      ],
+    };
 
     // Send the email
     await transporter.sendMail(mailOptions);
@@ -65,38 +77,71 @@ export async function sendEmailOTP(username, userEmail, otp, title) {
   }
 }
 
-export async function sendEmailLink(username, userEmail, link) {
+//* SEND LINK EMAIL
+export async function sendEmailLink(
+  username,
+  userEmail,
+  link,
+  title = "Reset Password"
+) {
   try {
     // Create a transporter object using the email configuration
     const transporter = nodemailer.createTransport(emailConfig);
 
-    // Render the email template with the given data and attachments
-    let mailOptions = {};
+    // Email Subject
+    const subject =
+      title === "Confimation Email"
+        ? "Confirmation Changing of Nab Estate Account Email"
+        : "Reset Your Nab Estate Account Password";
 
-    // Read the email template and set mail options
-    ejs.renderFile(
+    // Email Topic
+    const topic =
+      title === "Confirmation Email"
+        ? "change your email"
+        : "reset your password";
+
+    // Email Button Text
+    const buttonText =
+      title === "Confirmation Email" ? "Change Email" : "Recover Password";
+
+    // Email Alert Message
+    const alertMessage =
+      title === "Confirmation Email"
+        ? "If you did not request this, so be alert and change your account password immediately."
+        : "If you did not request this, please ignore this email.";
+
+    // Render the email template with the given data
+    const templateData = {
+      username,
+      link,
+      subject,
+      topic,
+      buttonText,
+      alertMessage,
+      imageCid: "logo-image",
+    };
+
+    // Render email template
+    const emailTemplate = await ejs.renderFile(
       path.join(__dirname, "../views/email/link.ejs"),
-      { username, link },
-      (err, data) => {
-        if (err) throw err;
-
-        // Set up the email options
-        mailOptions = {
-          from: process.env.PORTAL_EMAIL,
-          to: userEmail,
-          subject: "Reset Your Nab Estate Account Password",
-          html: data,
-          attachments: [
-            {
-              filename: "logo.png",
-              path: path.join(__dirname, "../public/assets/logo.png"),
-              encoding: "base64",
-              cid: "logo-image",
-            },
-          ],
-        };
-      }
+      templateData
     );
+
+    // Set up the email options
+    const mailOptions = {
+      from: process.env.PORTAL_EMAIL,
+      to: userEmail,
+      subject,
+      html: emailTemplate,
+      attachments: [
+        {
+          filename: "logo.png",
+          path: path.join(__dirname, "../public/assets/logo.png"),
+          encoding: "base64",
+          cid: "logo-image",
+        },
+      ],
+    };
 
     // Send the email
     await transporter.sendMail(mailOptions);

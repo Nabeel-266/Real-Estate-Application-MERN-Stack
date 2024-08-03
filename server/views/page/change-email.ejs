@@ -25,7 +25,7 @@
       body {
         font-family: "Montserrat Alternates", sans-serif;
       }
-      .containerMain {
+      .container-main {
         width: 100%;
         min-height: 100dvh;
         display: flex;
@@ -35,7 +35,7 @@
         background: white;
         color: #303030;
       }
-      .containerTop {
+      .container-top {
         width: 100%;
         min-height: 10rem;
         display: flex;
@@ -45,12 +45,12 @@
         padding: 2rem 4% 3rem 4%;
         /* background-color: #082835; */
       }
-      .containerTop img {
+      .container-top img {
         width: 23rem;
         margin-left: 0.7%;
         margin-bottom: 3rem;
       }
-      .containerTop h1 {
+      .container-top h1 {
         width: 100%;
         font-size: 2.8rem;
         line-height: 4.5rem;
@@ -60,14 +60,14 @@
         border-bottom: 0.2rem solid #bbb;
         padding: 0rem 1%;
       }
-      .containerTop h3 {
+      .container-top h3 {
         font-size: 2.1rem;
         line-height: 3rem;
         font-weight: 700;
         font-family: "Quicksand", sans-serif;
         padding: 0rem 1%;
       }
-      .containerTop p {
+      .container-top p {
         font-size: 1.8rem;
         line-height: 1.9rem;
         font-weight: bold;
@@ -76,19 +76,27 @@
         font-family: "Quicksand", sans-serif;
         padding: 0rem 1%;
       }
-      .inputs-cont {
+      .container-bottom {
         width: 100%;
-        padding: 1.5rem 5%;
-      }
-      .inputs-cont-wrapper {
-        width: 100%;
-        max-width: 45rem;
+        max-width: 60rem;
+        padding: 0rem 5%;
         display: flex;
         flex-direction: column;
         gap: 2rem;
       }
+      .email-cont,
+      .otp-cont {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .otp-cont {
+        display: none;
+      }
       .email,
       .otp-code {
+        width: 100%;
         display: flex;
         flex-direction: column;
         gap: 1rem;
@@ -102,6 +110,7 @@
       }
       .email input,
       .otp-code input {
+        width: 100%;
         outline: none;
         border: 2px solid #a0a0a0;
         border-radius: 0.4rem;
@@ -116,7 +125,8 @@
       .otp-code input:focus {
         border-color: #082835;
       }
-      .send-btn {
+
+      .button {
         all: unset;
         font-size: 2rem;
         font-weight: 600;
@@ -130,12 +140,22 @@
         cursor: pointer;
         transition: all 0.1s linear;
       }
-      .send-btn:hover {
+      .button:hover {
         transform: scale(1.02);
         box-shadow: 10px 10px 20px #eee;
       }
-      .form-error {
-        color: #cf0000;
+      .button:disabled {
+        background-color: #bbb;
+        color: #333;
+        cursor: not-allowed;
+      }
+      .response-message {
+        font-size: 1.7rem;
+        font-weight: 600;
+        display: none;
+      }
+      .server-error {
+        color: #990000;
         font-size: 1.7rem;
         font-weight: 600;
         display: none;
@@ -144,16 +164,6 @@
         color: #cf0000;
         font-size: 1.5rem;
         font-weight: 500;
-      }
-      .success-message {
-        display: none;
-        font-size: 1.8rem;
-        font-weight: 600;
-      }
-      .failure-message {
-        display: none;
-        font-size: 1.8rem;
-        font-weight: 600;
       }
 
       /* --> Responsive Screen <-- */
@@ -195,134 +205,204 @@
     </style>
   </head>
   <body>
-    <div class="containerMain">
-      <div class="containerTop">
+    <div class="container-main">
+      <div class="container-top">
         <img src="/assets/logo-dark.png" alt="NabEstateLogo" />
         <h1>Change Email</h1>
         <h3>Dear <%= name%>,</h3>
-        <p>Your current email is <strong><%= email%></strong></p>
+        <p>Your current email is <%= email%></p>
       </div>
 
-      <div class="inputs-cont">
-        <div id="inputs-cont" class="inputs-cont-wrapper">
-          <p id="formError" class="form-error"></p>
+      <div class="container-bottom">
+        <p id="serverError" class="server-error"></p>
 
+        <div id="emailCont" class="email-cont">
           <label for="email" class="email">
             <span>Enter New Email Address</span>
-            <input type="email" id="email" autocomplete="off" required />
+            <input
+              type="email"
+              id="email"
+              autocomplete="off"
+              oninput="emailInputHandler()"
+              required
+            />
             <div id="emailError" class="error"></div>
           </label>
 
-          <button class="send-btn">Send Verification Code</button>
+          <button id="sendCodeBtn" class="button" disabled>
+            Send Verification Code
+          </button>
+        </div>
 
+        <p id="responseMessage" class="response-message"></p>
+
+        <div id="otpCont" class="otp-cont">
           <label for="otp" class="otp-code">
             <span>Enter OTP Code</span>
-            <input type="text" id="otp" autocomplete="off" required />
+            <input
+              type="text"
+              id="otp"
+              autocomplete="off"
+              oninput="otpInputHandler()"
+              maxlength="6"
+              required
+            />
             <div id="otpError" class="error"></div>
           </label>
 
-          <button class="send-btn">Verify Code & Change Email</button>
-        </div>
-
-        <div id="successMessage" class="success-message">
-          <span>Dear <%= name %>,</span>
-          <br />
-          <p style="color: #72be00">
-            Your password has been reset successfully! ✔
-          </p>
-          <br />
-          <p>Lets go back to the NAB Estate and Login to your account again.</p>
-        </div>
-
-        <div id="failureMessage" class="failure-message">
-          <span>Dear <%= name %>,</span>
-          <br />
-          <p style="color: #990000">
-            An error occurred while resetting your password. Please try again in
-            a few minutes.
-          </p>
+          <button id="verifyCodeBtn" class="button" disabled>
+            Verify Code & Change Email
+          </button>
         </div>
       </div>
     </div>
-  </body>
-</html>
 
-<!-- <script>
-    const userId = "<%= id %>";
+    <script>
+      const userCurrentEmail = "<%= email %>";
+      const userId = "<%= id %>";
+      const token = "<%= token %>";
+      let otpCode;
+      let otpCodeExpiry;
 
-    function passwordInputHandler() {
-      document.getElementById("passwordError").innerText = "";
-      document.getElementById("formError").style.display = "none";
-      document.getElementById("formError").innerText = "";
-    }
+      function emailInputHandler() {
+        const email = document.getElementById("email");
 
-    function confirmPasswordInputHandler() {
-      document.getElementById("confirmPasswordError").innerText = "";
-      document.getElementById("formError").style.display = "none";
-      document.getElementById("formError").innerText = "";
-    }
-
-    document
-      .getElementById("resetForm")
-      .addEventListener("submit", function (event) {
-        // Prevent form submission
-        event.preventDefault();
-
-        // Get the values of the password fields
-        let password = document.getElementById("password").value;
-        let confirmPassword =
-          document.getElementById("confirmPassword").value;
-
-        // Error messages
-        let passwordError = "";
-        let confirmPasswordError = "";
-
-        // // Check if the password is at least 8 characters long
-        if (password.length < 8) {
-          passwordError = "Password must be at least 8 characters long.";
+        if (email.value.trim() !== "") {
+          document.getElementById("sendCodeBtn").disabled = false;
+        } else {
+          document.getElementById("sendCodeBtn").disabled = true;
         }
 
-        // // Check if the password and confirm password fields match
-        else if (password !== confirmPassword) {
-          confirmPasswordError = "Passwords do not match.";
+        document.getElementById("emailError").innerText = "";
+        document.getElementById("serverError").style.display = "none";
+        document.getElementById("serverError").innerText = "";
+      }
+
+      function otpInputHandler(e) {
+        const otp = document.getElementById("otp");
+
+        if (otp.value.length === 6) {
+          document.getElementById("verifyCodeBtn").disabled = false;
+        } else {
+          document.getElementById("verifyCodeBtn").disabled = true;
+        }
+        document.getElementById("otpError").innerText = "";
+        document.getElementById("serverError").style.display = "none";
+        document.getElementById("serverError").innerText = "";
+      }
+
+      document
+        .getElementById("sendCodeBtn")
+        .addEventListener("click", sendChangeEmailVerifyCodeHandler);
+
+      document
+        .getElementById("verifyCodeBtn")
+        .addEventListener("click", verifyChangeEmailVerifyCodeHandler);
+
+      function sendChangeEmailVerifyCodeHandler() {
+        const email = document.getElementById("email").value;
+
+        let emailError = "";
+
+        const emailRegex =
+          /^(?:[^@\s]+@(?:gmail\.com|hotmail\.com|yahoo\.com|outlook\.com|zoho\.com|icloud\.com|protonmail\.com|aol\.com))$/;
+
+        // Check Email Address is valid
+        if (!emailRegex.test(email)) {
+          emailError = "Your email is invalid";
         }
 
-        // Display error messages
-        document.getElementById("passwordError").innerText = passwordError;
-        document.getElementById("confirmPasswordError").innerText =
-          confirmPasswordError;
+        // Check new email is not same as current email
+        else if (email === userCurrentEmail) {
+          emailError = "Your new email is same as current email!";
+        }
 
-        // If there are no errors, show the success message and hide the form
-        if (!passwordError && !confirmPasswordError) {
-          // Replace the URL with your backend API endpoint
-          fetch(`/api/auth/reset-password/${userId}`, {
+        document.getElementById("emailError").innerText = emailError;
+
+        if (!emailError) {
+          fetch(`/api/auth/sendChangeEmailOTP`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              password,
-              confirmPassword,
+              userId,
+              email: email.trim(),
             }),
           })
             .then((response) => response.json())
             .then((data) => {
+              console.log(data);
               if (data?.status === "Success") {
-                document.getElementById("resetForm").style.display = "none";
-                document.getElementById("successMessage").style.display =
+                otpCode = data?.result.otp;
+                otpCodeExpiry = data?.result.otpExpiry;
+                document.getElementById("email").readOnly = true;
+                document.getElementById("sendCodeBtn").style.display = "none";
+                document.getElementById("otpCont").style.display = "block";
+                document.getElementById("responseMessage").style.display =
                   "block";
+                document.getElementById("responseMessage").innerText =
+                  data?.message;
               } else {
-                document.getElementById("formError").style.display = "block";
-                document.getElementById("formError").innerText =
+                document.getElementById("serverError").style.display = "block";
+                document.getElementById("serverError").innerText =
                   data?.message;
               }
             })
             .catch((error) => {
-              console.error("Error:", error);
-              document.getElementById("resetForm").style.display = "none";
-              document.getElementById("failureMessage").style.display =
-                "block";
+              console.error("Error:", error.message);
+              document.getElementById("serverError").style.display = "block";
+              document.getElementById("serverError").innerText =
+                "An error occurred while sending a OTP to an email from server, Something went wrong 🔴.";
             });
         }
-      });
-  </script> -->
+      }
+
+      function verifyChangeEmailVerifyCodeHandler() {
+        const enteredOTP = document.getElementById("otp").value;
+        const newEmail = document.getElementById("email").value;
+
+        let otpError = "";
+
+        // Check OTP Code is valid
+        if (enteredOTP.length !== 6) {
+          otpError = "OTP Code must be 6-digit number.";
+        }
+
+        // Check OTP Code Expiry
+        else if (Date.now() > otpCodeExpiry) {
+          otpError = "OTP Code has been expired!";
+        }
+
+        document.getElementById("otpError").innerText = otpError;
+
+        if (!otpError) {
+          fetch(`/api/auth/verifyChangeEmailOTP/${userId}/${token}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              newEmail,
+              enteredOTP,
+              otp: otpCode,
+              otpExpiry: otpCodeExpiry,
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data?.status !== "Success") {
+                document.getElementById("serverError").style.display = "block";
+                document.getElementById("serverError").innerText =
+                  data?.message;
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error.message);
+              window.location.reload();
+            });
+        }
+      }
+    </script>
+  </body>
+</html>
