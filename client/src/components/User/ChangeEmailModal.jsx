@@ -77,35 +77,6 @@ const ChangeEmailModal = ({ isModalOpen, recoveryEmailModalOpen }) => {
     }
   };
 
-  //   // Verify Recovery Email OTP Handler
-  //   const verifyRecoveryEmailOTPHandler = async (e) => {
-  //     const OTPCode = e.target.value;
-
-  //     try {
-  //       if (OTPCode.length === 6) {
-  //         const isOTPCodeExpired = responseData?.otpExpiry < Date.now();
-
-  //         if (!isOTPCodeExpired) {
-  //           const credentials = {
-  //             ...responseData,
-  //             enteredOTP: OTPCode,
-  //           };
-
-  //           // Call verify User Recovery Email OTP API Function
-  //           await verifyUserRecoveryEmailOTP(credentials, dispatch);
-
-  //           isModalOpen(false);
-  //         } else {
-  //           setError(["OTP", "OTP code has been expired"]);
-  //         }
-  //       }
-  //     } catch (err) {
-  //       console.error("Error adding user recovery email verification:", err);
-  //       const errorMsg = err?.response?.data?.message || err.message;
-  //       recoveryEmailServerErrorHandler(errorMsg, setError);
-  //     }
-  //   };
-
   return (
     <div className="changeEmailCont flex items-center justify-center fixed z-[990] top-0 left-0 right-0 bottom-0 backdrop-blur-[2px] bg-[#404040b0] overflow-hidden ">
       {/* Main Modal Cont */}
