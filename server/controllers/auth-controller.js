@@ -446,7 +446,7 @@ export const forgotPassword = async (req, res, next) => {
     } else {
       res.status(StatusCodes.OK).send(
         sendSuccess({
-          message: `Already sent a Reset Password Link via email, Please check your email`,
+          message: `Already sent a Reset Password Link to your email, Please check your email inbox`,
           data: user,
         })
       );

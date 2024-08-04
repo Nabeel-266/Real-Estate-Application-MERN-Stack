@@ -1,6 +1,7 @@
 import axios from "axios";
 import toastify from "../utils/toastify";
 import {
+  SEND_CHANGE_EMAIL_LINK,
   SEND_RECOVERY_EMAIL_OTP,
   UPDATE_PROFILE,
   UPLOAD_PROFILE_PIC,
@@ -103,6 +104,22 @@ export const verifyUserRecoveryEmailOTP = async (credentials, dispatch) => {
     }
   } catch (error) {
     console.log(error, "==> error in Verify User Recovery Email");
+    throw error;
+  }
+};
+
+// For SEND USER_RECOVERY_EMAIL OTP
+export const sendChangeEmailLink = async (credentials) => {
+  try {
+    const response = await axios.post(`${SEND_CHANGE_EMAIL_LINK}`, credentials);
+    const responseData = response?.data;
+    console.log(responseData);
+
+    if (responseData?.status === "Success") {
+      return responseData.result;
+    }
+  } catch (error) {
+    console.log(error, "==> error in Add User Recovery Email");
     throw error;
   }
 };

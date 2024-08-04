@@ -147,10 +147,16 @@ export const forgotPassword = async (email) => {
     const responseData = response?.data;
 
     if (responseData?.status === "Success") {
-      toastify("success", responseData.message, "top-right", "dark", 6000);
-    }
+      toastify(
+        "success",
+        `Dear ${responseData.result.username}, ${responseData.message}`,
+        "top-right",
+        "dark",
+        4000
+      );
 
-    return responseData;
+      return responseData;
+    }
   } catch (error) {
     throw error;
   }

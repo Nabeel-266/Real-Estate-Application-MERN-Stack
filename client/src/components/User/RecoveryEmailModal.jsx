@@ -89,24 +89,13 @@ const RecoveryEmailModal = ({ isModalOpen }) => {
   const sendRecoveryEmailOTPHandler = async (e) => {
     e.preventDefault();
 
-    // For checking recovery email is not same as current account email & recovery email
-    if (
-      currentUser?.email === recoveryEmail ||
-      currentUser?.recoveryEmail === recoveryEmail
-    ) {
-      setError([
-        "Email",
-        "This recovery email is already in use for your account.",
-      ]);
-      return;
-    }
-
     try {
       setLoading(true);
 
       // For Detecting User Input Errors
       const isCredentialsOK = recoveryEmailClientErrorHandler(
         recoveryEmailCredentials,
+        currentUser,
         setError
       );
 

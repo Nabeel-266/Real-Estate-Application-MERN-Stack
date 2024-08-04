@@ -56,16 +56,17 @@ const Account = () => {
               Recovery Email
             </h3>
 
-            <p className="text-[1.6rem] leading-[2.2rem] text-neutral-800 font-medium">
-              Add your recovery email, if you change your account email address.
-            </p>
-
-            {currentUser?.recoveryEmail && (
+            {currentUser?.recoveryEmail ? (
               <p className="flex items-center gap-[0.5rem]">
                 <MdOutlineMailOutline className="text-[1.8rem] text-theme-blue" />
                 <span className="text-[1.6rem] leading-[2rem] text-neutral-800 font-medium">
                   {currentUser?.recoveryEmail}
                 </span>
+              </p>
+            ) : (
+              <p className="text-[1.6rem] leading-[2.2rem] text-neutral-800 font-medium">
+                Add your recovery email, if you change your account email
+                address.
               </p>
             )}
 
@@ -128,7 +129,10 @@ const Account = () => {
 
       {/* Change Email Modal */}
       {isChangeEmailModalOpen && (
-        <ChangeEmailModal isModalOpen={setIsChangeEmailModalOpen} />
+        <ChangeEmailModal
+          isModalOpen={setIsChangeEmailModalOpen}
+          recoveryEmailModalOpen={setIsRecoveryEmailModalOpen}
+        />
       )}
     </>
   );

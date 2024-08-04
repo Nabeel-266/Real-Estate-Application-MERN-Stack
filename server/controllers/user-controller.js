@@ -143,19 +143,6 @@ export const sendRecoveryEmailOTP = async (req, res, next) => {
       );
     }
 
-    // Check Password is Correct
-    const isPasswordCorrect = compare(accountPassword, user.password);
-
-    // If Password is not correct
-    if (!isPasswordCorrect) {
-      return res.status(StatusCodes.BAD_REQUEST).send(
-        sendError({
-          statusCode: StatusCodes.BAD_REQUEST,
-          message: resMessages.INCORRECT_PASSWORD,
-        })
-      );
-    }
-
     // Find User in Database
     const user = await User.findOne({ _id: userId });
 
@@ -165,6 +152,32 @@ export const sendRecoveryEmailOTP = async (req, res, next) => {
         sendError({
           statusCode: StatusCodes.NOT_FOUND,
           message: resMessages.NO_USER,
+        })
+      );
+    }
+
+    // Check User Recovery Email already have in User Account
+    if (
+      user?.email === recoveryEmail ||
+      user?.recoveryEmail === recoveryEmail
+    ) {
+      return res.status(StatusCodes.CONFLICT).send(
+        sendError({
+          statusCode: StatusCodes.CONFLICT,
+          message: resMessages.EMAIL_ALREADY_USE,
+        })
+      );
+    }
+
+    // Check Password is Correct
+    const isPasswordCorrect = compare(accountPassword, user.password);
+
+    // If Password is not correct
+    if (!isPasswordCorrect) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.INCORRECT_PASSWORD,
         })
       );
     }
@@ -268,7 +281,7 @@ export const verifyRecoveryEmailOTP = async (req, res, next) => {
   }
 };
 
-//* --> For Send Confirmation Mail to Change User Email <--
+//* --> For Send Change User Email Link <--
 //? @route --> POST --> /api/auth/changeEmailConfirmation
 //  @access --> PUBLIC
 export const changeEmailConfirmation = async (req, res, next) => {
@@ -357,7 +370,7 @@ export const changeEmailConfirmation = async (req, res, next) => {
       // Send Reset Password Link to User Email
       const emailResponse = await sendEmailLink(
         user.username,
-        user.email,
+        user.recoveryEmail,
         link,
         "Confirmation Email"
       );
@@ -378,7 +391,7 @@ export const changeEmailConfirmation = async (req, res, next) => {
 
       res.status(StatusCodes.OK).send(
         sendSuccess({
-          message: `Already sent a Change Email Link via email, Please check your recovery email`,
+          message: `Already sent a Change Email Link to your recovery email, Please check your email inbox`,
           data: user,
         })
       );
@@ -393,6 +406,7 @@ export const changeEmailConfirmation = async (req, res, next) => {
 //? @route --> GET --> /api/auth/change-email/:id/:token
 //  @access --> PRIVATE
 export const changeEmailURL = async (req, res) => {
+  console.log("Change Email URL Controller");
   const { id, token } = req.params;
 
   try {

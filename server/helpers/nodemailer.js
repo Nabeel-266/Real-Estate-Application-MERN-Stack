@@ -146,9 +146,9 @@ export async function sendEmailLink(
     // Send the email
     await transporter.sendMail(mailOptions);
 
-    return `Reset Password Link sent to via email successfully`;
+    return `Link has been sent to via email successfully`;
   } catch (error) {
-    return `Error! sending Reset Password Link to ${userEmail} via email: ${error}`;
+    return `Error! sending Link to ${userEmail} via email: ${error}`;
   }
 }
 

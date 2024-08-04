@@ -18,7 +18,7 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [responseUser, setResponseUser] = useState("");
+  const [responseUser, setResponseUser] = useState(null);
 
   // Email Change Handler
   const emailChangeHandler = (e) => {
@@ -39,7 +39,8 @@ const ForgotPassword = () => {
 
         // Call Forgot Password API Function
         const response = await forgotPassword(email);
-        setResponseUser(response?.result);
+
+        if (response) setResponseUser(response?.result);
 
         setLoading(false);
       }
@@ -71,7 +72,7 @@ const ForgotPassword = () => {
         {/* Verfication Body */}
         <div className="w-full flex flex-col gap-[1rem] pt-[1rem]">
           {!responseUser ? (
-            // Sending Verification Link Content
+            // Send Verification Link Content
             <div className="w-full flex flex-col gap-[1rem]">
               {/* Message Cont */}
               <div className="w-full space-y-[0.5rem]">
@@ -131,7 +132,7 @@ const ForgotPassword = () => {
               </button>
             </div>
           ) : (
-            // Sending Verification Link Confirmation Message
+            // Sending Verification Link Success Message
             <div className="w-full flex flex-col items-center justify-center gap-[1rem] p-[1rem] pb-[2rem]">
               <div className="mailIcon p-[1.2rem] bg-theme-blue text-white rounded-full">
                 <RiMailSendFill size="4.5rem" />

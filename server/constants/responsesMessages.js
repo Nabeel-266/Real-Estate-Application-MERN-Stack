@@ -10,6 +10,7 @@ const resMessages = {
   ERROR_MESSAGES: "Internal Server Error",
   EMAIL_NOT_EXIST: "Email doesn't exists",
   EMAIL_ALREADY_EXISTS: "Email is already in use by another user",
+  EMAIL_ALREADY_USE: "This email is already in use for your account.",
   UNCHANGED_EMAIL: "New email is same as current email",
   INTERNAL_ERROR_MESSAGE: "Something went wrong",
   USERNAME_LENGTH: "User name must be 7 to 20 letters long",
@@ -26,13 +27,13 @@ const resMessages = {
   SUCCESS_SEND_OTP: "OTP has been sent via email, Please Check your Email",
   SUCCESS_RESEND_OTP: "OTP has been resent via email, Please Check your Email",
   SUCCESS_SEND_RESET_PASSWORD_LINK:
-    "Reset Password Link has been sent via email, Please Check your Email",
+    "Reset Password Link has been sent to your email, Please check your email inbox",
   SUCCESS_RESET_PASSWORD: "Password has been reset successfully",
   SUCCESS_UPDATE_PROFILE: "Profile has been updated successfully",
   SUCCESS_UPLOAD_IMAGE: "Image has been uploaded successfully",
   SUCCESS_ADD_RECOVERY_EMAIL: "Recovery Email has been added successfully",
   SUCCESS_SEND_CHANGE_EMAIL_LINK:
-    "Change Email Link has been sent via recovery email, Please Check your Recovery Email",
+    "Change Email Link has been sent to your recovery email, Please check your email inbox",
   SUCCESS_DEACTIVATE: "User Deactivation Successfull",
   SUCCESS_ACTIVATE: "User Activation Successfull",
   NO_USER: "User not found",
@@ -44,8 +45,7 @@ const resMessages = {
   INVALID_RECOVERY_EMAIL: "Your recovery email is invalid",
   NO_RECOVERY_EMAIL:
     "Your account does not have a recovery email, please set recovery email first",
-  WRONG_RECOVERY_EMAIL:
-    "Your recovery email is wrong, please enter correct one",
+  WRONG_RECOVERY_EMAIL: "Your recovery email is wrong",
   SUCCESS_REFRESH_TOKEN: "Token Refresh Successfull",
   INVALID_TOKEN: "Failed to authenticate token, token is invalid",
   UN_ACCESS_TOKEN: "Unauthorized User, Token is missing",

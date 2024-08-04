@@ -32,7 +32,7 @@ userRouter.post("/sendRecoveryEmailOTP", validateToken, sendRecoveryEmailOTP);
 //* For Verify User Recovery Email OTP
 userRouter.post("/verifyRecoveryEmailOTP", verifyRecoveryEmailOTP);
 
-//* For Send Confirmation Mail for Change User Email
+//* For Send Change User Email Link
 userRouter.post(
   "/changeEmailConfirmation",
   validateToken,
