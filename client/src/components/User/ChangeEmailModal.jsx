@@ -116,13 +116,9 @@ const ChangeEmailModal = ({ isModalOpen, recoveryEmailModalOpen }) => {
                     value={recoveryEmail}
                     onChange={recoveryEmailChangeHandler}
                     autoComplete="off"
-                    placeholder={
-                      currentUser?.recoveryEmail
-                        ? "Enter New Recovery Email here..."
-                        : "Enter Recovery Email here..."
-                    }
+                    placeholder="Enter Recovery Email here..."
                     className={`w-full px-[0.8rem] py-[0.8rem] text-neutral-700 text-[1.6rem] leading-[2rem] font-medium font-mont outline-none bg-transparent border-[0.2rem] border-neutral-500 rounded-md focus:border-theme-blue placeholder:font-montAlter placeholder:text-neutral-700 ${
-                      error[0] === "RecoveryEmail" && "border-red-700"
+                      error[0] === "Email" && "border-red-700"
                     }`}
                   />
 

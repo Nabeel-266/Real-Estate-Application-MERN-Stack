@@ -87,15 +87,11 @@ export const updateProfile = async (req, res, next) => {
 //? @route --> POST --> /api/auth/uploadProfilePic
 //  @access --> PRIVATE
 export const uploadProfilePic = async (req, res, next) => {
-  console.log(req.file);
-
   try {
     const filePath = req.file.path;
     const cloudinaryResult = await cloudinary.uploader.upload(filePath, {
       folder: "NAB Estate/User",
     });
-
-    console.log(cloudinaryResult, "==> Upload Image In To Cloudinary Result");
 
     // Delete the file from uploads folder after uploading to Cloudinary
     fs.unlinkSync(filePath);

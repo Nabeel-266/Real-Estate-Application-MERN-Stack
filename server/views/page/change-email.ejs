@@ -46,8 +46,8 @@
         /* background-color: #082835; */
       }
       .container-top img {
-        width: 23rem;
-        margin-left: 0.7%;
+        width: 20rem;
+        margin-left: 1%;
         margin-bottom: 3rem;
       }
       .container-top h1 {
@@ -99,7 +99,7 @@
         width: 100%;
         display: flex;
         flex-direction: column;
-        gap: 1rem;
+        gap: 0.5rem;
       }
       .email span,
       .otp-code span {
@@ -114,16 +114,22 @@
         outline: none;
         border: 2px solid #a0a0a0;
         border-radius: 0.4rem;
-        padding: 0.8rem 1rem;
-        font-size: 1.8rem;
+        padding: 0.9rem 1rem;
+        font-size: 1.6rem;
         line-height: 1.8rem;
         font-weight: 500;
         color: #505050;
         font-family: "Montserrat Alternates", sans-serif;
+        margin-top: 0.5rem;
       }
       .email input:focus,
       .otp-code input:focus {
         border-color: #082835;
+      }
+      .error {
+        color: #cf0000;
+        font-size: 1.5rem;
+        font-weight: 500;
       }
       .button {
         all: unset;
@@ -133,7 +139,7 @@
         padding: 1rem 1rem;
         color: white;
         background-color: #082835;
-        margin-bottom: 1rem;
+        margin: 1rem 0 1rem 0;
         text-decoration: none;
         border-radius: 100rem;
         cursor: pointer;
@@ -148,21 +154,18 @@
         color: #333;
         cursor: not-allowed;
       }
-      .response-message {
-        font-size: 1.7rem;
-        font-weight: 600;
-        display: none;
-      }
       .server-error {
         color: #990000;
         font-size: 1.7rem;
         font-weight: 600;
         display: none;
+        margin-bottom: 1rem;
       }
-      .error {
-        color: #cf0000;
-        font-size: 1.5rem;
-        font-weight: 500;
+      .response-message {
+        font-size: 1.6rem;
+        color: #007200;
+        font-weight: 600;
+        display: none;
       }
 
       /* --> Responsive Screen <-- */
@@ -214,6 +217,7 @@
 
       <div class="container-bottom">
         <p id="serverError" class="server-error"></p>
+        <p id="responseMessage" class="response-message"></p>
 
         <div id="emailCont" class="email-cont">
           <label for="email" class="email">
@@ -232,8 +236,6 @@
             Send Verification Code
           </button>
         </div>
-
-        <p id="responseMessage" class="response-message"></p>
 
         <div id="otpCont" class="otp-cont">
           <label for="otp" class="otp-code">
@@ -257,76 +259,69 @@
     </div>
 
     <script>
-      const userCurrentEmail = "<%= email %>";
       const userId = "<%= id %>";
       const token = "<%= token %>";
+      const userCurrentEmail = "<%= email %>";
+      const email = document.getElementById("email");
+      const otp = document.getElementById("otp");
+      const sendCodeBtn = document.getElementById("sendCodeBtn");
+      const verifyCodeBtn = document.getElementById("verifyCodeBtn");
+      const emailError = document.getElementById("emailError");
+      const otpError = document.getElementById("otpError");
+      const serverError = document.getElementById("serverError");
+      const otpCont = document.getElementById("otpCont");
+      const responseMessage = document.getElementById("responseMessage");
+
       let otpCode;
       let otpCodeExpiry;
 
       function emailInputHandler() {
-        const email = document.getElementById("email");
-
         if (email.value.trim() !== "") {
-          document.getElementById("sendCodeBtn").disabled = false;
+          sendCodeBtn.disabled = false;
         } else {
-          document.getElementById("sendCodeBtn").disabled = true;
+          sendCodeBtn.disabled = true;
         }
 
-        document.getElementById("emailError").innerText = "";
-        document.getElementById("serverError").style.display = "none";
-        document.getElementById("serverError").innerText = "";
+        emailError.innerText = "";
+        serverError.style.display = "none";
+        serverError.innerText = "";
       }
 
       function otpInputHandler(e) {
-        const otp = document.getElementById("otp");
-
         if (otp.value.length === 6) {
-          document.getElementById("verifyCodeBtn").disabled = false;
+          verifyCodeBtn.disabled = false;
         } else {
-          document.getElementById("verifyCodeBtn").disabled = true;
+          verifyCodeBtn.disabled = true;
         }
-        document.getElementById("otpError").innerText = "";
-        document.getElementById("serverError").style.display = "none";
-        document.getElementById("serverError").innerText = "";
+        otpError.innerText = "";
+        serverError.style.display = "none";
+        serverError.innerText = "";
       }
 
-      document
-        .getElementById("sendCodeBtn")
-        .addEventListener("click", sendChangeEmailVerifyCodeHandler);
-
-      document
-        .getElementById("verifyCodeBtn")
-        .addEventListener("click", verifyChangeEmailVerifyCodeHandler);
-
       function sendChangeEmailVerifyCodeHandler() {
-        const email = document.getElementById("email").value;
-
-        let emailError = "";
-
         const emailRegex =
           /^(?:[^@\s]+@(?:gmail\.com|hotmail\.com|yahoo\.com|outlook\.com|zoho\.com|icloud\.com|protonmail\.com|aol\.com))$/;
 
         // Check Email Address is valid
-        if (!emailRegex.test(email)) {
-          emailError = "Your email is invalid";
+        if (!emailRegex.test(email.value)) {
+          emailError.innerText = "Your email is invalid";
         }
 
         // Check new email is not same as current email
-        else if (email === userCurrentEmail) {
-          emailError = "Your new email is same as current email!";
+        else if (email.value === userCurrentEmail) {
+          emailError.innerText = "Your new email is same as current email!";
         }
 
-        document.getElementById("emailError").innerText = emailError;
-
-        if (!emailError) {
-          fetch(`/api/auth/sendChangeEmailOTP`, {
+        if (!emailError.value) {
+          sendCodeBtn.innerText = "Sending...";
+          fetch(`/api/user/sendChangeEmailOTP`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
               userId,
-              email: email.trim(),
+              email: email.value.trim(),
             }),
           })
             .then((response) => response.json())
@@ -335,55 +330,48 @@
               if (data?.status === "Success") {
                 otpCode = data?.result.otp;
                 otpCodeExpiry = data?.result.otpExpiry;
-                document.getElementById("email").readOnly = true;
-                document.getElementById("sendCodeBtn").style.display = "none";
-                document.getElementById("otpCont").style.display = "block";
-                document.getElementById("responseMessage").style.display =
-                  "block";
-                document.getElementById("responseMessage").innerText =
-                  data?.message;
+                email.readOnly = true;
+                sendCodeBtn.style.display = "none";
+                responseMessage.style.display = "block";
+                responseMessage.innerText = data?.message;
+                otpCont.style.display = "flex";
               } else {
-                document.getElementById("serverError").style.display = "block";
-                document.getElementById("serverError").innerText =
-                  data?.message;
+                serverError.style.display = "block";
+                serverError.innerText = data?.message;
               }
+              sendCodeBtn.innerText = "Send Verification Code";
             })
             .catch((error) => {
               console.error("Error:", error.message);
-              document.getElementById("serverError").style.display = "block";
-              document.getElementById("serverError").innerText =
+              sendCodeBtn.innerText = "Send Verification Code";
+              serverError.style.display = "block";
+              serverError.innerText =
                 "An error occurred while sending a OTP to an email from server, Something went wrong 🔴.";
             });
         }
       }
 
       function verifyChangeEmailVerifyCodeHandler() {
-        const enteredOTP = document.getElementById("otp").value;
-        const newEmail = document.getElementById("email").value;
-
-        let otpError = "";
-
         // Check OTP Code is valid
-        if (enteredOTP.length !== 6) {
-          otpError = "OTP Code must be 6-digit number.";
+        if (otp.value.length !== 6) {
+          otpError.innerText = "OTP Code must be 6-digit number.";
         }
 
         // Check OTP Code Expiry
         else if (Date.now() > otpCodeExpiry) {
-          otpError = "OTP Code has been expired!";
+          otpError.innerText = "OTP Code has been expired!";
         }
 
-        document.getElementById("otpError").innerText = otpError;
-
-        if (!otpError) {
-          fetch(`/api/auth/verifyChangeEmailOTP/${userId}/${token}`, {
+        if (!otpError.value) {
+          verifyCodeBtn.innerText = "Processing...";
+          fetch(`/api/user/verifyChangeEmailOTP/${userId}/${token}`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              newEmail,
-              enteredOTP,
+              newEmail: email.value.trim(),
+              enteredOTP: otp.value,
               otp: otpCode,
               otpExpiry: otpCodeExpiry,
             }),
@@ -391,17 +379,24 @@
             .then((response) => response.json())
             .then((data) => {
               if (data?.status !== "Success") {
-                document.getElementById("serverError").style.display = "block";
-                document.getElementById("serverError").innerText =
-                  data?.message;
+                serverError.style.display = "block";
+                serverError.innerText = data?.message;
               }
+              verifyCodeBtn.innerText = "Verify Code & Change Email";
             })
             .catch((error) => {
               console.error("Error:", error.message);
+              verifyCodeBtn.innerText = "Verify Code & Change Email";
               window.location.reload();
             });
         }
       }
+
+      sendCodeBtn.addEventListener("click", sendChangeEmailVerifyCodeHandler);
+      verifyCodeBtn.addEventListener(
+        "click",
+        verifyChangeEmailVerifyCodeHandler
+      );
     </script>
   </body>
 </html>

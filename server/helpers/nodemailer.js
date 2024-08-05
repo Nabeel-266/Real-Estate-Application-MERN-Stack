@@ -90,8 +90,8 @@ export async function sendEmailLink(
 
     // Email Subject
     const subject =
-      title === "Confimation Email"
-        ? "Confirmation Changing of Nab Estate Account Email"
+      title === "Confirmation Email"
+        ? "Change Your Nab Estate Account Email"
         : "Reset Your Nab Estate Account Password";
 
     // Email Topic
