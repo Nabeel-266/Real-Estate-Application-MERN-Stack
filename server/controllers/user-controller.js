@@ -13,7 +13,7 @@ import { emailRegex } from "../utils/emailRegex.js";
 dotenv.config();
 
 //* --> For Update User Profile <--
-//? @route --> POST --> /api/auth/updateProfile
+//? @route --> POST --> /api/user/updateProfile
 //  @access --> PRIVATE
 export const updateProfile = async (req, res, next) => {
   console.log("Update Profile Controller");
@@ -21,8 +21,31 @@ export const updateProfile = async (req, res, next) => {
   const updatedFields = req.body;
 
   try {
+    // List of fields that can be updated
+    const allowedUpdates = [
+      "username",
+      "mobileNumber",
+      "profilePicture",
+      "liveInCity",
+    ];
+    const updates = Object.keys(updatedFields);
+
+    // Check if the updates are valid
+    const isValidOperation = updates.every((update) =>
+      allowedUpdates.includes(update)
+    );
+
+    // If updated fields are not valid
+    if (!isValidOperation) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: "Invalid Operation Fields Update! ",
+        })
+      );
+    }
+
     const user = await User.findOne({ _id: id });
-    console.log(user);
 
     // If USER not exist
     if (!user) {
@@ -84,7 +107,7 @@ export const updateProfile = async (req, res, next) => {
 };
 
 //* --> For Upload User Profile Pic <--
-//? @route --> POST --> /api/auth/uploadProfilePic
+//? @route --> POST --> /api/user/uploadProfilePic
 //  @access --> PRIVATE
 export const uploadProfilePic = async (req, res, next) => {
   try {
@@ -109,7 +132,7 @@ export const uploadProfilePic = async (req, res, next) => {
 };
 
 //* --> For Send User Recovery Email OTP <--
-//? @route --> POST --> /api/auth/sendRecoveryEmailOTP
+//? @route --> POST --> /api/user/sendRecoveryEmailOTP
 //  @access --> PUBLIC
 export const sendRecoveryEmailOTP = async (req, res, next) => {
   console.log(req.body);
@@ -213,8 +236,8 @@ export const sendRecoveryEmailOTP = async (req, res, next) => {
   }
 };
 
-//* --> For Verify User Recovery Email OTP <--
-//? @route --> POST --> /api/auth/verifyRecoveryEmailOTP
+//* --> For Verify Recovery Email OTP & Update User Recovery Email <--
+//? @route --> POST --> /api/user/verifyRecoveryEmailOTP
 //  @access --> PRIVATE
 export const verifyRecoveryEmailOTP = async (req, res, next) => {
   console.log(req.body);
@@ -277,8 +300,8 @@ export const verifyRecoveryEmailOTP = async (req, res, next) => {
   }
 };
 
-//* --> For Send Change User Email Link <--
-//? @route --> POST --> /api/auth/changeEmailConfirmation
+//* --> For Send User Change Email Link <--
+//? @route --> POST --> /api/user/changeEmailConfirmation
 //  @access --> PUBLIC
 export const changeEmailConfirmation = async (req, res, next) => {
   console.log("Send Confirmation Controller");
@@ -368,7 +391,7 @@ export const changeEmailConfirmation = async (req, res, next) => {
         user.username,
         user.recoveryEmail,
         link,
-        "Confirmation Email"
+        "Change Email"
       );
       console.log(emailResponse);
 
@@ -377,7 +400,7 @@ export const changeEmailConfirmation = async (req, res, next) => {
 
       res.status(StatusCodes.OK).send(
         sendSuccess({
-          message: resMessages.SUCCESS_SEND_CHANGE_EMAIL_LINK,
+          message: resMessages.SUCCESS_SEND_LINK,
           data: user,
         })
       );
@@ -399,7 +422,7 @@ export const changeEmailConfirmation = async (req, res, next) => {
 };
 
 //* --> For Change Email URL <--
-//? @route --> GET --> /api/auth/change-email/:id/:token
+//? @route --> GET --> /api/user/change-email/:id/:token
 //  @access --> PRIVATE
 export const changeEmailURL = async (req, res) => {
   console.log("Change Email URL Controller");
@@ -425,7 +448,7 @@ export const changeEmailURL = async (req, res) => {
         username: user.username,
         title: "Change Email",
         message: "Your account email has been changed successfully! ✔",
-        guidance: "You can go to NAB state again. Thankyou!",
+        guidance: "You can go back to NAB Estate again. Thankyou!",
       });
     } else {
       res.status(StatusCodes.OK).render("page/change-email", {
@@ -476,12 +499,22 @@ export const changeEmailURL = async (req, res) => {
 };
 
 //* --> For Send User New Email OTP <--
-//? @route --> POST --> /api/auth/sendChangeEmailOTP
+//? @route --> POST --> /api/user/sendChangeEmailOTP
 //  @access --> PRIVATE
 export const sendChangeEmailOTP = async (req, res) => {
   const { userId, email } = req.body;
 
   try {
+    // Email Required Verification
+    if (!email) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.MISSING_FIELD,
+        })
+      );
+    }
+
     // Find User in Database
     const user = await User.findOne({ _id: userId });
 
@@ -562,7 +595,7 @@ export const sendChangeEmailOTP = async (req, res) => {
 };
 
 //* --> For Verify User New Email OTP <--
-//? @route --> POST --> /api/auth/verifyChangeEmailOTP/:id/:token
+//? @route --> POST --> /api/user/verifyChangeEmailOTP/:id/:token
 //  @access --> PRIVATE
 export const verifyChangeEmailOTP = async (req, res) => {
   const { id, token } = req.params;
@@ -659,7 +692,7 @@ export const verifyChangeEmailOTP = async (req, res) => {
       username: user.username,
       title: "Change Email",
       message: "Your account email has been changed successfully! ✔",
-      guidance: "You can go to NAB state again. Thankyou!",
+      guidance: "You can go back to NAB Estate again. Thankyou!",
     });
   } catch (error) {
     console.log(error.message, "==> error in verify recovery email");
@@ -682,6 +715,258 @@ export const verifyChangeEmailOTP = async (req, res) => {
         message: "Something went wrong!",
         reason:
           "An error occurred while changing your email, Please try again later or contact support if the issue persists.",
+      });
+    }
+  }
+};
+
+//* --> For Send User Change Password Link <--
+//? @route --> POST --> /api/user/changePasswordConfirmation
+//  @access --> PUBLIC
+export const changePasswordConfirmation = async (req, res, next) => {
+  try {
+    const userId = req.userId;
+
+    // Find User in Database
+    const user = await User.findOne({ _id: userId });
+
+    // If USER not exist
+    if (!user) {
+      return res.status(StatusCodes.NOT_FOUND).send(
+        sendError({
+          statusCode: StatusCodes.NOT_FOUND,
+          message: resMessages.NO_USER,
+        })
+      );
+    }
+
+    if (!req.session.changePasswordToken) {
+      // Generate Token for User Change Email URL
+      const token = generateTokenForLink({ userId: user._id });
+
+      // Set Cookies to store in Session for given duration
+      req.session.changePasswordToken = true;
+
+      const link = `${process.env.SERVER_URL}/api/user/change-password/${user._id}/${token}`;
+
+      // Send Reset Password Link to User Email
+      const emailResponse = await sendEmailLink(
+        user.username,
+        user.email,
+        link,
+        "Change Password"
+      );
+      console.log(emailResponse);
+
+      // Remove Password from User_Doc for give response
+      user.password = undefined;
+
+      res.status(StatusCodes.OK).send(
+        sendSuccess({
+          message: resMessages.SUCCESS_SEND_LINK,
+          data: user,
+        })
+      );
+    } else {
+      // Remove Password from User_Doc for give response
+      user.password = undefined;
+
+      res.status(StatusCodes.OK).send(
+        sendSuccess({
+          message: `Already sent a Change Password Link to your email, Please check your email inbox`,
+          data: user,
+        })
+      );
+    }
+  } catch (error) {
+    console.log(error.message, "==> error in change password confirmation");
+    next(error);
+  }
+};
+
+//* --> For Change Password URL <--
+//? @route --> GET --> /api/user/change-password/:id/:token
+//  @access --> PRIVATE
+export const changePasswordURL = async (req, res) => {
+  console.log("Change Password URL Controller");
+  const { id, token } = req.params;
+
+  try {
+    const user = await User.findOne({ _id: id });
+
+    if (!user) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .send("UnAuthenticated User! user not found");
+    }
+
+    const verifyURLToken = verifyToken(token);
+
+    if (verifyURLToken.result !== user._id.toString()) {
+      throw new Error("Authentication Failed");
+    }
+
+    if (req.session.changePasswordSuccess) {
+      res.status(StatusCodes.OK).render("page/success", {
+        username: user.username,
+        title: "Change Password",
+        message: "Your account password has been changed successfully! ✔",
+        guidance: "You can go back to NAB Estate again. Thankyou!",
+      });
+    } else {
+      res.status(StatusCodes.OK).render("page/change-password", {
+        name: user.username,
+        email: user.email,
+        id,
+        token,
+      });
+    }
+  } catch (error) {
+    console.log(error.message, "==> error in change password URL");
+
+    // If JWT TOKEN expired error
+    if (error.message === "jwt expired") {
+      res.status(StatusCodes.UNAUTHORIZED).render("page/error", {
+        statusCode: "401",
+        statusText: "Un-Authorized User",
+        message: "Access denied!",
+        reason: "Your Change Password URL has been expired.",
+      });
+    }
+
+    // ElseIf Params Id and Token invalid error
+    else if (
+      error.message.includes("Cast to ObjectId failed") ||
+      error.message === "invalid token" ||
+      error.message === "Authentication Failed"
+    ) {
+      res.status(StatusCodes.BAD_REQUEST).render("page/error", {
+        statusCode: "400",
+        statusText: "Un-Authentic User",
+        message: "Access denied!",
+        reason: "Your Change Password URL has been invalid.",
+      });
+    }
+
+    // Else Server error
+    else {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).render("page/error", {
+        statusCode: "500",
+        statusText: "Internal Server Error",
+        message: "Something went wrong!",
+        reason:
+          "An error occurred while changing your password, Please try again later or contact support if the issue persists.",
+      });
+    }
+  }
+};
+
+//* --> For Change Password  <--
+//? @route --> GET --> /api/user/change-password/:id/:token
+//  @access --> PRIVATE
+export const changePassword = async (req, res) => {
+  const { id, token } = req.params;
+  const { currentPass, newPass, confirmPass } = req.body;
+
+  try {
+    // Find User in Database
+    const user = await User.findOne({ _id: id });
+
+    // If USER not exist
+    if (!user) {
+      return res.status(StatusCodes.NOT_FOUND).send(
+        sendError({
+          statusCode: StatusCodes.NOT_FOUND,
+          message: resMessages.NO_USER,
+        })
+      );
+    }
+
+    // Verify Reset Password URL Token
+    verifyToken(token);
+
+    // Check is any field missing
+    if (!currentPass || !newPass || !confirmPass) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.MISSING_FIELDS,
+        })
+      );
+    }
+
+    // Check Current Password
+    const isCurrentPassCorrect = compare(currentPass, user.password);
+
+    // If Current Password is incorrect
+    if (!isCurrentPassCorrect) {
+      return res.status(StatusCodes.UNAUTHORIZED).send(
+        sendError({
+          statusCode: StatusCodes.UNAUTHORIZED,
+          message: resMessages.INCORRECT_PASSWORD,
+        })
+      );
+    }
+
+    // Check Password length
+    if (newPass.length < 8) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.PASSWORD_LENGTH_SHORT,
+        })
+      );
+    }
+
+    // Password Match Verification
+    if (newPass !== confirmPass) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.UN_MATCH_PASSWORDS,
+        })
+      );
+    }
+
+    // Hashed Password
+    const hashedPassword = encrypted(newPass, 10);
+
+    // Update Password in User_Doc and Save to DB
+    await User.updateOne(
+      { _id: user._id },
+      { $set: { password: hashedPassword } }
+    );
+
+    // If user changed password successfully then change password success session making true
+    // because the user didn't send a change password request again under same page
+    req.session.changePasswordSuccess = true;
+    res.status(StatusCodes.OK).render("page/success", {
+      username: user.username,
+      title: "Change Password",
+      message: "Your account password has been changed successfully! ✔",
+      guidance: "You can go back to NAB Estate again. Thankyou!",
+    });
+  } catch (error) {
+    console.log(error.message, "==> error in change password");
+
+    // If JWT TOKEN expired error
+    if (error.message === "jwt expired") {
+      res.status(StatusCodes.UNAUTHORIZED).render("page/error", {
+        statusCode: "401",
+        statusText: "Un-Authorized User",
+        message: "Access denied!",
+        reason: "Your Change Password URL has been expired.",
+      });
+    }
+
+    // Else Server error
+    else {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).render("page/error", {
+        statusCode: "500",
+        statusText: "Internal Server Error",
+        message: "Something went wrong!",
+        reason:
+          "An error occurred while changing your password, Please try again later or contact support if the issue persists.",
       });
     }
   }

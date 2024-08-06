@@ -125,7 +125,7 @@ const signinServerErrorHandler = (errorMsg, setError) => {
 const forgotPasswordErrorHandler = (email, setError) => {
   if (email) {
     if (!emailPattern.test(email)) {
-      setError("Please! enter a valid Email address, your Email is invalid");
+      setError("Please! enter a valid email address, your email is invalid");
       return false;
     } else {
       return true;

@@ -2,6 +2,7 @@ import axios from "axios";
 import toastify from "../utils/toastify";
 import {
   SEND_CHANGE_EMAIL_LINK,
+  SEND_CHANGE_PASSWORD_LINK,
   SEND_RECOVERY_EMAIL_OTP,
   UPDATE_PROFILE,
   UPLOAD_PROFILE_PIC,
@@ -34,13 +35,16 @@ export const updateUserProfile = async (userId, updatedFields, dispatch) => {
       if (uploadImageResponse?.data?.status === "Success") {
         const uploadImageURL = uploadImageResponse?.data?.result;
 
-        response = await axios.post(`${UPDATE_PROFILE}/${userId}`, {
+        response = await axios.patch(`${UPDATE_PROFILE}/${userId}`, {
           ...updatedFields,
           profilePicture: uploadImageURL,
         });
       }
     } else {
-      response = await axios.post(`${UPDATE_PROFILE}/${userId}`, updatedFields);
+      response = await axios.patch(
+        `${UPDATE_PROFILE}/${userId}`,
+        updatedFields
+      );
     }
 
     const responseData = response?.data;
@@ -81,10 +85,10 @@ export const sendUserRecoveryEmailOTP = async (credentials) => {
   }
 };
 
-// For VERIFY OTP & ADD USER_RECOVERY_EMAIL
+// For VERIFY OTP & UPDATE USER_RECOVERY_EMAIL
 export const verifyUserRecoveryEmailOTP = async (credentials, dispatch) => {
   try {
-    const response = await axios.post(
+    const response = await axios.patch(
       `${VERIFY_RECOVERY_EMAIL_OTP}`,
       credentials
     );
@@ -108,7 +112,7 @@ export const verifyUserRecoveryEmailOTP = async (credentials, dispatch) => {
   }
 };
 
-// For SEND USER_RECOVERY_EMAIL OTP
+// For SEND USER_CHANGE_EMAIL_LINK
 export const sendChangeEmailLink = async (credentials) => {
   try {
     const response = await axios.post(`${SEND_CHANGE_EMAIL_LINK}`, credentials);
@@ -116,6 +120,34 @@ export const sendChangeEmailLink = async (credentials) => {
     console.log(responseData);
 
     if (responseData?.status === "Success") {
+      toastify(
+        "success",
+        `Dear ${responseData.result.username}, ${responseData.message}`,
+        "top-right",
+        "dark",
+        4000
+      );
+
+      return responseData.result;
+    }
+  } catch (error) {
+    console.log(error, "==> error in Add User Recovery Email");
+    throw error;
+  }
+};
+
+// For SEND USER_CHANGE_PASSWORD_LINK
+export const sendChangePasswordLink = async (email) => {
+  try {
+    const response = await axios.post(`${SEND_CHANGE_PASSWORD_LINK}`, {
+      email,
+    });
+    const responseData = response?.data;
+    console.log(responseData);
+
+    if (responseData?.status === "Success") {
+      toastify("success", `${responseData.message}`, "top-right", "dark", 4000);
+
       return responseData.result;
     }
   } catch (error) {

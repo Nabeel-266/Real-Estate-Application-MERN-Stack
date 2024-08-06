@@ -9,12 +9,14 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 // Import Components
 import RecoveryEmailModal from "./RecoveryEmailModal";
 import ChangeEmailModal from "./ChangeEmailModal";
+import ChangePasswordModal from "./ChangePassModal";
 
 const Account = () => {
   const currentUser = useSelector((state) => state?.user?.authenticUser);
   const [isRecoveryEmailModalOpen, setIsRecoveryEmailModalOpen] =
     useState(false);
   const [isChangeEmailModalOpen, setIsChangeEmailModalOpen] = useState(false);
+  const [isChangePassModalOpen, setIsChangePassModalOpen] = useState(false);
 
   return (
     <>
@@ -91,10 +93,13 @@ const Account = () => {
           {/* Reset Password */}
           <section className="flex flex-col items-start gap-[1rem] px-[0.5rem]">
             <h3 className="text-[1.9rem] leading-[2rem] font-semibold">
-              Reset Password
+              Change Password
             </h3>
 
-            <button className="flex items-center gap-[0.8rem] text-[1.7rem] leading-[1.8rem] font-medium text-theme-blue mt-[1rem]">
+            <button
+              onClick={() => setIsChangePassModalOpen(true)}
+              className="flex items-center gap-[0.8rem] text-[1.7rem] leading-[1.8rem] font-medium text-theme-blue mt-[1rem]"
+            >
               <MdOutlinePassword size="1.8rem" />
               <span>Change Password</span>
             </button>
@@ -114,18 +119,13 @@ const Account = () => {
               </span>
             </p>
 
-            <button className="flex items-center gap-[0.8rem] text-[1.7rem] leading-[1.8rem] font-medium text-red-800 px-[2rem] py-[1rem] border-[0.2rem] border-red-800 rounded-md mt-[1.2rem] hover:bg-red-800 hover:text-white transition-all">
-              <RiDeleteBin6Line />
-              <span>Delete Your Account</span>
+            <button className="flex items-center gap-[0.8rem] text-[1.7rem] leading-[1.8rem] font-semibold text-red-800 px-[1rem] py-[0.8rem] border-[0.2rem] border-red-800 rounded-md mt-[1.2rem] hover:bg-red-800 hover:text-white transition-all">
+              <RiDeleteBin6Line size="1.8rem" />
+              <span>Delete Account</span>
             </button>
           </section>
         </div>
       </div>
-
-      {/* Recovery Email Modal */}
-      {isRecoveryEmailModalOpen && (
-        <RecoveryEmailModal isModalOpen={setIsRecoveryEmailModalOpen} />
-      )}
 
       {/* Change Email Modal */}
       {isChangeEmailModalOpen && (
@@ -133,6 +133,15 @@ const Account = () => {
           isModalOpen={setIsChangeEmailModalOpen}
           recoveryEmailModalOpen={setIsRecoveryEmailModalOpen}
         />
+      )}
+
+      {/* Recovery Email Modal */}
+      {isRecoveryEmailModalOpen && (
+        <RecoveryEmailModal isModalOpen={setIsRecoveryEmailModalOpen} />
+      )}
+
+      {isChangePassModalOpen && (
+        <ChangePasswordModal isModalOpen={setIsChangePassModalOpen} />
       )}
     </>
   );

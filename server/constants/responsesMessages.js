@@ -26,14 +26,12 @@ const resMessages = {
   SUCCESS_LOGOUT: "User Logout Successfull",
   SUCCESS_SEND_OTP: "OTP has been sent via email, Please Check your Email",
   SUCCESS_RESEND_OTP: "OTP has been resent via email, Please Check your Email",
-  SUCCESS_SEND_RESET_PASSWORD_LINK:
-    "Reset Password Link has been sent to your email, Please check your email inbox",
+  SUCCESS_SEND_LINK:
+    "Link has been sent to your email, Please check your email inbox",
   SUCCESS_RESET_PASSWORD: "Password has been reset successfully",
   SUCCESS_UPDATE_PROFILE: "Profile has been updated successfully",
   SUCCESS_UPLOAD_IMAGE: "Image has been uploaded successfully",
   SUCCESS_ADD_RECOVERY_EMAIL: "Recovery Email has been added successfully",
-  SUCCESS_SEND_CHANGE_EMAIL_LINK:
-    "Change Email Link has been sent to your recovery email, Please check your email inbox",
   SUCCESS_DEACTIVATE: "User Deactivation Successfull",
   SUCCESS_ACTIVATE: "User Activation Successfull",
   NO_USER: "User not found",

@@ -439,7 +439,7 @@ export const forgotPassword = async (req, res, next) => {
 
       res.status(StatusCodes.OK).send(
         sendSuccess({
-          message: resMessages.SUCCESS_SEND_RESET_PASSWORD_LINK,
+          message: resMessages.SUCCESS_SEND_LINK,
           data: user,
         })
       );

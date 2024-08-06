@@ -54,30 +54,30 @@ const ForgotPassword = () => {
 
   return (
     <div
-      className={`accountVerifyCont w-full h-full absolute z-[90] top-0 left-0 flex justify-center items-center p-[3rem] ${
+      className={`w-full h-full absolute z-[90] top-0 left-0 flex justify-center items-center p-[3rem] ${
         routeLocation === "forgot-password"
           ? "opacity-100 scale-100 "
           : "opacity-0 scale-0"
       } transition-all duration-[700ms] ease-in-out`}
     >
-      {/* Verification Cont */}
-      <div className="verificationCont mobileSm:min-w-[90%] mobileRg:min-w-[90%] tabletSm:min-w-[55rem] max-w-[65rem] bg-white p-[2.5rem] shadow-2xl rounded-lg">
-        {/* Verfication Header */}
+      {/* Forgot Password Cont */}
+      <div className="w-[90%] tabletSm:w-[60rem] bg-white p-[2.5rem] shadow-2xl rounded-lg">
+        {/* Forgot Password Header */}
         <header className="w-full pb-[1.5rem] border-b-[0.2rem] border-neutral-500">
           <h1 className="text-[2.5rem] leading-[2.5rem] text-theme-blue font-semibold">
             Forgot Password
           </h1>
         </header>
 
-        {/* Verfication Body */}
-        <div className="w-full flex flex-col gap-[1rem] pt-[1rem]">
+        {/* Forgot Password Body */}
+        <div className="w-full flex flex-col gap-[1rem] pt-[1.2rem]">
           {!responseUser ? (
-            // Send Verification Link Content
+            // Send Reset Password Link Content
             <div className="w-full flex flex-col gap-[1rem]">
               {/* Message Cont */}
               <div className="w-full space-y-[0.5rem]">
-                <h6 className="text-[1.8rem] font-semibold text-theme-blue">
-                  You Forgot Your Account Password?
+                <h6 className="text-[1.75rem] font-semibold text-theme-blue">
+                  Have you forgotten your account password?
                 </h6>
                 <p className="text-[1.55rem] font-medium text-neutral-800">
                   No worries! just enter your email address below, and click on{" "}
@@ -161,15 +161,6 @@ const ForgotPassword = () => {
             <FaArrowLeftLong />
             <span>Back to Login</span>
           </Link>
-
-          {/* Note */}
-          {/* <div className="w-full text-[1.5rem] font-medium mt-[0.5rem]">
-        <h6 className="text-red-800 text-[1.6rem] font-bold">Note :</h6>
-        <p>
-          <b className="text-[2rem] leading-[2rem]">-</b> If your account is
-          not verified, you will not be able to create an account.
-        </p>
-      </div> */}
         </div>
       </div>
     </div>

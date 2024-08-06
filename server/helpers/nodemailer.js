@@ -1,5 +1,4 @@
 import nodemailer from "nodemailer";
-import fs from "fs";
 import ejs from "ejs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -90,24 +89,32 @@ export async function sendEmailLink(
 
     // Email Subject
     const subject =
-      title === "Confirmation Email"
+      title === "Change Email"
         ? "Change Your Nab Estate Account Email"
+        : title === "Change Password"
+        ? "Change Your Nab Estate Account Password"
         : "Reset Your Nab Estate Account Password";
 
     // Email Topic
     const topic =
-      title === "Confirmation Email"
+      title === "Change Email"
         ? "change your email"
+        : title === "Change Password"
+        ? "change your password"
         : "reset your password";
 
     // Email Button Text
     const buttonText =
-      title === "Confirmation Email" ? "Change Email" : "Recover Password";
+      title === "Change Email"
+        ? "Change Email"
+        : title === "Change Password"
+        ? "Change Password"
+        : "Recover Password";
 
     // Email Alert Message
     const alertMessage =
-      title === "Confirmation Email"
-        ? "If you did not request this, so be alert and change your account password immediately."
+      title === "Change Email" || title === "Change Password"
+        ? "Your request link will be expired after 5 minutes."
         : "If you did not request this, please ignore this email.";
 
     // Render the email template with the given data
@@ -151,53 +158,3 @@ export async function sendEmailLink(
     return `Error! sending Link to ${userEmail} via email: ${error}`;
   }
 }
-
-// async function sendEmailOTP(username, userEmail, otp) {
-//   // Dynamic values
-//   const replacements = {
-//     username,
-//     otp,
-//   };
-
-//   // Read and replace the HTML template
-//   const emailTemplatePath = path.join(
-//     __dirname,
-//     "../public/email/otpEmail.html"
-//   );
-//   const emailTemplate = getEmailTemplate(emailTemplatePath, replacements);
-
-//   // Create a transporter object using the email configuration
-//   const transporter = nodemailer.createTransport(emailConfig);
-
-//   // Set up the email options
-//   const mailOptions = {
-//     from: process.env.PORTAL_EMAIL,
-//     to: userEmail,
-//     subject: "Verify Your Email for Nab Estate Account",
-//     html: emailTemplate,
-//     attachments: [
-//       {
-//         filename: "logo.png",
-//         path: path.join(__dirname, "../public/assets/logo.png"),
-//         encoding: "base64",
-//         cid: "logo-image",
-//       },
-//     ],
-//   };
-
-//   try {
-//     await transporter.sendMail(mailOptions);
-//     return `OTP sent to via email successfully`;
-//   } catch (error) {
-//     return `Error! sending OTP to ${userEmail} via email: ${error}`;
-//   }
-// }
-
-// // Function to read the HTML file and replace placeholders with dynamic values
-// const getEmailTemplate = (templatePath, replacements) => {
-//   let template = fs.readFileSync(templatePath, "utf8");
-//   for (const [key, value] of Object.entries(replacements)) {
-//     template = template.replace(new RegExp(`\\\${${key}}`, "g"), value);
-//   }
-//   return template;
-// };

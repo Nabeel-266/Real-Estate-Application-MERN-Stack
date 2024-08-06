@@ -52,6 +52,7 @@
       }
       .container-top h1 {
         width: 100%;
+        max-width: 50rem;
         font-size: 2.8rem;
         line-height: 4.5rem;
         font-weight: 600;
@@ -287,18 +288,20 @@
         serverError.innerText = "";
       }
 
-      function otpInputHandler(e) {
+      function otpInputHandler() {
         if (otp.value.length === 6) {
           verifyCodeBtn.disabled = false;
         } else {
           verifyCodeBtn.disabled = true;
         }
         otpError.innerText = "";
+        responseMessage.style.display = "none";
         serverError.style.display = "none";
+        responseMessage.innerText = "";
         serverError.innerText = "";
       }
 
-      function sendChangeEmailVerifyCodeHandler() {
+      function sendChangeEmailOTPCodeHandler() {
         const emailRegex =
           /^(?:[^@\s]+@(?:gmail\.com|hotmail\.com|yahoo\.com|outlook\.com|zoho\.com|icloud\.com|protonmail\.com|aol\.com))$/;
 
@@ -365,7 +368,7 @@
         if (!otpError.value) {
           verifyCodeBtn.innerText = "Processing...";
           fetch(`/api/user/verifyChangeEmailOTP/${userId}/${token}`, {
-            method: "POST",
+            method: "PATCH",
             headers: {
               "Content-Type": "application/json",
             },
@@ -392,7 +395,7 @@
         }
       }
 
-      sendCodeBtn.addEventListener("click", sendChangeEmailVerifyCodeHandler);
+      sendCodeBtn.addEventListener("click", sendChangeEmailOTPCodeHandler);
       verifyCodeBtn.addEventListener(
         "click",
         verifyChangeEmailVerifyCodeHandler
