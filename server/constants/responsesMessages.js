@@ -24,6 +24,7 @@ const resMessages = {
   SUCCESS_REGISTRATION: "User Registration Successfull",
   SUCCESS_VERIFICATION: "User Verification Successfull",
   SUCCESS_LOGOUT: "User Logout Successfull",
+  SUCCESS_ACCOUNT_DELETED: "User Account Deleted Successfully",
   SUCCESS_SEND_OTP: "OTP has been sent via email, Please Check your Email",
   SUCCESS_RESEND_OTP: "OTP has been resent via email, Please Check your Email",
   SUCCESS_SEND_LINK:

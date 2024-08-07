@@ -16,3 +16,4 @@ export const SEND_RECOVERY_EMAIL_OTP = "/api/user/sendRecoveryEmailOTP";
 export const VERIFY_RECOVERY_EMAIL_OTP = "/api/user/verifyRecoveryEmailOTP";
 export const SEND_CHANGE_EMAIL_LINK = "/api/user/changeEmailConfirmation";
 export const SEND_CHANGE_PASSWORD_LINK = "/api/user/changePasswordConfirmation";
+export const DELETE_ACCOUNT = "/api/user/deleteAccount";

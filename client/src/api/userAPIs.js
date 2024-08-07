@@ -1,6 +1,7 @@
 import axios from "axios";
 import toastify from "../utils/toastify";
 import {
+  DELETE_ACCOUNT,
   SEND_CHANGE_EMAIL_LINK,
   SEND_CHANGE_PASSWORD_LINK,
   SEND_RECOVERY_EMAIL_OTP,
@@ -13,6 +14,7 @@ import {
   updateProfileSuccess,
   updateProfileFailure,
   addRecoveryEmailSuccess,
+  deleteAccountSuccess,
 } from "../app/actions/userActions";
 
 // For UPDATE USER_PROFILE
@@ -152,6 +154,34 @@ export const sendChangePasswordLink = async (email) => {
     }
   } catch (error) {
     console.log(error, "==> error in Add User Recovery Email");
+    throw error;
+  }
+};
+
+// For DELETE USER_ACCOUNT
+export const deleteAccount = async (userId, email, password, dispatch) => {
+  try {
+    const response = await axios.delete(`${DELETE_ACCOUNT}/${userId}`, {
+      headers: {
+        email,
+        password,
+      },
+    });
+    const responseData = response?.data;
+
+    if (responseData?.status === "Success") {
+      toastify(
+        "success",
+        `Dear ${responseData.result.username}! Your Account deleted Successfully`,
+        "top-right",
+        "dark",
+        3000
+      );
+
+      dispatch(deleteAccountSuccess());
+    }
+  } catch (error) {
+    console.log(error, "==> error in Delete User Account");
     throw error;
   }
 };

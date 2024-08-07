@@ -10,6 +10,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import RecoveryEmailModal from "./RecoveryEmailModal";
 import ChangeEmailModal from "./ChangeEmailModal";
 import ChangePasswordModal from "./ChangePassModal";
+import DeleteAcctModal from "./DeleteAcctModal";
 
 const Account = () => {
   const currentUser = useSelector((state) => state?.user?.authenticUser);
@@ -17,6 +18,7 @@ const Account = () => {
     useState(false);
   const [isChangeEmailModalOpen, setIsChangeEmailModalOpen] = useState(false);
   const [isChangePassModalOpen, setIsChangePassModalOpen] = useState(false);
+  const [isDeleteAcctModalOpen, setIsDeleteAcctModalOpen] = useState(false);
 
   return (
     <>
@@ -119,7 +121,10 @@ const Account = () => {
               </span>
             </p>
 
-            <button className="flex items-center gap-[0.8rem] text-[1.7rem] leading-[1.8rem] font-semibold text-red-800 px-[1rem] py-[0.8rem] border-[0.2rem] border-red-800 rounded-md mt-[1.2rem] hover:bg-red-800 hover:text-white transition-all">
+            <button
+              onClick={() => setIsDeleteAcctModalOpen(true)}
+              className="flex items-center gap-[0.8rem] text-[1.7rem] leading-[1.8rem] font-semibold text-red-800 px-[1rem] py-[0.8rem] border-[0.2rem] border-red-800 rounded-md mt-[1.2rem] hover:bg-red-800 hover:text-white transition-all"
+            >
               <RiDeleteBin6Line size="1.8rem" />
               <span>Delete Account</span>
             </button>
@@ -140,8 +145,14 @@ const Account = () => {
         <RecoveryEmailModal isModalOpen={setIsRecoveryEmailModalOpen} />
       )}
 
+      {/* Change Password Modal */}
       {isChangePassModalOpen && (
         <ChangePasswordModal isModalOpen={setIsChangePassModalOpen} />
+      )}
+
+      {/* Delete Account Modal */}
+      {isDeleteAcctModalOpen && (
+        <DeleteAcctModal isModalOpen={setIsDeleteAcctModalOpen} />
       )}
     </>
   );

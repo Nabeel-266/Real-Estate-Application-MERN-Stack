@@ -13,7 +13,7 @@ import { emailRegex } from "../utils/emailRegex.js";
 dotenv.config();
 
 //* --> For Update User Profile <--
-//? @route --> POST --> /api/user/updateProfile
+//? @route --> PATCH --> /api/user/updateProfile
 //  @access --> PRIVATE
 export const updateProfile = async (req, res, next) => {
   console.log("Update Profile Controller");
@@ -237,7 +237,7 @@ export const sendRecoveryEmailOTP = async (req, res, next) => {
 };
 
 //* --> For Verify Recovery Email OTP & Update User Recovery Email <--
-//? @route --> POST --> /api/user/verifyRecoveryEmailOTP
+//? @route --> PATCH --> /api/user/verifyRecoveryEmailOTP
 //  @access --> PRIVATE
 export const verifyRecoveryEmailOTP = async (req, res, next) => {
   console.log(req.body);
@@ -594,8 +594,8 @@ export const sendChangeEmailOTP = async (req, res) => {
   }
 };
 
-//* --> For Verify User New Email OTP <--
-//? @route --> POST --> /api/user/verifyChangeEmailOTP/:id/:token
+//* --> For Verify New Email OTP & Update User Email <--
+//? @route --> PATCH --> /api/user/verifyChangeEmailOTP/:id/:token
 //  @access --> PRIVATE
 export const verifyChangeEmailOTP = async (req, res) => {
   const { id, token } = req.params;
@@ -724,9 +724,9 @@ export const verifyChangeEmailOTP = async (req, res) => {
 //? @route --> POST --> /api/user/changePasswordConfirmation
 //  @access --> PUBLIC
 export const changePasswordConfirmation = async (req, res, next) => {
-  try {
-    const userId = req.userId;
+  const userId = req.userId;
 
+  try {
     // Find User in Database
     const user = await User.findOne({ _id: userId });
 
@@ -861,8 +861,8 @@ export const changePasswordURL = async (req, res) => {
   }
 };
 
-//* --> For Change Password  <--
-//? @route --> GET --> /api/user/change-password/:id/:token
+//* --> For Change User Password  <--
+//? @route --> PATCH --> /api/user/change-password/:id/:token
 //  @access --> PRIVATE
 export const changePassword = async (req, res) => {
   const { id, token } = req.params;
@@ -969,5 +969,56 @@ export const changePassword = async (req, res) => {
           "An error occurred while changing your password, Please try again later or contact support if the issue persists.",
       });
     }
+  }
+};
+
+//* --> For Delete User Account  <--
+//? @route --> DELETE --> /api/user/deleteAccount/:userId
+//  @access --> PUBLIC
+export const deleteAccount = async (req, res, next) => {
+  const userId = req.params.userId;
+  const { email, password } = req.headers;
+
+  try {
+    const user = await User.findOne({ _id: userId, email });
+
+    // If User not exist
+    if (!user) {
+      return res.status(StatusCodes.NOT_FOUND).send(
+        sendError({
+          statusCode: StatusCodes.NOT_FOUND,
+          message: resMessages.NO_USER,
+        })
+      );
+    }
+
+    // Check Password
+    const isPasswordCorrect = compare(password, user.password);
+
+    // If Password not correct
+    if (!isPasswordCorrect) {
+      return res.status(StatusCodes.UNAUTHORIZED).send(
+        sendError({
+          statusCode: StatusCodes.UNAUTHORIZED,
+          message: resMessages.INCORRECT_PASSWORD,
+        })
+      );
+    }
+
+    // Delete User Account
+    await User.deleteOne({ _id: userId, email });
+
+    res
+      .cookie("token", "", { httpOnly: true, maxAge: 0 })
+      .status(StatusCodes.OK)
+      .send(
+        sendSuccess({
+          message: resMessages.SUCCESS_ACCOUNT_DELETED,
+          data: { username: user.username },
+        })
+      );
+  } catch (error) {
+    console.log(error.message, "==> error in update profile");
+    next(error);
   }
 };

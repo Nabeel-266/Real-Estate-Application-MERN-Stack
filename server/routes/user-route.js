@@ -15,6 +15,7 @@ import {
   changePasswordConfirmation,
   changePasswordURL,
   changePassword,
+  deleteAccount,
 } from "../controllers/user-controller.js";
 
 const userRouter = express.Router();
@@ -63,5 +64,8 @@ userRouter.get("/change-password/:id/:token", changePasswordURL);
 
 //* For Change User Password
 userRouter.patch("/change-password/:id/:token", changePassword);
+
+//* For Delete User Account
+userRouter.delete("/deleteAccount/:userId", deleteAccount);
 
 export default userRouter;

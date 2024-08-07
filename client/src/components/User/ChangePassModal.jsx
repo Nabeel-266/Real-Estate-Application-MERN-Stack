@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { sendChangePasswordLink } from "../../api/userAPIs";
 
 // Import React Icons
 import { FaXmark } from "react-icons/fa6";
 import { BsFillSendFill } from "react-icons/bs";
+import { RiMailSendFill } from "react-icons/ri";
 
 // Import Component
 import Loader from "../Loader";
-import { RiMailSendFill } from "react-icons/ri";
-import { sendChangePasswordLink } from "../../api/userAPIs";
 
 const ChangePasswordModal = ({ isModalOpen }) => {
   const currentUser = useSelector((state) => state?.user?.authenticUser);
@@ -33,7 +33,7 @@ const ChangePasswordModal = ({ isModalOpen }) => {
   };
 
   return (
-    <div className="recoveryEmailCont flex items-center justify-center fixed z-[990] top-0 left-0 right-0 bottom-0 backdrop-blur-[2px] bg-[#404040b0] overflow-hidden ">
+    <div className="overlayCont flex items-center justify-center fixed z-[990] top-0 left-0 right-0 bottom-0 backdrop-blur-[2px] bg-[#404040b0] overflow-hidden ">
       {/* Main Modal Cont */}
       <div className="w-[85%] tabletSm:w-[50rem] tabletRg:w-[55rem] max-h-[80%] relative z-20 bg-white rounded-md px-[1.2rem] shadow-2xl">
         {/* Change Password Modal Header */}

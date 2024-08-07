@@ -86,21 +86,7 @@ export const addRecoveryEmailSuccess = (user) => (dispatch) => {
   dispatch(setAuthUser(user));
 };
 
-// export const logout = () => (dispatch) => {
-//   dispatch(resetAuthUser());
-// };
-
-// export const updateSuccess = (user) => (dispatch) => {
-//   dispatch(setLoading(false));
-//   dispatch(setAuthUser(user));
-// };
-
-// export const uploadImgSuccess = (imgUrl) => (dispatch) => {
-//   dispatch(setLoading(false));
-//   dispatch(updateUserProfileImg(imgUrl));
-// };
-
-// export const updatePasswordSuccess = (user) => (dispatch) => {
-//   dispatch(setLoading(false));
-//   dispatch(setAuthUser(user));
-// };
+//* For Delete User Account Action
+export const deleteAccountSuccess = (user) => (dispatch) => {
+  dispatch(setAuthUser(null));
+};

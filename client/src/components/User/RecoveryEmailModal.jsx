@@ -281,6 +281,7 @@ const RecoveryEmailModal = ({ isModalOpen }) => {
                       name="recoveryEmailOTP"
                       onChange={verifyRecoveryEmailOTPHandler}
                       maxLength={6}
+                      autoComplete="off"
                       placeholder="Enter your 6-digit OTP code here..."
                       className={`w-full tabletSm:w-[90%] px-[0.5rem] py-[0.6rem] text-neutral-700 text-[1.7rem] leading-[2rem] font-medium font-mont outline-none bg-transparent border-b-[0.2rem] border-neutral-400 rounded-sm focus:border-theme-blue placeholder:font-montAlter placeholder:text-neutral-600 ${
                         error[0] === "OTP" && "border-red-700"
