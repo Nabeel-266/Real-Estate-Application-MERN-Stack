@@ -6,7 +6,7 @@ import {
   directions,
   landmarksNearby,
   utilities,
-} from "../../constants/data";
+} from "../../lib/dummyData";
 
 // Import React Icons
 import { IoMdArrowDropdown } from "react-icons/io";

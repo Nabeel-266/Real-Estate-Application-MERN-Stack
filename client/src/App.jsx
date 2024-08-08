@@ -33,6 +33,7 @@ import Profile from "./components/User/Profile";
 import Account from "./components/User/Account";
 import MyProperties from "./components/User/MyProperties";
 import ForgotPassword from "./components/Authentication/ForgotPassword";
+import NotFound from "./pages/NotFound";
 
 const AppRoutes = () => {
   const location = useLocation();
@@ -111,19 +112,7 @@ const AppRoutes = () => {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
 
-        <Route
-          path="/profileDemo"
-          element={
-            <UnAuthProtectedRoute>
-              <ProfileDemo />
-            </UnAuthProtectedRoute>
-          }
-        />
-
-        <Route
-          path="*"
-          element={<h1 className="mt-[7rem]">Page not found</h1>}
-        />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );

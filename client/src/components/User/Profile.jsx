@@ -2,9 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUserProfile } from "../../api/userAPIs";
 import { countries } from "countries-list";
-import { cities } from "../../constants/data";
+import { cities } from "../../lib/dummyData";
 import Flag from "react-world-flags";
-import toastify from "../../utils/toastify";
 
 // Import React Icons
 import { FaCameraRetro } from "react-icons/fa";

@@ -75,8 +75,8 @@ const About = () => {
 
   return (
     <div className="aboutCont w-full min-h-dvh pt-[6rem] flex flex-col gap-[4rem]">
-      {/* About Heading */}
-      <div className="aboutHd w-full h-[20rem] tabletSm:h-[22rem] tabletLg:h-[25rem] bg-about-hd-image bg-cover bg-bottom bg-no-repeat">
+      {/* About Banner */}
+      <div className="aboutBanner w-full h-[20rem] tabletSm:h-[22rem] tabletLg:h-[25rem] bg-about-hd-image bg-cover bg-bottom bg-no-repeat">
         <div className="aboutHdWrapper w-full h-full flex items-center justify-center bg-[#222222a0] backdrop-blur-[0.2rem] border-b-[0.3rem] border-dotted border-white">
           <h1 className="text-[4rem] leading-[2rem] font-bold text-white">
             ABOUT US

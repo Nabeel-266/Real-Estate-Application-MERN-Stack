@@ -1,32 +1,32 @@
 // Property Purposes Icons
-import RentIcon from "../assets/Property-Icons/rent.png";
-import SellIcon from "../assets/Property-Icons/sell.png";
+import RentIcon from "/src/assets/Property-Icons/rent.png";
+import SellIcon from "/src/assets/Property-Icons/sell.png";
 // Property Residential Types Icons
-import HouseIcon from "../assets/Property-Icons/house.png";
-import ApartmentIcon from "../assets/Property-Icons/apartment.png";
-import PortionIcon from "../assets/Property-Icons/house-portion.png";
-import RoomIcon from "../assets/Property-Icons/room.png";
-import FarmHouseIcon from "../assets/Property-Icons/farm-house.png";
-import GusetHouseIcon from "../assets/Property-Icons/guest-house.png";
-import HostelIcon from "../assets/Property-Icons/hostel.png";
-import HotelIcon from "../assets/Property-Icons/hotel.png";
-import BasementIcon from "../assets/Property-Icons/basement.png";
+import HouseIcon from "/src/assets/Property-Icons/house.png";
+import ApartmentIcon from "/src/assets/Property-Icons/apartment.png";
+import PortionIcon from "/src/assets/Property-Icons/house-portion.png";
+import RoomIcon from "/src/assets/Property-Icons/room.png";
+import FarmHouseIcon from "/src/assets/Property-Icons/farm-house.png";
+import GusetHouseIcon from "/src/assets/Property-Icons/guest-house.png";
+import HostelIcon from "/src/assets/Property-Icons/hostel.png";
+import HotelIcon from "/src/assets/Property-Icons/hotel.png";
+import BasementIcon from "/src/assets/Property-Icons/basement.png";
 // Property Plot Types Icons
-import ResidentialPlotIcon from "../assets/Property-Icons/residential-plot.png";
-import CommercialPlotIcon from "../assets/Property-Icons/commercial-plot.png";
-import AgriculturalLandIcon from "../assets/Property-Icons/agricultural-land.png";
-import IndustrialLandIcon from "../assets/Property-Icons/industrial-land.png";
-import FarmhousePlotIcon from "../assets/Property-Icons/farmhouse-plot.png";
+import ResidentialPlotIcon from "/src/assets/Property-Icons/residential-plot.png";
+import CommercialPlotIcon from "/src/assets/Property-Icons/commercial-plot.png";
+import AgriculturalLandIcon from "/src/assets/Property-Icons/agricultural-land.png";
+import IndustrialLandIcon from "/src/assets/Property-Icons/industrial-land.png";
+import FarmhousePlotIcon from "/src/assets/Property-Icons/farmhouse-plot.png";
 // Property Commercial Types Icons
-import OfficeIcon from "../assets/Property-Icons/office.png";
-import ShopIcon from "../assets/Property-Icons/shop.png";
-import WarehouseIcon from "../assets/Property-Icons/warehouse.png";
-import HallIcon from "../assets/Property-Icons/hall.png";
-import PlazaIcon from "../assets/Property-Icons/plaza.png";
-import GymIcon from "../assets/Property-Icons/gym.png";
-import TheatreIcon from "../assets/Property-Icons/theatre.png";
-import RestaurantIcon from "../assets/Property-Icons/restaurant.png";
-import FactoryIcon from "../assets/Property-Icons/factory.png";
+import OfficeIcon from "/src/assets/Property-Icons/office.png";
+import ShopIcon from "/src/assets/Property-Icons/shop.png";
+import WarehouseIcon from "/src/assets/Property-Icons/warehouse.png";
+import HallIcon from "/src/assets/Property-Icons/hall.png";
+import PlazaIcon from "/src/assets/Property-Icons/plaza.png";
+import GymIcon from "/src/assets/Property-Icons/gym.png";
+import TheatreIcon from "/src/assets/Property-Icons/theatre.png";
+import RestaurantIcon from "/src/assets/Property-Icons/restaurant.png";
+import FactoryIcon from "/src/assets/Property-Icons/factory.png";
 
 export const propertyPurposes = [
   { value: "Sell", iconImage: SellIcon },

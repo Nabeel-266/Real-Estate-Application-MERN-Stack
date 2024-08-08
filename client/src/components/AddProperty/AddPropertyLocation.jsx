@@ -1,12 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Map, Marker, ZoomControl } from "pigeon-maps";
 import axios from "axios";
+
+// Import React Icon
+import { BiExitFullscreen, BiFullscreen } from "react-icons/bi";
+
+// Component
+import Loader from "../Loader";
 
 const AddPropertyLocationModal = ({
   setIsLocationModalOpen,
   city,
   propertyFormDataChangeHandler,
 }) => {
+  const mapRef = useRef(null);
   const [marker, setMarker] = useState([]);
   const [cityBoundary, setCityBoundary] = useState({});
   const [propertyCoordinates, setPropertyCoordinates] = useState(null);
@@ -16,6 +23,19 @@ const AddPropertyLocationModal = ({
   console.log(marker);
   console.log(cityBoundary);
   console.log(propertyCoordinates);
+
+  const handleFullScreen = () => {
+    mapRef.current.requestFullscreen
+      ? mapRef.current.requestFullscreen()
+      : // Firefox
+      mapRef.current.mozRequestFullScreen
+      ? mapRef.current.mozRequestFullScreen()
+      : // Chrome, Safari & Opera
+      mapRef.current.webkitRequestFullscreen
+      ? mapRef.current.webkitRequestFullscreen()
+      : // IE/Edge 11
+        mapRef.current.msRequestFullscreen();
+  };
 
   useEffect(() => {
     const getCityLocationCoordinates = async (city) => {
@@ -71,10 +91,10 @@ const AddPropertyLocationModal = ({
   };
 
   return (
-    <div className="editProfileModalCont w-full h-dvh flex items-center justify-center fixed z-[990] top-0 left-0">
+    <div className="flex items-center justify-center fixed z-[990] top-0 right-0 bottom-0 left-0">
       {/* Add Property Location Modal Overlay */}
       <div
-        className={`w-full h-full absolute z-0 backdrop-blur-[2px] bg-[#404040b0] overflow-hidden`}
+        className={`absolute z-0 top-0 right-0 bottom-0 left-0 backdrop-blur-[2px] bg-[#404040b0] overflow-hidden`}
       ></div>
 
       <div className="w-[90%] tabletRg:w-[70%] laptopSm:w-[60%] min-h-[30rem] relative z-20 bg-white rounded-md px-[1rem] py-[1rem] shadow-2xl">
@@ -88,15 +108,32 @@ const AddPropertyLocationModal = ({
         {/* Map Container */}
         <div className="mapContainer w-full h-[40rem] px-[1rem] pt-[1.5rem] pb-[1rem] flex items-center justify-center">
           {loading ? (
-            <div className="loader"></div>
+            <div className="loading text-[2.4rem] text-theme-blue font-semibold">
+              <Loader
+                value="LOADING"
+                color="#082835"
+                size="0.8rem"
+                gap="0.8rem"
+              />
+            </div>
           ) : (
-            <div className="map w-full h-full border-[0.2rem] border-neutral-300 rounded-md">
+            <div
+              ref={mapRef}
+              className="map w-full h-full relative border-[0.2rem] border-neutral-200 rounded-md"
+            >
+              <button
+                onClick={handleFullScreen}
+                className="text-[2.2rem] p-[0.3rem] bg-white text-neutral-700 absolute z-[1] top-[1rem] right-[1rem]"
+              >
+                <BiFullscreen />
+              </button>
               <Map
                 defaultCenter={marker}
-                defaultZoom={11}
+                defaultZoom={12}
+                minZoom={4}
                 onClick={handleMapClick}
               >
-                <Marker width={40} anchor={marker} color="#082835" />
+                <Marker width={35} anchor={marker} color="#082835" />
                 <ZoomControl />
               </Map>
             </div>

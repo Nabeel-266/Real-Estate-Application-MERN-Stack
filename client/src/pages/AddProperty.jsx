@@ -12,7 +12,7 @@ import {
   count,
   propertyCondition,
   availabiltyDays,
-} from "../constants/data";
+} from "../lib/dummyData";
 
 // Import React Icons
 import { IoSearch } from "react-icons/io5";
@@ -65,7 +65,7 @@ const AddProperty = () => {
     availability,
   } = propertyDetails;
 
-  console.log(propertyDetails);
+  // console.log(propertyDetails);
 
   const propertyFormDataChangeHandler = (action, key, value) => {
     if (action === "added") {
@@ -1174,7 +1174,7 @@ const AddProperty = () => {
                       When can clients visit your property?
                     </h6>
 
-                    <div className="input w-full laptopSm:w-[80%] flex flex-wrap items-center gap-[1.5rem] mt-[1rem]">
+                    <div className="input w-full tabletSm:w-[70%] tabletSm:min-w-[50rem] flex flex-wrap items-center gap-[1.5rem] mt-[1rem]">
                       {availabiltyDays?.map((day, index) => (
                         <div key={index} className="singleInput select-none">
                           <label

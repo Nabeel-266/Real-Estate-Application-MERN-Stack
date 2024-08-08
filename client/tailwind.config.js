@@ -55,11 +55,11 @@ export default {
       backgroundImage: {
         "auth-page-image": "url('/src/assets/auth-bg-image.png')",
         "about-hd-image": "url('/src/assets/About/about-bg.jpg')",
-        "profile-page-image": "url('/src/assets/profile-bg.png')",
         "footer-image": "url('/src/assets/footer-bg.jpg')",
         "add-property-banner-image":
           "url('/src/assets/add-property-banner-bg.png')",
         "no-property-found-image": "url('/src/assets/no-property-found.png')",
+        "circles-svg-image": "url('/src/assets/no-page-bg.png')",
       },
     },
     fontFamily: {
