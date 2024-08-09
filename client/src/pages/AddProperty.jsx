@@ -29,26 +29,26 @@ import AddPropertyReview from "../components/AddProperty/AddPropertyReview";
 
 const AddProperty = () => {
   const dropdownRef = useRef(null);
+  const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
+  const [isFeaturesModalOpen, setIsFeaturesModalOpen] = useState(false);
   const [isCitiesDropdownOpen, setIsCitiesDropdownOpen] = useState(false);
   const [isSizeDropdownOpen, setIsSizeDropdownOpen] = useState(false);
   const [isCountryDropdownOpen, setIsCountryDropdownOpen] = useState(false);
-  const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
-  const [isFeaturesModalOpen, setIsFeaturesModalOpen] = useState(false);
   const [isConditionDropdownOpen, setIsConditionDropdownOpen] = useState(false);
   const [isAvailableOptionsOpen, setIsAvailableOptionsOpen] = useState(false);
   const [numericPrice, setNumericPrice] = useState("");
   const [sizeValue, setSizeValue] = useState(0);
   const [sizeUnit, setSizeUnit] = useState("Sq. Ft");
+  const [propertyTypeOptions, setPropertyTypeOptions] = useState(
+    propertyResidentialTypes
+  );
+  const [propertyDetails, setPropertyDetails] = useState({});
   const [contactNumInfo, setContactNumInfo] = useState({
     ISOCode: "PK",
     callingCode: "+92",
     callingNumber: "",
   });
   const { ISOCode, callingCode, callingNumber } = contactNumInfo;
-  const [propertyTypeOptions, setPropertyTypeOptions] = useState(
-    propertyResidentialTypes
-  );
-  const [propertyDetails, setPropertyDetails] = useState({});
   const {
     purpose,
     category,
@@ -82,22 +82,21 @@ const AddProperty = () => {
 
   // Set Property Form Initial Values
   useEffect(() => {
-    // console.log("useEffect Run");
+    setPropertyTypeOptions(propertyPlotTypes);
     if (category === "Plot") {
       setPropertyDetails({
         ...propertyDetails,
         type: "Residential Plot",
       });
-      setPropertyTypeOptions(propertyPlotTypes);
       return;
     }
 
     if (category === "Commercial") {
+      setPropertyTypeOptions(propertyCommercialTypes);
       setPropertyDetails({
         ...propertyDetails,
         type: "Office",
       });
-      setPropertyTypeOptions(propertyCommercialTypes);
       return;
     }
 
@@ -139,7 +138,7 @@ const AddProperty = () => {
     let number = parseFloat(value);
     if (isNaN(number)) return "";
 
-    let formattedNumber = "";
+    let formattedNumber;
     let unit = "";
 
     if (number >= 1e11) {
@@ -154,6 +153,9 @@ const AddProperty = () => {
     } else if (number >= 1e5) {
       formattedNumber = number / 1e5;
       unit = " Lac";
+    } else if (number >= 1e3) {
+      formattedNumber = number / 1e3;
+      unit = " Thousand";
     } else {
       formattedNumber = number;
     }

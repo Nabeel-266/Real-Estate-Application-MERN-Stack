@@ -78,13 +78,13 @@ export const propertyCondition = [
 ];
 
 export const propertyFeaturesCategory = [
-  "Accountable Features",
+  "Countable Features",
   "Highlighted Features",
   "Landmarks Nearby",
   "Utilities",
 ];
 
-export const accountableFeatures = [
+export const countableFeatures = [
   "TV Lounge",
   "Store Room",
   "Laundry Room",
@@ -153,6 +153,53 @@ export const availabiltyDays = [
   "Friday",
   "Saturday",
   "Sunday",
+];
+
+export const priceRanges = [
+  {
+    value: "Any",
+    label: "Any",
+  },
+  {
+    value: "1000 - 50000",
+    label: "Under Rs. 50 Thousand",
+  },
+  {
+    value: "50000 - 100000",
+    label: "Rs. 50 Thousand - Rs. 1 Lac",
+  },
+  {
+    value: "100000 - 2500000",
+    label: "Rs. 1 Lac - Rs. 25 Lac",
+  },
+  {
+    value: "2500000 - 10000000",
+    label: "Rs. 25 Lac - Rs. 1 Crore",
+  },
+  {
+    value: "10000000 - 100000000",
+    label: "Rs. 1 Crore - Rs. 10 Crore",
+  },
+  {
+    value: "100000000 - 500000000",
+    label: "Rs. 10 Crore - Rs. 50 Crore",
+  },
+  {
+    value: "500000000 - 1000000000",
+    label: "Rs. 50 Crore - Rs. 1 Arab",
+  },
+  {
+    value: "1000000000 - 50000000000",
+    label: "Rs. 1 Arab - Rs. 50 Arab",
+  },
+  {
+    value: "50000000000 - 100000000000",
+    label: "Rs. 50 Arab - Rs. 1 Kharab",
+  },
+  {
+    value: "100000000000 - 10000000000000",
+    label: "Above Rs. 1 Kharab",
+  },
 ];
 
 export const cities = [

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import {
   propertyFeaturesCategory,
-  accountableFeatures,
+  countableFeatures,
   highlightedFeatures,
   directions,
   landmarksNearby,
@@ -137,14 +137,11 @@ const AddPropertyFeaturesModal = ({
   };
 
   const removeFeaturesHandler = (el) => {
-    if (!el.includes("Facing")) {
-      setSelectedPropertyFeatures((prvFeatures) =>
-        prvFeatures?.filter((singleFeature) => singleFeature !== el)
-      );
-    } else {
-      setSelectedPropertyFeatures((prvFeatures) =>
-        prvFeatures?.filter((singleFeature) => singleFeature !== el)
-      );
+    setSelectedPropertyFeatures((prvFeatures) =>
+      prvFeatures?.filter((singleFeature) => singleFeature !== el)
+    );
+
+    if (el.includes("Facing")) {
       setPropertyFacing("");
     }
   };
@@ -221,17 +218,17 @@ const AddPropertyFeaturesModal = ({
 
                 {/* Single Feature Category Body */}
                 <div className="w-full overflow-hidden">
-                  {/* For Accountable Features */}
-                  {category === "Accountable Features" && (
+                  {/* For Countable Features */}
+                  {category === "Countable Features" && (
                     <div
-                      className={`accountableFeaturesCont ${
+                      className={`countableFeaturesCont ${
                         whichFeaturesDropdownOpen[index]
                           ? "max-h-[100rem]"
                           : "max-h-0"
                       } transition-all duration-500`}
                     >
                       <ul className="w-full flex flex-col gap-[1rem] p-[1rem]">
-                        {accountableFeatures.map((feature, index) => (
+                        {countableFeatures.map((feature, index) => (
                           <li
                             key={index}
                             className={`text-[1.6rem] leading-[1.5rem] font-medium text-neutral-700 flex items-center justify-between border-[0.2rem] border-neutral-200 px-[1rem] py-[0.8rem] rounded-md cursor-default hover:border-theme-blue transition-all ${

@@ -111,7 +111,7 @@ const Header = ({ setIsOpenSidebar }) => {
             <div className="relative hidden tabletSm:flex items-center gap-[1.5rem] px-[0.5rem] tabletSm:px-0">
               {/* Add Property Button */}
               <Link to="/add-property">
-                <button className="addPropertyBtn  hidden tabletLg:flex items-center gap-[0.5rem] text-[1.6rem] leading-[1rem] font-semibold bg-theme-yellow text-theme-blue px-[1.2rem] py-[1rem] rounded-md hover:bg-theme-blue hover:text-white transition-all ">
+                <button className="addPropertyBtn hidden tabletLg:flex items-center gap-[0.5rem] text-[1.6rem] leading-[1rem] font-semibold bg-theme-yellow text-theme-blue px-[1.2rem] py-[1rem] rounded-md hover:bg-theme-blue hover:text-white transition-all">
                   <FaPlus size={"1.6rem"} />
                   <span>Add Property</span>
                 </button>
