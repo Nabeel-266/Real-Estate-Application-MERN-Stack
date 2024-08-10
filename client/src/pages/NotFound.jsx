@@ -11,11 +11,11 @@ const NotFound = () => {
           <img
             src="/src/assets/page-not-found.png"
             alt="Page-Not-Found"
-            className="max-h-[35rem] laptopRg:max-h-[45rem] aspect-auto mb-[2rem]"
+            className="max-h-[35rem] laptopRg:max-h-[45rem] aspect-auto mb-[2rem] laptopRg:mb-[4rem]"
           />
         </div>
 
-        <div className="textSide w-full laptopRg:w-[54%] flex flex-col items-center laptopRg:items-start gap-[1rem] laptopRg:gap-[2rem]">
+        <div className="textSide w-full laptopRg:w-[54%] flex flex-col items-center laptopRg:items-start gap-[1rem] laptopRg:gap-[2rem] mb-[6rem] laptopRg:mb-[0rem]">
           <h1 className="text-[3.5rem] leading-[3.8rem] font-semibold text-theme-blue text-center laptopRg:text-left">
             PAGE NOT FOUND!
           </h1>

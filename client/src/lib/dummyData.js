@@ -202,6 +202,20 @@ export const priceRanges = [
   },
 ];
 
+export const bedrooms = [
+  "1 bedroom",
+  "2 bedrooms",
+  "3 bedrooms",
+  "4 bedrooms",
+  "5 bedrooms",
+  "6 bedrooms",
+  "7 bedrooms",
+  "8 bedrooms",
+  "9 bedrooms",
+  "10 bedrooms",
+  "10+ bedrooms",
+];
+
 export const cities = [
   "Islamabad",
   "Attock",

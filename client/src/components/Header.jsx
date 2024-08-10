@@ -130,7 +130,7 @@ const Header = ({ setIsOpenSidebar }) => {
                 <div
                   ref={dropdownRef}
                   onMouseLeave={() => setIsOpenProfileDropdown(false)}
-                  className={`accountDropdown absolute top-[148%] right-0 z-[-1] bg-white rounded-lg overflow-hidden shadow-xl p-[0.6rem] flex flex-col gap-[0.6rem] ${
+                  className={`accountDropdown absolute top-[148%] right-0 z-[99] bg-white rounded-lg overflow-hidden shadow-xl p-[0.6rem] flex flex-col gap-[0.6rem] ${
                     isOpenProfileDropdown
                       ? "h-[20.2rem] opacity-100"
                       : "h-0 opacity-0"

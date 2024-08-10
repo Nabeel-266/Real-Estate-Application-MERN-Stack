@@ -99,14 +99,7 @@ const AppRoutes = () => {
           <Route path="properties" element={<MyProperties />} />
         </Route>
 
-        <Route
-          path="/explore"
-          element={
-            <UnAuthProtectedRoute>
-              <Explore />
-            </UnAuthProtectedRoute>
-          }
-        />
+        <Route path="/explore" element={<Explore />} />
 
         <Route path="/add-property" element={<AddProperty />} />
         <Route path="/about" element={<About />} />

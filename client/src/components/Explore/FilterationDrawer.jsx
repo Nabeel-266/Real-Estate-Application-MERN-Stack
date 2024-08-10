@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import {
+  bedrooms,
   cities,
   priceRanges,
   propertyCategories,
@@ -8,37 +10,41 @@ import {
   propertyResidentialTypes,
 } from "../../lib/dummyData";
 
-const FilterationDrawer = () => {
+// Import React Icons
+import { IoSearch } from "react-icons/io5";
+import { MdCancel } from "react-icons/md";
+
+const FilterationDrawer = ({ isDrawerOpen, setIsDrawerOpen }) => {
   const dropdownRef = useRef(null);
-  const [isCitiesDropdownOpen, setIsCitiesDropdownOpen] = useState(false);
-  const [isPurposeDropdownOpen, setIsPurposeDropdownOpen] = useState(false);
-  const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
-  const [isTypeDropdownOpen, setIsTypeDropdownOpen] = useState(false);
-  const [isPriceDropdownOpen, setIsPriceDropdownOpen] = useState(false);
-  const [propertyTypes, setPropertyTypes] = useState(null);
-  const [propertyPriceLabel, setPropertyPriceLabel] = useState("Any");
-  const [filterQuery, setFilterQuery] = useState({
-    city: "All",
-    purpose: "Any",
-    category: "Residential",
-    type: "All",
-    minPrice: "",
-    maxPrice: "",
+  const [seacrhParams, setSearchParams] = useSearchParams();
+  const [dropdownOpen, setDropdownOpen] = useState({
+    cities: false,
+    purposes: false,
+    categories: false,
+    types: false,
+    bedrooms: false,
   });
+  const [propertyTypes, setPropertyTypes] = useState(null);
+  const [filterQuery, setFilterQuery] = useState({
+    city: seacrhParams.get("city") || "All",
+    purpose: seacrhParams.get("purpose") || "Any",
+    category: seacrhParams.get("category") || "All",
+    type: seacrhParams.get("type") || "All",
+    minPrice: seacrhParams.get("minPrice") || "",
+    maxPrice: seacrhParams.get("maxPrice") || "",
+    bedroom: seacrhParams.get("bedroom") || "Any",
+  });
+  const { city, purpose, category, type, minPrice, maxPrice, bedroom } =
+    filterQuery;
 
-  const { city, purpose, category, type } = filterQuery;
-
-  console.log(filterQuery);
+  // console.log(filterQuery);
+  console.log(seacrhParams.get("type"));
 
   // Dropdown Close when clicked outside of the dropdown
   useEffect(() => {
     const handleClickOutsideDropdown = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsCitiesDropdownOpen(false);
-        setIsPurposeDropdownOpen(false);
-        setIsCategoryDropdownOpen(false);
-        setIsTypeDropdownOpen(false);
-        setIsPriceDropdownOpen(false);
+        toggleDropdown(Object.keys(dropdownOpen));
       }
     };
 
@@ -49,73 +55,107 @@ const FilterationDrawer = () => {
     };
   }, [dropdownRef]);
 
-  // Set Select Property Type Options based on Property Category
+  // Change Property Type Options based on Property Category
   useEffect(() => {
+    const isTypeQueryFind = seacrhParams.get("type");
+    const isBedroomQueryFind = seacrhParams.get("bedroom");
+
     if (category === "Residential") {
       setPropertyTypes(propertyResidentialTypes.map((obj) => obj.value));
-      setFilterQuery({ ...filterQuery, type: "All" });
+
+      setFilterQuery({ ...filterQuery, bedroom: "Any", type: "All" });
     } else if (category === "Commercial") {
       setPropertyTypes(propertyCommercialTypes.map((obj) => obj.value));
-      setFilterQuery({ ...filterQuery, type: "All" });
-    } else {
+      setFilterQuery({ ...filterQuery, type: "All", bedroom: "" });
+    } else if (category === "Plot") {
       setPropertyTypes(propertyPlotTypes.map((obj) => obj.value));
-      setFilterQuery({ ...filterQuery, type: "All" });
+
+      setFilterQuery({ ...filterQuery, type: "All", bedroom: "" });
+    } else {
+      setFilterQuery({ ...filterQuery, type: "", bedroom: "" });
     }
   }, [category]);
 
-  const selectCityHandler = (selectedCity) => {
-    setFilterQuery({ ...filterQuery, city: selectedCity });
-    setIsCitiesDropdownOpen(false);
-  };
-
-  const selectPurposeHandler = (selectedPurpose) => {
-    setFilterQuery({ ...filterQuery, purpose: selectedPurpose });
-    setIsPurposeDropdownOpen(false);
-  };
-
-  const selectCategoryHandler = (selectedCategory) => {
-    setFilterQuery({ ...filterQuery, category: selectedCategory });
-    setIsCategoryDropdownOpen(false);
-  };
-
-  const selectTypeHandler = (selectedType) => {
-    setFilterQuery({ ...filterQuery, type: selectedType });
-    setIsTypeDropdownOpen(false);
-  };
-
-  const selectPriceHandler = (value, label) => {
-    setPropertyPriceLabel(label);
-
-    if (label !== "Any") {
-      const minPrice = +value.split("-")[0];
-      const maxPrice = +value.split("-")[1];
-      setFilterQuery({ ...filterQuery, minPrice, maxPrice });
+  // Dropdowns Toggle Handler
+  const toggleDropdown = (dropdownName) => {
+    if (typeof dropdownName === "string") {
+      setDropdownOpen((prevState) => ({
+        ...prevState,
+        [dropdownName]: !prevState[dropdownName],
+      }));
     } else {
-      setFilterQuery({ ...filterQuery, minPrice: "", maxPrice: "" });
+      dropdownName.forEach((name) => {
+        setDropdownOpen((prevState) => ({
+          ...prevState,
+          [name]: false,
+        }));
+      });
     }
-    setIsPriceDropdownOpen(false);
+  };
+
+  // Select Filter Options Handler
+  const selectHandler = (selectedKey, selectedValue, closeDropdownValue) => {
+    setFilterQuery({ ...filterQuery, [selectedKey]: selectedValue });
+    toggleDropdown(closeDropdownValue);
+  };
+
+  // Change Price Handler
+  const changePriceHandler = (priceProp, value) => {
+    if (priceProp === "minPrice") {
+      setFilterQuery({ ...filterQuery, minPrice: +value });
+    } else {
+      setFilterQuery({ ...filterQuery, maxPrice: +value });
+    }
+  };
+
+  // Set Filter Queries in Search Params
+  const searchFilterResultsHandler = () => {
+    const filterResultValues = Object.entries(filterQuery)
+      .filter(
+        (objProps) =>
+          objProps[1] !== "All" && objProps[1] !== "Any" && objProps[1] !== ""
+      )
+      .reduce((acc, [key, value]) => {
+        acc[key] = value;
+        return acc;
+      }, {});
+
+    if (Object.keys(filterResultValues).length > 0) {
+      console.log(filterResultValues);
+      setSearchParams(filterResultValues);
+    }
   };
 
   return (
-    <aside className=" w-[35rem] min-w-[30rem] h-[calc(100dvh-6rem)] fixed z-[999] bottom-0 right-0 px-[1rem] shadow-neutral-300 shadow-xl border-l-[0.2rem] border-neutral-100">
+    <aside
+      className={`w-[20%] min-w-[33rem] h-[calc(100dvh-6rem)] fixed z-[99] bottom-0 right-0 px-[1rem] bg-neutral-50 shadow-neutral-300 shadow-xl border-l-[0.2rem] border-neutral-100 ${
+        isDrawerOpen ? "translate-x-[0%]" : "translate-x-[101%]"
+      } transition-all duration-200`}
+    >
       {/* Filteration Drawer Header */}
-      <div className="px-[0.5rem] pt-[2rem] pb-[1rem] border-b-[0.1rem] border-neutral-200 text-theme-blue">
+      <div className="flex items-center justify-between px-[0.5rem] pt-[2rem] pb-[0.6rem] border-b-[0.1rem] border-neutral-200 text-theme-blue">
         <h2 className="text-[2.2rem] leading-[2.2rem] font-semibold">
           Filter Results
         </h2>
+        <button
+          onClick={() => setIsDrawerOpen(false)}
+          className="text-[2.55rem] mb-[0.4rem]"
+        >
+          <MdCancel />
+        </button>
       </div>
 
       {/* Filteration Drawer Body */}
       <div className="w-full flex flex-col gap-[1.5rem] py-[1.5rem]">
         {/* For City */}
-        <div className="cityField relative z-[5]">
+        <div className="cityField relative">
           <input
             type="text"
             name="city"
             id="city"
             readOnly={true}
             value={city}
-            onClick={() => setIsCitiesDropdownOpen(true)}
+            onClick={() => toggleDropdown("cities")}
             className="w-full border-[0.2rem] text-neutral-800 border-neutral-200 font-medium pl-[7.5rem] py-[0.8rem] text-[1.5rem] leading-[1.8rem] rounded-md cursor-pointer focus:border-theme-blue peer/city"
           />
 
@@ -127,7 +167,7 @@ const FilterationDrawer = () => {
           </label>
 
           {/* Cities Dropdown */}
-          {isCitiesDropdownOpen && (
+          {dropdownOpen.cities && (
             <div
               ref={dropdownRef}
               className="w-full py-[0.5rem] shadow-lg border-[0.2rem] bg-white border-neutral-300 rounded-md absolute z-10 top-[100%] left-0"
@@ -139,7 +179,7 @@ const FilterationDrawer = () => {
                 {["All", ...cities.sort()].map((city, index) => (
                   <li
                     key={index}
-                    onClick={() => selectCityHandler(city)}
+                    onClick={() => selectHandler("city", city, "cities")}
                     className="w-full text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[0.8rem] hover:bg-theme-blue hover:text-white transition-all"
                   >
                     {city}
@@ -151,14 +191,14 @@ const FilterationDrawer = () => {
         </div>
 
         {/* For Purpose */}
-        <div className="purposeField relative z-[4]">
+        <div className="purposeField relative">
           <input
             type="text"
             name="purpose"
             id="purpose"
             readOnly={true}
             value={purpose}
-            onClick={() => setIsPurposeDropdownOpen(true)}
+            onClick={() => toggleDropdown("purposes")}
             className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-200 font-medium pl-[11rem] py-[0.8rem] text-[1.5rem] leading-[1.8rem] rounded-md cursor-pointer focus:border-theme-blue peer/purpose"
           />
 
@@ -170,7 +210,7 @@ const FilterationDrawer = () => {
           </label>
 
           {/* Property Purpose Dropdown */}
-          {isPurposeDropdownOpen && (
+          {dropdownOpen.purposes && (
             <div
               ref={dropdownRef}
               className="w-full py-[0.5rem] shadow-lg border-[0.2rem] bg-white border-neutral-300 rounded-md absolute z-10 top-[100%] left-0"
@@ -182,7 +222,7 @@ const FilterationDrawer = () => {
                 {["Any", "For Sale", "For Rental"].map((value, index) => (
                   <li
                     key={index}
-                    onClick={() => selectPurposeHandler(value)}
+                    onClick={() => selectHandler("purpose", value, "purposes")}
                     className="w-full text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[0.8rem] hover:bg-theme-blue hover:text-white transition-all"
                   >
                     {value}
@@ -194,14 +234,14 @@ const FilterationDrawer = () => {
         </div>
 
         {/* For Category */}
-        <div className="categoryField relative z-[3]">
+        <div className="categoryField relative">
           <input
             type="text"
             name="category"
             id="category"
             readOnly={true}
             value={category}
-            onClick={() => setIsCategoryDropdownOpen(true)}
+            onClick={() => toggleDropdown("categories")}
             className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-200 font-medium pl-[12rem] py-[1rem] text-[1.5rem] leading-[1.8rem] rounded-md cursor-pointer focus:border-theme-blue peer/category"
           />
 
@@ -213,7 +253,7 @@ const FilterationDrawer = () => {
           </label>
 
           {/* Property Category Dropdown */}
-          {isCategoryDropdownOpen && (
+          {dropdownOpen.categories && (
             <div
               ref={dropdownRef}
               className="w-full py-[0.5rem] shadow-lg border-[0.2rem] bg-white border-neutral-300 rounded-md absolute z-10 top-[100%] left-0"
@@ -222,10 +262,12 @@ const FilterationDrawer = () => {
                 <h6 className="text-[1.6rem] leading-[1.6rem] font-semibold text-neutral-800 px-[1.5rem] py-[0.6rem]">
                   Select Category
                 </h6>
-                {propertyCategories.map((value, index) => (
+                {["All", ...propertyCategories].map((value, index) => (
                   <li
                     key={index}
-                    onClick={() => selectCategoryHandler(value)}
+                    onClick={() =>
+                      selectHandler("category", value, "categories")
+                    }
                     className="w-full text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[0.8rem] hover:bg-theme-blue hover:text-white transition-all"
                   >
                     {value}
@@ -237,69 +279,71 @@ const FilterationDrawer = () => {
         </div>
 
         {/* For Type */}
-        <div className="typeField relative z-[2]">
-          <input
-            type="text"
-            name="type"
-            id="type"
-            readOnly={true}
-            value={type}
-            onClick={() => setIsTypeDropdownOpen(true)}
-            className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-200 font-medium pl-[8.2rem] py-[1rem] text-[1.5rem] leading-[1.8rem] rounded-md cursor-pointer focus:border-theme-blue peer/Type"
-          />
+        {category !== "All" && (
+          <div className="typeField relative">
+            <input
+              type="text"
+              name="type"
+              id="type"
+              readOnly={true}
+              value={type || "All"}
+              onClick={() => toggleDropdown("types")}
+              className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-200 font-medium pl-[8.2rem] py-[1rem] text-[1.5rem] leading-[1.8rem] rounded-md cursor-pointer focus:border-theme-blue peer/Type"
+            />
 
-          <label
-            htmlFor="type"
-            className="absolute top-0 left-0 h-full flex items-center justify-center pl-[1.2rem] pr-[1.5rem] text-[1.6rem] font-medium tracking-wide text-neutral-700 bg-neutral-200 rounded-l-md rounded-r-full pointer-events-none peer-focus/Type:text-white peer-focus/Type:bg-theme-blue"
-          >
-            Type
-          </label>
-
-          {/* Property Types Dropdown */}
-          {isTypeDropdownOpen && (
-            <div
-              ref={dropdownRef}
-              className="w-full py-[0.5rem] shadow-lg border-[0.2rem] bg-white border-neutral-300 rounded-md absolute z-10 top-[100%] left-0"
+            <label
+              htmlFor="type"
+              className="absolute top-0 left-0 h-full flex items-center justify-center pl-[1.2rem] pr-[1.5rem] text-[1.6rem] font-medium tracking-wide text-neutral-700 bg-neutral-200 rounded-l-md rounded-r-full pointer-events-none peer-focus/Type:text-white peer-focus/Type:bg-theme-blue"
             >
-              <ul className="w-full max-h-[19rem] overflow-auto scrollbar-slim-y ">
-                <h6 className="text-[1.6rem] leading-[1.6rem] font-semibold text-neutral-800 px-[1.5rem] py-[0.6rem]">
-                  Select Type
-                </h6>
-                {["All", ...propertyTypes].map((value, index) => (
-                  <li
-                    key={index}
-                    onClick={() => selectTypeHandler(value)}
-                    className="w-full text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[0.8rem] hover:bg-theme-blue hover:text-white transition-all"
-                  >
-                    {value}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
+              Type
+            </label>
 
-        {/* For Price */}
-        <div className="priceField relative z-[1]">
+            {/* Property Types Dropdown */}
+            {dropdownOpen.types && (
+              <div
+                ref={dropdownRef}
+                className="w-full py-[0.5rem] shadow-lg border-[0.2rem] bg-white border-neutral-300 rounded-md absolute z-10 top-[100%] left-0"
+              >
+                <ul className="w-full max-h-[19rem] overflow-auto scrollbar-slim-y ">
+                  <h6 className="text-[1.6rem] leading-[1.6rem] font-semibold text-neutral-800 px-[1.5rem] py-[0.6rem]">
+                    Select Type
+                  </h6>
+                  {["All", ...propertyTypes].map((value, index) => (
+                    <li
+                      key={index}
+                      onClick={() => selectHandler("type", value, "types")}
+                      className="w-full text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[0.8rem] hover:bg-theme-blue hover:text-white transition-all"
+                    >
+                      {value}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* For Min Price */}
+        <div className="minPriceField relative">
           <input
-            type="text"
-            name="price"
-            id="price"
-            readOnly={true}
-            value={propertyPriceLabel}
-            onClick={() => setIsPriceDropdownOpen(true)}
-            className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-200 font-medium pl-[8.2rem] py-[1rem] text-[1.5rem] leading-[1.8rem] rounded-md cursor-pointer focus:border-theme-blue peer/price"
+            type="number"
+            name="minPrice"
+            id="minPrice"
+            value={minPrice}
+            onChange={(e) => changePriceHandler("minPrice", e.target.value)}
+            placeholder="Any"
+            className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-200 font-medium pl-[12.5rem] py-[1rem] text-[1.5rem] leading-[1.8rem] rounded-md cursor-pointer focus:border-theme-blue peer/price numberInput placeholder:text-neutral-800 focus:placeholder-transparent"
           />
 
           <label
-            htmlFor="price"
+            htmlFor="minPrice"
             className="absolute top-0 left-0 h-full flex items-center justify-center pl-[1.2rem] pr-[1.5rem] text-[1.6rem] font-medium tracking-wide text-neutral-700 bg-neutral-200 rounded-l-md rounded-r-full pointer-events-none peer-focus/price:text-white peer-focus/price:bg-theme-blue"
           >
-            Price
+            Min Price
           </label>
 
           {/* Property Price Dropdown */}
-          {isPriceDropdownOpen && (
+          {/* {dropdownOpen.prices && (
             <div
               ref={dropdownRef}
               className="w-full py-[0.5rem] shadow-lg border-[0.2rem] bg-white border-neutral-300 rounded-md absolute z-10 top-[100%] left-0"
@@ -319,8 +363,81 @@ const FilterationDrawer = () => {
                 ))}
               </ul>
             </div>
-          )}
+          )} */}
         </div>
+
+        {/* For Max Price */}
+        <div className="maxPriceField relative">
+          <input
+            type="number"
+            name="maxPrice"
+            id="maxPrice"
+            value={maxPrice}
+            onChange={(e) => changePriceHandler("maxPrice", e.target.value)}
+            placeholder="Any"
+            className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-200 font-medium pl-[13rem] py-[1rem] text-[1.5rem] leading-[1.8rem] rounded-md cursor-pointer focus:border-theme-blue peer/price numberInput placeholder:text-neutral-800 focus:placeholder-transparent"
+          />
+
+          <label
+            htmlFor="maxPrice"
+            className="absolute top-0 left-0 h-full flex items-center justify-center pl-[1.2rem] pr-[1.5rem] text-[1.6rem] font-medium tracking-wide text-neutral-700 bg-neutral-200 rounded-l-md rounded-r-full pointer-events-none peer-focus/price:text-white peer-focus/price:bg-theme-blue"
+          >
+            Max Price
+          </label>
+        </div>
+
+        {/* For Bedroom */}
+        {category === "Residential" && (
+          <div className="bedroomField relative">
+            <input
+              type="text"
+              name="bedroom"
+              id="bedroom"
+              readOnly={true}
+              value={bedroom}
+              onClick={() => toggleDropdown("bedrooms")}
+              className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-200 font-medium pl-[12rem] py-[1rem] text-[1.5rem] leading-[1.8rem] rounded-md cursor-pointer focus:border-theme-blue peer/bedroom"
+            />
+
+            <label
+              htmlFor="bedroom"
+              className="absolute top-0 left-0 h-full flex items-center justify-center pl-[1.2rem] pr-[1.5rem] text-[1.6rem] font-medium tracking-wide text-neutral-700 bg-neutral-200 rounded-l-md rounded-r-full pointer-events-none peer-focus/bedroom:text-white peer-focus/bedroom:bg-theme-blue"
+            >
+              Bedroom
+            </label>
+
+            {/* Property Bedrooms Dropdown */}
+            {dropdownOpen.bedrooms && (
+              <div
+                ref={dropdownRef}
+                className="w-full py-[0.5rem] shadow-lg border-[0.2rem] bg-white border-neutral-300 rounded-md absolute z-10 bottom-[100%] left-0"
+              >
+                <ul className="w-full max-h-[16rem] overflow-auto scrollbar-slim-y ">
+                  {["Any", ...bedrooms]?.map((value, index) => (
+                    <li
+                      key={index}
+                      onClick={() =>
+                        selectHandler("bedroom", value, "bedrooms")
+                      }
+                      className="w-full text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[0.8rem] hover:bg-theme-blue hover:text-white transition-all"
+                    >
+                      {value}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* For Search Button */}
+        <button
+          onClick={searchFilterResultsHandler}
+          className="w-full flex justify-center items-center gap-[0.6rem] py-[0.8rem] text-[1.8rem] leading-[1.8rem] font-semibold border-theme-blue border-[0.2rem] text-theme-blue rounded-full hover:bg-theme-blue hover:text-white transition-all active:scale-[0.98] mt-[1rem]"
+        >
+          <IoSearch className="text-[2.2rem]" />
+          <span>Search Results</span>
+        </button>
       </div>
     </aside>
   );
