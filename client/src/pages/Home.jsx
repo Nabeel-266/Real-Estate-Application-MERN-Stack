@@ -1,12 +1,10 @@
 import { useRef, useState } from "react";
 
-// Import Swiper React components
+// Import Swiper React component and its styles & modules
 import { Swiper, SwiperSlide } from "swiper/react";
-// Import Swiper styles
+import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-// import required module
-import { Navigation } from "swiper/modules";
 
 // Import React Icon
 import { FaArrowRightLong } from "react-icons/fa6";

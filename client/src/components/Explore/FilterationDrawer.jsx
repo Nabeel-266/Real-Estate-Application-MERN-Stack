@@ -16,7 +16,7 @@ import { MdCancel } from "react-icons/md";
 
 const FilterationDrawer = ({ isDrawerOpen, setIsDrawerOpen }) => {
   const dropdownRef = useRef(null);
-  const [seacrhParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [dropdownOpen, setDropdownOpen] = useState({
     cities: false,
     purposes: false,
@@ -26,51 +26,42 @@ const FilterationDrawer = ({ isDrawerOpen, setIsDrawerOpen }) => {
   });
   const [propertyTypes, setPropertyTypes] = useState(null);
   const [filterQuery, setFilterQuery] = useState({
-    city: seacrhParams.get("city") || "All",
-    purpose: seacrhParams.get("purpose") || "Any",
-    category: seacrhParams.get("category") || "All",
-    type: seacrhParams.get("type") || "All",
-    minPrice: seacrhParams.get("minPrice") || "",
-    maxPrice: seacrhParams.get("maxPrice") || "",
-    bedroom: seacrhParams.get("bedroom") || "Any",
+    city: searchParams.get("city") || "All",
+    purpose: searchParams.get("purpose") || "Any",
+    category: searchParams.get("category") || "All",
+    type: searchParams.get("type") || "All",
+    minPrice: searchParams.get("minPrice") || "",
+    maxPrice: searchParams.get("maxPrice") || "",
+    bedroom: searchParams.get("bedroom") || "Any",
   });
   const { city, purpose, category, type, minPrice, maxPrice, bedroom } =
     filterQuery;
 
   // console.log(filterQuery);
-  console.log(seacrhParams.get("type"));
-
-  // Dropdown Close when clicked outside of the dropdown
-  useEffect(() => {
-    const handleClickOutsideDropdown = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        toggleDropdown(Object.keys(dropdownOpen));
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutsideDropdown);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutsideDropdown);
-    };
-  }, [dropdownRef]);
 
   // Change Property Type Options based on Property Category
   useEffect(() => {
-    const isTypeQueryFind = seacrhParams.get("type");
-    const isBedroomQueryFind = seacrhParams.get("bedroom");
+    let propertyType;
+
+    if (category === searchParams.get("category")) {
+      propertyType = searchParams.get("type");
+    } else {
+      propertyType = "All";
+    }
 
     if (category === "Residential") {
       setPropertyTypes(propertyResidentialTypes.map((obj) => obj.value));
-
-      setFilterQuery({ ...filterQuery, bedroom: "Any", type: "All" });
+      setFilterQuery({
+        ...filterQuery,
+        type: propertyType,
+        bedroom: searchParams.get("bedroom") || "Any",
+      });
     } else if (category === "Commercial") {
       setPropertyTypes(propertyCommercialTypes.map((obj) => obj.value));
-      setFilterQuery({ ...filterQuery, type: "All", bedroom: "" });
+      setFilterQuery({ ...filterQuery, type: propertyType, bedroom: "" });
     } else if (category === "Plot") {
       setPropertyTypes(propertyPlotTypes.map((obj) => obj.value));
-
-      setFilterQuery({ ...filterQuery, type: "All", bedroom: "" });
+      setFilterQuery({ ...filterQuery, type: propertyType, bedroom: "" });
     } else {
       setFilterQuery({ ...filterQuery, type: "", bedroom: "" });
     }
@@ -93,6 +84,21 @@ const FilterationDrawer = ({ isDrawerOpen, setIsDrawerOpen }) => {
     }
   };
 
+  // Dropdown Close when clicked outside of the dropdown
+  useEffect(() => {
+    const handleClickOutsideDropdown = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        toggleDropdown(Object.keys(dropdownOpen));
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutsideDropdown);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutsideDropdown);
+    };
+  }, [dropdownRef]);
+
   // Select Filter Options Handler
   const selectHandler = (selectedKey, selectedValue, closeDropdownValue) => {
     setFilterQuery({ ...filterQuery, [selectedKey]: selectedValue });
@@ -102,34 +108,34 @@ const FilterationDrawer = ({ isDrawerOpen, setIsDrawerOpen }) => {
   // Change Price Handler
   const changePriceHandler = (priceProp, value) => {
     if (priceProp === "minPrice") {
-      setFilterQuery({ ...filterQuery, minPrice: +value });
+      value < "1"
+        ? setFilterQuery({ ...filterQuery, minPrice: "" })
+        : setFilterQuery({ ...filterQuery, minPrice: +value });
     } else {
-      setFilterQuery({ ...filterQuery, maxPrice: +value });
+      value < "1"
+        ? setFilterQuery({ ...filterQuery, maxPrice: "" })
+        : setFilterQuery({ ...filterQuery, maxPrice: +value });
     }
   };
 
   // Set Filter Queries in Search Params
   const searchFilterResultsHandler = () => {
     const filterResultValues = Object.entries(filterQuery)
-      .filter(
-        (objProps) =>
-          objProps[1] !== "All" && objProps[1] !== "Any" && objProps[1] !== ""
-      )
+      .filter((objProps) => objProps[1] !== "")
       .reduce((acc, [key, value]) => {
         acc[key] = value;
         return acc;
       }, {});
 
     if (Object.keys(filterResultValues).length > 0) {
-      console.log(filterResultValues);
       setSearchParams(filterResultValues);
     }
   };
 
   return (
     <aside
-      className={`w-[20%] min-w-[33rem] h-[calc(100dvh-6rem)] fixed z-[99] bottom-0 right-0 px-[1rem] bg-neutral-50 shadow-neutral-300 shadow-xl border-l-[0.2rem] border-neutral-100 ${
-        isDrawerOpen ? "translate-x-[0%]" : "translate-x-[101%]"
+      className={`w-[20%] min-w-[33rem] h-[calc(100dvh-6rem)] fixed z-[99] bottom-0 right-0 px-[1rem] bg-neutral-50 shadow-neutral-400 shadow-xl border-l-[0.2rem] border-neutral-100 ${
+        isDrawerOpen ? "translate-x-[0%]" : "translate-x-[105%]"
       } transition-all duration-200`}
     >
       {/* Filteration Drawer Header */}
@@ -180,7 +186,7 @@ const FilterationDrawer = ({ isDrawerOpen, setIsDrawerOpen }) => {
                   <li
                     key={index}
                     onClick={() => selectHandler("city", city, "cities")}
-                    className="w-full text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[0.8rem] hover:bg-theme-blue hover:text-white transition-all"
+                    className="w-full text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[0.8rem] cursor-pointer hover:bg-theme-blue hover:text-white transition-all"
                   >
                     {city}
                   </li>
@@ -223,7 +229,7 @@ const FilterationDrawer = ({ isDrawerOpen, setIsDrawerOpen }) => {
                   <li
                     key={index}
                     onClick={() => selectHandler("purpose", value, "purposes")}
-                    className="w-full text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[0.8rem] hover:bg-theme-blue hover:text-white transition-all"
+                    className="w-full text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[0.8rem] cursor-pointer hover:bg-theme-blue hover:text-white transition-all"
                   >
                     {value}
                   </li>
@@ -312,7 +318,7 @@ const FilterationDrawer = ({ isDrawerOpen, setIsDrawerOpen }) => {
                     <li
                       key={index}
                       onClick={() => selectHandler("type", value, "types")}
-                      className="w-full text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[0.8rem] hover:bg-theme-blue hover:text-white transition-all"
+                      className="w-full text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[0.8rem] cursor-pointer hover:bg-theme-blue hover:text-white transition-all"
                     >
                       {value}
                     </li>
@@ -331,7 +337,7 @@ const FilterationDrawer = ({ isDrawerOpen, setIsDrawerOpen }) => {
             id="minPrice"
             value={minPrice}
             onChange={(e) => changePriceHandler("minPrice", e.target.value)}
-            placeholder="Any"
+            placeholder="Lowest Price"
             className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-200 font-medium pl-[12.5rem] py-[1rem] text-[1.5rem] leading-[1.8rem] rounded-md cursor-pointer focus:border-theme-blue peer/price numberInput placeholder:text-neutral-800 focus:placeholder-transparent"
           />
 
@@ -374,7 +380,7 @@ const FilterationDrawer = ({ isDrawerOpen, setIsDrawerOpen }) => {
             id="maxPrice"
             value={maxPrice}
             onChange={(e) => changePriceHandler("maxPrice", e.target.value)}
-            placeholder="Any"
+            placeholder="Highest Price"
             className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-200 font-medium pl-[13rem] py-[1rem] text-[1.5rem] leading-[1.8rem] rounded-md cursor-pointer focus:border-theme-blue peer/price numberInput placeholder:text-neutral-800 focus:placeholder-transparent"
           />
 
@@ -419,7 +425,7 @@ const FilterationDrawer = ({ isDrawerOpen, setIsDrawerOpen }) => {
                       onClick={() =>
                         selectHandler("bedroom", value, "bedrooms")
                       }
-                      className="w-full text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[0.8rem] hover:bg-theme-blue hover:text-white transition-all"
+                      className="w-full text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[0.8rem] cursor-pointer hover:bg-theme-blue hover:text-white transition-all"
                     >
                       {value}
                     </li>

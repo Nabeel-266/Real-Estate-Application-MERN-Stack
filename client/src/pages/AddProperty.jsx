@@ -1219,7 +1219,7 @@ const AddProperty = () => {
           </div>
 
           {/* Add Property Preview Cont */}
-          <div className="addPropertyPreviewCont w-0 hidden relative laptopSm:w-[40%] laptopSm:flex flex-col items-center gap-[2rem]">
+          <div className="addPropertyPreviewCont w-full hidden relative laptopSm:w-[40%] laptopSm:flex flex-col items-center gap-[2rem]">
             <h3 className="w-full text-[2.2rem] leading-[2.2rem] text-neutral-800 font-semibold">
               Preview
             </h3>

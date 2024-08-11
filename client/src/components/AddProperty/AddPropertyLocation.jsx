@@ -3,7 +3,7 @@ import { Map, Marker, ZoomControl } from "pigeon-maps";
 import axios from "axios";
 
 // Import React Icon
-import { BiExitFullscreen, BiFullscreen } from "react-icons/bi";
+import { BiFullscreen } from "react-icons/bi";
 
 // Component
 import Loader from "../Loader";
