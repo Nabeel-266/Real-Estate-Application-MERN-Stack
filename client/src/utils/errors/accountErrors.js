@@ -1,4 +1,4 @@
-import toastify from "../utils/toastify";
+import toastify from "../toastify";
 
 const emailPattern =
   /^(?:[^@\s]+@(?:gmail\.com|hotmail\.com|yahoo\.com|outlook\.com|zoho\.com|icloud\.com|protonmail\.com|aol\.com))$/;

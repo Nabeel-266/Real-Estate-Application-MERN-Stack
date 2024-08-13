@@ -154,11 +154,11 @@ const AddPropertyReview = ({ propertyDetails }) => {
 
               {/* Property Price */}
               <div className="w-full">
-                {price ? (
+                {price?.value ? (
                   <p className="text-[1.4rem] leading-[1.4rem] text-neutral-800 font-semibold">
                     PKR{" "}
                     <span className="text-[1.8rem] leading-[1.8rem] font-bold">
-                      {price}
+                      {price?.label}
                     </span>
                   </p>
                 ) : (

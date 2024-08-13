@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { forgotPasswordErrorHandler } from "../../utils/authErrors";
+import { forgotPasswordErrorHandler } from "../../utils/errors/authErrors";
 import { forgotPassword } from "../../api/authAPIs";
 
 // Import React Icons

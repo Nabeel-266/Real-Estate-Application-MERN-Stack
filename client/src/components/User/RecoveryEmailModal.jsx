@@ -7,7 +7,7 @@ import {
 import {
   recoveryEmailClientErrorHandler,
   recoveryEmailServerErrorHandler,
-} from "../../utils/accountErrors";
+} from "../../utils/errors/accountErrors";
 
 // Import React Icons
 import { FaXmark } from "react-icons/fa6";

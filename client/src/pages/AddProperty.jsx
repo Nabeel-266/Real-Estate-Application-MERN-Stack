@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { countries } from "countries-list";
 import Flag from "react-world-flags";
+import { addPropertyClientErrorHandler } from "../utils/errors/propertyErrors";
 
 import {
   propertyPurposes,
@@ -29,6 +30,7 @@ import AddPropertyReview from "../components/AddProperty/AddPropertyReview";
 
 const AddProperty = () => {
   const dropdownRef = useRef(null);
+  const [error, setError] = useState(null);
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const [isFeaturesModalOpen, setIsFeaturesModalOpen] = useState(false);
   const [isCitiesDropdownOpen, setIsCitiesDropdownOpen] = useState(false);
@@ -60,12 +62,9 @@ const AddProperty = () => {
     condition,
     features,
     images,
-    contact,
     username,
     availability,
   } = propertyDetails;
-
-  // console.log(propertyDetails);
 
   const propertyFormDataChangeHandler = (action, key, value) => {
     if (action === "added") {
@@ -82,22 +81,27 @@ const AddProperty = () => {
 
   // Set Property Form Initial Values
   useEffect(() => {
-    setPropertyTypeOptions(propertyPlotTypes);
     if (category === "Plot") {
-      setPropertyDetails({
+      setPropertyTypeOptions(propertyPlotTypes);
+      const updatePropertyDetails = {
         ...propertyDetails,
         type: "Residential Plot",
+      };
+      delete updatePropertyDetails.bedroom;
+      delete updatePropertyDetails.bathroom;
+      return setPropertyDetails({
+        ...updatePropertyDetails,
       });
-      return;
     }
 
     if (category === "Commercial") {
       setPropertyTypeOptions(propertyCommercialTypes);
-      setPropertyDetails({
-        ...propertyDetails,
-        type: "Office",
+      const updatePropertyDetails = { ...propertyDetails, type: "Office" };
+      delete updatePropertyDetails.bedroom;
+      delete updatePropertyDetails.bathroom;
+      return setPropertyDetails({
+        ...updatePropertyDetails,
       });
-      return;
     }
 
     setPropertyTypeOptions(propertyResidentialTypes);
@@ -126,6 +130,11 @@ const AddProperty = () => {
       document.removeEventListener("mousedown", handleClickOutsideDropdown);
     };
   }, [dropdownRef]);
+
+  // Remove Errors
+  useEffect(() => {
+    setError(null);
+  }, [propertyDetails]);
 
   // City Change Handler
   const cityChangeHandler = (e) => {
@@ -182,7 +191,11 @@ const AddProperty = () => {
     setNumericPrice(value);
     const formattedPrice = convertPrice(value);
     if (formattedPrice) {
-      propertyFormDataChangeHandler("added", "price", formattedPrice);
+      const price = {
+        label: formattedPrice,
+        value: +value,
+      };
+      propertyFormDataChangeHandler("added", "price", price);
     } else {
       propertyFormDataChangeHandler("deleted", "price");
     }
@@ -285,7 +298,7 @@ const AddProperty = () => {
       } else if (callingNumber) {
         propertyFormDataChangeHandler(
           "added",
-          "contact",
+          "contactNumber",
           `${value.callingCode} ${callingNumber}`
         );
         setContactNumInfo({
@@ -310,7 +323,7 @@ const AddProperty = () => {
       } else if (value.length <= 10) {
         propertyFormDataChangeHandler(
           "added",
-          "contact",
+          "contactNumber",
           `${callingCode} ${value}`
         );
         setContactNumInfo({
@@ -371,6 +384,22 @@ const AddProperty = () => {
       }
 
       propertyFormDataChangeHandler("added", "availability", updatedDays);
+    }
+  };
+
+  const propertyFormSubmissionHandler = (e) => {
+    console.log(propertyDetails);
+    e.preventDefault();
+
+    try {
+      const isPropertyDetailsOK = addPropertyClientErrorHandler(
+        propertyDetails,
+        setError
+      );
+
+      console.log(isPropertyDetailsOK);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -575,9 +604,9 @@ const AddProperty = () => {
                     )}
                   </div>
 
-                  <p className="cityErrorMsg hidden text-[1.4rem] leading-[1.4rem] font-medium text-red-700">
-                    City is required
-                  </p>
+                  {error && error[0] === "city" && (
+                    <FieldError error={error[1]} />
+                  )}
                 </div>
               </div>
 
@@ -604,9 +633,9 @@ const AddProperty = () => {
                     </span>
                   </button>
 
-                  <p className="areaErrorMsg hidden text-[1.4rem] leading-[1.4rem] font-medium text-red-700">
-                    Location is required
-                  </p>
+                  {error && error[0] === "coordinates" && (
+                    <FieldError error={error[1]} />
+                  )}
                 </div>
               </div>
 
@@ -635,6 +664,7 @@ const AddProperty = () => {
                       <BiArea />
                     </span>
 
+                    {/* Size Unit Dropdown */}
                     <div
                       onClick={() => setIsSizeDropdownOpen(!isSizeDropdownOpen)}
                       className="absolute top-0 right-0 h-full px-[2rem] flex items-center gap-[1rem] text-[1.5rem] font-medium text-neutral-700 cursor-pointer rounded-r-md select-none"
@@ -682,9 +712,9 @@ const AddProperty = () => {
                     )}
                   </div>
 
-                  <p className="sizeErrorMsg hidden text-[1.4rem] leading-[1.4rem] font-medium text-red-700">
-                    Size is required
-                  </p>
+                  {error && error[0] === "size" && (
+                    <FieldError error={error[1]} />
+                  )}
                 </div>
               </div>
 
@@ -712,15 +742,15 @@ const AddProperty = () => {
                     </span>
                   </div>
 
-                  {price && (
+                  {price?.value && (
                     <p className="cityErrorMsg text-[1.4rem] leading-[1.4rem] font-medium text-neutral-800">
-                      PKR <span className="font-semibold">{price}</span>
+                      PKR <span className="font-semibold">{price?.label}</span>
                     </p>
                   )}
 
-                  <p className="priceErrorMsg hidden text-[1.4rem] leading-[1.4rem] font-medium text-red-700">
-                    Price is required
-                  </p>
+                  {error && error[0] === "price" && (
+                    <FieldError error={error[1]} />
+                  )}
                 </div>
               </div>
 
@@ -871,9 +901,9 @@ const AddProperty = () => {
                     )}
                   </div>
 
-                  <p className="conditionErrorMsg hidden text-[1.4rem] leading-[1.4rem] font-medium text-red-700">
-                    Condition is required
-                  </p>
+                  {error && error[0] === "condition" && (
+                    <FieldError error={error[1]} />
+                  )}
                 </div>
               </div>
 
@@ -881,7 +911,7 @@ const AddProperty = () => {
               <div className="features w-full flex flex-col gap-[0.5rem]">
                 {/* Title */}
                 <h4 className="propertyFormInputTitles">
-                  What amenities are available?
+                  Which amenities & features are available?
                 </h4>
 
                 <p className="text-[1.4rem] text-neutral-600 font-medium">
@@ -984,9 +1014,9 @@ const AddProperty = () => {
                     />
                   </div>
 
-                  <p className="conditionErrorMsg hidden text-[1.4rem] leading-[1.4rem] font-medium text-red-700">
-                    Images is required
-                  </p>
+                  {error && error[0] === "images" && (
+                    <FieldError error={error[1]} />
+                  )}
                 </div>
 
                 {/* Images Display Cont */}
@@ -1033,7 +1063,7 @@ const AddProperty = () => {
                 </p>
 
                 <p className="text-[1.4rem] text-neutral-600 font-medium">
-                  Enter 10 digit number except zero
+                  Enter 10 digit number except initial zero
                 </p>
 
                 {/* Contact Number Input Cont */}
@@ -1111,9 +1141,9 @@ const AddProperty = () => {
                     )}
                   </div>
 
-                  <p className="contactErrorMsg hidden text-[1.4rem] leading-[1.4rem] font-medium text-red-700">
-                    not a valid phone number
-                  </p>
+                  {error && error[0] === "contactNumber" && (
+                    <FieldError error={error[1]} />
+                  )}
                 </div>
               </div>
 
@@ -1136,10 +1166,14 @@ const AddProperty = () => {
                     />
                   </div>
 
-                  {username && !username.includes(" ") && (
+                  {/* {username && !username.includes(" ") && (
                     <p className="priceErrorMsg text-[1.4rem] leading-[1.4rem] font-medium text-red-700">
                       Please! enter your proper fullname with space separated
                     </p>
+                  )} */}
+
+                  {error && error[0] === "name" && (
+                    <FieldError error={error[1]} />
                   )}
                 </div>
               </div>
@@ -1211,7 +1245,10 @@ const AddProperty = () => {
                   SAVE AS DRAFT
                 </button>
 
-                <button className="outline-none border-[0.2rem] text-white border-theme-blue p-[1.1rem] text-[1.6rem] leading-[1.5rem] font-medium rounded-md cursor-pointer bg-theme-blue hover:translate-y-[-0.1rem] hover:shadow-lg hover:shadow-neutral-200 transition-all">
+                <button
+                  onClick={propertyFormSubmissionHandler}
+                  className="outline-none border-[0.2rem] text-white border-theme-blue p-[1.1rem] text-[1.6rem] leading-[1.5rem] font-medium rounded-md cursor-pointer bg-theme-blue hover:translate-y-[-0.1rem] hover:shadow-lg hover:shadow-neutral-200 transition-all"
+                >
                   SUBMIT FOR REVIEW
                 </button>
               </div>
@@ -1247,6 +1284,14 @@ const AddProperty = () => {
         />
       )}
     </div>
+  );
+};
+
+const FieldError = ({ error }) => {
+  return (
+    <p className="fieldErrorMsg text-[1.4rem] leading-[1.4rem] font-medium text-red-700">
+      {error}
+    </p>
   );
 };
 

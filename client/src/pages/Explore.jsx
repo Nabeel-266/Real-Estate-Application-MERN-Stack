@@ -239,12 +239,16 @@ const Explore = () => {
                   <BiFullscreen />
                 </button>
                 <Map
-                  defaultCenter={[45.25, 24.25]}
+                  defaultCenter={[24.8546842, 67.0207055]}
                   defaultZoom={12}
                   minZoom={4}
                   // onClick={handleMapClick}
                 >
-                  <Marker width={35} anchor={[45.25, 24.25]} color="#082835" />
+                  <Marker
+                    width={35}
+                    anchor={[24.8546842, 67.0207055]}
+                    color="#082835"
+                  />
                   <ZoomControl />
                 </Map>
               </div>

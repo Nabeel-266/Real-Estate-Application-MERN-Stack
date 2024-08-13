@@ -5,7 +5,7 @@ import { loginUser } from "../../api/authAPIs";
 import {
   signinClientErrorHandler,
   signinServerErrorHandler,
-} from "../../utils/authErrors";
+} from "../../utils/errors/authErrors";
 
 // Import React Icons
 import { IoMail, IoMailOpen, IoLockClosed, IoLockOpen } from "react-icons/io5";

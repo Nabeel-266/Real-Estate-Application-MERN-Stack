@@ -4,7 +4,7 @@ import { sendChangeEmailLink } from "../../api/userAPIs";
 import {
   changeEmailClientErrorHandler,
   changeEmailServerErrorHandler,
-} from "../../utils/accountErrors";
+} from "../../utils/errors/accountErrors";
 
 // Import React Icons
 import { FaXmark } from "react-icons/fa6";
