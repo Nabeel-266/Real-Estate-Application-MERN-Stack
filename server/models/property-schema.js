@@ -73,12 +73,21 @@ const propertySchema = new mongoose.Schema(
     availability: {
       type: [String],
     },
+    status: {
+      type: String,
+      required: true,
+    },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
   {
     timestamps: true,
   }
 );
 
-const User = mongoose.model("User", propertySchema);
+const Property = mongoose.model("Property", propertySchema);
 
-export default User;
+export default Property;

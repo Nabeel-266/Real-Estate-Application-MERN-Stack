@@ -13,11 +13,6 @@ const addPropertyClientErrorHandler = (propertyDetails, setError) => {
     images,
     contactNumber,
     username,
-    description,
-    bedroom,
-    bathroom,
-    features,
-    availability,
   } = propertyDetails;
 
   if (
@@ -33,35 +28,45 @@ const addPropertyClientErrorHandler = (propertyDetails, setError) => {
     username &&
     contactNumber
   ) {
-    return true;
+    if (images && images.length < 3) {
+      setError(["images", "Please! upload at least 3 Property Images."]);
+      return false;
+    } else if (contactNumber.split(" ")[1].length !== 10) {
+      setError(["contactNumber", "Invalid mobile number"]);
+      return false;
+    } else if (!username.includes(" ")) {
+      setError([
+        "name",
+        "Please! enter your proper fullname with space separated",
+      ]);
+      return false;
+    } else {
+      return true;
+    }
   } else {
     toastify("error", "Missing Required Field!", "top-right", "dark", 5000);
 
-    if (!purpose) {
-      setError(["purpose", "Property Purpose is required."]);
-    } else if (!category) {
-      setError(["category", "Property Category is required."]);
-    } else if (!type) {
-      setError(["type", "Property Type is required."]);
-    } else if (!city) {
-      setError(["city", "City is required."]);
-    } else if (!coordinates) {
-      setError(["coordinates", "Location Coordinates is required."]);
-    } else if (!size) {
-      setError(["size", "Property Size is required."]);
-    } else if (!price) {
-      setError(["price", "Property Price is required."]);
-    } else if (!condition) {
-      setError(["condition", "Property Condition is required."]);
-    } else if (!images) {
-      setError(["images", "Property Images is required."]);
-    } else if (!contactNumber) {
-      setError(["contactNumber", "Contact Number is required."]);
-    } else if (!username) {
-      setError(["name", "Your Name is required."]);
-    } else {
-      true;
-    }
+    !purpose
+      ? setError(["purpose", "Property Purpose is required."])
+      : !category
+      ? setError(["category", "Property Category is required."])
+      : !type
+      ? setError(["type", "Property Type is required."])
+      : !city
+      ? setError(["city", "City is required."])
+      : !coordinates
+      ? setError(["coordinates", "Location Coordinates is required."])
+      : !size
+      ? setError(["size", "Property Size is required."])
+      : !price
+      ? setError(["price", "Property Price is required."])
+      : !condition
+      ? setError(["condition", "Property Condition is required."])
+      : !images
+      ? setError(["images", "Property Images is required."])
+      : !contactNumber
+      ? setError(["contactNumber", "Contact Number is required."])
+      : !username && setError(["name", "Your Name is required."]);
 
     return false;
   }

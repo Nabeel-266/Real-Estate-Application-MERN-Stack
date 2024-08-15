@@ -122,11 +122,11 @@ const AddPropertyReview = ({ propertyDetails }) => {
                   swiperRef.current = swiper;
                 }}
               >
-                {images?.map((imageURL, index) => (
+                {images?.map((imageFile, index) => (
                   <SwiperSlide key={index} className="w-full">
                     <img
                       className="w-full h-full object-cover"
-                      src={imageURL}
+                      src={URL.createObjectURL(imageFile)}
                       alt="Property Image"
                     />
                   </SwiperSlide>

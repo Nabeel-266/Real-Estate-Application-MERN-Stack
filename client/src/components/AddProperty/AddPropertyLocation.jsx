@@ -20,9 +20,9 @@ const AddPropertyLocationModal = ({
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
 
-  console.log(marker);
-  console.log(cityBoundary);
-  console.log(propertyCoordinates);
+  // console.log(marker);
+  // console.log(cityBoundary);
+  // console.log(propertyCoordinates);
 
   const handleFullScreen = () => {
     mapRef.current.requestFullscreen

@@ -13,7 +13,7 @@ import {
   LOGOUT,
 } from "../constants/apisRoute";
 
-// Import Actions
+// Import Redux Actions
 import {
   signupVerifyOtpSendSuccess,
   signupFailure,

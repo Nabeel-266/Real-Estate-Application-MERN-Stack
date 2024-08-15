@@ -1,4 +1,6 @@
 import express from "express";
+
+// Import Middleware
 import { upload } from "../helpers/storage.js";
 import { validateToken } from "../helpers/token.js";
 
@@ -18,9 +20,10 @@ import {
   deleteAccount,
 } from "../controllers/user-controller.js";
 
+// Define User Router
 const userRouter = express.Router();
 
-//* For Update User Profile
+//* For Update User Profile Pic
 userRouter.patch("/updateProfile/:id", updateProfile);
 
 //* For Upload User Profile Pic

@@ -9,6 +9,11 @@ import session from "express-session";
 import { fileURLToPath } from "url";
 import { v2 as cloudinary } from "cloudinary";
 
+// Import Routes
+import userRouter from "./routes/user-route.js";
+import authRouter from "./routes/auth-route.js";
+import propertyRouter from "./routes/property-route.js";
+
 // Configuration
 dotenv.config();
 cloudinary.config({
@@ -16,10 +21,6 @@ cloudinary.config({
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
-
-// Import Routes
-import userRouter from "./routes/user-route.js";
-import authRouter from "./routes/auth-route.js";
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -79,6 +80,7 @@ app.use((err, req, res, next) => {
 // Routes
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
+app.use("/api/property", propertyRouter);
 
 // process.on("SIGINT", async function () {
 //   console.log("App is terminating");

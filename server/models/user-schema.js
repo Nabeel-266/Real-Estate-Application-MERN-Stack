@@ -32,6 +32,13 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    properties: {
+      drafted: [{ type: mongoose.Schema.Types.ObjectId, ref: "Property" }],
+      published: [{ type: mongoose.Schema.Types.ObjectId, ref: "Property" }],
+      pending: [{ type: mongoose.Schema.Types.ObjectId, ref: "Property" }],
+      rejected: [{ type: mongoose.Schema.Types.ObjectId, ref: "Property" }],
+      removed: [{ type: mongoose.Schema.Types.ObjectId, ref: "Property" }],
+    },
   },
   {
     timestamps: true,

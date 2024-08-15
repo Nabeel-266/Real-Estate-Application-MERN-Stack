@@ -1,5 +1,7 @@
 import axios from "axios";
 import toastify from "../utils/toastify";
+
+// Import Routes
 import {
   DELETE_ACCOUNT,
   SEND_CHANGE_EMAIL_LINK,
@@ -9,6 +11,8 @@ import {
   UPLOAD_PROFILE_PIC,
   VERIFY_RECOVERY_EMAIL_OTP,
 } from "../constants/apisRoute";
+
+// Import Redux Actions
 import {
   updateProfilePending,
   updateProfileSuccess,

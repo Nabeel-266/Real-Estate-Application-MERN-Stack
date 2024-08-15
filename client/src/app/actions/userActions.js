@@ -90,3 +90,8 @@ export const addRecoveryEmailSuccess = (user) => (dispatch) => {
 export const deleteAccountSuccess = (user) => (dispatch) => {
   dispatch(setAuthUser(null));
 };
+
+//* For Update User Doc Action
+export const updateUserDocSuccess = (user) => (dispatch) => {
+  dispatch(setAuthUser(user));
+};

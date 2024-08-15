@@ -1,6 +1,6 @@
 import express from "express";
 
-// Import Middlewares
+// Import Middleware
 import { validateToken } from "../helpers/token.js";
 
 // Import Controllers
@@ -18,6 +18,7 @@ import {
   // verifyAccount,
 } from "../controllers/auth-controller.js";
 
+// Define Auth Router
 const authRouter = express.Router();
 
 //* For Signup

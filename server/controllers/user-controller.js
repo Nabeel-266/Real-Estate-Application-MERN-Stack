@@ -113,7 +113,7 @@ export const uploadProfilePic = async (req, res, next) => {
   try {
     const filePath = req.file.path;
     const cloudinaryResult = await cloudinary.uploader.upload(filePath, {
-      folder: "NAB Estate/User",
+      folder: "NAB_Estate/Users",
     });
 
     // Delete the file from uploads folder after uploading to Cloudinary
