@@ -6,8 +6,9 @@ import { validateToken } from "../helpers/token.js";
 
 // Import Controllers
 import {
-  createProperty,
   uploadPropertyImages,
+  createProperty,
+  getUserProperty,
 } from "../controllers/property-controller.js";
 
 // Define Property Router
@@ -18,5 +19,8 @@ propertyRouter.post("/uploadPropertyImages", uploads, uploadPropertyImages);
 
 //* For Create a New Property
 propertyRouter.post("/createProperty", validateToken, createProperty);
+
+//* For Get User Properties
+propertyRouter.get("/getUserProperty/:userId", getUserProperty);
 
 export default propertyRouter;

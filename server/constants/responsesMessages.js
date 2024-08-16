@@ -1,9 +1,9 @@
 const resMessages = {
   GET_SUCCESS_MESSAGES: "Got Resource Successfully",
-  GET_UNSUCCESS_MESSAGES: "No resource found",
-  ADD_SUCCESS_MESSAGES: "resource added successfully",
-  UPDATE_SUCCESS_MESSAGES: "resource updated successfully",
-  DELETED_SUCCESS_MESSAGES: "resource deleted successfully",
+  GET_UNSUCCESS_MESSAGES: "Resource Not Found",
+  ADD_SUCCESS_MESSAGES: "Resource Added Successfully",
+  UPDATE_SUCCESS_MESSAGES: "Resource Updated Successfully",
+  DELETED_SUCCESS_MESSAGES: "Resource Deleted Successfully",
   DELETED_UNSUCCESS_MESSAGES: "resource cannot be deleted",
   ADD_UNSUCCESS_MESSAGES: "data already available in DB",
   UPDATE_UNSUCCESS_MESSAGES: "ID not found",
@@ -70,6 +70,7 @@ const resMessages = {
   REQUEST_UNSUCCESS:
     "Your Invitation is already send before, cannot send again",
   UPDATE_REQUEST_SUCCESS: "Invitation request is updated",
+  INVALID_REQUEST: "Invalid request! missing credentials.",
   REQUEST_SUCCESS: "Your Invitation is sent, wait for the admin approval",
   DUPLICATE_ERROR: "same data exist in db",
 };

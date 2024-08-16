@@ -5,6 +5,7 @@ import { StatusCodes } from "http-status-codes";
 import resMessages from "../constants/responsesMessages.js";
 import { v2 as cloudinary } from "cloudinary";
 import { sendError, sendSuccess } from "../utils/responses.js";
+import { log } from "console";
 
 //* --> For Upload Property Images <--
 //? @route --> POST --> /api/property/uploadPropertyImages
@@ -138,6 +139,61 @@ export const createProperty = async (req, res, next) => {
     );
   } catch (error) {
     console.log(error.message, "==> error in create property");
+    next(error);
+  }
+};
+
+//* --> For Get User Properties <--
+//? @route --> GET --> /api/property/getUserProperty/:userId
+//  @access --> PUBLIC
+export const getUserProperty = async (req, res, next) => {
+  console.log("Get User Properties Controller");
+
+  try {
+    const userId = req.params.userId;
+    const status = req.query.status;
+
+    if (!userId || !status) {
+      return res.status(StatusCodes.BAD_REQUEST).send(
+        sendError({
+          statusCode: StatusCodes.BAD_REQUEST,
+          message: resMessages.INVALID_REQUEST,
+        })
+      );
+    }
+
+    const user = await User.findOne({ _id: userId });
+
+    // If USER not exist
+    if (!user) {
+      return res.status(StatusCodes.NOT_FOUND).send(
+        sendError({
+          statusCode: StatusCodes.NOT_FOUND,
+          message: resMessages.NO_USER,
+        })
+      );
+    }
+
+    // Find Properties From Database
+    const properties = await Property.find({ userId: userId, status: status });
+
+    if (properties.length > 0) {
+      res.status(StatusCodes.OK).send(
+        sendSuccess({
+          message: resMessages.GET_SUCCESS_MESSAGES,
+          data: properties,
+        })
+      );
+    } else {
+      res.status(StatusCodes.NO_CONTENT).send(
+        sendSuccess({
+          message: resMessages.GET_UNSUCCESS_MESSAGES,
+          data: null,
+        })
+      );
+    }
+  } catch (error) {
+    console.log(error.message, "==> error in get user properties");
     next(error);
   }
 };

@@ -395,6 +395,7 @@ const AddProperty = () => {
     }
   };
 
+  // Add Property Submission Handler
   const propertyFormSubmissionHandler = async (e, action) => {
     e.preventDefault();
 
@@ -413,11 +414,10 @@ const AddProperty = () => {
         } else if (action === "SAVE AS DRAFT") {
           propertyDoc = { ...propertyDetails, status: "drafted" };
         }
-        console.log(propertyDoc);
 
         await createProperty(propertyDoc, dispatch);
 
-        navigate("/user/properties");
+        navigate("/user/property");
         setLoading(false);
       }
     } catch (error) {

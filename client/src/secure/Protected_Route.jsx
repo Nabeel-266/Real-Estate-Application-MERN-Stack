@@ -6,7 +6,7 @@ export const AuthProtectedRoute = ({ children }) => {
   const user = useSelector((state) => state?.user?.authenticUser);
 
   if (user) {
-    return <Navigate to={"/"} replace />;
+    return <Navigate to="/" replace />;
   }
 
   return <>{children}</>;

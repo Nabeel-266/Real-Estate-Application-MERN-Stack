@@ -96,7 +96,7 @@ const AppRoutes = () => {
         >
           <Route path="profile" element={<Profile />} />
           <Route path="account" element={<Account />} />
-          <Route path="properties" element={<MyProperties />} />
+          <Route path="property" element={<MyProperties />} />
         </Route>
 
         <Route path="/explore" element={<Explore />} />

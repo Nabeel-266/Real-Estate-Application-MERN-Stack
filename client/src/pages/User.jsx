@@ -19,12 +19,12 @@ const User = () => {
   return (
     <div className="userCont w-full h-dvh relative pt-[6rem]">
       <div className="userContWrapper h-full flex items-start">
-        <aside className="w-[20%] min-w-[26rem] h-full hidden laptopSm:flex laptopSm:items-center pl-[2%] desktopSm:pl-[4%]">
+        <aside className="w-[20%] min-w-[25rem] h-full hidden laptopSm:flex laptopSm:items-center pl-[2%] desktopSm:pl-[4%]">
           <ul className="w-full h-[calc(100%-6rem)] flex flex-col gap-[0.3rem] border-r-[0.2rem] border-neutral-200">
             {[
               [FiUser, "Profile", "profile"],
               [RiAccountBoxLine, "Account", "account"],
-              [MdOutlineMapsHomeWork, "My Properties", "properties"],
+              [MdOutlineMapsHomeWork, "My Properties", "property"],
             ].map(([Icon, title, route], index) => (
               <li
                 key={index}
@@ -40,7 +40,7 @@ const User = () => {
                     isActiveTab === route
                       ? "text-white font-medium"
                       : "text-neutral-500 font-semibold"
-                  } w-full relative z-10 flex items-center gap-[1rem] px-[1rem] py-[0.8rem]`}
+                  } w-full relative z-10 flex items-center gap-[0.8rem] px-[1rem] py-[0.8rem]`}
                 >
                   <Icon className="text-[2rem]" />
                   <span className="text-[1.7rem] leading-[1.8rem]">

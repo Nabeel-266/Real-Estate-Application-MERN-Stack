@@ -78,7 +78,7 @@ const Sidebar = ({ isOpenSidebar, setIsOpenSidebar }) => {
                 [RiTeamLine, "About", "/about"],
                 [RiMessage2Line, "Contact", "/contact"],
                 [MdOutlineRealEstateAgent, "Add Property", "/add-property"],
-                [MdOutlineMapsHomeWork, "My Properties", "/user/properties"],
+                [MdOutlineMapsHomeWork, "My Properties", "/user/property"],
               ].map(([Icon, title, route], index) => (
                 <li
                   key={index}
@@ -112,7 +112,7 @@ const Sidebar = ({ isOpenSidebar, setIsOpenSidebar }) => {
             {/* Signin Button */}
             {!authenticUser && (
               <div className="w-full">
-                <Link to={"/account/sign-in"}>
+                <Link to="/account/sign-in">
                   <button
                     onClick={() => setIsOpenSidebar(!isOpenSidebar)}
                     className="w-full relative flex items-center gap-[1rem] px-[1.4rem] py-[1rem] text-[2.2rem] leading-[3.2rem] text-cyan-950 font-semibold bg-white cursor-pointer rounded-full transition-all hover:bg-theme-yellow active:scale-[0.98]"
@@ -127,7 +127,7 @@ const Sidebar = ({ isOpenSidebar, setIsOpenSidebar }) => {
             {/* Profile, Account and Logout Buttons */}
             {authenticUser && (
               <div className="w-full flex flex-col gap-[1.5rem]">
-                <Link to={"/user/profile"}>
+                <Link to="/user/profile">
                   <button
                     onClick={() => setIsOpenSidebar(!isOpenSidebar)}
                     className="w-full relative flex items-center gap-[1.2rem] px-[1.2rem] py-[0.7rem] text-[2.2rem] leading-[3.2rem] text-white font-semibold bg-transparent border-[0.2rem] border-white cursor-pointer rounded-full transition-all hover:bg-theme-blue active:scale-[0.98]"

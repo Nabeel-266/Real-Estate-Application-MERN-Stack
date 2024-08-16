@@ -163,7 +163,7 @@ const Header = ({ setIsOpenSidebar }) => {
 
                     <li className="w-full hover:bg-neutral-100 hover:text-neutral-800 rounded-md">
                       <Link
-                        to="/user/properties"
+                        to="/user/property"
                         className="flex items-center gap-[0.8rem] p-[0.8rem] cursor-pointer transition-all whitespace-nowrap"
                       >
                         <MdOutlineMapsHomeWork size="1.9rem" />

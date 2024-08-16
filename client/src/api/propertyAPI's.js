@@ -4,6 +4,7 @@ import toastify from "../utils/toastify";
 // Import Routes
 import {
   CREATE_PROPERTY,
+  GET_USER_PROPERTIES,
   UPLOAD_PROPERTY_IMAGES,
 } from "../constants/apisRoute";
 
@@ -52,6 +53,22 @@ export const createProperty = async (propertyDoc, dispatch) => {
           4000
         );
       }
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
+// For GET USER_PROPERTIES
+export const getActiveTabUserProperties = async (userId, query) => {
+  try {
+    const response = await axios.get(
+      `${GET_USER_PROPERTIES}/${userId}?status=${query}`
+    );
+    const responseData = response?.data;
+
+    if (responseData?.status === "Success") {
+      return responseData.result;
     }
   } catch (error) {
     throw error;
