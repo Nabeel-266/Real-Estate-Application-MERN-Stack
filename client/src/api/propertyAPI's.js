@@ -60,15 +60,24 @@ export const createProperty = async (propertyDoc, dispatch) => {
 };
 
 // For GET USER_PROPERTIES
-export const getActiveTabUserProperties = async (userId, query) => {
+export const getActiveTabUserProperties = async (
+  userId,
+  query,
+  cancelToken
+) => {
   try {
     const response = await axios.get(
-      `${GET_USER_PROPERTIES}/${userId}?status=${query}`
+      `${GET_USER_PROPERTIES}/${userId}?status=${query}`,
+      {
+        cancelToken,
+      }
     );
     const responseData = response?.data;
 
-    if (responseData?.status === "Success") {
+    if (!!responseData?.result?.length) {
       return responseData.result;
+    } else {
+      return null;
     }
   } catch (error) {
     throw error;

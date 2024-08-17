@@ -6,6 +6,7 @@ import resMessages from "../constants/responsesMessages.js";
 import { v2 as cloudinary } from "cloudinary";
 import { sendError, sendSuccess } from "../utils/responses.js";
 import { log } from "console";
+import { buildQuery } from "../helpers/query.js";
 
 //* --> For Upload Property Images <--
 //? @route --> POST --> /api/property/uploadPropertyImages
@@ -147,7 +148,7 @@ export const createProperty = async (req, res, next) => {
 //? @route --> GET --> /api/property/getUserProperty/:userId
 //  @access --> PUBLIC
 export const getUserProperty = async (req, res, next) => {
-  console.log("Get User Properties Controller");
+  console.log("Get User Property Controller");
 
   try {
     const userId = req.params.userId;
@@ -177,7 +178,7 @@ export const getUserProperty = async (req, res, next) => {
     // Find Properties From Database
     const properties = await Property.find({ userId: userId, status: status });
 
-    if (properties.length > 0) {
+    if (!!properties.length) {
       res.status(StatusCodes.OK).send(
         sendSuccess({
           message: resMessages.GET_SUCCESS_MESSAGES,
@@ -194,6 +195,27 @@ export const getUserProperty = async (req, res, next) => {
     }
   } catch (error) {
     console.log(error.message, "==> error in get user properties");
+    next(error);
+  }
+};
+
+//* --> For Get Properties <--
+//? @route --> GET --> /api/property/getProperties
+//  @access --> PUBLIC
+export const getProperties = async (req, res, next) => {
+  console.log("Get Properties Controller");
+
+  try {
+    const filters = req.query;
+    const query = buildQuery(filters);
+    console.log(filters, "==> Filters");
+    console.log(query, "==> Query");
+
+    const properties = await Property.find(query);
+
+    res.status(200).send(properties);
+  } catch (error) {
+    console.log(error.message, "==> error in get properties");
     next(error);
   }
 };

@@ -9,6 +9,7 @@ import {
   uploadPropertyImages,
   createProperty,
   getUserProperty,
+  getProperties,
 } from "../controllers/property-controller.js";
 
 // Define Property Router
@@ -22,5 +23,8 @@ propertyRouter.post("/createProperty", validateToken, createProperty);
 
 //* For Get User Properties
 propertyRouter.get("/getUserProperty/:userId", getUserProperty);
+
+//* For Get Properties
+propertyRouter.get("/getProperties", getProperties);
 
 export default propertyRouter;

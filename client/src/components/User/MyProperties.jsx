@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { getActiveTabUserProperties } from "../../api/propertyAPI's";
+import axios from "axios";
 
 // Import Swiper React component and its styles & modules
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -25,51 +26,93 @@ const tabs = ["drafted", "published", "pending", "rejected", "removed"];
 const MyProperties = () => {
   const tabRefs = useRef([]);
   const swiperRefs = useRef([]);
+  const containerRef = useRef(null);
   const currentUser = useSelector((state) => state?.user?.authenticUser);
   const [searchQueryParams, setSearchQueryParams] = useSearchParams();
-  const [activeTab, setActiveTab] = useState(searchQueryParams.get("status"));
+  const [activeTab, setActiveTab] = useState("");
   const [underlineStyle, setUnderlineStyle] = useState({});
   const [loading, setLoading] = useState(true);
-  const [properties, setProperties] = useState([]);
+  const [properties, setProperties] = useState(null);
+  const [numColumns, setNumColumns] = useState(1);
+
+  useEffect(() => {
+    const updateNumColumns = () => {
+      if (containerRef.current) {
+        const computedStyle = window.getComputedStyle(containerRef.current);
+        const gridTemplateColumns = computedStyle.getPropertyValue(
+          "grid-template-columns"
+        );
+        const columnsCount = gridTemplateColumns.split(" ").length;
+        setNumColumns(columnsCount);
+      }
+    };
+
+    updateNumColumns();
+
+    window.addEventListener("resize", updateNumColumns);
+    return () => window.removeEventListener("resize", updateNumColumns);
+  }, []);
 
   useEffect(() => {
     if (!searchQueryParams.get("status")) {
-      setSearchQueryParams({ status: "drafted" });
-    }
-    const activeIndex = tabs.indexOf(activeTab);
-    const activeTabElement = tabRefs.current[activeIndex];
-    setUnderlineStyle({
-      left: `${activeTabElement?.offsetLeft}px`,
-      width: `${activeTabElement?.clientWidth}px`,
-    });
+      setSearchQueryParams(new URLSearchParams({ status: "drafted" }));
+    } else {
+      const status = searchQueryParams.get("status");
 
-    getPropertiesAccordingActiveTab(searchQueryParams.get("status"));
-  }, [activeTab, searchQueryParams]);
+      const activeIndex = tabs.indexOf(status);
+      const activeTabElement = tabRefs.current[activeIndex];
+
+      // Set the underline style based on the active tab
+      setUnderlineStyle({
+        left: `${activeTabElement?.offsetLeft}px`,
+        width: `${activeTabElement?.clientWidth}px`,
+      });
+
+      // Only call setActiveTab if the tab is not already active to avoid extra renders
+      if (activeTab !== status) {
+        setActiveTab(status);
+      }
+
+      // Create a CancelToken source for Axios
+      const source = axios.CancelToken.source();
+
+      // Fetch properties according to the active tab
+      getPropertiesAccordingActiveTab(status, source.token);
+
+      return () => {
+        source.cancel("Operation canceled due to new request.");
+      };
+    }
+  }, [searchQueryParams]);
 
   const changeTabHandler = (tab) => {
-    setActiveTab(tab);
-    setSearchQueryParams({ status: tab });
+    setSearchQueryParams(new URLSearchParams({ status: tab }));
   };
 
-  const getPropertiesAccordingActiveTab = async (queryStatus) => {
+  const getPropertiesAccordingActiveTab = async (queryStatus, cancelToken) => {
     try {
       setLoading(true);
       // Fetch properties according to active tab from API or Database
       const properties = await getActiveTabUserProperties(
         currentUser._id,
-        queryStatus
+        queryStatus,
+        cancelToken
       );
       setProperties(properties);
 
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      if (axios.isCancel(error)) {
+        console.log("Previous API call canceled");
+      } else {
+        console.error(error);
+      }
       setLoading(false);
     }
   };
 
   return (
-    <div className="w-full px-[5%] laptopSm:px-[2%]">
+    <div className="w-full px-[4%] laptopSm:px-[2%]">
       {/* Properties Header */}
       <div className="header text-neutral-800 border-b-[0.2rem] border-neutral-200 pb-[1rem]">
         <h1 className="text-[2.5rem] leading-[3rem] font-bold">
@@ -91,16 +134,14 @@ const MyProperties = () => {
                 ref={(el) => (tabRefs.current[index] = el)}
                 onClick={() => changeTabHandler(tab)}
                 className={`relative py-[1rem] px-[2rem] text-[1.7rem] leading-[2rem] font-semibold transition-all duration-300 ${
-                  activeTab === tab.toLowerCase()
-                    ? "text-theme-blue"
-                    : "text-gray-500"
+                  activeTab === tab ? "text-theme-blue" : "text-gray-500"
                 }`}
               >
                 {tab.charAt(0).toUpperCase() + tab.slice(1)}
               </button>
             ))}
             <div
-              className="absolute bottom-0 h-[0.2rem] bg-theme-yellow transition-all duration-300"
+              className="absolute bottom-0 h-[0.3rem] bg-theme-yellow transition-all duration-300"
               style={{ ...underlineStyle }}
             />
           </div>
@@ -109,20 +150,30 @@ const MyProperties = () => {
         {/* My Property Cards */}
         <div className="w-full">
           {loading ? (
-            <LoadingCards />
+            <>
+              <div
+                ref={containerRef}
+                className="loadingCardsCont w-full grid grid-cols-1 tabletLg:grid-cols-3 tabletSm:grid-cols-2 desktopSm:grid-cols-3 gap-[3rem_2rem] px-[1rem]"
+              >
+                {/* Loading Card */}
+                {Array.from({ length: numColumns }).map((_, index) => (
+                  <LoadingCards key={index} />
+                ))}
+              </div>
+            </>
           ) : (
             <>
-              {properties?.length ? (
+              {!!properties?.length ? (
                 // Property Cards Cont
-                <div className="propertyCardsCont w-full grid grid-cols-1 tabletLg:grid-cols-3 tabletSm:grid-cols-2 desktopSm:grid-cols-3 gap-[3rem_2rem]  px-[1rem]">
+                <div className="propertyCardsCont w-full grid grid-cols-1 tabletLg:grid-cols-3 tabletSm:grid-cols-2 desktopSm:grid-cols-3 gap-[3rem_2rem] px-[2rem] mobileRg:px-[0rem] tabletSm:px-[1rem]">
                   {/* Property Card */}
                   {properties?.map((property, index) => (
                     <div
                       key={property?._id}
-                      className="propertyCard max-w-[35rem] min-w-full relative bg-white overflow-hidden shadow-[0px_15px_20px_#e0e0e0] rounded-xl"
+                      className="propertyCard max-w-[35rem] min-w-full relative bg-white overflow-hidden shadow-[0px_5px_25px_#e0e0e0] rounded-xl flex flex-col mobileRg:flex-row tabletSm:flex-col"
                     >
                       {/* Card Image */}
-                      <div className="imageArea relative flex items-center w-full h-[18rem] object-cover before:content-[''] before:absolute before:z-[1] before:bottom-0 before:left-0 before:right-0 before:h-[50%] before:bg-gradient-to-b to-[#30303080] from-transparent before:pointer-events-none group/picture">
+                      <div className="imageArea relative flex items-center w-full mobileRg:w-[45%] tabletSm:w-full h-[18rem] before:content-[''] before:absolute before:z-[1] before:bottom-0 before:left-0 before:right-0 before:h-[50%] before:bg-gradient-to-b to-[#30303080] from-transparent before:pointer-events-none group/picture">
                         <Swiper
                           modules={[Pagination, Navigation]}
                           slidesPerView={1}
@@ -157,25 +208,23 @@ const MyProperties = () => {
                         >
                           <FaChevronRight />
                         </button>
+
+                        <span className="absolute z-10 top-0 right-0 text-[1.4rem] leading-[1.2rem] font-semibold rounded-md bg-theme-yellow text-neutral-800 px-[0.8rem] py-[0.4rem]">
+                          For {property?.purpose}
+                        </span>
                       </div>
 
                       {/* Card Content */}
-                      <div className="cardContent w-full flex flex-col gap-[1rem] p-[1rem] text-neutral-700">
-                        {/* Type & Purpose */}
-                        <div className="typePurpose flex justify-between">
-                          {/* Type */}
-                          <p className="type relative flex items-center text-[1.6rem] leading-[1.6rem] font-semibold pl-[1.8rem] before:content-[''] before:w-[1rem] before:h-[1rem] before:bg-theme-yellow before:absolute before:left-0 before:rounded-full">
-                            {property?.type}
+                      <div className="cardContent w-full mobileRg:w-[55%] tabletSm:w-full flex flex-col justify-between gap-[1rem] p-[1rem] mobileRg:px-[1.5rem] mobileRg:py-[1.2rem] tabletSm:p-[1rem] text-neutral-700">
+                        {/* Type */}
+                        <div className="type">
+                          <p className="relative flex items-center text-[1.7rem] leading-[1.5rem] font-semibold pl-[1.8rem] before:content-[''] before:w-[1rem] before:h-[1rem] before:bg-theme-yellow before:absolute before:left-0 before:rounded-full">
+                            {property.type}
                           </p>
-
-                          {/* Purpose */}
-                          <span className="text-[1.3rem] leading-[1.5rem] font-semibold rounded-sm bg-theme-blue text-white px-[0.5rem] py-[0.2rem]">
-                            For {property?.purpose}
-                          </span>
                         </div>
 
                         {/* Price */}
-                        <div className="price flex items-end gap-[1rem] text-[1.6rem] leading-[1.6rem] font-semibold text-theme-blue select-none">
+                        <div className="price flex items-end gap-[0.8rem] text-[1.6rem] leading-[1.6rem] font-semibold text-theme-blue select-none">
                           <span>PKR</span>
                           <span className="text-[2.1rem] leading-[2rem] font-bold">
                             {property?.price?.label}
@@ -183,45 +232,45 @@ const MyProperties = () => {
                         </div>
 
                         {/* Details */}
-                        <div className="w-full flex items-center justify-between mt-[0.1rem] text-neutral-600">
-                          <div className="leftSide flex items-center gap-[1rem] text-[1.5rem] leading-[1.5rem] font-semibold select-none">
-                            {/* Bedroom */}
-                            {property?.bedroom && (
-                              <abbr title="Bedroom" className="no-underline ">
-                                <span className="bed flex items-center gap-[0.5rem]">
-                                  <LiaBedSolid size="1.8rem" />{" "}
-                                  <span>{property?.bedroom}</span>
-                                </span>
-                              </abbr>
-                            )}
-
-                            {/* Bathroom */}
-                            {property?.bathroom && (
-                              <abbr title="Bathroom" className="no-underline ">
-                                <span className="bath flex items-center gap-[0.5rem]">
-                                  <LuBath /> <span>{property?.bathroom}</span>
-                                </span>
-                              </abbr>
-                            )}
-
-                            {/* Size */}
-                            <abbr title="Size" className="no-underline">
-                              <span className="area flex items-center gap-[0.5rem]">
-                                <BiArea /> <span>{property?.size}</span>
+                        <div className="w-full flex items-center gap-[1rem] text-[1.55rem] leading-[1.5rem] font-semibold select-none text-neutral-600">
+                          {/* Bedroom */}
+                          {property?.bedroom && (
+                            <abbr title="Bedroom" className="no-underline ">
+                              <span className="bed flex items-center gap-[0.5rem]">
+                                <LiaBedSolid size="1.7rem" />{" "}
+                                <span>{property?.bedroom}</span>
                               </span>
                             </abbr>
-                          </div>
+                          )}
+
+                          {/* Bathroom */}
+                          {property?.bathroom && (
+                            <abbr title="Bathroom" className="no-underline">
+                              <span className="bath flex items-center gap-[0.5rem]">
+                                <LuBath size="1.5rem" />{" "}
+                                <span>{property?.bathroom}</span>
+                              </span>
+                            </abbr>
+                          )}
+
+                          {/* Size */}
+                          <abbr title="Size" className="no-underline">
+                            <span className="area flex items-center gap-[0.5rem]">
+                              <BiArea size="1.7rem" />{" "}
+                              <span>{property?.size}</span>
+                            </span>
+                          </abbr>
                         </div>
 
-                        {/* Location */}
-                        <div className="location flex items-center gap-[0.5rem] text-[1.6rem] text-neutral-600 mt-[0.2rem]">
+                        {/* City */}
+                        <div className="city flex items-center gap-[0.5rem] text-[1.6rem] text-neutral-700">
                           <HiOutlineLocationMarker />
-                          <span className="leading-[1.4rem] font-semibold">
+                          <span className="leading-[1.7rem] font-semibold">
                             {property?.city}
                           </span>
                         </div>
 
-                        {/* Controls */}
+                        {/* Edit & Delete Button */}
                         <div className="w-full flex items-center justify-between gap-[1rem] mt-[0.5rem]">
                           <button className="w-[50%] flex items-center justify-center gap-[0.5rem] text-[1.6rem] leading-[1.6rem] font-semibold text-theme-blue tracking-wider px-[1rem] py-[0.8rem] bg-transparent border-[0.2rem] border-theme-blue rounded-full hover:bg-theme-blue hover:text-white transition-all duration-200">
                             <BiEditAlt />
