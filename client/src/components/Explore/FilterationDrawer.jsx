@@ -119,17 +119,19 @@ const FilterationDrawer = ({ isDrawerOpen, setIsDrawerOpen }) => {
   };
 
   // Set Filter Queries in Search Params
-  const searchFilterResultsHandler = () => {
+  const setSearchFilterQueryHandler = () => {
     const filterResultValues = Object.entries(filterQuery)
-      .filter((objProps) => objProps[1] !== "")
+      .filter(
+        (objProps) =>
+          objProps[1] !== "" && objProps[1] !== "Any" && objProps[1] !== "All"
+      )
       .reduce((acc, [key, value]) => {
         acc[key] = value;
         return acc;
       }, {});
 
-    if (Object.keys(filterResultValues).length > 0) {
-      setSearchParams(filterResultValues);
-    }
+    setSearchParams(filterResultValues);
+    setIsDrawerOpen(false);
   };
 
   return (
@@ -438,7 +440,7 @@ const FilterationDrawer = ({ isDrawerOpen, setIsDrawerOpen }) => {
 
         {/* For Search Button */}
         <button
-          onClick={searchFilterResultsHandler}
+          onClick={setSearchFilterQueryHandler}
           className="w-full flex justify-center items-center gap-[0.6rem] py-[0.8rem] text-[1.8rem] leading-[1.8rem] font-semibold border-theme-blue border-[0.2rem] text-theme-blue rounded-full hover:bg-theme-blue hover:text-white transition-all active:scale-[0.98] mt-[1rem]"
         >
           <IoSearch className="text-[2.2rem]" />

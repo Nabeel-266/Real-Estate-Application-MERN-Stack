@@ -22,3 +22,4 @@ export const DELETE_ACCOUNT = "/api/user/deleteAccount";
 export const UPLOAD_PROPERTY_IMAGES = "/api/property/uploadPropertyImages";
 export const CREATE_PROPERTY = "/api/property/createProperty";
 export const GET_USER_PROPERTIES = "/api/property/getUserProperty";
+export const GET_ALL_PROPERTIES = "/api/property/getProperties";

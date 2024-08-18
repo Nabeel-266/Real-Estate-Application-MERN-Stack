@@ -102,9 +102,7 @@ const MyProperties = () => {
 
       setLoading(false);
     } catch (error) {
-      if (axios.isCancel(error)) {
-        console.log("Previous API call canceled");
-      } else {
+      if (!axios.isCancel(error)) {
         console.error(error);
       }
       setLoading(false);

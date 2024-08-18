@@ -181,14 +181,14 @@ export const getUserProperty = async (req, res, next) => {
     if (!!properties.length) {
       res.status(StatusCodes.OK).send(
         sendSuccess({
-          message: resMessages.GET_SUCCESS_MESSAGES,
+          message: resMessages.GET_SUCCESS_MESSAGE,
           data: properties,
         })
       );
     } else {
       res.status(StatusCodes.NO_CONTENT).send(
         sendSuccess({
-          message: resMessages.GET_UNSUCCESS_MESSAGES,
+          message: resMessages.GET_UNSUCCESS_MESSAGE,
           data: null,
         })
       );
@@ -208,12 +208,15 @@ export const getProperties = async (req, res, next) => {
   try {
     const filters = req.query;
     const query = buildQuery(filters);
-    console.log(filters, "==> Filters");
-    console.log(query, "==> Query");
 
-    const properties = await Property.find(query);
+    const propertyData = await Property.find(query);
 
-    res.status(200).send(properties);
+    res.status(StatusCodes.OK).send(
+      sendSuccess({
+        message: resMessages.GET_SUCCESS_MESSAGE,
+        data: propertyData,
+      })
+    );
   } catch (error) {
     console.log(error.message, "==> error in get properties");
     next(error);
