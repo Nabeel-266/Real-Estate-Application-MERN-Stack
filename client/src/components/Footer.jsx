@@ -19,14 +19,14 @@ const Footer = () => {
         {/* Footer Top */}
         <section className="footerTop w-full grid grid-cols-12 gap-[3rem] laptopSm:grid-cols-5 laptopSm:gap-[2rem] pt-[4rem] pb-[3rem]">
           {/* Objective */}
-          <div className="objective col-span-12 tabletSm:col-span-12 laptopSm:col-span-2 flex flex-col gap-[1rem] text-[1.5rem] leading-[1.9rem] font-sans font-normal text-neutral-200 pr-[0%] tabletSm:pr-[15%]">
+          <div className="objective col-span-12 tabletSm:col-span-12 laptopSm:col-span-2 flex flex-col gap-[1rem] text-[1.4rem] leading-[2.2rem] font-medium text-neutral-200 pr-[0%] tabletSm:pr-[15%]">
             <img src={LogoLight} alt="Logo" className="w-[18rem]" />
 
             <p className="tracking-[-0.05rem]">
-              <b className="text-neutral-100">Nab Estate</b> is your premier
-              destination for luxury and comfort in the real estate market. We
-              pride ourselves on offering exclusive properties that meet the
-              highest standards of quality and design.
+              <span className="text-neutral-100 font-semibold">Nab Estate</span>{" "}
+              is your premier destination for luxury and comfort in the real
+              estate market. We pride ourselves on offering exclusive properties
+              that meet the highest standards of quality and design.
             </p>
 
             <p className="tracking-[-0.02rem]">
@@ -38,7 +38,7 @@ const Footer = () => {
           {/* Quick Links */}
           <div className="quickLinks col-span-6 tabletSm:col-span-4 laptopSm:col-span-1 flex flex-col gap-[1.5rem] py-[0.5rem]">
             <h5 className="text-[1.8rem] font-medium">Quick Links</h5>
-            <ul className="flex flex-col gap-[1rem]">
+            <ul className="flex flex-col gap-[1.2rem]">
               {[
                 { linkTitle: "Home", linkRoute: "/" },
                 { linkTitle: "Explore", linkRoute: "/explore" },
@@ -49,7 +49,7 @@ const Footer = () => {
                 <li key={index}>
                   <Link
                     to={linkRoute}
-                    className="text-[1.5rem] leading-[1.5rem] font-sans text-neutral-200 flex items-center gap-[0.2rem] hover:translate-x-[0.5rem] hover:text-theme-yellow transition-all"
+                    className="text-[1.45rem] leading-[1.5rem] font-medium text-neutral-200 flex items-center gap-[0.2rem] hover:translate-x-[0.5rem] hover:text-theme-yellow transition-all"
                   >
                     <FaCaretRight /> {linkTitle}
                   </Link>
@@ -61,7 +61,7 @@ const Footer = () => {
           {/* Property Types */}
           <div className="propertyTypes col-span-6 tabletSm:col-span-4 laptopSm:col-span-1 flex flex-col gap-[1.5rem] py-[0.5rem]">
             <h5 className="text-[1.8rem] font-medium">Property Types</h5>
-            <ul className="flex flex-col gap-[1rem]">
+            <ul className="flex flex-col gap-[1.2rem]">
               {[
                 { linkTitle: "Commercial", linkRoute: "/" },
                 { linkTitle: "Office", linkRoute: "/" },
@@ -75,7 +75,7 @@ const Footer = () => {
                 <li key={index} className="max-w-max">
                   <Link
                     to={linkRoute}
-                    className={`text-[1.5rem] leading-[1.5rem] font-sans text-neutral-200 flex items-center gap-[0.2rem] hover:translate-x-[0.5rem] hover:text-theme-yellow transition-all ${
+                    className={`text-[1.45rem] leading-[1.5rem] font-medium text-neutral-200 flex items-center gap-[0.2rem] hover:translate-x-[0.5rem] hover:text-theme-yellow transition-all ${
                       linkTitle === "Commercial" ||
                       linkTitle === "Residential" ||
                       linkTitle === "Plot"
@@ -119,9 +119,9 @@ const Footer = () => {
         </section>
 
         {/* Footer Bottom */}
-        <section className="footerBottom w-full flex flex-col gap-[0.5rem] tabletRg:flex-row items-center justify-between py-[1.5rem] text-[1.4rem] font-sans border-t-[0.2rem] border-neutral-500 border-dotted">
+        <section className="footerBottom w-full flex flex-col gap-[0.5rem] tabletRg:flex-row items-center justify-between py-[1.5rem] text-[1.4rem] font-medium border-t-[0.2rem] border-neutral-500 border-dotted">
           <span>&copy; Copyright 2024. All rights reserved</span>
-          <span>Designed & Powered by Muhammad Nabeel</span>
+          <span>Designed & Developed by Muhammad Nabeel</span>
         </section>
       </div>
     </footer>

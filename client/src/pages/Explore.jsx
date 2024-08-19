@@ -21,18 +21,16 @@ import { MdOutlineTimer } from "react-icons/md";
 // Import Component
 import FilterationDrawer from "../components/Explore/FilterationDrawer";
 import LoadingCards from "../components/LoadingCards";
-
-const images = [
-  "/src/assets/Properties/house-02.jpg",
-  "/src/assets/Properties/house-01.jpg",
-  "/src/assets/Properties/room-04.jpg",
-];
+import PagePagination from "../components/Pagination";
+import Footer from "../components/Footer";
 
 const Explore = () => {
-  const sentinelRef = useRef(null);
+  const sentinelTopRef = useRef(null);
+  const sentinelBottomRef = useRef(null);
   const mapRef = useRef(null);
   const swiperRefs = useRef([]);
-  const [isSticky, setIsSticky] = useState(false);
+  const [isSticky, setIsSticky] = useState(true);
+  const [isFixed, setIsFixed] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [searchParams] = useSearchParams();
   const category = searchParams.get("category");
@@ -41,20 +39,38 @@ const Explore = () => {
   const [properties, setProperties] = useState(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
+    const observerTop = new IntersectionObserver(
       ([entry]) => {
-        setIsSticky(!entry.isIntersecting);
+        setIsSticky(!!entry.isIntersecting);
       },
       { threshold: [0] }
     );
 
-    if (sentinelRef.current) {
-      observer.observe(sentinelRef.current);
+    const observerBottom = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsFixed(false); // Stop being fixed when footer comes into view
+        } else {
+          setIsFixed(true); // Become fixed again when footer is out of view
+        }
+      },
+      { threshold: [0] }
+    );
+
+    if (sentinelTopRef.current) {
+      observerTop.observe(sentinelTopRef.current);
+    }
+
+    if (sentinelBottomRef.current) {
+      observerBottom.observe(sentinelBottomRef.current);
     }
 
     return () => {
-      if (sentinelRef.current) {
-        observer.unobserve(sentinelRef.current);
+      if (sentinelTopRef.current) {
+        observerTop.unobserve(sentinelTopRef.current);
+      }
+      if (sentinelBottomRef.current) {
+        observerBottom.unobserve(sentinelBottomRef.current);
       }
     };
   }, []);
@@ -150,8 +166,8 @@ const Explore = () => {
           </button>
         </div>
 
-        {/* Sentinel Scroll Content */}
-        <div ref={sentinelRef}></div>
+        {/* Top Sentinel Scroll Content */}
+        <div ref={sentinelTopRef}></div>
 
         {/* Result Display Area */}
         {loading ? (
@@ -175,9 +191,10 @@ const Explore = () => {
         ) : (
           <>
             {properties?.length ? (
-              <div className="w-full flex justify-between">
+              <div className="w-full h-full flex justify-between">
                 {/* Property Cards Side */}
-                <div className="w-full laptopSm:w-[60%] laptopRg:w-[55%] py-[2rem] px-[2%] mobileRg:px-0 tabletSm:px-[2%] tabletLg:px-0 laptopSm:px-[2%]">
+                <div className="w-full laptopSm:w-[60%] laptopRg:w-[55%] py-[2rem] px-[2%] mobileRg:px-0 tabletSm:px-[2%] tabletLg:px-0 laptopSm:px-[2%] flex flex-col gap-[5rem]">
+                  {/* Property Cards Cont */}
                   <div className="grid grid-cols-1 mobileRg:grid-cols-1 tabletSm:grid-cols-2 tabletLg:grid-cols-3 laptopSm:grid-cols-2 gap-[3rem] place-items-center">
                     {/* Property Cards */}
                     {properties?.map((property, index) => (
@@ -301,16 +318,22 @@ const Explore = () => {
                       </div>
                     ))}
                   </div>
+
+                  <div className="w-full">
+                    <PagePagination />
+                  </div>
                 </div>
 
                 {/* Property Map Location Side  */}
-                <div className="w-[40%] laptopRg:w-[45%] h-full relative hidden laptopSm:flex items-center justify-center py-[2rem]">
+                <div className="w-[40%] laptopRg:w-[45%] min-h-full relative hidden laptopSm:flex items-start justify-center py-[2rem]">
                   <section
                     ref={mapRef}
-                    className={` ${
+                    className={`${
                       isSticky
+                        ? "sticky w-[94%] top-0 left-0 h-[75dvh]"
+                        : isFixed
                         ? "fixed w-[34%] laptopRg:w-[39%] top-[8rem] h-[85dvh]"
-                        : "sticky w-[94%] top-[0rem] h-[75dvh]"
+                        : "absolute w-[94%] bottom-[2rem] h-[85dvh]"
                     }`}
                   >
                     <div className="mapCont w-full h-full relative border-[0.2rem] border-neutral-200 rounded-xl shadow-xl shadow-neutral-300 overflow-hidden">
@@ -347,14 +370,18 @@ const Explore = () => {
                 />
                 <p className="text-[2.5rem] font-bold">NO PROPERTY FOUND</p>
                 <p className="text-[1.6rem] tabletSm:text-[1.8rem] font-semibold mb-[5rem]">
-                  {" "}
-                  Please try searching with different filters.
+                  Please try searching with other filters
                 </p>
               </div>
             )}
           </>
         )}
+        {/* Bottom Sentinel Scroll Content */}
+        <div ref={sentinelBottomRef}></div>
       </div>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };
