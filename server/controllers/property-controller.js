@@ -5,7 +5,6 @@ import { StatusCodes } from "http-status-codes";
 import resMessages from "../constants/responsesMessages.js";
 import { v2 as cloudinary } from "cloudinary";
 import { sendError, sendSuccess } from "../utils/responses.js";
-import { log } from "console";
 import { buildQuery } from "../helpers/query.js";
 
 //* --> For Upload Property Images <--

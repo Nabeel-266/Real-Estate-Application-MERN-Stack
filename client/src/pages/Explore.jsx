@@ -33,6 +33,7 @@ const Explore = () => {
   const [isFixed, setIsFixed] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [searchParams] = useSearchParams();
+  const purpose = searchParams.get("purpose");
   const category = searchParams.get("category");
   const city = searchParams.get("city");
   const [loading, setLoading] = useState(true);
@@ -136,8 +137,11 @@ const Explore = () => {
                 <p className="text-[1.6rem] leading-[2.2rem] font-medium text-neutral-700">
                   Showing Results for{" "}
                   <span className="font-semibold">
-                    {category === "All" || !category ? "" : category}
-                    {category !== "Plot" ? " All Properties" : "s"}
+                    {category === "All" || !category
+                      ? "All Properties"
+                      : category === "Plot"
+                      ? "s"
+                      : ` ${category} Properties`}
                   </span>
                   <br />
                   in
@@ -200,7 +204,7 @@ const Explore = () => {
                     {properties?.map((property, index) => (
                       <div
                         key={property?._id}
-                        className="propertyCard w-full min-w-[22rem] relative bg-white overflow-hidden shadow-[0px_20px_30px_#d0d0d0] rounded-xl flex flex-col mobileRg:flex-row tabletSm:flex-col"
+                        className="propertyCard w-full min-w-[22rem] relative bg-white overflow-hidden shadow-[0px_5px_15px_#e0e0e0] rounded-xl flex flex-col mobileRg:flex-row tabletSm:flex-col"
                       >
                         {/* Card Image */}
                         <div className="imageArea relative flex items-center w-full mobileRg:w-[45%] tabletSm:w-full h-[22rem] mobileRg:h-[18rem] object-cover before:content-[''] before:absolute before:z-[1] before:bottom-0 before:left-0 before:right-0 before:h-[50%] before:bg-gradient-to-b to-[#30303080] from-transparent before:pointer-events-none group/picture">
@@ -243,9 +247,11 @@ const Explore = () => {
                             <FaChevronRight />
                           </button>
 
-                          <span className="absolute z-10 top-0 right-0 text-[1.4rem] leading-[1.2rem] font-semibold rounded-md bg-theme-yellow text-neutral-800 px-[0.8rem] py-[0.4rem]">
-                            For {property?.purpose}
-                          </span>
+                          {!purpose && (
+                            <span className="absolute z-10 top-0 right-0 text-[1.4rem] leading-[1.2rem] font-semibold rounded-md bg-neutral-800 text-theme-yellow px-[0.8rem] py-[0.4rem]">
+                              For {property?.purpose}
+                            </span>
+                          )}
                         </div>
 
                         {/* Card Content */}
@@ -336,7 +342,7 @@ const Explore = () => {
                         : "absolute w-[94%] bottom-[2rem] h-[85dvh]"
                     }`}
                   >
-                    <div className="mapCont w-full h-full relative border-[0.2rem] border-neutral-200 rounded-xl shadow-xl shadow-neutral-300 overflow-hidden">
+                    <div className="mapCont w-full h-full relative border-[0.2rem] border-neutral-200 rounded-xl shadow-xl shadow-neutral-200 overflow-hidden">
                       <button
                         onClick={handleFullScreen}
                         className="text-[2.2rem] p-[0.3rem] bg-white text-neutral-700 absolute z-[1] top-[1rem] right-[1rem]"
@@ -362,15 +368,15 @@ const Explore = () => {
               </div>
             ) : (
               // No Property Found
-              <div className="w-full h-[75dvh] flex flex-col items-center justify-center   text-center text-neutral-700">
+              <div className="w-full h-[calc(100dvh-16rem)] flex flex-col items-center justify-center text-center text-neutral-700">
                 <img
                   src="/src/assets/no-property-data.png"
                   alt="property-not-found"
                   className="w-[30rem] select-none"
                 />
                 <p className="text-[2.5rem] font-bold">NO PROPERTY FOUND</p>
-                <p className="text-[1.6rem] tabletSm:text-[1.8rem] font-semibold mb-[5rem]">
-                  Please try searching with other filters
+                <p className="text-[1.6rem] tabletSm:text-[1.8rem] font-semibold mb-[6rem]">
+                  We don't have any property exist that matches to your criteria
                 </p>
               </div>
             )}

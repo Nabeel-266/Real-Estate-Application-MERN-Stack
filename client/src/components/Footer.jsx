@@ -14,7 +14,7 @@ import Youtube from "../assets/Social-Icons/youtube.png";
 
 const Footer = () => {
   return (
-    <footer className="header relative bottom-0 w-full flex items-center backdrop-blur-[20px] bg-footer-image bg-cover bg-no-repeat bg-center bg-fixed bg-clip-padding bg-[#08283560] bg-blend-multiply border-t-[0.2rem] border-theme-blue border-dotted">
+    <footer className="header relative bottom-0 w-full flex items-center bg-footer-image bg-cover bg-no-repeat bg-center bg-fixed bg-clip-padding bg-[#082835a0] bg-blend-multiply border-t-[0.2rem] border-theme-blue border-dotted">
       <div className="headerWrapper w-full flex flex-col justify-between mx-[4%] text-white">
         {/* Footer Top */}
         <section className="footerTop w-full grid grid-cols-12 gap-[3rem] laptopSm:grid-cols-5 laptopSm:gap-[2rem] pt-[4rem] pb-[3rem]">
@@ -22,17 +22,17 @@ const Footer = () => {
           <div className="objective col-span-12 tabletSm:col-span-12 laptopSm:col-span-2 flex flex-col gap-[1rem] text-[1.4rem] leading-[2.2rem] font-medium text-neutral-200 pr-[0%] tabletSm:pr-[15%]">
             <img src={LogoLight} alt="Logo" className="w-[18rem]" />
 
-            <p className="tracking-[-0.05rem]">
+            <p className="tracking-[-0.05rem] mt-[1rem]">
               <span className="text-neutral-100 font-semibold">Nab Estate</span>{" "}
               is your premier destination for luxury and comfort in the real
               estate market. We pride ourselves on offering exclusive properties
               that meet the highest standards of quality and design.
             </p>
 
-            <p className="tracking-[-0.02rem]">
+            {/* <p className="tracking-[-0.02rem]">
               Our dedicated team is committed to helping you find your dream
               home, whether you are buying, selling, or investing.
-            </p>
+            </p> */}
           </div>
 
           {/* Quick Links */}

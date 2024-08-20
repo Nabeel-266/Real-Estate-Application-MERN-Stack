@@ -205,7 +205,13 @@ const FilterationDrawer = ({ isDrawerOpen, setIsDrawerOpen }) => {
             name="purpose"
             id="purpose"
             readOnly={true}
-            value={purpose}
+            value={
+              purpose === "Sell"
+                ? "For Sale"
+                : purpose === "Rent"
+                ? "For Rental"
+                : purpose
+            }
             onClick={() => toggleDropdown("purposes")}
             className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-200 font-medium pl-[11rem] py-[0.8rem] text-[1.5rem] leading-[1.8rem] rounded-md cursor-pointer focus:border-theme-blue peer/purpose"
           />
@@ -227,13 +233,17 @@ const FilterationDrawer = ({ isDrawerOpen, setIsDrawerOpen }) => {
                 <h6 className="text-[1.6rem] leading-[1.6rem] font-semibold text-neutral-800 px-[1.5rem] py-[0.6rem]">
                   Select Purpose
                 </h6>
-                {["Any", "For Sale", "For Rental"].map((value, index) => (
+                {["Any", "Sell", "Rent"].map((value, index) => (
                   <li
                     key={index}
                     onClick={() => selectHandler("purpose", value, "purposes")}
                     className="w-full text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[0.8rem] cursor-pointer hover:bg-theme-blue hover:text-white transition-all"
                   >
-                    {value}
+                    {value === "Sell"
+                      ? "For Sale"
+                      : value === "Rent"
+                      ? "For Rental"
+                      : value}
                   </li>
                 ))}
               </ul>
