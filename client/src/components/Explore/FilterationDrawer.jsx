@@ -435,7 +435,11 @@ const FilterationDrawer = ({ isDrawerOpen, setIsDrawerOpen }) => {
                     <li
                       key={index}
                       onClick={() =>
-                        selectHandler("bedroom", value, "bedrooms")
+                        selectHandler(
+                          "bedroom",
+                          value.split(" ")[0],
+                          "bedrooms"
+                        )
                       }
                       className="w-full text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[0.8rem] cursor-pointer hover:bg-theme-blue hover:text-white transition-all"
                     >

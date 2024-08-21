@@ -37,7 +37,8 @@ const Explore = () => {
   const category = searchParams.get("category");
   const city = searchParams.get("city");
   const [loading, setLoading] = useState(true);
-  const [properties, setProperties] = useState(null);
+  const [propertyData, setPropertyData] = useState(null);
+  const [propertyDataInfo, setPropertyDataInfo] = useState(null);
 
   useEffect(() => {
     const observerTop = new IntersectionObserver(
@@ -93,9 +94,10 @@ const Explore = () => {
   const getPropertiesAccordingQuery = async (queryParams) => {
     setLoading(true);
     try {
-      const properties = await getAllProperties(queryParams);
+      const result = await getAllProperties(queryParams);
 
-      setProperties(properties);
+      setPropertyData(result.propertyData);
+      setPropertyDataInfo(result.propertyDataInfo);
     } catch (error) {
       console.error(error);
     } finally {
@@ -133,7 +135,7 @@ const Explore = () => {
             </p>
           ) : (
             <>
-              {properties?.length ? (
+              {propertyData?.length ? (
                 <p className="text-[1.6rem] leading-[2.2rem] font-medium text-neutral-700">
                   Showing Results for{" "}
                   <span className="font-semibold">
@@ -194,14 +196,14 @@ const Explore = () => {
           </div>
         ) : (
           <>
-            {properties?.length ? (
+            {propertyData?.length ? (
               <div className="w-full h-full flex justify-between">
                 {/* Property Cards Side */}
                 <div className="w-full laptopSm:w-[60%] laptopRg:w-[55%] py-[2rem] px-[2%] mobileRg:px-0 tabletSm:px-[2%] tabletLg:px-0 laptopSm:px-[2%] flex flex-col gap-[5rem]">
                   {/* Property Cards Cont */}
                   <div className="grid grid-cols-1 mobileRg:grid-cols-1 tabletSm:grid-cols-2 tabletLg:grid-cols-3 laptopSm:grid-cols-2 gap-[3rem] place-items-center">
                     {/* Property Cards */}
-                    {properties?.map((property, index) => (
+                    {propertyData?.map((property, index) => (
                       <div
                         key={property?._id}
                         className="propertyCard w-full min-w-[22rem] relative bg-white overflow-hidden shadow-[0px_5px_15px_#e0e0e0] rounded-xl flex flex-col mobileRg:flex-row tabletSm:flex-col"
@@ -326,7 +328,7 @@ const Explore = () => {
                   </div>
 
                   <div className="w-full">
-                    <PagePagination />
+                    <PagePagination propertyDataInfo={propertyDataInfo} />
                   </div>
                 </div>
 
@@ -338,7 +340,7 @@ const Explore = () => {
                       isSticky
                         ? "sticky w-[94%] top-0 left-0 h-[75dvh]"
                         : isFixed
-                        ? "fixed w-[34%] laptopRg:w-[39%] top-[8rem] h-[85dvh]"
+                        ? "fixed w-[35%] laptopRg:w-[39%] top-[8rem] h-[85dvh]"
                         : "absolute w-[94%] bottom-[2rem] h-[85dvh]"
                     }`}
                   >
@@ -368,14 +370,14 @@ const Explore = () => {
               </div>
             ) : (
               // No Property Found
-              <div className="w-full h-[calc(100dvh-16rem)] flex flex-col items-center justify-center text-center text-neutral-700">
+              <div className="w-full h-[calc(100dvh-15rem)] flex flex-col items-center justify-center text-center text-neutral-700">
                 <img
                   src="/src/assets/no-property-data.png"
                   alt="property-not-found"
                   className="w-[30rem] select-none"
                 />
                 <p className="text-[2.5rem] font-bold">NO PROPERTY FOUND</p>
-                <p className="text-[1.6rem] tabletSm:text-[1.8rem] font-semibold mb-[6rem]">
+                <p className="text-[1.6rem] tabletSm:text-[1.8rem] font-semibold mb-[8rem]">
                   We don't have any property exist that matches to your criteria
                 </p>
               </div>

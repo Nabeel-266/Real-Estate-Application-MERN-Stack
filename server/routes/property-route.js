@@ -15,6 +15,9 @@ import {
 // Define Property Router
 const propertyRouter = express.Router();
 
+//* For Get Properties
+propertyRouter.get("/", getProperties);
+
 //* For Upload Property Images
 propertyRouter.post("/uploadPropertyImages", uploads, uploadPropertyImages);
 
@@ -23,8 +26,5 @@ propertyRouter.post("/createProperty", validateToken, createProperty);
 
 //* For Get User Properties
 propertyRouter.get("/getUserProperty/:userId", getUserProperty);
-
-//* For Get Properties
-propertyRouter.get("/getProperties", getProperties);
 
 export default propertyRouter;

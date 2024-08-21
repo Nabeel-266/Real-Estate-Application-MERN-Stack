@@ -203,17 +203,35 @@ export const getUserProperty = async (req, res, next) => {
 //  @access --> PUBLIC
 export const getProperties = async (req, res, next) => {
   console.log("Get Properties Controller");
+  console.log(req.query);
 
   try {
-    const filters = req.query;
+    const limit = 3;
+    const { page = 1, ...filters } = req.query;
     const query = buildQuery(filters);
 
-    const propertyData = await Property.find(query);
+    // Pagination
+    const skip = (page - 1) * limit;
+
+    // Get Property according query, skip and limit
+    const propertyData = await Property.find(query).skip(skip).limit(limit);
+
+    // Count total documents according to query
+    const totalPropertyDocs = await Property.countDocuments(query);
 
     res.status(StatusCodes.OK).send(
       sendSuccess({
         message: resMessages.GET_SUCCESS_MESSAGE,
-        data: propertyData,
+        data: {
+          propertyData,
+          propertyDataInfo: {
+            pageLimit: limit,
+            currentPage: +page,
+            totalPages: Math.ceil(totalPropertyDocs / limit),
+            skipProperties: +skip,
+            totalProperties: +totalPropertyDocs,
+          },
+        },
       })
     );
   } catch (error) {
