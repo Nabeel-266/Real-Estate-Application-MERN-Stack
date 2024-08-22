@@ -23,6 +23,7 @@ import FilterationDrawer from "../components/Explore/FilterationDrawer";
 import LoadingCards from "../components/LoadingCards";
 import PagePagination from "../components/Pagination";
 import Footer from "../components/Footer";
+import { cities } from "../lib/dummyData";
 
 const Explore = () => {
   const sentinelTopRef = useRef(null);
@@ -81,7 +82,27 @@ const Explore = () => {
   useEffect(() => {
     const queryParams = getAllQueryParams();
     getPropertiesAccordingQuery(queryParams);
+    window.history.scrollRestoration = "manual";
+    window.scrollTo(0, 0);
   }, [searchParams]);
+
+  const handleFullScreen = () => {
+    mapRef.current.requestFullscreen
+      ? mapRef.current.requestFullscreen()
+      : // Firefox
+      mapRef.current.mozRequestFullScreen
+      ? mapRef.current.mozRequestFullScreen()
+      : // Chrome, Safari & Opera
+      mapRef.current.webkitRequestFullscreen
+      ? mapRef.current.webkitRequestFullscreen()
+      : // IE/Edge 11
+        mapRef.current.msRequestFullscreen();
+  };
+
+  const getCityCoordinates = (city) => {
+    const cityCoordinates = cities.find((c) => c.name === city)?.coordinates;
+    return cityCoordinates;
+  };
 
   // Get all query parameters as an object
   const getAllQueryParams = () => {
@@ -103,19 +124,6 @@ const Explore = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleFullScreen = () => {
-    mapRef.current.requestFullscreen
-      ? mapRef.current.requestFullscreen()
-      : // Firefox
-      mapRef.current.mozRequestFullScreen
-      ? mapRef.current.mozRequestFullScreen()
-      : // Chrome, Safari & Opera
-      mapRef.current.webkitRequestFullscreen
-      ? mapRef.current.webkitRequestFullscreen()
-      : // IE/Edge 11
-        mapRef.current.msRequestFullscreen();
   };
 
   return (
@@ -352,16 +360,31 @@ const Explore = () => {
                         <BiFullscreen />
                       </button>
                       <Map
-                        defaultCenter={[24.8546842, 67.0207055]}
-                        defaultZoom={12}
+                        // defaultCenter={[24.8546842, 67.0207055]}
+                        defaultCenter={
+                          city ? getCityCoordinates(city) : [30.3753, 69.3451]
+                        }
+                        defaultZoom={city ? 10 : 5}
                         minZoom={4}
                         // onClick={handleMapClick}
                       >
-                        <Marker
-                          width={35}
-                          anchor={[24.8546842, 67.0207055]}
-                          color="#082835"
-                        />
+                        {propertyData.map((property, index) => (
+                          <Marker
+                            key={index}
+                            width={35}
+                            color="#082835"
+                            anchor={[
+                              property.coordinates.lat,
+                              property.coordinates.lng,
+                            ]}
+                            payload={property.id}
+                            onClick={({ event, anchor, payload }) => {
+                              // Handle marker click, if needed
+                              console.log(`Clicked marker with ID: ${payload}`);
+                            }}
+                          />
+                        ))}
+
                         <ZoomControl />
                       </Map>
                     </div>

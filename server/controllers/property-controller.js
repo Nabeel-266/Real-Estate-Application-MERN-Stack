@@ -207,14 +207,25 @@ export const getProperties = async (req, res, next) => {
 
   try {
     const limit = 3;
-    const { page = 1, ...filters } = req.query;
+    const { page = 1, orderBy = 1, ...filters } = req.query;
     const query = buildQuery(filters);
 
     // Pagination
     const skip = (page - 1) * limit;
 
+    // Determine sorting order
+    const sortOrder = {};
+    if (orderBy === "2") {
+      sortOrder["price.value"] = 1;
+    } else if (orderBy === "3") {
+      sortOrder["price.value"] = -1;
+    }
+
     // Get Property according query, skip and limit
-    const propertyData = await Property.find(query).skip(skip).limit(limit);
+    const propertyData = await Property.find(query)
+      .sort(sortOrder)
+      .skip(skip)
+      .limit(limit);
 
     // Count total documents according to query
     const totalPropertyDocs = await Property.countDocuments(query);

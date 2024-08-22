@@ -3,7 +3,6 @@ import { useSearchParams } from "react-router-dom";
 import {
   bedrooms,
   cities,
-  priceRanges,
   propertyCategories,
   propertyCommercialTypes,
   propertyPlotTypes,
@@ -23,6 +22,7 @@ const FilterationDrawer = ({ isDrawerOpen, setIsDrawerOpen }) => {
     categories: false,
     types: false,
     bedrooms: false,
+    sortOrders: false,
   });
   const [propertyTypes, setPropertyTypes] = useState(null);
   const [filterQuery, setFilterQuery] = useState({
@@ -33,9 +33,18 @@ const FilterationDrawer = ({ isDrawerOpen, setIsDrawerOpen }) => {
     minPrice: searchParams.get("minPrice") || "",
     maxPrice: searchParams.get("maxPrice") || "",
     bedroom: searchParams.get("bedroom") || "Any",
+    orderBy: searchParams.get("orderBy") || "1",
   });
-  const { city, purpose, category, type, minPrice, maxPrice, bedroom } =
-    filterQuery;
+  const {
+    city,
+    purpose,
+    category,
+    type,
+    minPrice,
+    maxPrice,
+    bedroom,
+    orderBy,
+  } = filterQuery;
 
   // console.log(filterQuery);
 
@@ -184,15 +193,17 @@ const FilterationDrawer = ({ isDrawerOpen, setIsDrawerOpen }) => {
                 <h6 className="text-[1.6rem] leading-[1.6rem] font-semibold text-neutral-800 px-[1.5rem] py-[0.6rem]">
                   Select City
                 </h6>
-                {["All", ...cities.sort()].map((city, index) => (
-                  <li
-                    key={index}
-                    onClick={() => selectHandler("city", city, "cities")}
-                    className="w-full text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[0.8rem] cursor-pointer hover:bg-theme-blue hover:text-white transition-all"
-                  >
-                    {city}
-                  </li>
-                ))}
+                {["All", ...cities.map((city) => city.name).sort()].map(
+                  (city, index) => (
+                    <li
+                      key={index}
+                      onClick={() => selectHandler("city", city, "cities")}
+                      className="w-full text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[0.8rem] cursor-pointer hover:bg-theme-blue hover:text-white transition-all"
+                    >
+                      {city}
+                    </li>
+                  )
+                )}
               </ul>
             </div>
           )}
@@ -286,7 +297,7 @@ const FilterationDrawer = ({ isDrawerOpen, setIsDrawerOpen }) => {
                     onClick={() =>
                       selectHandler("category", value, "categories")
                     }
-                    className="w-full text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[0.8rem] hover:bg-theme-blue hover:text-white transition-all"
+                    className="w-full text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[0.8rem] cursor-pointer hover:bg-theme-blue hover:text-white transition-all"
                   >
                     {value}
                   </li>
@@ -452,10 +463,65 @@ const FilterationDrawer = ({ isDrawerOpen, setIsDrawerOpen }) => {
           </div>
         )}
 
+        {/* For Sort Orders */}
+        <div className="sortOrderField relative">
+          <input
+            type="text"
+            name="sortOrder"
+            id="sortOrder"
+            readOnly={true}
+            value={
+              orderBy === "2"
+                ? "Price - Low to High"
+                : orderBy === "3"
+                ? "Price - High to Low"
+                : "New Listing"
+            }
+            onClick={() => toggleDropdown("sortOrders")}
+            className="w-full outline-none border-[0.2rem] text-neutral-800 border-neutral-200 font-medium pl-[9rem] py-[1rem] text-[1.5rem] leading-[1.8rem] rounded-md cursor-pointer focus:border-theme-blue peer/orderBy"
+          />
+
+          <label
+            htmlFor="sortOrder"
+            className="absolute top-0 left-0 h-full flex items-center justify-center pl-[1.2rem] pr-[1.5rem] text-[1.6rem] font-medium tracking-wide text-neutral-700 bg-neutral-200 rounded-l-md rounded-r-full pointer-events-none peer-focus/orderBy:text-white peer-focus/orderBy:bg-theme-blue"
+          >
+            Order
+          </label>
+
+          {/* Property Sort Orders Dropdown */}
+          {dropdownOpen.sortOrders && (
+            <div
+              ref={dropdownRef}
+              className="w-full py-[0.5rem] shadow-lg border-[0.2rem] bg-white border-neutral-300 rounded-md absolute z-10 bottom-[100%] left-0"
+            >
+              <h6 className="text-[1.6rem] leading-[1.6rem] font-semibold text-neutral-800 px-[1.5rem] py-[0.6rem]">
+                Select Order
+              </h6>
+              <ul className="w-full max-h-[25rem] overflow-auto scrollbar-slim-y ">
+                {["1", "2", "3"].map((value, index) => (
+                  <li
+                    key={index}
+                    onClick={() =>
+                      selectHandler("orderBy", value, "sortOrders")
+                    }
+                    className="w-full text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[0.8rem] cursor-pointer hover:bg-theme-blue hover:text-white transition-all"
+                  >
+                    {value === "2"
+                      ? "Price - Low to High"
+                      : value === "3"
+                      ? "Price - High to Low"
+                      : "New Listing"}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+
         {/* For Search Button */}
         <button
           onClick={setSearchFilterQueryHandler}
-          className="w-full flex justify-center items-center gap-[0.6rem] py-[0.8rem] text-[1.8rem] leading-[1.8rem] font-semibold border-theme-blue border-[0.2rem] text-theme-blue rounded-full hover:bg-theme-blue hover:text-white transition-all active:scale-[0.98] mt-[1rem]"
+          className="w-full flex justify-center items-center gap-[0.6rem] py-[0.8rem] text-[1.8rem] leading-[1.8rem] font-semibold border-theme-blue border-[0.2rem] text-theme-blue rounded-full hover:bg-theme-blue hover:text-white transition-all active:scale-[0.98] mt-[0.5rem]"
         >
           <IoSearch className="text-[2.2rem]" />
           <span>Search Results</span>

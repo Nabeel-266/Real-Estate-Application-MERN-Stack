@@ -613,7 +613,7 @@ const AddProperty = () => {
                         }`}
                       />
                       <span className="text-[2rem] absolute top-0 left-0 h-full flex items-center justify-center px-[1.5rem] text-neutral-400 pointer-events-none peer-focus/city:text-theme-blue">
-                        <IoSearch className="" />
+                        <IoSearch />
                       </span>
 
                       {/* Cities Dropdown */}
@@ -626,15 +626,17 @@ const AddProperty = () => {
                             <h6 className="text-[1.6rem] leading-[1.6rem] font-semibold text-neutral-800 px-[1.5rem] py-[1rem]">
                               Select City
                             </h6>
-                            {cities.sort().map((city, index) => (
-                              <li
-                                key={index}
-                                onClick={(e) => cityChangeHandler(e)}
-                                className="w-full text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[1rem] hover:bg-theme-blue hover:text-white transition-all"
-                              >
-                                {city}
-                              </li>
-                            ))}
+                            {[...cities.map((city) => city.name).sort()].map(
+                              (city, index) => (
+                                <li
+                                  key={index}
+                                  onClick={(e) => cityChangeHandler(e)}
+                                  className="w-full text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[1rem] hover:bg-theme-blue hover:text-white transition-all"
+                                >
+                                  {city}
+                                </li>
+                              )
+                            )}
                           </ul>
                         </div>
                       )}
