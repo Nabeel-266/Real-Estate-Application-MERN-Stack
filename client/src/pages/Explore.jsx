@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Map, Marker, ZoomControl } from "pigeon-maps";
 import { getAllProperties } from "../api/propertyAPI's";
 
 // Import Swiper React component and its styles & modules
@@ -14,7 +13,7 @@ import { HiMiniAdjustmentsHorizontal } from "react-icons/hi2";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import { LiaBedSolid } from "react-icons/lia";
 import { LuBath } from "react-icons/lu";
-import { BiArea, BiFullscreen } from "react-icons/bi";
+import { BiArea } from "react-icons/bi";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { MdOutlineTimer } from "react-icons/md";
 
@@ -23,16 +22,16 @@ import FilterationDrawer from "../components/Explore/FilterationDrawer";
 import LoadingCards from "../components/LoadingCards";
 import PagePagination from "../components/Pagination";
 import Footer from "../components/Footer";
-import { cities } from "../lib/dummyData";
+import LocationMap from "../components/Explore/LocationMap";
 
 const Explore = () => {
   const sentinelTopRef = useRef(null);
   const sentinelBottomRef = useRef(null);
-  const mapRef = useRef(null);
   const swiperRefs = useRef([]);
+  const mapRef = useRef(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(true);
   const [isFixed, setIsFixed] = useState(false);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [searchParams] = useSearchParams();
   const purpose = searchParams.get("purpose");
   const category = searchParams.get("category");
@@ -85,24 +84,6 @@ const Explore = () => {
     window.history.scrollRestoration = "manual";
     window.scrollTo(0, 0);
   }, [searchParams]);
-
-  const handleFullScreen = () => {
-    mapRef.current.requestFullscreen
-      ? mapRef.current.requestFullscreen()
-      : // Firefox
-      mapRef.current.mozRequestFullScreen
-      ? mapRef.current.mozRequestFullScreen()
-      : // Chrome, Safari & Opera
-      mapRef.current.webkitRequestFullscreen
-      ? mapRef.current.webkitRequestFullscreen()
-      : // IE/Edge 11
-        mapRef.current.msRequestFullscreen();
-  };
-
-  const getCityCoordinates = (city) => {
-    const cityCoordinates = cities.find((c) => c.name === city)?.coordinates;
-    return cityCoordinates;
-  };
 
   // Get all query parameters as an object
   const getAllQueryParams = () => {
@@ -259,7 +240,10 @@ const Explore = () => {
 
                           {!purpose && (
                             <span className="absolute z-10 top-0 right-0 text-[1.4rem] leading-[1.2rem] font-semibold rounded-md bg-neutral-800 text-theme-yellow px-[0.8rem] py-[0.4rem]">
-                              For {property?.purpose}
+                              For{" "}
+                              {property?.purpose === "Sell"
+                                ? "Sale"
+                                : property?.purpose}
                             </span>
                           )}
                         </div>
@@ -274,11 +258,15 @@ const Explore = () => {
                           </div>
 
                           {/* Price */}
-                          <div className="price flex items-end gap-[0.4rem] text-[1.6rem] leading-[1.6rem] font-semibold text-theme-blue select-none">
-                            <span>PKR</span>
-                            <span className="text-[2rem] leading-[2rem] font-bold">
-                              {property?.price?.label}
-                            </span>
+                          <div className="price select-none">
+                            <p className="space-x-[0.6rem] text-theme-blue">
+                              <span className="text-[1.6rem] leading-[1.6rem] font-semibold">
+                                PKR
+                              </span>
+                              <span className="text-[2.1rem] leading-[2rem] font-bold">
+                                {property?.price?.label}
+                              </span>
+                            </p>
                           </div>
 
                           {/* Details */}
@@ -313,7 +301,7 @@ const Explore = () => {
                           </div>
 
                           {/* City */}
-                          <div className="city flex items-center gap-[0.5rem] text-[1.6rem] text-neutral-600">
+                          <div className="flex items-center gap-[0.5rem] text-[1.6rem] text-neutral-600">
                             <HiOutlineLocationMarker />
                             <span className="leading-[1.7rem] font-semibold">
                               {property?.city}
@@ -335,9 +323,7 @@ const Explore = () => {
                     ))}
                   </div>
 
-                  <div className="w-full">
-                    <PagePagination propertyDataInfo={propertyDataInfo} />
-                  </div>
+                  <PagePagination propertyDataInfo={propertyDataInfo} />
                 </div>
 
                 {/* Property Map Location Side  */}
@@ -352,42 +338,11 @@ const Explore = () => {
                         : "absolute w-[94%] bottom-[2rem] h-[85dvh]"
                     }`}
                   >
-                    <div className="mapCont w-full h-full relative border-[0.2rem] border-neutral-200 rounded-xl shadow-xl shadow-neutral-200 overflow-hidden">
-                      <button
-                        onClick={handleFullScreen}
-                        className="text-[2.2rem] p-[0.3rem] bg-white text-neutral-700 absolute z-[1] top-[1rem] right-[1rem]"
-                      >
-                        <BiFullscreen />
-                      </button>
-                      <Map
-                        // defaultCenter={[24.8546842, 67.0207055]}
-                        defaultCenter={
-                          city ? getCityCoordinates(city) : [30.3753, 69.3451]
-                        }
-                        defaultZoom={city ? 10 : 5}
-                        minZoom={4}
-                        // onClick={handleMapClick}
-                      >
-                        {propertyData.map((property, index) => (
-                          <Marker
-                            key={index}
-                            width={35}
-                            color="#082835"
-                            anchor={[
-                              property.coordinates.lat,
-                              property.coordinates.lng,
-                            ]}
-                            payload={property.id}
-                            onClick={({ event, anchor, payload }) => {
-                              // Handle marker click, if needed
-                              console.log(`Clicked marker with ID: ${payload}`);
-                            }}
-                          />
-                        ))}
-
-                        <ZoomControl />
-                      </Map>
-                    </div>
+                    <LocationMap
+                      propertyData={propertyData}
+                      city={city}
+                      mapRef={mapRef}
+                    />
                   </section>
                 </div>
               </div>
