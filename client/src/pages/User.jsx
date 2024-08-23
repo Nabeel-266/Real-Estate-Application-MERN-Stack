@@ -22,14 +22,14 @@ const User = () => {
         <aside className="w-[20%] min-w-[25rem] h-full hidden laptopSm:flex laptopSm:items-center pl-[2%] desktopSm:pl-[4%]">
           <ul className="w-full h-[calc(100%-6rem)] flex flex-col gap-[0.3rem] border-r-[0.2rem] border-neutral-200">
             {[
-              [FiUser, "Profile", "profile"],
-              [RiAccountBoxLine, "Account", "account"],
-              [MdOutlineMapsHomeWork, "My Properties", "property"],
+              [FiUser, "Profile", "/user/profile"],
+              [RiAccountBoxLine, "Account", "/user/account"],
+              [MdOutlineMapsHomeWork, "My Properties", "/user/property"],
             ].map(([Icon, title, route], index) => (
               <li
                 key={index}
                 className={`${
-                  isActiveTab === route
+                  isActiveTab === route.split("/")[2]
                     ? "before:translate-x-[-5%] before:bg-theme-blue"
                     : "before:translate-x-[-100%] hover:before:translate-x-[0%] before:bg-neutral-100"
                 } w-[95%] relative overflow-hidden before:content-[''] before:w-full before:h-full before:z-0 before:absolute before:top-0 before:left-0 before:rounded-e-full before:transition before:ease-out before:duration-[0.4s]`}
@@ -37,7 +37,7 @@ const User = () => {
                 <Link
                   to={route}
                   className={`${
-                    isActiveTab === route
+                    isActiveTab === route.split("/")[2]
                       ? "text-white font-medium"
                       : "text-neutral-500 font-semibold"
                   } w-full relative z-10 flex items-center gap-[0.8rem] px-[1rem] py-[0.8rem]`}
