@@ -1,4 +1,5 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Map, Marker, Overlay, ZoomControl } from "pigeon-maps";
 import { cities } from "../../lib/dummyData";
 
@@ -7,6 +8,7 @@ import { BiArea, BiFullscreen } from "react-icons/bi";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 
 const LocationMap = ({ propertyData, city, mapRef }) => {
+  const navigate = useNavigate();
   const [markerPopupData, setMarkerPopupData] = useState(null);
 
   const handleFullScreen = () => {
@@ -26,6 +28,11 @@ const LocationMap = ({ propertyData, city, mapRef }) => {
     const cityCoordinates = cities.find((c) => c.name === city)?.coordinates;
     return cityCoordinates;
   };
+
+  const handleMarkerClick = (propertyId) => {
+    navigate(`/property/${propertyId}`);
+  };
+
   return (
     <div className="mapCont w-full h-full relative border-[0.2rem] border-neutral-200 rounded-xl shadow-xl shadow-neutral-200 overflow-hidden">
       <button
@@ -50,6 +57,7 @@ const LocationMap = ({ propertyData, city, mapRef }) => {
             payload={property}
             onMouseOver={({ payload }) => setMarkerPopupData(payload)}
             onMouseOut={() => setMarkerPopupData(null)}
+            onClick={({ payload }) => handleMarkerClick(payload._id)}
           />
         ))}
 
@@ -63,7 +71,7 @@ const LocationMap = ({ propertyData, city, mapRef }) => {
             offset={[0, 150]}
           >
             <div
-              className={`shadow-xl shadow-[#22222240] bg-white p-[1.2rem] rounded-t-2xl rounded-br-2xl text-neutral-700 text-[1.4rem] leading-[1.4rem] font-semibold space-y-[1rem]`}
+              className={`shadow-xl shadow-[#22222240] bg-[#ffffff90] backdrop-blur-[1rem] p-[1.2rem] rounded-t-2xl rounded-br-2xl text-neutral-700 text-[1.4rem] leading-[1.4rem] font-semibold space-y-[1rem]`}
             >
               {/* type & purpose */}
               <p className="flex items-center gap-[6rem]">

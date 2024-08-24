@@ -35,7 +35,7 @@ const PORT = process.env.PORT || 8000;
       console.log(`Server is running successfully on PORT ${PORT}`);
     });
   } catch (error) {
-    console.log(error + " ==> Connection Problem");
+    console.log(error + " ==> MongoDB Connection Problem");
     // process.exit(1);
   }
 })();

@@ -143,8 +143,8 @@ export const createProperty = async (req, res, next) => {
   }
 };
 
-//* --> For Get User Properties <--
-//? @route --> GET --> /api/property/getUserProperty/:userId
+//* --> For Get Specific User Properties <--
+//? @route --> GET --> /api/property/user/:userId
 //  @access --> PUBLIC
 export const getUserProperty = async (req, res, next) => {
   console.log("Get User Property Controller");
@@ -198,8 +198,8 @@ export const getUserProperty = async (req, res, next) => {
   }
 };
 
-//* --> For Get Properties <--
-//? @route --> GET --> /api/property/getProperties
+//* --> For Get Multiple Properties <--
+//? @route --> GET --> /api/property/all
 //  @access --> PUBLIC
 export const getProperties = async (req, res, next) => {
   console.log("Get Properties Controller");
@@ -248,5 +248,39 @@ export const getProperties = async (req, res, next) => {
   } catch (error) {
     console.log(error.message, "==> error in get properties");
     next(error);
+  }
+};
+
+//* --> For Get a Single Property <--
+//? @route --> GET --> /api/property/:propertyId
+//  @access --> PUBLIC
+export const getProperty = async (req, res, next) => {
+  console.log("Get a Property Controller");
+
+  try {
+    const propertyId = req.params.propertyId;
+
+    // Find Property From Database
+    const property = await Property.findOne({ _id: propertyId });
+
+    res.status(StatusCodes.OK).send(
+      sendSuccess({
+        message: resMessages.GET_SUCCESS_MESSAGE,
+        data: property,
+      })
+    );
+  } catch (error) {
+    console.log(error.message, "==> error in get properties");
+
+    if (error.message.includes("Cast to ObjectId failed")) {
+      return res.status(StatusCodes.NOT_FOUND).send(
+        sendError({
+          statusCode: StatusCodes.NOT_FOUND,
+          message: resMessages.GET_UNSUCCESS_MESSAGE,
+        })
+      );
+    } else {
+      next(error);
+    }
   }
 };

@@ -10,21 +10,25 @@ import {
   createProperty,
   getUserProperty,
   getProperties,
+  getProperty,
 } from "../controllers/property-controller.js";
 
 // Define Property Router
 const propertyRouter = express.Router();
 
-//* For Get Properties
-propertyRouter.get("/", getProperties);
+//* For Get Multiple Properties
+propertyRouter.get("/all", getProperties);
+
+//* For Get a Single Property
+propertyRouter.get("/:propertyId", getProperty);
+
+//* For Get Specific User Properties
+propertyRouter.get("/user/:userId", getUserProperty);
 
 //* For Upload Property Images
 propertyRouter.post("/uploadPropertyImages", uploads, uploadPropertyImages);
 
 //* For Create a New Property
 propertyRouter.post("/createProperty", validateToken, createProperty);
-
-//* For Get User Properties
-propertyRouter.get("/getUserProperty/:userId", getUserProperty);
 
 export default propertyRouter;

@@ -28,7 +28,7 @@ const MyProperties = () => {
   const swiperRefs = useRef([]);
   const containerRef = useRef(null);
   const currentUser = useSelector((state) => state?.user?.authenticUser);
-  const [searchQueryParams, setSearchQueryParams] = useSearchParams();
+  const [searchQueryParam, setSearchQueryParam] = useSearchParams();
   const [activeTab, setActiveTab] = useState("");
   const [underlineStyle, setUnderlineStyle] = useState({});
   const [loading, setLoading] = useState(true);
@@ -54,10 +54,10 @@ const MyProperties = () => {
   }, []);
 
   useEffect(() => {
-    if (!searchQueryParams.get("status")) {
-      setSearchQueryParams(new URLSearchParams({ status: "drafted" }));
+    if (!searchQueryParam.get("status")) {
+      setSearchQueryParam(new URLSearchParams({ status: "drafted" }));
     } else {
-      const status = searchQueryParams.get("status");
+      const status = searchQueryParam.get("status");
 
       const activeIndex = tabs.indexOf(status);
       const activeTabElement = tabRefs.current[activeIndex];
@@ -83,12 +83,14 @@ const MyProperties = () => {
         source.cancel("Operation canceled due to new request.");
       };
     }
-  }, [searchQueryParams]);
+  }, [searchQueryParam]);
 
+  // Change Tab Handler
   const changeTabHandler = (tab) => {
-    setSearchQueryParams(new URLSearchParams({ status: tab }));
+    setSearchQueryParam(new URLSearchParams({ status: tab }));
   };
 
+  // Get User Properties According To Active Tab
   const getPropertiesAccordingActiveTab = async (queryStatus, cancelToken) => {
     try {
       setLoading(true);

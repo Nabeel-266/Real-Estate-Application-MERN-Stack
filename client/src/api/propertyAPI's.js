@@ -5,6 +5,7 @@ import toastify from "../utils/toastify";
 import {
   CREATE_PROPERTY,
   GET_ALL_PROPERTIES,
+  GET_SINGLE_PROPERTY,
   GET_USER_PROPERTIES,
   UPLOAD_PROPERTY_IMAGES,
 } from "../constants/apisRoute";
@@ -91,6 +92,20 @@ export const getAllProperties = async (queryParams) => {
     const response = await axios.get(`${GET_ALL_PROPERTIES}`, {
       params: queryParams,
     });
+    const responseData = response?.data;
+
+    if (responseData.status === "Success") {
+      return responseData.result;
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
+// For GET a SINGLE PROPERTY
+export const getSingleProperty = async (propertyId) => {
+  try {
+    const response = await axios.get(`${GET_SINGLE_PROPERTY}/${propertyId}`);
     const responseData = response?.data;
 
     if (responseData.status === "Success") {

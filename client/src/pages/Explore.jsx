@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { getAllProperties } from "../api/propertyAPI's";
 
 // Import Swiper React component and its styles & modules
@@ -25,6 +25,7 @@ import Footer from "../components/Footer";
 import LocationMap from "../components/Explore/LocationMap";
 
 const Explore = () => {
+  const navigate = useNavigate();
   const sentinelTopRef = useRef(null);
   const sentinelBottomRef = useRef(null);
   const swiperRefs = useRef([]);
@@ -77,7 +78,7 @@ const Explore = () => {
     };
   }, []);
 
-  // Call Get Properties API Funtion according to Search Query Params
+  // Call Get Properties API Function
   useEffect(() => {
     const queryParams = getAllQueryParams();
     getPropertiesAccordingQuery(queryParams);
@@ -92,7 +93,7 @@ const Explore = () => {
     );
   };
 
-  // Get Properties API Funtion
+  // Get Properties According To Search Query Params
   const getPropertiesAccordingQuery = async (queryParams) => {
     setLoading(true);
     try {
@@ -105,6 +106,11 @@ const Explore = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Property Card Click Handler
+  const handlePropertyClick = (propertyId) => {
+    navigate(`/property/${propertyId}`);
   };
 
   return (
@@ -190,15 +196,16 @@ const Explore = () => {
                 {/* Property Cards Side */}
                 <div className="w-full laptopSm:w-[60%] laptopRg:w-[55%] py-[2rem] px-[2%] mobileRg:px-0 tabletSm:px-[2%] tabletLg:px-0 laptopSm:px-[2%] flex flex-col gap-[5rem]">
                   {/* Property Cards Cont */}
-                  <div className="grid grid-cols-1 mobileRg:grid-cols-1 tabletSm:grid-cols-2 tabletLg:grid-cols-3 laptopSm:grid-cols-2 gap-[3rem] place-items-center">
+                  <div className="w-full grid grid-cols-1 mobileRg:grid-cols-1 tabletSm:grid-cols-2 tabletLg:grid-cols-3 laptopSm:grid-cols-2 gap-[3rem] place-items-center">
                     {/* Property Cards */}
                     {propertyData?.map((property, index) => (
                       <div
                         key={property?._id}
-                        className="propertyCard w-full min-w-[22rem] relative bg-white overflow-hidden shadow-[0px_5px_15px_#e0e0e0] rounded-xl flex flex-col mobileRg:flex-row tabletSm:flex-col"
+                        onClick={() => handlePropertyClick(property._id)}
+                        className="propertyCard w-full min-w-[22rem] relative bg-white overflow-hidden cursor-pointer shadow-[0px_5px_15px_#e0e0e0] rounded-xl flex flex-col mobileRg:flex-row tabletSm:flex-col"
                       >
                         {/* Card Image */}
-                        <div className="imageArea relative flex items-center w-full mobileRg:w-[45%] tabletSm:w-full h-[22rem] mobileRg:h-[18rem] object-cover before:content-[''] before:absolute before:z-[1] before:bottom-0 before:left-0 before:right-0 before:h-[50%] before:bg-gradient-to-b to-[#30303080] from-transparent before:pointer-events-none group/picture">
+                        <div className="imageArea relative flex items-center w-full mobileRg:w-[45%] tabletSm:w-full h-[22rem] mobileRg:h-[18rem] object-cover before:content-[''] before:absolute before:z-[2] before:bottom-0 before:left-0 before:right-0 before:h-[50%] before:bg-gradient-to-b to-[#20202020] from-transparent before:pointer-events-none group/picture">
                           <Swiper
                             modules={[Pagination, Navigation]}
                             slidesPerView={1}
@@ -221,18 +228,20 @@ const Explore = () => {
                           </Swiper>
 
                           <button
-                            onClick={() =>
-                              swiperRefs.current[index]?.slidePrev()
-                            }
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              swiperRefs.current[index]?.slidePrev();
+                            }}
                             className="previous absolute left-[4%] z-[5] bg-[#ffffffa0] outline-none text-[2.4rem] text-neutral-800 hover:scale-[1.1] p-[0.5rem] rounded-full transition-all scale-0 group-hover/picture:scale-100"
                           >
                             <FaChevronLeft />
                           </button>
 
                           <button
-                            onClick={() =>
-                              swiperRefs.current[index]?.slideNext()
-                            }
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              swiperRefs.current[index]?.slideNext();
+                            }}
                             className="next absolute right-[4%] z-[5] bg-[#ffffffa0] outline-none text-[2.4rem] text-neutral-800 hover:scale-[1.1] p-[0.5rem] rounded-full transition-all scale-0 group-hover/picture:scale-100"
                           >
                             <FaChevronRight />

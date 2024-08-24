@@ -29,6 +29,7 @@ import Profile from "./components/User/Profile";
 import Account from "./components/User/Account";
 import MyProperties from "./components/User/MyProperties";
 import NotFound from "./pages/NotFound";
+import Property from "./pages/Property";
 
 const AppLayout = () => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
@@ -72,6 +73,14 @@ const router = createBrowserRouter([
         element: (
           <UnAuthProtectedRoute>
             <AddProperty />
+          </UnAuthProtectedRoute>
+        ),
+      },
+      {
+        path: "/property/:propertyId",
+        element: (
+          <UnAuthProtectedRoute>
+            <Property />
           </UnAuthProtectedRoute>
         ),
       },
