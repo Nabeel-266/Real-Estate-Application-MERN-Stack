@@ -178,7 +178,12 @@ const MyProperties = () => {
                           modules={[Pagination, Navigation]}
                           slidesPerView={1}
                           loop={property?.images?.length > 1 ? true : false}
-                          pagination={{ clickable: true }}
+                          pagination={{
+                            clickable: true,
+                            renderBullet: (index, className) => {
+                              return `<span class="${className}" style="width: 0.8rem; height: 0.8rem;"></span>`;
+                            },
+                          }}
                           className="mySwiper w-full h-full cursor-grab"
                           onSwiper={(swiper) => {
                             swiperRefs.current[index] = swiper;
@@ -209,8 +214,11 @@ const MyProperties = () => {
                           <FaChevronRight />
                         </button>
 
-                        <span className="absolute z-10 top-0 right-0 text-[1.4rem] leading-[1.2rem] font-semibold rounded-md bg-theme-yellow text-neutral-800 px-[0.8rem] py-[0.4rem]">
-                          For {property?.purpose}
+                        <span className="absolute z-10 top-0 right-0 text-[1.4rem] leading-[1.2rem] font-semibold rounded-md bg-neutral-800 text-theme-yellow px-[0.8rem] py-[0.4rem]">
+                          For{" "}
+                          {property?.purpose === "Sell"
+                            ? "Sale"
+                            : property?.purpose}
                         </span>
                       </div>
 

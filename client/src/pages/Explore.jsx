@@ -109,7 +109,13 @@ const Explore = () => {
   };
 
   // Property Card Click Handler
-  const handlePropertyClick = (propertyId) => {
+  const handlePropertyClick = (e, propertyId) => {
+    if (
+      e.target.getAttribute("data-pagination-bullet") ||
+      e.target.getAttribute("data-swiper-navigate")
+    )
+      return;
+
     navigate(`/property/${propertyId}`);
   };
 
@@ -137,7 +143,7 @@ const Explore = () => {
                     {category === "All" || !category
                       ? "All Properties"
                       : category === "Plot"
-                      ? "s"
+                      ? "Plots & Lands"
                       : ` ${category} Properties`}
                   </span>
                   <br />
@@ -201,19 +207,30 @@ const Explore = () => {
                     {propertyData?.map((property, index) => (
                       <div
                         key={property?._id}
-                        onClick={() => handlePropertyClick(property._id)}
+                        onClick={(e) => handlePropertyClick(e, property._id)}
                         className="propertyCard w-full min-w-[22rem] relative bg-white overflow-hidden cursor-pointer shadow-[0px_5px_15px_#e0e0e0] rounded-xl flex flex-col mobileRg:flex-row tabletSm:flex-col"
                       >
                         {/* Card Image */}
-                        <div className="imageArea relative flex items-center w-full mobileRg:w-[45%] tabletSm:w-full h-[22rem] mobileRg:h-[18rem] object-cover before:content-[''] before:absolute before:z-[2] before:bottom-0 before:left-0 before:right-0 before:h-[50%] before:bg-gradient-to-b to-[#20202020] from-transparent before:pointer-events-none group/picture">
+                        <div className="imageArea w-full mobileRg:w-[45%] tabletSm:w-full h-[22rem] mobileRg:h-[18rem] relative flex items-center object-cover before:content-[''] before:absolute before:z-[2] before:bottom-0 before:left-0 before:right-0 before:h-[50%] before:bg-gradient-to-b to-[#20202020] from-transparent before:pointer-events-none group/picture">
                           <Swiper
                             modules={[Pagination, Navigation]}
                             slidesPerView={1}
                             loop={property?.images?.length > 1 ? true : false}
-                            pagination={{ clickable: true }}
+                            pagination={{
+                              clickable: true,
+                              renderBullet: (index, className) => {
+                                return `<span class="${className}" style="width: 0.8rem; height: 0.8rem;"></span>`;
+                              },
+                            }}
                             className="mySwiper w-full h-full cursor-grab"
-                            onSwiper={(swiper) => {
+                            onInit={(swiper) => {
                               swiperRefs.current[index] = swiper;
+                              swiper.pagination.bullets.forEach((bullet) => {
+                                bullet.setAttribute(
+                                  "data-pagination-bullet",
+                                  "true"
+                                );
+                              });
                             }}
                           >
                             {property?.images?.map((imageURL, index) => (

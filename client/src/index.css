@@ -184,11 +184,21 @@
     @apply text-[1.4rem] leading-[1.4rem] font-medium text-neutral-800 px-[2.5rem] py-[0.8rem] border-[0.2rem] rounded-lg cursor-pointer flex items-center gap-[0.8rem] hover:shadow-lg hover:shadow-neutral-200 hover:translate-y-[-0.1rem] transition-all;
   }
 
+  .mySwiper .swiper-pagination {
+    width: fit-content;
+    display: flex;
+    background: #ffffff60;
+    padding: 0.3rem 0.4rem;
+    border-radius: 10px;
+    cursor: default;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
   .mySwiper .swiper-pagination-bullet {
     background-color: black;
-    opacity: 0.5;
-    width: 0.7rem;
-    height: 0.7rem;
+    opacity: 0.6;
   }
 
   .mySwiper .swiper-pagination-bullet-active {
