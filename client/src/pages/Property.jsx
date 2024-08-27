@@ -18,7 +18,7 @@ import { BiArea } from "react-icons/bi";
 import { LuBath } from "react-icons/lu";
 import { LiaBedSolid } from "react-icons/lia";
 import { MdOutlineEmail, MdOutlineTimer } from "react-icons/md";
-import { HiOutlineLocationMarker } from "react-icons/hi";
+import { HiOutlineClock, HiOutlineLocationMarker } from "react-icons/hi";
 import { TbMessage2 } from "react-icons/tb";
 
 const Property = () => {
@@ -65,14 +65,6 @@ const Property = () => {
             <>
               {!!Object.entries(propertyDetails).length ? (
                 <div className="w-full flex flex-col gap-[1.5rem]">
-                  {/* Property Title */}
-                  <h1 className="text-[2.5rem] font-semibold text-theme-blue">
-                    <span>
-                      {size} {type} For {purpose === "Sell" ? "Sale" : purpose}
-                    </span>{" "}
-                    <span>in {city.toUpperCase()}</span>
-                  </h1>
-
                   {/* Property Image Display Section */}
                   <section className="w-[100%] laptopSm:h-[75dvh] relative z-[1] grid grid-cols-3 grid-rows-2 gap-[1rem]">
                     {images.slice(0, 3).map((imageURL, index) => (
@@ -90,7 +82,7 @@ const Property = () => {
                         />
 
                         {index === 0 && (
-                          <div className="totalImages absolute bottom-[1rem] right-[1rem] py-[0.5rem] px-[1rem] rounded-lg bg-theme-yellow text-neutral-800 flex items-end gap-[0.5rem] pointer-events-none">
+                          <div className="totalImages absolute bottom-[1rem] right-[1rem] py-[0.5rem] px-[1rem] rounded-lg bg-white text-neutral-800 flex items-end gap-[0.5rem] pointer-events-none">
                             <FaRegImage size="1.7rem" />
                             <span className="text-[1.7rem] leading-[1.6rem] font-semibold">
                               5
@@ -102,18 +94,51 @@ const Property = () => {
                   </section>
 
                   {/* Property Details Section */}
-                  <div className="w-full grid grid-cols-3 mt-[1rem]">
-                    <section className="w-full col-span-3 tabletLg:col-span-2 flex flex-col gap-[1.2rem] px-[1.5rem]">
+                  <div className="w-full">
+                    <section className="w-full flex flex-col gap-[1.2rem] px-[1.5rem]">
+                      {/* Title Bar */}
+                      <div className="w-full flex items-center justify-between">
+                        <h1 className="text-[2.8rem] font-bold text-neutral-800">
+                          <span>
+                            Agricultural Land For{" "}
+                            {purpose === "Sell" ? "Sale" : purpose}
+                          </span>{" "}
+                          {/* <span>in DERA GHAZI KHAN</span> */}
+                          {/* {city.toUpperCase()} */}
+                        </h1>
+
+                        <div className="flex items-center gap-[0.5rem]">
+                          <button className="text-[1.6rem] leading-[1.6rem] font-semibold text-white bg-theme-blue flex items-center justify-center gap-[0.5rem] px-[1rem] py-[0.8rem] rounded-md border-[0.2rem] border-theme-blue hover:text-theme-yellow transition-all">
+                            <TbMessage2 size="2rem" />
+                            <span>INTERESTED</span>
+                          </button>
+
+                          <button className="text-[1.6rem] leading-[1.6rem] font-semibold text-neutral-800 bg-theme-yellow flex items-center justify-center gap-[0.5rem] px-[1rem] py-[0.8rem] rounded-md border-[0.2rem] border-theme-yellow hover:text-theme-blue transition-all">
+                            <TbMessage2 size="2rem" />
+                            <span>INQUIRE</span>
+                          </button>
+                        </div>
+                      </div>
+                      {/* Title */}
+
                       {/* Type & Purpose */}
-                      <div className="w-full flex items-center justify-between text-neutral-800">
+                      {/* <div className="w-full flex items-start justify-between text-neutral-800">
                         <p className="type relative flex items-center text-[2.2rem] leading-[2.2rem] font-semibold pl-[1.8rem] before:content-[''] before:w-[1.2rem] before:h-[1.2rem] before:bg-theme-yellow before:absolute before:left-0 before:rounded-full">
                           {type}
                         </p>
 
-                        <p className="type relative flex items-center text-[2rem] leading-[2rem] font-semibold">
+                        <p className="type relative flex items-center text-[1.9rem] leading-[1.9rem] font-semibold">
                           For {purpose === "Sell" ? "Sale" : purpose}
                         </p>
-                      </div>
+                      </div> */}
+
+                      {/* City */}
+                      <p className="flex items-center gap-[0.8rem] text-[2rem] text-neutral-800 mt-[0.5rem]">
+                        <HiOutlineLocationMarker />
+                        <span className="leading-[2rem] font-semibold">
+                          {city}
+                        </span>
+                      </p>
 
                       {/* Price */}
                       <p className="space-x-[0.6rem] text-theme-blue select-none mt-[0.3rem]">
@@ -153,51 +178,7 @@ const Property = () => {
                           </span>
                         </abbr>
                       </div>
-
-                      {/* City */}
-                      <p className="flex items-center gap-[0.8rem] text-[2rem] text-neutral-800 mt-[0.5rem]">
-                        <HiOutlineLocationMarker />
-                        <span className="leading-[2rem] font-semibold">
-                          {city}
-                        </span>
-                      </p>
                     </section>
-
-                    <aside className="flex flex-col gap-[2rem] px-[1.5rem]">
-                      <h2 className="text-[2rem] leading-[2rem] font-semibold text-neutral-800">
-                        Published By
-                      </h2>
-
-                      <div className="w-full flex flex-col gap-[1rem] p-[1.5rem] border-[0.2rem] border-neutral-200 rounded-lg shadow-lg">
-                        <div className="w-full flex justify-between">
-                          <img
-                            src="/src/assets/Agents/agent04.png"
-                            alt="Agent"
-                            className="w-[10rem] h-[10rem] rounded-full object-cover border-[0.2rem] border-theme-blue"
-                          />
-
-                          <p className="flex flex-col items-end gap-[0.2rem] text-neutral-700 text-[1.5rem] leading-[1.6rem] font-semibold">
-                            <span className="text-theme-blue">Added in</span>
-
-                            <span>2m ago</span>
-                          </p>
-                        </div>
-
-                        <h4 className=" text-neutral-800 text-[1.8rem] leading-[1.8rem] font-semibold">
-                          Muhammad Nabeel
-                        </h4>
-
-                        <p className="flex items-center gap-[0.5rem] text-neutral-700 text-[1.5rem] leading-[1.5rem] font-semibold">
-                          <MdOutlineEmail size="1.7rem" />
-                          <span>nabeelmajeed266@gmail.com</span>
-                        </p>
-                      </div>
-
-                      <button className="text-[1.6rem] leading-[1.6rem] font-semibold text-white bg-theme-blue flex items-center justify-center gap-[0.5rem] py-[0.8rem] rounded-md border-[0.2rem] border-theme-blue hover:text-theme-yellow transition-all">
-                        <TbMessage2 size="2rem" />
-                        <span>INQUIRE</span>
-                      </button>
-                    </aside>
                   </div>
                 </div>
               ) : (
