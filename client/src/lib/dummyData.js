@@ -1,70 +1,140 @@
-// Property Purposes Icons
-import RentIcon from "/src/assets/Property-Icons/rent.png";
-import SellIcon from "/src/assets/Property-Icons/sell.png";
-// Property Residential Types Icons
-import HouseIcon from "/src/assets/Property-Icons/house.png";
-import ApartmentIcon from "/src/assets/Property-Icons/apartment.png";
-import PortionIcon from "/src/assets/Property-Icons/house-portion.png";
-import RoomIcon from "/src/assets/Property-Icons/room.png";
-import FarmHouseIcon from "/src/assets/Property-Icons/farm-house.png";
-import GusetHouseIcon from "/src/assets/Property-Icons/guest-house.png";
-import HostelIcon from "/src/assets/Property-Icons/hostel.png";
-import HotelIcon from "/src/assets/Property-Icons/hotel.png";
-import BasementIcon from "/src/assets/Property-Icons/basement.png";
-// Property Plot Types Icons
-import ResidentialPlotIcon from "/src/assets/Property-Icons/residential-plot.png";
-import CommercialPlotIcon from "/src/assets/Property-Icons/commercial-plot.png";
-import AgriculturalLandIcon from "/src/assets/Property-Icons/agricultural-land.png";
-import IndustrialLandIcon from "/src/assets/Property-Icons/industrial-land.png";
-import FarmhousePlotIcon from "/src/assets/Property-Icons/farmhouse-plot.png";
-// Property Commercial Types Icons
-import OfficeIcon from "/src/assets/Property-Icons/office.png";
-import ShopIcon from "/src/assets/Property-Icons/shop.png";
-import WarehouseIcon from "/src/assets/Property-Icons/warehouse.png";
-import HallIcon from "/src/assets/Property-Icons/hall.png";
-import PlazaIcon from "/src/assets/Property-Icons/plaza.png";
-import GymIcon from "/src/assets/Property-Icons/gym.png";
-import TheatreIcon from "/src/assets/Property-Icons/theatre.png";
-import RestaurantIcon from "/src/assets/Property-Icons/restaurant.png";
-import FactoryIcon from "/src/assets/Property-Icons/factory.png";
-
 export const propertyPurposes = [
-  { value: "Sell", iconImage: SellIcon },
-  { value: "Rent", iconImage: RentIcon },
+  {
+    value: "Sell",
+    iconImage:
+      "https://res.cloudinary.com/dnwt1ltlm/image/upload/v1724857655/NAB_Estate/Property_Icons/Sell.png",
+  },
+  {
+    value: "Rent",
+    iconImage:
+      "https://res.cloudinary.com/dnwt1ltlm/image/upload/v1724857692/NAB_Estate/Property_Icons/Rent.png",
+  },
 ];
 
 export const propertyCategories = ["Residential", "Plot", "Commercial"];
 
 export const propertyResidentialTypes = [
-  { value: "House", iconImage: HouseIcon },
-  { value: "Apartment", iconImage: ApartmentIcon },
-  { value: "House Portion", iconImage: PortionIcon },
-  { value: "Room", iconImage: RoomIcon },
-  { value: "Farm House", iconImage: FarmHouseIcon },
-  { value: "Guest House", iconImage: GusetHouseIcon },
-  { value: "Hostel", iconImage: HostelIcon },
-  { value: "Hotel", iconImage: HotelIcon },
-  { value: "Basement", iconImage: BasementIcon },
+  {
+    value: "House",
+    iconImage:
+      "https://res.cloudinary.com/dnwt1ltlm/image/upload/v1724855477/NAB_Estate/Property_Icons/House.png",
+  },
+  {
+    value: "Apartment",
+    iconImage:
+      "https://res.cloudinary.com/dnwt1ltlm/image/upload/v1724855741/NAB_Estate/Property_Icons/Apartment.png",
+  },
+  {
+    value: "House Portion",
+    iconImage:
+      "https://res.cloudinary.com/dnwt1ltlm/image/upload/v1724855901/NAB_Estate/Property_Icons/House_Portion.png",
+  },
+  {
+    value: "Room",
+    iconImage:
+      "https://res.cloudinary.com/dnwt1ltlm/image/upload/v1724856022/NAB_Estate/Property_Icons/Room.png",
+  },
+  {
+    value: "Farm House",
+    iconImage:
+      "https://res.cloudinary.com/dnwt1ltlm/image/upload/v1724856160/NAB_Estate/Property_Icons/Farm_House.png",
+  },
+  {
+    value: "Guest House",
+    iconImage:
+      "https://res.cloudinary.com/dnwt1ltlm/image/upload/v1724856242/NAB_Estate/Property_Icons/Guest_House.png",
+  },
+  {
+    value: "Hostel",
+    iconImage:
+      "https://res.cloudinary.com/dnwt1ltlm/image/upload/v1724856313/NAB_Estate/Property_Icons/Hostel.png",
+  },
+  {
+    value: "Hotel",
+    iconImage:
+      "https://res.cloudinary.com/dnwt1ltlm/image/upload/v1724856360/NAB_Estate/Property_Icons/Hotel.png",
+  },
+  {
+    value: "Basement",
+    iconImage:
+      "https://res.cloudinary.com/dnwt1ltlm/image/upload/v1724856405/NAB_Estate/Property_Icons/Basement.png",
+  },
 ];
 
 export const propertyPlotTypes = [
-  { value: "Residential Plot", iconImage: ResidentialPlotIcon },
-  { value: "Commercial Plot", iconImage: CommercialPlotIcon },
-  { value: "Agricultural Land", iconImage: AgriculturalLandIcon },
-  { value: "Industrial Land", iconImage: IndustrialLandIcon },
-  { value: "Farmhouse Plot ", iconImage: FarmhousePlotIcon },
+  {
+    value: "Residential Plot",
+    iconImage:
+      "https://res.cloudinary.com/dnwt1ltlm/image/upload/v1724856460/NAB_Estate/Property_Icons/Residential_Plot.png",
+  },
+  {
+    value: "Commercial Plot",
+    iconImage:
+      "https://res.cloudinary.com/dnwt1ltlm/image/upload/v1724856509/NAB_Estate/Property_Icons/Commercial_Plot.png",
+  },
+  {
+    value: "Agricultural Land",
+    iconImage:
+      "https://res.cloudinary.com/dnwt1ltlm/image/upload/v1724856571/NAB_Estate/Property_Icons/Agricultural_Land.png",
+  },
+  {
+    value: "Industrial Land",
+    iconImage:
+      "https://res.cloudinary.com/dnwt1ltlm/image/upload/v1724856616/NAB_Estate/Property_Icons/Industrial_Land.png",
+  },
+  {
+    value: "Farmhouse Plot",
+    iconImage:
+      "https://res.cloudinary.com/dnwt1ltlm/image/upload/v1724856676/NAB_Estate/Property_Icons/Farmhouse_Plot.png",
+  },
 ];
 
 export const propertyCommercialTypes = [
-  { value: "Office", iconImage: OfficeIcon },
-  { value: "Shop", iconImage: ShopIcon },
-  { value: "Warehouse", iconImage: WarehouseIcon },
-  { value: "Hall", iconImage: HallIcon },
-  { value: "Plaza", iconImage: PlazaIcon },
-  { value: "Gym", iconImage: GymIcon },
-  { value: "Theatre", iconImage: TheatreIcon },
-  { value: "Restaurant", iconImage: RestaurantIcon },
-  { value: "Factory", iconImage: FactoryIcon },
+  {
+    value: "Office",
+    iconImage:
+      "https://res.cloudinary.com/dnwt1ltlm/image/upload/v1724856736/NAB_Estate/Property_Icons/Office.png",
+  },
+  {
+    value: "Shop",
+    iconImage:
+      "https://res.cloudinary.com/dnwt1ltlm/image/upload/v1724856785/NAB_Estate/Property_Icons/Shop.png",
+  },
+  {
+    value: "Warehouse",
+    iconImage:
+      "https://res.cloudinary.com/dnwt1ltlm/image/upload/v1724856823/NAB_Estate/Property_Icons/Warehouse.png",
+  },
+  {
+    value: "Hall",
+    iconImage:
+      "https://res.cloudinary.com/dnwt1ltlm/image/upload/v1724856875/NAB_Estate/Property_Icons/Hall.png",
+  },
+  {
+    value: "Plaza",
+    iconImage:
+      "https://res.cloudinary.com/dnwt1ltlm/image/upload/v1724856928/NAB_Estate/Property_Icons/Plaza.png",
+  },
+  {
+    value: "Gym",
+    iconImage:
+      "https://res.cloudinary.com/dnwt1ltlm/image/upload/v1724856980/NAB_Estate/Property_Icons/Gym.png",
+  },
+  {
+    value: "Theatre",
+    iconImage:
+      "https://res.cloudinary.com/dnwt1ltlm/image/upload/v1724857027/NAB_Estate/Property_Icons/Theatre.png",
+  },
+  {
+    value: "Restaurant",
+    iconImage:
+      "https://res.cloudinary.com/dnwt1ltlm/image/upload/v1724857067/NAB_Estate/Property_Icons/Restaurant.png",
+  },
+  {
+    value: "Factory",
+    iconImage:
+      "https://res.cloudinary.com/dnwt1ltlm/image/upload/v1724857104/NAB_Estate/Property_Icons/Factory.png",
+  },
 ];
 
 export const count = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "10+"];

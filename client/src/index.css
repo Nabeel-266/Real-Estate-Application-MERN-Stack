@@ -18,6 +18,7 @@
   /* Scrollbar Dark */
   body::-webkit-scrollbar {
     width: 1rem;
+    display: none;
   }
 
   body::-webkit-scrollbar-track {
