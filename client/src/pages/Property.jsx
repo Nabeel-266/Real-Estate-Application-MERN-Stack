@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { getSingleProperty } from "../api/propertyAPI's";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { Map, Marker, Overlay, ZoomControl } from "pigeon-maps";
+import { cities, landmarksNearby } from "../lib/dummyData";
 
 // Import React Icons
 import { FiMail } from "react-icons/fi";
@@ -10,24 +12,27 @@ import {
   FaChevronRight,
   FaRegImage,
 } from "react-icons/fa6";
-
-// Import Component
-import Footer from "../components/Footer";
-import ImageSlider from "../components/Property/ImageSlider";
-import { BiArea } from "react-icons/bi";
 import { LuBath } from "react-icons/lu";
 import { LiaBedSolid } from "react-icons/lia";
+import { BiArea, BiFullscreen } from "react-icons/bi";
 import { MdOutlineEmail, MdOutlineTimer } from "react-icons/md";
 import { HiOutlineClock, HiOutlineLocationMarker } from "react-icons/hi";
 import { TbMessage2 } from "react-icons/tb";
 
+// Import Component
+import Footer from "../components/Footer";
+import ImageSlider from "../components/Property/ImageSlider";
+
 const Property = () => {
   const param = useParams();
+  const mapRef = useRef(null);
   const barRef = useRef(null);
   const imageSection = useRef(null);
   const [isFixed, setIsFixed] = useState(false);
   const [isOpenImageSlider, setIsOpenImageSlider] = useState(false);
   const [propertyDetails, setPropertyDetails] = useState({});
+  const [nearBy, setNearBy] = useState(null);
+  const [features, setFeatures] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const {
@@ -41,7 +46,7 @@ const Property = () => {
     bathroom,
     condition,
     description,
-    features,
+    coordinates,
   } = propertyDetails;
 
   useEffect(() => {
@@ -75,13 +80,36 @@ const Property = () => {
     try {
       setLoading(true);
       const property = await getSingleProperty(propertyId);
+
       setPropertyDetails(property);
-      // console.log(property);
+      setNearBy(
+        property.features?.filter((feature) =>
+          landmarksNearby.includes(feature)
+        )
+      );
+      setFeatures(
+        property.features?.filter(
+          (feature) => !landmarksNearby.includes(feature)
+        )
+      );
     } catch (error) {
       console.error("Error fetching property:", error.message);
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleFullScreen = () => {
+    mapRef.current.requestFullscreen
+      ? mapRef.current.requestFullscreen()
+      : // Firefox
+      mapRef.current.mozRequestFullScreen
+      ? mapRef.current.mozRequestFullScreen()
+      : // Chrome, Safari & Opera
+      mapRef.current.webkitRequestFullscreen
+      ? mapRef.current.webkitRequestFullscreen()
+      : // IE/Edge 11
+        mapRef.current.msRequestFullscreen();
   };
 
   return (
@@ -164,12 +192,12 @@ const Property = () => {
 
                     {/* Property Info */}
                     <div
-                      className={`w-full flex gap-[2rem] ${
-                        isFixed ? "mt-[8.5rem] tabletLg:mt-[3.5rem]" : "mt-0"
+                      className={`w-full flex flex-col gap-[2rem] laptopRg:flex-row laptopRg:gap-[3rem] ${
+                        isFixed ? "mt-[11rem] tabletLg:mt-[5.5rem]" : "mt-0"
                       }`}
                     >
                       {/* Content Side */}
-                      <section className="w-[calc(100%-38rem)] flex flex-col gap-[3rem]">
+                      <section className="w-full tabletLg:w-[90%] laptopRg:w-[calc(100%-33%)] flex flex-col gap-[3rem]">
                         {/* Primary Details */}
                         <div className="w-full flex flex-col gap-[1rem]">
                           {/* City */}
@@ -181,7 +209,7 @@ const Property = () => {
                           </p>
 
                           {/* Price */}
-                          <p className="space-x-[0.6rem] text-theme-blue select-none mt-[0.3rem]">
+                          <p className="space-x-[0.6rem] text-theme-blue select-none mt-[0.5rem]">
                             <span className="text-[2.2rem] leading-[2.2rem] font-semibold">
                               PKR{" "}
                             </span>{" "}
@@ -237,7 +265,7 @@ const Property = () => {
                         <div className="w-full flex flex-col gap-[1rem]">
                           {/* Condition */}
                           <div className="border-t-[0.2rem] border-neutral-200 py-[2rem]">
-                            <h6 className="text-[2rem] font-bold select-none text-neutral-800">
+                            <h6 className="text-[2rem] font-bold select-none text-theme-blue">
                               Condition
                             </h6>
                             <p className="flex items-center gap-[0.8rem] text-[1.8rem] font-semibold text-neutral-700">
@@ -247,7 +275,7 @@ const Property = () => {
 
                           {/* Description */}
                           <div className="border-t-[0.2rem] border-neutral-200 py-[2rem]">
-                            <h6 className="text-[2rem] font-bold select-none text-neutral-800">
+                            <h6 className="text-[2rem] font-bold select-none text-theme-blue">
                               Description
                             </h6>
                             <p className="flex items-center gap-[0.8rem] text-[1.8rem] font-semibold text-neutral-700">
@@ -255,27 +283,83 @@ const Property = () => {
                             </p>
                           </div>
 
-                          {/* Description */}
+                          {/* Features */}
                           <div className="border-t-[0.2rem] border-neutral-200 py-[2rem]">
-                            <h6 className="text-[2rem] font-bold select-none text-neutral-800">
-                              Amenities & Features
+                            <h6 className="text-[2rem] font-bold select-none text-theme-blue">
+                              Features
                             </h6>
 
-                            {features.length && (
-                              <div className="flex flex-wrap gap-[2rem]">
-                                {features.map((feature) => (
-                                  <span className="flex items-center gap-[0.8rem] text-[1.8rem] leading-[1.8rem] font-semibold text-neutral-700">
+                            {features && (
+                              <div className="flex flex-wrap gap-[1rem] mt-[1.5rem]">
+                                {features.map((feature, index) => (
+                                  <span
+                                    key={index}
+                                    className="text-[1.6rem] leading-[1.6rem] font-semibold text-neutral-800 p-[1rem] flex items-center gap-[1rem] bg-neutral-200 rounded-md whitespace-nowrap"
+                                  >
                                     {feature}
                                   </span>
                                 ))}
                               </div>
                             )}
                           </div>
+
+                          {/* Near By Places */}
+                          <div className="border-t-[0.2rem] border-neutral-200 py-[2rem]">
+                            <h6 className="text-[2rem] font-bold select-none text-theme-blue">
+                              Near by Facility
+                            </h6>
+
+                            {nearBy && (
+                              <ul className="flex flex-wrap gap-[2.5rem] mt-[1.5rem]">
+                                {nearBy.map((place, index) => (
+                                  <li
+                                    key={index}
+                                    className="text-[1.8rem] leading-[2rem] font-semibold text-neutral-800 flex items-end gap-[1rem] rounded-lg whitespace-nowrap "
+                                  >
+                                    <img
+                                      src={`https://res.cloudinary.com/dnwt1ltlm/image/upload/v1724891736/NAB_Estate/Places/${place}.png`}
+                                      alt="Place"
+                                      className="size-[2.5rem]"
+                                    />
+                                    <span>{place}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            )}
+                          </div>
                         </div>
                       </section>
 
                       {/* Map Side */}
-                      <section className="w-[38rem] bg-slate-400"></section>
+                      <section
+                        ref={mapRef}
+                        className="w-full laptopRg:w-[33%] h-[40rem] pt-[1rem] flex flex-col gap-[2rem]"
+                      >
+                        <div className="mapCont w-full h-full relative border-[0.2rem] border-neutral-300 rounded-xl shadow-xl shadow-neutral-200 overflow-hidden">
+                          <button
+                            onClick={handleFullScreen}
+                            className="text-[2.2rem] p-[0.3rem] bg-white text-neutral-700 absolute z-[1] top-[1rem] right-[1rem]"
+                          >
+                            <BiFullscreen />
+                          </button>
+
+                          <Map
+                            defaultCenter={[coordinates.lat, coordinates.lng]}
+                            defaultZoom={12}
+                            minZoom={4}
+                          >
+                            {/* Marker */}
+                            <Marker
+                              width={35}
+                              color="#082835"
+                              anchor={[coordinates.lat, coordinates.lng]}
+                            />
+
+                            {/* Zoom Control */}
+                            <ZoomControl />
+                          </Map>
+                        </div>
+                      </section>
                     </div>
                   </div>
                 </div>

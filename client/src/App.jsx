@@ -79,9 +79,9 @@ const router = createBrowserRouter([
       {
         path: "/property/:propertyId",
         element: (
-          <UnAuthProtectedRoute>
-            <Property />
-          </UnAuthProtectedRoute>
+          <Property />
+          // <UnAuthProtectedRoute>
+          // </UnAuthProtectedRoute>
         ),
       },
       {
