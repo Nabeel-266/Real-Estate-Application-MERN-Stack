@@ -30,14 +30,14 @@ const Explore = () => {
   const sentinelBottomRef = useRef(null);
   const swiperRefs = useRef([]);
   const mapRef = useRef(null);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [isSticky, setIsSticky] = useState(true);
-  const [isFixed, setIsFixed] = useState(false);
   const [searchParams] = useSearchParams();
   const purpose = searchParams.get("purpose");
   const category = searchParams.get("category");
   const city = searchParams.get("city");
-  const [loading, setLoading] = useState(true);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isSticky, setIsSticky] = useState(true);
+  const [isFixed, setIsFixed] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [propertyData, setPropertyData] = useState(null);
   const [propertyDataInfo, setPropertyDataInfo] = useState(null);
 
