@@ -64,9 +64,9 @@ const ContactModal = ({ isModalOpen }) => {
 
   return (
     <div className="flex items-center justify-center fixed z-[990] top-0 left-0 right-0 bottom-0 backdrop-blur-[4px] bg-[#404040b0] overflow-hidden">
-      <div className="w-[90%] tabletSm:w-[50rem] tabletRg:w-[55rem] min-h-[20%] max-h-[80%] relative z-20 bg-white rounded-md px-[1.2rem] shadow-2xl">
+      <div className="w-[90%] tabletSm:w-[50rem] tabletRg:w-[55rem] relative z-20 bg-white rounded-md px-[1.5rem] shadow-2xl">
         {/* Contact Me Modal Header */}
-        <header className="w-full px-[1rem] pt-[2rem] pb-[1rem] border-b-[0.2rem] border-neutral-200 text-theme-blue flex items-center justify-between">
+        <header className="w-full px-[1rem] pt-[2.2rem] pb-[1rem] border-b-[0.2rem] border-neutral-200 text-theme-blue flex items-center justify-between">
           <h2 className="text-[2.5rem] leading-[2.5rem] font-bold">
             Get in Touch
           </h2>
@@ -78,7 +78,7 @@ const ContactModal = ({ isModalOpen }) => {
           </button>
         </header>
 
-        <section className="flex flex-col gap-[1rem] px-[1rem] py-[2rem]">
+        <section className="flex flex-col gap-[1rem] px-[1rem] py-[2.2rem]">
           <h6 className="text-[1.8rem] leading-[1.8rem] text-neutral-800 font-semibold">
             Interested in this property?
           </h6>

@@ -18,10 +18,13 @@ import { BiArea, BiFullscreen } from "react-icons/bi";
 import { MdOutlineEmail, MdOutlineTimer } from "react-icons/md";
 import { HiOutlineClock, HiOutlineLocationMarker } from "react-icons/hi";
 import { TbMessage2 } from "react-icons/tb";
+import { VscCallIncoming } from "react-icons/vsc";
 
 // Import Component
 import Footer from "../components/Footer";
 import ImageSlider from "../components/Property/ImageSlider";
+import ContactModal from "../components/Property/ContactModal";
+import InquireModal from "../components/Property/InquireModal";
 
 const Property = () => {
   const param = useParams();
@@ -30,6 +33,8 @@ const Property = () => {
   const imageSection = useRef(null);
   const [isFixed, setIsFixed] = useState(false);
   const [isOpenImageSlider, setIsOpenImageSlider] = useState(false);
+  const [isOpenContactModal, setIsOpenContactModal] = useState(false);
+  const [isOpenInquireModal, setIsOpenInquireModal] = useState(false);
   const [propertyDetails, setPropertyDetails] = useState({});
   const [nearBy, setNearBy] = useState(null);
   const [features, setFeatures] = useState(null);
@@ -177,13 +182,19 @@ const Property = () => {
                       </h1>
 
                       {/* Action Button */}
-                      <div className="flex items-center justify-between gap-[1rem]">
-                        <button className="text-[1.6rem] leading-[1.6rem] font-semibold text-white bg-theme-blue flex items-center justify-center gap-[0.5rem] px-[1rem] py-[0.8rem] rounded-md border-[2px] border-theme-blue hover:text-theme-yellow transition-all">
-                          <TbMessage2 size="2rem" />
-                          <span>INTERESTED</span>
+                      <div className="flex items-center justify-between gap-[1rem] *:text-[1.6rem] *:leading-[1.6rem] *:font-semibold *:flex *:items-center *:justify-center *:gap-[0.5rem] *:px-[1rem] *:py-[0.8rem] *:rounded-md *:border-[2px] *:transition-all">
+                        <button
+                          onClick={() => setIsOpenContactModal(true)}
+                          className=" text-white bg-theme-blue border-theme-blue hover:text-theme-yellow "
+                        >
+                          <VscCallIncoming size="2rem" />
+                          <span>CONTACT ME</span>
                         </button>
 
-                        <button className="text-[1.6rem] leading-[1.6rem] font-semibold text-neutral-800 bg-white flex items-center justify-center gap-[0.5rem] px-[1rem] py-[0.8rem] rounded-md border-[2px] border-neutral-800 hover:text-white hover:bg-neutral-800 transition-all">
+                        <button
+                          onClick={() => setIsOpenInquireModal(true)}
+                          className="text-neutral-800 bg-white border-neutral-800 hover:text-white hover:bg-neutral-800"
+                        >
                           <TbMessage2 size="2rem" />
                           <span>INQUIRE</span>
                         </button>
@@ -388,6 +399,17 @@ const Property = () => {
 
       {isOpenImageSlider && (
         <ImageSlider images={images} isOpenSlider={setIsOpenImageSlider} />
+      )}
+
+      {isOpenContactModal && (
+        <ContactModal isModalOpen={setIsOpenContactModal} />
+      )}
+
+      {isOpenInquireModal && (
+        <InquireModal
+          isModalOpen={setIsOpenInquireModal}
+          propertyDetails={propertyDetails}
+        />
       )}
     </>
   );
