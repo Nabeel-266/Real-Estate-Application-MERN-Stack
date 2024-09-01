@@ -15,22 +15,22 @@ const contactOptions = [
   {
     id: "1",
     Icon: FiMail,
-    label: "Email Support",
+    title: "Email Support",
     text: "Our team can respond in real time",
     to: "nabestate@gmail.com",
   },
   {
     id: "2",
     Icon: HiOutlineBuildingOffice2,
-    label: "Visit Our Office",
+    title: "Visit Our Office",
     text: "Visit our location in real life",
     to: "Karachi, Islamabad & Lahore",
   },
   {
     id: "3",
     Icon: VscCallIncoming,
-    label: "Call Us Directly",
-    text: "Available during working hours",
+    title: "Call Us Directly",
+    text: "Available during on working hours",
     to: "(+1) 123-456-7890",
   },
 ];
@@ -198,20 +198,20 @@ const Contact = () => {
   };
 
   return (
-    <div className="contactCont w-full min-h-dvh pt-[6rem] flex flex-col gap-[4rem]">
+    <div className="contactCont w-full min-h-dvh pt-[6rem] flex flex-col gap-[2rem] tabletRg:gap-[4rem]">
       {/* Contact Form */}
-      <div className="w-full h-[calc(100dvh-6rem)] flex">
+      <div className="w-full min-h-[calc(100dvh-6rem)] tabletRg:h-[calc(100dvh-6rem)] flex flex-col items-center tabletRg:flex-row">
         {/* Image Side */}
-        <section className="w-[50%] h-full flex items-start pl-[0rem] p-[1.5rem]">
+        <section className="w-full tabletRg:w-[45%] laptopSm:w-[50%] h-full flex items-start pl-[0rem] p-[1.5rem]">
           <img
             src="/src/assets/contact-banner_1.jpeg"
             alt="Contact-Banner"
-            className="h-full object-cover rounded-r-full shadow-2xl shadow-neutral-200"
+            className="h-full object-cover rounded-r-full shadow-lg tabletRg:shadow-2xl shadow-neutral-200"
           />
         </section>
 
         {/* Form Side */}
-        <section className="w-[50%] h-full px-[4%] py-[2rem] flex flex-col justify-center">
+        <section className="w-full tabletRg:w-[55%] laptopSm:w-[50%] h-full px-[4%] py-[2rem] flex flex-col justify-center">
           <h2 className="text-[2.8rem] text-theme-blue font-bold">
             Let's Get In Touch
           </h2>
@@ -221,7 +221,7 @@ const Contact = () => {
             <span className="text-theme-blue">nabestate@gmail.com</span>
           </p>
 
-          <form className="flex flex-col gap-[1.4rem] py-[1rem] pr-[8%] mt-[1rem]">
+          <form className="flex flex-col gap-[1.4rem] py-[1rem] tabletLg:pr-[8%] mt-[1rem]">
             {/* Username Input Cont */}
             <div className="w-full space-y-[0.8rem]">
               <div className="input w-full">
@@ -411,6 +411,53 @@ const Contact = () => {
             </button>
           </form>
         </section>
+      </div>
+
+      {/* Contact Options Card */}
+      <div className="mx-[4%] laptopSm:mx-[5%] laptopRg:mx-[6%] py-[2rem] flex flex-col items-center laptopSm:items-start">
+        <h6 className="w-fit text-[1.5rem] text-neutral-700 font-medium px-[1rem] border-[0.2rem] border-neutral-400 rounded-full mb-[0.5rem]">
+          Reach Out To Us
+        </h6>
+
+        <h2 className="text-[2.5rem] tabletSm:text-[3rem] text-theme-blue font-bold">
+          We'd Love to Hear From You
+        </h2>
+
+        <p className="text-[1.6rem] text-neutral-700 font-semibold text-center hidden tabletSm:block">
+          Or just reach out manually to{" "}
+          <span className="text-theme-blue">nabestate@gmail.com</span>
+        </p>
+
+        <div className="w-full flex flex-wrap justify-around laptopSm:justify-between gap-[5rem] laptopSm:gap-[2rem] py-[3rem] tabletSm:py-[5rem]">
+          {contactOptions.map(({ id, Icon, title, text, to }) => (
+            <div
+              key={id}
+              className={`w-auto flex flex-col items-center gap-[0.5rem] ${
+                id == 1
+                  ? "laptopSm:items-start"
+                  : id == 2
+                  ? "laptopSm:items-center"
+                  : "laptopSm:items-end"
+              }`}
+            >
+              <div className="w-fit p-[1rem] bg-theme-blue rounded-full text-[2.4rem] text-white">
+                <Icon />
+              </div>
+
+              <h5 className="text-[2rem] text-theme-blue font-bold mt-[1rem]">
+                {title}
+              </h5>
+
+              <p className="text-[1.6rem] text-neutral-700 font-semibold">
+                {text}
+              </p>
+
+              <p className="text-[1.6rem] text-theme-blue font-semibold mt-[1rem]">
+                {to}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Footer */}
