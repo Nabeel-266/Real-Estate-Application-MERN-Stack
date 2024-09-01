@@ -92,15 +92,15 @@ const Header = ({ setIsOpenSidebar }) => {
             <div className="authBtns hidden tabletSm:flex items-center gap-[1.4rem]">
               {/* Signin Button */}
               <Link to="/account/sign-in">
-                <button className="signinBtn text-[1.7rem] leading-[1.6rem] font-semibold text-theme-blue p-[0.8rem] rounded-md border-[0.2rem] border-theme-blue hover:bg-theme-blue hover:text-theme-yellow transition-all ">
-                  Sign in
+                <button className="signinBtn text-[1.6rem] leading-[1.5rem] font-semibold text-theme-blue px-[1.5rem] p-[0.8rem] rounded-md border-[0.2rem] border-neutral-300 shadow-md shadow-neutral-50 hover:bg-theme-blue hover:text-white hover:border-theme-blue transition-all ">
+                  SIGN IN
                 </button>
               </Link>
 
               {/* Signup Button */}
               <Link to="/account/sign-up">
-                <button className="signupBtn text-[1.7rem] leading-[1.6rem] font-semibold text-theme-blue p-[1rem] bg-theme-yellow rounded-md transition-all">
-                  Sign up
+                <button className="signupBtn text-[1.6rem] leading-[1.5rem] font-semibold text-theme-blue px-[1.5rem] py-[1rem] bg-theme-yellow rounded-md shadow-md shadow-neutral-50 transition-all">
+                  JOIN US
                 </button>
               </Link>
             </div>

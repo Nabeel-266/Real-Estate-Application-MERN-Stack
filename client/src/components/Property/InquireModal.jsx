@@ -163,8 +163,8 @@ const InquireModal = ({ isModalOpen, propertyDetails }) => {
     }
   };
 
-  // Send Inquire Message Handler
-  const sendInquireMessageHandler = (e) => {
+  // Inquire Form Submission Handler
+  const inquireFormSubmissionHandler = (e) => {
     e.preventDefault();
 
     try {
@@ -353,7 +353,7 @@ const InquireModal = ({ isModalOpen, propertyDetails }) => {
 
             {/* Send Info Request Button */}
             <button
-              onClick={(e) => sendInquireMessageHandler(e)}
+              onClick={(e) => inquireFormSubmissionHandler(e)}
               disabled={
                 clientName && clientEmail && callingNumber && message
                   ? false
