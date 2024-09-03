@@ -47,7 +47,7 @@ const Header = ({ setIsOpenSidebar }) => {
 
   return (
     <header className="header w-full flex items-center fixed top-0 left-0 z-[99] backdrop-blur-[20px] bg-[#fffffff0]">
-      <div className="headerWrapper w-full h-[6rem] flex items-center justify-between mx-[2%] px-[2%] border-b-[1px] border-neutral-100 ">
+      <div className="headerWrapper w-full h-[6rem] flex items-center justify-between mx-[2%] px-[2%] border-b-[1px] border-neutral-100">
         {/* Header Left Side */}
         <div className="leftSide bg-slate- flex items-center justify-between gap-[2.5rem] laptopSm:gap-[3rem]">
           {/* Logo */}
@@ -106,7 +106,7 @@ const Header = ({ setIsOpenSidebar }) => {
             </div>
           )}
 
-          {/*  Add Property Button & Profile Avatar */}
+          {/* Add Property Button & Profile Avatar */}
           {authenticUser && (
             <div className="relative hidden tabletSm:flex items-center gap-[1.5rem] px-[0.5rem] tabletSm:px-0">
               {/* Add Property Button */}

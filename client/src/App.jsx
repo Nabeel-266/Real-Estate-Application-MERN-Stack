@@ -30,8 +30,12 @@ import Account from "./components/User/Account";
 import MyProperties from "./components/User/MyProperties";
 import NotFound from "./pages/NotFound";
 import Property from "./pages/Property";
+import AdminDash from "./pages/Management/AdminDash";
+import Dashboard from "./components/Management/Admin/Dashboard";
+import Properties from "./components/Management/Admin/Properties";
+import Clients from "./components/Management/Admin/Clients";
 
-const AppLayout = () => {
+const ClientLayout = () => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
 
   return (
@@ -46,11 +50,23 @@ const AppLayout = () => {
   );
 };
 
+const ManagementLayout = () => {
+  return (
+    <>
+      <div className="w-full h-dvh px-[0.6rem] pt-[0.7rem] pb-0 bg-theme-blue font-sans">
+        <div className="w-full h-full bg-white rounded-t-3xl flex overflow-hidden">
+          <Outlet />
+        </div>
+      </div>
+    </>
+  );
+};
+
 // Routes Configuration
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <AppLayout />,
+    element: <ClientLayout />,
     children: [
       {
         path: "/",
@@ -79,9 +95,9 @@ const router = createBrowserRouter([
       {
         path: "/property/:propertyId",
         element: (
-          <Property />
-          // <UnAuthProtectedRoute>
-          // </UnAuthProtectedRoute>
+          <UnAuthProtectedRoute>
+            <Property />
+          </UnAuthProtectedRoute>
         ),
       },
       {
@@ -133,6 +149,24 @@ const router = createBrowserRouter([
       {
         path: "/account/forgot-password",
         element: <ForgotPassword />,
+      },
+    ],
+  },
+  {
+    // path: "/",
+    element: <AdminDash />,
+    children: [
+      {
+        path: "/admin/dashboard",
+        element: <Dashboard />,
+      },
+      {
+        path: "/admin/properties",
+        element: <Properties />,
+      },
+      {
+        path: "/admin/clients",
+        element: <Clients />,
       },
     ],
   },
