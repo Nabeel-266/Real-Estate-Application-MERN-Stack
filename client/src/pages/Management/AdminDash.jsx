@@ -9,7 +9,7 @@ import Sidebar from "../../components/Management/Sidebar";
 
 const AdminDash = () => {
   return (
-    <div className="w-full h-dvh px-[0.6rem] pt-[0.7rem] pb-0 bg-theme-blue font-sans">
+    <div className="w-full h-dvh px-[0.6rem] pt-[0.7rem] pb-0 bg-theme-blue font-quick">
       <div className="w-full h-full bg-white rounded-t-3xl flex overflow-hidden">
         {/* Sidebar
         <aside className="w-[25rem] my-[1.6rem] border-r-[1px] border-neutral-200">
@@ -29,9 +29,8 @@ const AdminDash = () => {
         {/* Panel */}
         <main className="flex-1 min-h-full">
           <header className="mx-[1%] h-[6rem] flex items-center justify-between px-[1rem] border-b-[1px] border-neutral-200">
-            <h2 className="text-[2.4rem] leading-[2.2rem] font-semibold text-neutral-800 flex items-center gap-[0.8rem] mt-[0.2rem]">
-              <span>Good Morning Muhammad Nabeel</span>
-              <span className="text-[1.8rem] mb-[0.2rem]">👋</span>
+            <h2 className="text-[2.4rem] leading-[2.2rem] font-bold text-neutral-800 flex items-center gap-[0.8rem] mt-[0.2rem]">
+              <span>Dashboard</span>
             </h2>
 
             <div className="flex items-center gap-[1rem] select-none">

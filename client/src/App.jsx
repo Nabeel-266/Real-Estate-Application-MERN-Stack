@@ -34,6 +34,11 @@ import AdminDash from "./pages/Management/AdminDash";
 import Dashboard from "./components/Management/Admin/Dashboard";
 import Properties from "./components/Management/Admin/Properties";
 import Clients from "./components/Management/Admin/Clients";
+import Agents from "./components/Management/Admin/Agents";
+import Contacts from "./components/Management/Admin/Contacts";
+import Reports from "./components/Management/Admin/Reports";
+import Settings from "./components/Management/Admin/Settings";
+import Listing from "./components/Management/Admin/Listing";
 
 const ClientLayout = () => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
@@ -46,18 +51,6 @@ const ClientLayout = () => {
         setIsOpenSidebar={setIsOpenSidebar}
       />
       <Outlet />
-    </>
-  );
-};
-
-const ManagementLayout = () => {
-  return (
-    <>
-      <div className="w-full h-dvh px-[0.6rem] pt-[0.7rem] pb-0 bg-theme-blue font-sans">
-        <div className="w-full h-full bg-white rounded-t-3xl flex overflow-hidden">
-          <Outlet />
-        </div>
-      </div>
     </>
   );
 };
@@ -161,12 +154,32 @@ const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
+        path: "/admin/agents",
+        element: <Agents />,
+      },
+      {
         path: "/admin/properties",
         element: <Properties />,
       },
       {
         path: "/admin/clients",
         element: <Clients />,
+      },
+      {
+        path: "/admin/listing",
+        element: <Listing />,
+      },
+      {
+        path: "/admin/contacts",
+        element: <Contacts />,
+      },
+      {
+        path: "/admin/reports",
+        element: <Reports />,
+      },
+      {
+        path: "/admin/settings",
+        element: <Settings />,
       },
     ],
   },

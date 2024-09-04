@@ -6,6 +6,11 @@ import { MdOutlineMapsHomeWork } from "react-icons/md";
 import { TbLayoutDashboard } from "react-icons/tb";
 import { HiHomeModern } from "react-icons/hi2";
 import { FiUsers } from "react-icons/fi";
+import { PiUsersBold } from "react-icons/pi";
+import { LuLayoutList } from "react-icons/lu";
+import { MdOutlineContacts } from "react-icons/md";
+import { TbReport } from "react-icons/tb";
+import { LuSettings } from "react-icons/lu";
 
 const Sidebar = () => {
   const location = useLocation();
@@ -32,11 +37,16 @@ const Sidebar = () => {
       </header>
 
       {/* Navigations */}
-      <ul className="w-full flex flex-col gap-[0.5rem]">
+      <ul className="w-full flex flex-col gap-[0.6rem]">
         {[
           [TbLayoutDashboard, "Dashboard", "/admin/dashboard"],
+          [PiUsersBold, "Agents", "/admin/agents"],
           [MdOutlineMapsHomeWork, "Properties", "/admin/properties"],
           [FiUsers, "Clients", "/admin/clients"],
+          [LuLayoutList, "Listing", "/admin/listing"],
+          [MdOutlineContacts, "Contacts", "/admin/contacts"],
+          [TbReport, "Reports", "/admin/reports"],
+          [LuSettings, "Settings", "/admin/settings"],
         ].map(([Icon, title, route], index) => (
           <li
             key={index}
@@ -48,10 +58,10 @@ const Sidebar = () => {
           >
             <Link
               to={route}
-              className={`w-full relative z-10 flex items-center gap-[0.8rem] px-[1rem] py-[0.8rem] ${
+              className={`w-full relative z-10 flex items-center gap-[1rem] pl-[1.8rem] py-[0.8rem] font-bold ${
                 isActiveTab === route.split("/")[2]
-                  ? "text-white font-medium"
-                  : "text-neutral-600 font-semibold hover:text-theme-blue"
+                  ? "text-white"
+                  : "text-neutral-600 hover:text-theme-blue"
               }`}
             >
               <Icon className="text-[2rem]" />

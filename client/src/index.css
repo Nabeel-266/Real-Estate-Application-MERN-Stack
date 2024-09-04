@@ -210,30 +210,3 @@
 /* @layer utilities {} */
 
 /* color: #fbbf24; */
-
-/* .demandWrapper {
-    @apply relative before:content-[''] before:absolute before:-z-[1] before:w-[25rem] before:h-[25rem] before:top-[16%] laptopSm:before:top-[24%] before:left-[1%] before:bg-cyan-700 before:animate-pulse before:rounded-full after:content-[''] after:absolute after:-z-[1] after:w-[25rem] after:h-[25rem] after:bottom-[7%] laptopSm:after:bottom-[12%] after:right-[1%] after:bg-cyan-700 after:animate-pulse after:rounded-full;
-  } */
-
-/* .loader {
-  width: 6.5rem;
-  aspect-ratio: 5;
-  --_g: no-repeat radial-gradient(circle closest-side, #082835 90%, #0000);
-  background: var(--_g) 0% 50%, var(--_g) 50% 50%, var(--_g) 100% 50%;
-  background-size: calc(100% / 3) 100%;
-  animation: l7 1.2s infinite linear;
-}
-@keyframes l7 {
-  33% {
-    background-size: calc(100% / 3) 0%, calc(100% / 3) 100%,
-      calc(100% / 3) 100%;
-  }
-  50% {
-    background-size: calc(100% / 3) 100%, calc(100% / 3) 0%,
-      calc(100% / 3) 100%;
-  }
-  66% {
-    background-size: calc(100% / 3) 100%, calc(100% / 3) 100%,
-      calc(100% / 3) 0%;
-  }
-} */
