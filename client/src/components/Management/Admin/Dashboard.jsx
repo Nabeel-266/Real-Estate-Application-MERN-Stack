@@ -22,6 +22,41 @@ ChartJS.register(
 );
 
 const RevenueChart = () => {
+  const convertPrice = (value) => {
+    let number = parseFloat(value);
+    if (isNaN(number)) return "";
+
+    let formattedNumber;
+    let unit = "";
+
+    if (number >= 1e11) {
+      formattedNumber = number / 1e11;
+      unit = " Kharab";
+    } else if (number >= 1e9) {
+      formattedNumber = number / 1e9;
+      unit = " Arab";
+    } else if (number >= 1e7) {
+      formattedNumber = number / 1e7;
+      unit = " Crore";
+    } else if (number >= 1e5) {
+      formattedNumber = number / 1e5;
+      unit = " Lac";
+    } else if (number >= 1e3) {
+      formattedNumber = number / 1e3;
+      unit = " k";
+    } else {
+      formattedNumber = number;
+    }
+
+    if (formattedNumber % 1 === 0) {
+      return formattedNumber.toFixed(0) + unit;
+    } else if ((formattedNumber * 10) % 1 === 0) {
+      return formattedNumber.toFixed(1) + unit;
+    } else {
+      return formattedNumber.toFixed(2) + unit;
+    }
+  };
+
   const data = {
     labels: [
       "Jan",
@@ -39,10 +74,10 @@ const RevenueChart = () => {
     ],
     datasets: [
       {
-        label: "Income",
+        label: "Total Revenue",
         data: [
           100000, 200000, 350000, 525658, 600000, 400000, 20000, 525658, 300000,
-          100000, 600000, 625658,
+          100000, 600000, 15658,
         ],
         borderColor: "rgba(75, 192, 192, 1)",
         backgroundColor: "rgba(75, 192, 192, 1)",
@@ -56,13 +91,30 @@ const RevenueChart = () => {
         tension: 0.5,
       },
       {
-        label: "Expense",
+        label: "Sales Reveneue",
         data: [
-          200000, 500000, 450000, 300000, 400000, 200000, 500000, 450000,
+          200000, 500000, 350000, 300000, 400000, 200000, 500000, 450000,
           300000, 400000, 300000, 400000,
         ],
         borderColor: "rgba(54, 162, 235, 1)",
         backgroundColor: "rgba(54, 162, 235, 0.2)",
+        pointBackgroundColor: "rgba(255, 255, 255,1)",
+        pointStyle: "circle",
+        radius: 3,
+        pointHoverRadius: 5,
+        pointBorderWidth: 4,
+        pointHoverBorderWidth: 3,
+        fill: true,
+        tension: 0.5,
+      },
+      {
+        label: "Rents Reveneue",
+        data: [
+          300000, 400000, 350000, 400000, 200000, 500000, 200000, 500000,
+          450000, 450000, 300000, 400000,
+        ],
+        borderColor: "rgba(84, 102, 235, 1)",
+        backgroundColor: "rgba(84, 182, 235, 0.2)",
         pointBackgroundColor: "rgba(255, 255, 255,1)",
         pointStyle: "circle",
         radius: 3,
@@ -77,9 +129,24 @@ const RevenueChart = () => {
 
   const options = {
     responsive: true,
+
     plugins: {
       legend: {
-        display: false,
+        position: "top",
+        align: "start",
+        labels: {
+          usePointStyle: true,
+          pointStyle: "circle",
+          boxWidth: 10,
+          boxHeight: 10,
+          padding: 5,
+          color: "#fff",
+          font: {
+            size: 14,
+            family: "Quicksand, sans-serif",
+            weight: "normal",
+          },
+        },
       },
       tooltip: {
         callbacks: {
@@ -112,7 +179,8 @@ const RevenueChart = () => {
         },
         ticks: {
           callback: function (value) {
-            return `PKR ${value.toLocaleString()}`;
+            const formattedPrice = convertPrice(value);
+            return `PKR ${formattedPrice}`;
           },
           color: "#ffffff",
           font: {
@@ -145,7 +213,7 @@ const RevenueChart = () => {
 const Dashboard = () => {
   return (
     <div className="p-[2rem]">
-      <div className="w-[65%] bg-theme-blue text-white p-[2rem] rounded-3xl">
+      <div className="min-w-[50rem] w-[55%] bg-theme-blue text-white p-[2rem] rounded-3xl flex flex-col gap-[1rem]">
         <h2 className="text-[1.8rem] font-bold text-white">Total Revenue</h2>
         <RevenueChart />
       </div>
