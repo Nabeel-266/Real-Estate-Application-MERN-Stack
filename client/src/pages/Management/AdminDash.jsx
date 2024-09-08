@@ -9,7 +9,7 @@ import Sidebar from "../../components/Management/Sidebar";
 
 const AdminDash = () => {
   return (
-    <div className="w-full h-dvh px-[0.6rem] pt-[0.7rem] pb-0 bg-theme-blue font-quick">
+    <div className="w-full h-dvh px-[0.6rem] pt-[0.7rem] pb-0 bg-theme-blue">
       <div className="w-full h-full bg-white rounded-t-3xl flex overflow-hidden">
         {/* Sidebar
         <aside className="w-[25rem] my-[1.6rem] border-r-[1px] border-neutral-200">

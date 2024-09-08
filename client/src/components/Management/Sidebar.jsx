@@ -58,14 +58,14 @@ const Sidebar = () => {
           >
             <Link
               to={route}
-              className={`w-full relative z-10 flex items-center gap-[1rem] pl-[1.8rem] py-[0.8rem] font-bold ${
+              className={`w-full relative z-10 flex items-center gap-[1rem] pl-[1.8rem] py-[0.8rem] font-semibold ${
                 isActiveTab === route.split("/")[2]
                   ? "text-white"
                   : "text-neutral-600 hover:text-theme-blue"
               }`}
             >
               <Icon className="text-[2rem]" />
-              <span className="text-[1.7rem] leading-[1.8rem]">{title}</span>
+              <span className="text-[1.65rem] leading-[1.8rem]">{title}</span>
             </Link>
           </li>
         ))}
