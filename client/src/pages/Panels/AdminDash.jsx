@@ -5,25 +5,13 @@ import { PiHandWavingFill } from "react-icons/pi";
 import { HiHomeModern } from "react-icons/hi2";
 
 // Import Components
-import Sidebar from "../../components/Management/Sidebar";
+import Sidebar from "../../components/Management/Admin/Sidebar";
 
 const AdminDash = () => {
   return (
     <div className="w-full h-dvh px-[0.6rem] pt-[0.7rem] pb-0 bg-theme-blue">
       <div className="w-full h-full bg-white rounded-t-3xl flex overflow-hidden">
-        {/* Sidebar
-        <aside className="w-[25rem] my-[1.6rem] border-r-[1px] border-neutral-200">
-          <header className="w-full flex flex-col gap-[0.8rem]  px-[2rem]">
-            <img
-              src="/src/assets/logo-dark.png"
-              alt="logo"
-              className="w-[16.5rem]"
-            />
-            <h3 className="text-[1.6rem] leading-[1.6rem] font-bold text-theme-blue">
-              ADMIN
-            </h3>
-          </header>
-        </aside> */}
+        {/* Sidebar */}
         <Sidebar />
 
         {/* Panel */}

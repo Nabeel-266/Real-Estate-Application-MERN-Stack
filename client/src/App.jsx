@@ -30,15 +30,15 @@ import Account from "./components/User/Account";
 import MyProperties from "./components/User/MyProperties";
 import NotFound from "./pages/NotFound";
 import Property from "./pages/Property";
-import AdminDash from "./pages/Management/AdminDash";
-import Dashboard from "./components/Management/Admin/Dashboard";
-import Properties from "./components/Management/Admin/Properties";
-import Clients from "./components/Management/Admin/Clients";
-import Agents from "./components/Management/Admin/Agents";
-import Contacts from "./components/Management/Admin/Contacts";
-import Reports from "./components/Management/Admin/Reports";
-import Settings from "./components/Management/Admin/Settings";
-import Listing from "./components/Management/Admin/Listing";
+import Admin from "./pages/Admin/Admin";
+import Dashboard from "./pages/Admin/Panels/Dashboard";
+import Properties from "./pages/Admin/Panels/Properties";
+import Clients from "./pages/Admin/Panels/Clients";
+import Agents from "./pages/Admin/Panels/Agents";
+import Contacts from "./pages/Admin/Panels/Contacts";
+import Reports from "./pages/Admin/Panels/Reports";
+import Settings from "./pages/Admin/Panels/Settings";
+import Listing from "./pages/Admin/Panels/Listing";
 
 const ClientLayout = () => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
@@ -147,7 +147,7 @@ const router = createBrowserRouter([
   },
   {
     // path: "/",
-    element: <AdminDash />,
+    element: <Admin />,
     children: [
       {
         path: "/admin/dashboard",
