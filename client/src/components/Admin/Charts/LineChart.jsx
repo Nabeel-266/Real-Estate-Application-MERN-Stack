@@ -22,7 +22,7 @@ ChartJS.register(
 );
 
 // Common dataset styling
-const commonStyle = {
+const commonDatasetsStyle = {
   fill: false,
   tension: 0.5,
   pointStyle: "circle",
@@ -54,7 +54,7 @@ const LineChart = ({ title }) => {
         borderColor: "rgba(27, 229, 229, 1)",
         pointBackgroundColor: "rgba(27, 229, 229, 1)",
         yAxisID: "y",
-        ...commonStyle,
+        ...commonDatasetsStyle,
       },
       {
         label: "Sales Revenue",
@@ -65,7 +65,7 @@ const LineChart = ({ title }) => {
         borderColor: "rgba(174, 38, 211, 1)",
         pointBackgroundColor: "rgba(174, 38, 211, 1)",
         yAxisID: "y",
-        ...commonStyle,
+        ...commonDatasetsStyle,
       },
       {
         label: "Rental Revenue",
@@ -76,7 +76,7 @@ const LineChart = ({ title }) => {
         borderColor: "rgba(0, 100, 252, 1)",
         pointBackgroundColor: "rgba(0, 100, 252, 1)",
         yAxisID: "y",
-        ...commonStyle,
+        ...commonDatasetsStyle,
       },
       // Left Y-axis (Deal datasets)
       {
@@ -88,7 +88,7 @@ const LineChart = ({ title }) => {
         borderColor: "rgba(255, 99, 132, 1)",
         pointBackgroundColor: "rgba(255, 99, 132, 1)",
         yAxisID: "y1",
-        ...commonStyle,
+        ...commonDatasetsStyle,
       },
       {
         label: "Sales Deals",
@@ -99,7 +99,7 @@ const LineChart = ({ title }) => {
         borderColor: "rgba(255, 159, 64, 1)",
         pointBackgroundColor: "rgba(255, 159, 64, 1)",
         yAxisID: "y1",
-        ...commonStyle,
+        ...commonDatasetsStyle,
       },
       {
         label: "Rental Deals",
@@ -110,7 +110,7 @@ const LineChart = ({ title }) => {
         borderColor: "rgba(39, 174, 96, 1)",
         pointBackgroundColor: "rgba(39, 174, 96, 1)",
         yAxisID: "y1",
-        ...commonStyle,
+        ...commonDatasetsStyle,
       },
     ],
   };
@@ -293,7 +293,7 @@ const LineChart = ({ title }) => {
   };
 
   return (
-    <div className="w-[60%] min-w-[50rem] bg-theme-blue p-[2rem] rounded-3xl flex flex-col gap-[1rem]">
+    <div className="w-[50%] min-w-[40rem] h-fit bg-theme-blue p-[2rem] rounded-3xl flex flex-col gap-[1rem]">
       <div className="flex justify-between items-start">
         <h2 className="text-[2.1rem] font-bold text-white font-montAlter">
           {title}
@@ -321,7 +321,7 @@ const LineChart = ({ title }) => {
 
       <div className="w-full flex flex-col gap-[2rem] mt-[0.5rem]">
         {/* Custom Legend  */}
-        <div className="w-full flex flex-wrap gap-[1.5rem] pr-[20%]">
+        <div className="w-full flex flex-wrap gap-[1.5rem]">
           {chartData?.datasets.map((dataset, index) => (
             <div
               key={index}
