@@ -293,16 +293,16 @@ const LineChart = ({ title }) => {
   };
 
   return (
-    <div className="w-[50%] min-w-[40rem] h-fit bg-theme-blue p-[2rem] rounded-3xl flex flex-col gap-[1rem]">
-      <div className="flex justify-between items-start">
-        <h2 className="text-[2.1rem] font-bold text-white font-montAlter">
+    <div className="w-[53%] min-w-[40rem] h-fit bg-theme-blue p-[1.6rem] rounded-3xl flex flex-col gap-[1rem]">
+      <div className="flex items-center justify-between">
+        <h2 className="text-[2rem] font-bold text-white font-montAlter">
           {title}
         </h2>
 
-        <div className="flex gap-[1rem]">
+        <div className="flex gap-[1rem] mb-[0.2rem]">
           <select
             onChange={(e) => setSelectedYear(e.target.value)}
-            className="px-[0.5rem] py-[0.3rem] text-[1.4rem] text-theme-blue font-semibold rounded-md outline-none bg-white *:font-semibold *:bg-theme-blue *:text-white"
+            className="px-[0.4rem] py-[0.2rem] text-[1.3rem] text-theme-blue font-semibold rounded-md outline-none bg-white *:font-semibold *:bg-theme-blue *:text-white"
           >
             <option value="2024">2024</option>
             <option value="2023">2023</option>
@@ -311,7 +311,7 @@ const LineChart = ({ title }) => {
 
           <select
             onChange={(e) => setSelectedRange(e.target.value)}
-            className="px-[0.5rem] py-[0.3rem] text-[1.4rem] text-theme-blue font-semibold rounded-md outline-none bg-white *:font-semibold *:bg-theme-blue *:text-white"
+            className="px-[0.4rem] py-[0.2rem] text-[1.3rem] text-theme-blue font-semibold rounded-md outline-none bg-white *:font-semibold *:bg-theme-blue *:text-white"
           >
             <option value="Jan-Jun">Jan - Jun</option>
             <option value="Jul-Dec">Jul - Dec</option>

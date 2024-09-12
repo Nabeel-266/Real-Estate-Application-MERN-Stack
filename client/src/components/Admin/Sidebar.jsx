@@ -4,7 +4,6 @@ import { Link, useLocation } from "react-router-dom";
 // Import React Icons
 import { MdOutlineMapsHomeWork } from "react-icons/md";
 import { TbLayoutDashboard } from "react-icons/tb";
-import { HiHomeModern } from "react-icons/hi2";
 import { FiUsers } from "react-icons/fi";
 import { PiUsersBold } from "react-icons/pi";
 import { LuLayoutList } from "react-icons/lu";
