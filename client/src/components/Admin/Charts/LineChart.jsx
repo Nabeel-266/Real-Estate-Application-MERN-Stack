@@ -295,7 +295,7 @@ const LineChart = ({ title }) => {
   return (
     <div className="w-[53%] min-w-[40rem] h-fit bg-theme-blue p-[1.6rem] rounded-3xl flex flex-col gap-[1rem]">
       <div className="flex items-center justify-between">
-        <h2 className="text-[2rem] font-bold text-white font-montAlter">
+        <h2 className="text-[1.8rem] font-bold text-white font-montAlter">
           {title}
         </h2>
 
