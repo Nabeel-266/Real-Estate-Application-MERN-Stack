@@ -32,7 +32,7 @@ const commonDatasetsStyle = {
   pointHoverBorderWidth: 3,
 };
 
-const LineChart = ({ title }) => {
+const LineChart = () => {
   const chartRef = useRef(null);
   const [lineToggle, setLineToggle] = useState([]);
   const [selectedYear, setSelectedYear] = useState("2024");
@@ -51,8 +51,8 @@ const LineChart = ({ title }) => {
           selectedRange === "Jan-Jun"
             ? [100000, 200000, 350000, 525658, 600000, 400000]
             : [20000, 525658, 300000, 100000, 600000, 15658],
-        borderColor: "rgba(27, 229, 229, 1)",
-        pointBackgroundColor: "rgba(27, 229, 229, 1)",
+        borderColor: "#00bbef",
+        pointBackgroundColor: "#00bbef",
         yAxisID: "y",
         ...commonDatasetsStyle,
       },
@@ -62,8 +62,8 @@ const LineChart = ({ title }) => {
           selectedRange === "Jan-Jun"
             ? [200000, 500000, 350000, 300000, 400000, 200000]
             : [500000, 450000, 300000, 400000, 300000, 400000],
-        borderColor: "rgba(174, 38, 211, 1)",
-        pointBackgroundColor: "rgba(174, 38, 211, 1)",
+        borderColor: "#ff9226",
+        pointBackgroundColor: "#ff9226",
         yAxisID: "y",
         ...commonDatasetsStyle,
       },
@@ -73,8 +73,8 @@ const LineChart = ({ title }) => {
           selectedRange === "Jan-Jun"
             ? [300000, 400000, 350000, 400000, 200000, 500000]
             : [200000, 500000, 450000, 450000, 300000, 400000],
-        borderColor: "rgba(0, 100, 252, 1)",
-        pointBackgroundColor: "rgba(0, 100, 252, 1)",
+        borderColor: "#00f461",
+        pointBackgroundColor: "#00f461",
         yAxisID: "y",
         ...commonDatasetsStyle,
       },
@@ -85,8 +85,8 @@ const LineChart = ({ title }) => {
           selectedRange === "Jan-Jun"
             ? [10, 20, 30, 40, 50, 60]
             : [70, 80, 90, 100, 110, 120],
-        borderColor: "rgba(255, 99, 132, 1)",
-        pointBackgroundColor: "rgba(255, 99, 132, 1)",
+        borderColor: "#0085aa",
+        pointBackgroundColor: "#0085aa",
         yAxisID: "y1",
         ...commonDatasetsStyle,
       },
@@ -96,8 +96,8 @@ const LineChart = ({ title }) => {
           selectedRange === "Jan-Jun"
             ? [7, 10, 24, 25, 22, 15]
             : [32, 52, 78, 82, 65, 95],
-        borderColor: "rgba(255, 159, 64, 1)",
-        pointBackgroundColor: "rgba(255, 159, 64, 1)",
+        borderColor: "#ce6f10",
+        pointBackgroundColor: "#ce6f10",
         yAxisID: "y1",
         ...commonDatasetsStyle,
       },
@@ -107,8 +107,8 @@ const LineChart = ({ title }) => {
           selectedRange === "Jan-Jun"
             ? [3, 10, 6, 15, 28, 45]
             : [38, 28, 12, 18, 45, 25],
-        borderColor: "rgba(39, 174, 96, 1)",
-        pointBackgroundColor: "rgba(39, 174, 96, 1)",
+        borderColor: "#06a046",
+        pointBackgroundColor: "#06a046",
         yAxisID: "y1",
         ...commonDatasetsStyle,
       },
@@ -293,10 +293,10 @@ const LineChart = ({ title }) => {
   };
 
   return (
-    <div className="w-[53%] min-w-[40rem] h-fit bg-theme-blue p-[1.6rem] rounded-3xl flex flex-col gap-[1rem]">
+    <>
       <div className="flex items-center justify-between">
         <h2 className="text-[1.8rem] font-bold text-white font-montAlter">
-          {title}
+          Deals & Revenue
         </h2>
 
         <div className="flex gap-[1rem] mb-[0.2rem]">
@@ -321,7 +321,7 @@ const LineChart = ({ title }) => {
 
       <div className="w-full flex flex-col gap-[2rem] mt-[0.5rem]">
         {/* Custom Legend  */}
-        <div className="w-full flex flex-wrap gap-[1.5rem]">
+        <div className="w-full flex flex-wrap gap-[1.2rem] pr-[6%]">
           {chartData?.datasets.map((dataset, index) => (
             <div
               key={index}
@@ -349,7 +349,7 @@ const LineChart = ({ title }) => {
         {/* Chart */}
         <Line ref={chartRef} data={chartData} options={options} />
       </div>
-    </div>
+    </>
   );
 };
 

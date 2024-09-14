@@ -6,7 +6,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 function DonutChart({ data }) {
   const chartData = {
-    labels: ["Residential", "Commercial", "Plot"], // Categories
+    labels: ["Residential", "Plot", "Commercial"], // Categories
     datasets: [data],
   };
 
