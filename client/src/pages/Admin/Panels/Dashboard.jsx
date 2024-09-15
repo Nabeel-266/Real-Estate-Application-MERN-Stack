@@ -1,28 +1,93 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+
+// Import React Icon
+import { IoMdArrowDropdown } from "react-icons/io";
 
 // Import Components
 import LineChart from "../../../components/Admin/Charts/LineChart";
 import DonutChart from "../../../components/Admin/Charts/DonutChart";
 
 const Dashboard = () => {
+  const dropdownRef = useRef(null);
+  const [dropdowns, setDropdowns] = useState({
+    TDRYear: false,
+  });
+
+  // Dropdowns Toggle Handler
+  const toggleDropdown = (dropdownName) => {
+    if (typeof dropdownName === "string") {
+      setDropdowns((prevState) => ({
+        ...prevState,
+        [dropdownName]: !prevState[dropdownName],
+      }));
+    } else {
+      dropdownName.forEach((name) => {
+        setDropdowns((prevState) => ({
+          ...prevState,
+          [name]: false,
+        }));
+      });
+    }
+  };
+
+  // Dropdown Close when clicked outside of the dropdown
+  useEffect(() => {
+    const handleClickOutsideDropdown = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        toggleDropdown(Object.keys(dropdowns));
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutsideDropdown);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutsideDropdown);
+    };
+  }, [dropdownRef]);
+
   return (
     <div className="w-full flex flex-col gap-[2rem]">
       {/* Section One */}
       <section className="w-full flex gap-[2rem]">
-        {/* Total Revenue & Deals */}
-        <div className="w-full h-fit bg-theme-blue rounded-xl px-[1rem] py-[1rem] space-y-[0.6rem] shadow-[0rem_0.6rem_1.5rem_#08283525]">
+        {/* Total Deals & Revenue  */}
+        <div className="w-full h-fit bg-theme-blue rounded-xl px-[1rem] py-[1rem] space-y-[0.6rem] shadow-[0.6rem_0.6rem_1.2rem_#082835d0]">
           <div className="w-full flex justify-between">
             <h2 className="text-[1.8rem] text-white font-bold">Total DR</h2>
 
-            <select
-              onChange={(e) => setSelectedYear(e.target.value)}
-              className="w-fit h-fit px-[0.2rem] py-[0.2rem] text-[1.4rem] leading-[1.4rem] text-theme-blue bg-white font-semibold rounded-md outline-none *:font-semibold *:bg-theme-blue *:text-white"
-            >
-              <option value="Overall">Overall</option>
-              <option value="2024">2024</option>
-              <option value="2023">2023</option>
-              <option value="2022">2022</option>
-            </select>
+            {/* Select Year Dropdown */}
+            <div ref={dropdownRef} className="relative group/dropdown">
+              {/* Input Area */}
+              <div
+                onClick={() => toggleDropdown("TDRYear")}
+                className="w-[9rem] px-[0.8rem] flex items-center justify-between border-[2px] border-white rounded-full overflow-hidden cursor-pointer"
+              >
+                <input
+                  type="text"
+                  name="TDRYear"
+                  id="TDRYear"
+                  defaultValue={2024}
+                  className="w-full p-[0.2rem] text-[1.4rem] leading-[1.4rem] text-white font-semibold outline-none pointer-events-none bg-transparent"
+                  readOnly
+                />
+                <IoMdArrowDropdown className="text-[2.4rem] text-white" />
+              </div>
+
+              {/* Dropdown */}
+              {dropdowns.TDRYear && (
+                <div className="w-full bg-[#082835d0] backdrop-blur-[20px] absolute top-[100%] left-0 rounded-md shadow-lg shadow-[#082835d0] py-[0.5rem]">
+                  <ul className="text-[1.4rem] leading-[1.4rem] text-white font-semibold *:px-[1.2rem] *:py-[0.6rem]">
+                    {[2022, 2023, 2024].map((year, index) => (
+                      <li
+                        key={index}
+                        className="hover:bg-theme-blue cursor-pointer"
+                      >
+                        {year}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
           </div>
 
           <div
@@ -52,8 +117,8 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Sales Revenue & Deals */}
-        <div className="w-full h-fit bg-theme-blue rounded-xl px-[1rem] py-[1rem] space-y-[0.6rem] shadow-[0rem_0.6rem_1.5rem_#08283525]">
+        {/* Sales Deals & Revenue */}
+        <div className="w-full h-fit bg-theme-blue rounded-xl px-[1rem] py-[1rem] space-y-[0.6rem] shadow-[0rem_0.6rem_1.2rem_#082835c0]">
           <div className="w-full flex justify-between">
             <h2 className="text-[1.8rem] text-white font-bold">Sales DR</h2>
 
@@ -95,8 +160,8 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Rental Revenue & Deals */}
-        <div className="w-full h-fit bg-theme-blue rounded-xl px-[1rem] py-[1rem] space-y-[0.6rem] shadow-[0rem_0.6rem_1.5rem_#08283525]">
+        {/* Rental Deals & Revenue */}
+        <div className="w-full h-fit bg-theme-blue rounded-xl px-[1rem] py-[1rem] space-y-[0.6rem] shadow-[0rem_0.6rem_1.2rem_#082835c0]">
           <div className="w-full flex justify-between">
             <h2 className="text-[1.8rem] text-white font-bold">Rental DR</h2>
 
@@ -300,7 +365,7 @@ const Dashboard = () => {
               {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, index) => (
                 <tr
                   key={index}
-                  className="border-y-[1px] border-neutral-400 *:text-[1.35rem] *:leading-[1.35rem] *:font-semibold *:text-neutral-600 *:px-[1.2rem] *:py-[1.6rem]"
+                  className="border-y-[1px] border-neutral-400 *:text-[1.35rem] *:leading-[1.35rem] *:font-semibold *:text-neutral-600 *:px-[1.2rem] *:py-[1.5rem]"
                 >
                   <td className="rounded-l-xl">Agricultural Land</td>
                   <td>10 Deals | 20 Deals</td>
