@@ -1,4 +1,11 @@
 import { useEffect, useRef, useState } from "react";
+import {
+  DR_SummaryByPropertyTypes,
+  DR_SummaryByPropertyCities,
+} from "../../../lib/adminDashData";
+
+// Import React Icon
+import { IoMdArrowDropdown } from "react-icons/io";
 
 // Import Components
 import LineChart from "../../../components/Admin/Charts/LineChart";
@@ -6,6 +13,10 @@ import DonutChart from "../../../components/Admin/Charts/DonutChart";
 import Dropdown from "../../../components/Admin/Dropdown";
 
 const Dashboard = () => {
+  const [summarizedBy, setSummarizedBy] = useState("By Property Types");
+  const [summarizedData, setSummarizedData] = useState(
+    DR_SummaryByPropertyTypes
+  );
   const [selectedPeriodOfData, setSelectedPeriodOfData] = useState({
     totalDR: { year: "2024" },
     salesDR: { year: "2024" },
@@ -35,10 +46,18 @@ const Dashboard = () => {
     } else {
       setSelectedPeriodOfData((prevValues) => ({
         ...prevValues,
-        [dataTitle]: { ...prevValues.graphDR, [to]: value },
+        [dataTitle]: { ...prevValues[dataTitle], [to]: value },
       }));
     }
   };
+
+  useEffect(() => {
+    if (summarizedBy.includes("Types")) {
+      setSummarizedData(DR_SummaryByPropertyTypes);
+    } else {
+      setSummarizedData(DR_SummaryByPropertyCities);
+    }
+  }, [summarizedBy]);
 
   return (
     <div className="w-full flex flex-col gap-[2rem]">
@@ -298,12 +317,12 @@ const Dashboard = () => {
       </section>
 
       {/* Section Three */}
-      <section className="w-full flex gap-[2rem]">
+      <section className="w-full">
         <div className="w-[100%]">
           {/* Top Side */}
-          <div className="w-full flex items-center justify-between px-[1.2rem] pt-[1.2rem] pb-[0.8rem] rounded-t-xl">
+          <div className="w-full flex items-center justify-between px-[1.2rem] pt-[1.2rem] pb-[1rem] rounded-t-xl">
             <h2 className="text-[2rem] font-bold text-theme-blue">
-              Property Types - DR Summary
+              Deals & Revenue Summary
             </h2>
 
             {/* Select Month & Year */}
@@ -334,25 +353,59 @@ const Dashboard = () => {
 
           <table className="w-full table-auto text-left">
             <thead>
-              <tr className="*:text-[1.55rem] *:leading-[1.6rem] *:font-bold *:text-neutral-700 *:px-[1.2rem] *:py-[1.5rem] border-b-[2px] border-neutral-500">
-                <th className="rounded-bl-2xl">Property Type</th>
+              <tr className="*:text-[1.55rem] *:leading-[1.6rem] *:font-bold *:text-theme-blue *:px-[1.2rem] *:py-[1.2rem] border-b-[2px] border-neutral-500">
+                <th className="relative group">
+                  <div className="flex gap-[0rem]">
+                    <input
+                      type="text"
+                      value={summarizedBy}
+                      readOnly
+                      className="w-[16rem] outline-none pointer-events-none"
+                    />
+                    <IoMdArrowDropdown />
+                  </div>
+
+                  <div className="w-full bg-theme-blue text-white absolute top-[100%] left-0 rounded-lg shadow-lg shadow-neutral-200 py-[0.5rem] border-[2px] border-neutral-500 hidden group-hover:block">
+                    <ul className="text-[1.4rem] leading-[1.4rem] font-semibold *:px-[1.2rem] *:py-[1rem] *:transition-all *:cursor-pointer">
+                      {["By Property Types", "By Property Cities"].map(
+                        (by, index) => (
+                          <li
+                            key={index}
+                            onClick={() => setSummarizedBy(by)}
+                            className="hover:bg-white hover:text-theme-blue"
+                          >
+                            {by}
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  </div>
+                </th>
                 <th>Sales | Rental Deals</th>
                 <th>Sales Rvn</th>
                 <th>Rental Rvn</th>
-                <th className="rounded-br-2xl">Total Rvn</th>
+                <th>Total Rvn</th>
               </tr>
             </thead>
             <tbody>
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, index) => (
+              {summarizedData.map(({ summaryBy, deals, revenue }, index) => (
                 <tr
                   key={index}
-                  className="border-y-[1px] border-neutral-400 *:text-[1.35rem] *:leading-[1.35rem] *:font-semibold *:text-neutral-600 *:px-[1.2rem] *:py-[1.5rem]"
+                  className="border-t-[1px] border-neutral-400 *:leading-[1.5rem] *:font-semibold *: *:px-[1.2rem] *:py-[1.4rem]"
                 >
-                  <td className="rounded-l-xl">Agricultural Land</td>
-                  <td>10 Deals | 20 Deals</td>
-                  <td>PKR 1200000</td>
-                  <td>PKR 200000</td>
-                  <td className="rounded-r-xl">PKR 1400000</td>
+                  <td className="text-[1.5rem] text-theme-blue">{summaryBy}</td>
+                  <td className="text-[1.4rem] text-neutral-700">
+                    {deals.sales} Deals | {deals.rental} Deals
+                  </td>
+                  <td className="text-[1.4rem] text-neutral-700">
+                    PKR {revenue.sales.toLocaleString()}
+                  </td>
+                  <td className="text-[1.4rem] text-neutral-700">
+                    PKR {revenue.rental.toLocaleString()}
+                  </td>
+                  <td className="text-[1.4rem] text-neutral-700">
+                    PKR {(revenue.sales + revenue.rental).toLocaleString()}
+                  </td>
                 </tr>
               ))}
             </tbody>

@@ -54,7 +54,11 @@ const Dropdown = ({
           readOnly
           className={`w-full p-[0.2rem] text-[1.4rem] leading-[1.4rem] outline-none pointer-events-none bg-transparent`}
         />
-        <IoMdArrowDropdown className="text-[2.4rem]" />
+        <IoMdArrowDropdown
+          className={`text-[2.4rem] ${
+            isOpenDropdown ? "rotate-180" : "rotate-0"
+          } transition-all`}
+        />
       </div>
 
       {/* Dropdown */}
