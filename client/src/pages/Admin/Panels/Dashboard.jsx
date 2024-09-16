@@ -1,49 +1,44 @@
 import { useEffect, useRef, useState } from "react";
 
-// Import React Icon
-import { IoMdArrowDropdown } from "react-icons/io";
-
 // Import Components
 import LineChart from "../../../components/Admin/Charts/LineChart";
 import DonutChart from "../../../components/Admin/Charts/DonutChart";
+import Dropdown from "../../../components/Admin/Dropdown";
 
 const Dashboard = () => {
-  const dropdownRef = useRef(null);
-  const [dropdowns, setDropdowns] = useState({
-    TDRYear: false,
+  const [selectedPeriodOfData, setSelectedPeriodOfData] = useState({
+    totalDR: { year: "2024" },
+    salesDR: { year: "2024" },
+    rentalDR: { year: "2024" },
+    graphDR: { year: "2024", monthRange: "Jan - Jun" },
+    propertyCategoryDR: { year: "2024", month: "Jan" },
+    summaryDR: { year: "2024", month: "Jan" },
   });
 
-  // Dropdowns Toggle Handler
-  const toggleDropdown = (dropdownName) => {
-    if (typeof dropdownName === "string") {
-      setDropdowns((prevState) => ({
-        ...prevState,
-        [dropdownName]: !prevState[dropdownName],
-      }));
-    } else {
-      dropdownName.forEach((name) => {
-        setDropdowns((prevState) => ({
-          ...prevState,
-          [name]: false,
-        }));
-      });
-    }
+  const dropdownOptions = {
+    year: ["2024", "2023", "2022", "2021", "2020"],
+    month: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+    monthRange: ["Jan - Jun", "Jul - Dec"],
   };
 
-  // Dropdown Close when clicked outside of the dropdown
-  useEffect(() => {
-    const handleClickOutsideDropdown = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        toggleDropdown(Object.keys(dropdowns));
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutsideDropdown);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutsideDropdown);
-    };
-  }, [dropdownRef]);
+  // Handle option selection
+  const handleSelect = (dataTitle, to, value) => {
+    if (
+      dataTitle === "totalDR" ||
+      dataTitle === "salesDR" ||
+      dataTitle === "rentalDR"
+    ) {
+      setSelectedPeriodOfData((prevValues) => ({
+        ...prevValues,
+        [dataTitle]: { [to]: value },
+      }));
+    } else {
+      setSelectedPeriodOfData((prevValues) => ({
+        ...prevValues,
+        [dataTitle]: { ...prevValues.graphDR, [to]: value },
+      }));
+    }
+  };
 
   return (
     <div className="w-full flex flex-col gap-[2rem]">
@@ -55,39 +50,14 @@ const Dashboard = () => {
             <h2 className="text-[1.8rem] text-white font-bold">Total DR</h2>
 
             {/* Select Year Dropdown */}
-            <div ref={dropdownRef} className="relative group/dropdown">
-              {/* Input Area */}
-              <div
-                onClick={() => toggleDropdown("TDRYear")}
-                className="w-[9rem] px-[0.8rem] flex items-center justify-between border-[2px] border-white rounded-full overflow-hidden cursor-pointer"
-              >
-                <input
-                  type="text"
-                  name="TDRYear"
-                  id="TDRYear"
-                  defaultValue={2024}
-                  className="w-full p-[0.2rem] text-[1.4rem] leading-[1.4rem] text-white font-semibold outline-none pointer-events-none bg-transparent"
-                  readOnly
-                />
-                <IoMdArrowDropdown className="text-[2.4rem] text-white" />
-              </div>
-
-              {/* Dropdown */}
-              {dropdowns.TDRYear && (
-                <div className="w-full bg-[#082835d0] backdrop-blur-[20px] absolute top-[100%] left-0 rounded-md shadow-lg shadow-[#082835d0] py-[0.5rem]">
-                  <ul className="text-[1.4rem] leading-[1.4rem] text-white font-semibold *:px-[1.2rem] *:py-[0.6rem]">
-                    {[2022, 2023, 2024].map((year, index) => (
-                      <li
-                        key={index}
-                        className="hover:bg-theme-blue cursor-pointer"
-                      >
-                        {year}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
+            <Dropdown
+              size={"8.5"}
+              dataTitle={"totalDR"}
+              to={"year"}
+              options={dropdownOptions.year}
+              selectedYear={selectedPeriodOfData.totalDR.year}
+              onSelect={handleSelect}
+            />
           </div>
 
           <div
@@ -122,15 +92,15 @@ const Dashboard = () => {
           <div className="w-full flex justify-between">
             <h2 className="text-[1.8rem] text-white font-bold">Sales DR</h2>
 
-            <select
-              onChange={(e) => setSelectedYear(e.target.value)}
-              className="w-fit h-fit px-[0.2rem] py-[0.2rem] text-[1.4rem] leading-[1.4rem] text-theme-blue bg-white font-semibold rounded-md outline-none *:font-semibold *:bg-theme-blue *:text-white"
-            >
-              <option value="Overall">Overall</option>
-              <option value="2024">2024</option>
-              <option value="2023">2023</option>
-              <option value="2022">2022</option>
-            </select>
+            {/* Select Year Dropdown */}
+            <Dropdown
+              size={"8.5"}
+              dataTitle={"salesDR"}
+              to={"year"}
+              options={dropdownOptions.year}
+              selectedYear={selectedPeriodOfData.salesDR.year}
+              onSelect={handleSelect}
+            />
           </div>
 
           <div
@@ -165,15 +135,15 @@ const Dashboard = () => {
           <div className="w-full flex justify-between">
             <h2 className="text-[1.8rem] text-white font-bold">Rental DR</h2>
 
-            <select
-              onChange={(e) => setSelectedYear(e.target.value)}
-              className="w-fit h-fit px-[0.2rem] py-[0.2rem] text-[1.4rem] leading-[1.4rem] text-theme-blue bg-white font-semibold rounded-md outline-none *:font-semibold *:bg-theme-blue *:text-white"
-            >
-              <option value="Overall">Overall</option>
-              <option value="2024">2024</option>
-              <option value="2023">2023</option>
-              <option value="2022">2022</option>
-            </select>
+            {/* Select Year Dropdown */}
+            <Dropdown
+              size={"8.5"}
+              dataTitle={"rentalDR"}
+              to={"year"}
+              options={dropdownOptions.year}
+              selectedYear={selectedPeriodOfData.rentalDR.year}
+              onSelect={handleSelect}
+            />
           </div>
 
           <div
@@ -208,51 +178,73 @@ const Dashboard = () => {
       <section className="w-full flex gap-[2rem]">
         {/* Revenue & Deals Chart */}
         <div className="w-[53%] min-w-[40rem] h-fit bg-theme-blue p-[1.6rem] rounded-3xl flex flex-col gap-[1rem]">
-          <LineChart />
+          <div className="flex items-center justify-between">
+            <h2 className="text-[1.8rem] font-bold text-white font-montAlter">
+              Deals & Revenue
+            </h2>
+
+            <div className="flex gap-[1rem] mb-[0.2rem]">
+              {/* Select Year Dropdown */}
+              <Dropdown
+                size={"8.5"}
+                drpdBgColor={"#fffffff0"}
+                dataTitle={"graphDR"}
+                to={"year"}
+                options={dropdownOptions.year}
+                selectedYear={selectedPeriodOfData.graphDR.year}
+                onSelect={handleSelect}
+              />
+
+              {/* Select Months-Range Dropdown */}
+              <Dropdown
+                size={"12"}
+                drpdBgColor={"#fffffff0"}
+                dataTitle={"graphDR"}
+                to={"monthRange"}
+                options={dropdownOptions.monthRange}
+                selectedYear={selectedPeriodOfData.graphDR.monthRange}
+                onSelect={handleSelect}
+              />
+            </div>
+          </div>
+
+          {/* Chart */}
+          <LineChart
+            selectedPeriodOfData={selectedPeriodOfData.graphDR.monthRange}
+          />
         </div>
 
         {/* Revenue & Deals Chart by Property Category */}
-        <div className="w-[47%] min-w-[30rem] h-fit flex flex-col gap-[1rem] bg-theme-blue px-[2rem] pb-[2rem] pt-[1.5rem] rounded-3xl">
+        <div className="w-[47%] min-w-[30rem] h-fit flex flex-col gap-[1rem] bg-theme-blue px-[2rem] pb-[1.8rem] pt-[1.5rem] rounded-3xl">
           {/* Chart Top */}
-          <div className="w-full space-y-[1.2rem]">
+          <div className="w-full space-y-[0.8rem]">
             <h2 className="text-[1.8rem] font-bold text-white">
               Property Category - DR
             </h2>
 
             {/* Select Month & Year */}
             <div className="flex gap-[1rem]">
-              <select
-                // onChange={(e) => setSelectedYear(e.target.value)}
-                className="px-[0.4rem] py-[0.2rem] text-[1.3rem] text-theme-blue font-semibold rounded-md outline-none bg-white *:font-semibold *:bg-theme-blue *:text-white"
-              >
-                <option value="2024">2024</option>
-                <option value="2023">2023</option>
-                <option value="2022">2022</option>
-              </select>
+              {/* Select Year Dropdown */}
+              <Dropdown
+                size={"8.5"}
+                drpdBgColor={"#fffffff0"}
+                dataTitle={"propertyCategoryDR"}
+                to={"year"}
+                options={dropdownOptions.year}
+                selectedYear={selectedPeriodOfData.propertyCategoryDR.year}
+                onSelect={handleSelect}
+              />
 
-              <select
-                // onChange={(e) => setSelectedRange(e.target.value)}
-                className="px-[0.4rem] py-[0.2rem] text-[1.3rem] text-theme-blue font-semibold rounded-md outline-none bg-white *:font-semibold *:bg-theme-blue *:text-white"
-              >
-                {[
-                  "Jan",
-                  "Feb",
-                  "Mar",
-                  "Apr",
-                  "May",
-                  "Jun",
-                  "Jul",
-                  "Aug",
-                  "Sep",
-                  "Oct",
-                  "Nov",
-                  "Dec",
-                ].map((month, index) => (
-                  <option key={index} value={month}>
-                    {month}
-                  </option>
-                ))}
-              </select>
+              {/* Select Month Dropdown */}
+              <Dropdown
+                size={"8.5"}
+                drpdBgColor={"#fffffff0"}
+                dataTitle={"propertyCategoryDR"}
+                to={"month"}
+                options={dropdownOptions.month}
+                selectedYear={selectedPeriodOfData.propertyCategoryDR.month}
+                onSelect={handleSelect}
+              />
             </div>
           </div>
 
@@ -316,38 +308,27 @@ const Dashboard = () => {
 
             {/* Select Month & Year */}
             <div className="flex gap-[1rem]">
-              <select
-                // onChange={(e) => setSelectedYear(e.target.value)}
-                className="px-[0.8rem] pt-[0.3rem] pb-[0.4rem] text-[1.5rem] text-white font-semibold rounded-md outline-none bg-theme-blue *:font-semibold *:bg-theme-blue *:text-white"
-              >
-                <option value="2024">2024</option>
-                <option value="2023">2023</option>
-                <option value="2022">2022</option>
-              </select>
+              {/* Select Year Dropdown */}
+              <Dropdown
+                size={"8.5"}
+                inputColor={"#022835"}
+                dataTitle={"summaryDR"}
+                to={"year"}
+                options={dropdownOptions.year}
+                selectedYear={selectedPeriodOfData.summaryDR.year}
+                onSelect={handleSelect}
+              />
 
-              <select
-                // onChange={(e) => setSelectedRange(e.target.value)}
-                className="px-[0.8rem] pt-[0.3rem] pb-[0.4rem] text-[1.5rem] text-white font-semibold rounded-md outline-none bg-theme-blue *:font-semibold *:bg-theme-blue *:text-white"
-              >
-                {[
-                  "Jan",
-                  "Feb",
-                  "Mar",
-                  "Apr",
-                  "May",
-                  "Jun",
-                  "Jul",
-                  "Aug",
-                  "Sep",
-                  "Oct",
-                  "Nov",
-                  "Dec",
-                ].map((month, index) => (
-                  <option key={index} value={month}>
-                    {month}
-                  </option>
-                ))}
-              </select>
+              {/* Select Month Dropdown */}
+              <Dropdown
+                size={"8.5"}
+                inputColor={"#022835"}
+                dataTitle={"summaryDR"}
+                to={"month"}
+                options={dropdownOptions.month}
+                selectedYear={selectedPeriodOfData.summaryDR.month}
+                onSelect={handleSelect}
+              />
             </div>
           </div>
 
@@ -383,3 +364,34 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+// {/* <div ref={dropdownRef} className="relative group/dropdown">
+//   {/* Input Area */}
+//   <div
+//     onClick={() => toggleDropdown("TDRYear")}
+//     className="w-[9rem] px-[0.8rem] flex items-center justify-between border-[2px] border-white rounded-full overflow-hidden cursor-pointer"
+//   >
+//     <input
+//       type="text"
+//       name="TDRYear"
+//       id="TDRYear"
+//       defaultValue={2024}
+//       className="w-full p-[0.2rem] text-[1.4rem] leading-[1.4rem] text-white font-semibold outline-none pointer-events-none bg-transparent"
+//       readOnly
+//     />
+//     <IoMdArrowDropdown className="text-[2.4rem] text-white" />
+//   </div>
+
+//   {/* Dropdown */}
+//   {dropdowns.TDRYear && (
+//     <div className="w-full bg-[#082835d0] backdrop-blur-[20px] absolute top-[100%] left-0 rounded-md shadow-lg shadow-[#082835d0] py-[0.5rem]">
+//       <ul className="text-[1.4rem] leading-[1.4rem] text-white font-semibold *:px-[1.2rem] *:py-[0.6rem]">
+//         {[2022, 2023, 2024].map((year, index) => (
+//           <li key={index} className="hover:bg-theme-blue cursor-pointer">
+//             {year}
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   )}
+// </div>; */}

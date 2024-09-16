@@ -32,15 +32,13 @@ const commonDatasetsStyle = {
   pointHoverBorderWidth: 3,
 };
 
-const LineChart = () => {
+const LineChart = ({ selectedPeriodOfData }) => {
   const chartRef = useRef(null);
   const [lineToggle, setLineToggle] = useState([]);
-  const [selectedYear, setSelectedYear] = useState("2024");
-  const [selectedRange, setSelectedRange] = useState("Jan-Jun");
 
   const chartData = {
     labels:
-      selectedRange === "Jan-Jun"
+      selectedPeriodOfData === "Jan - Jun"
         ? ["Jan", "Feb", "Mar", "Apr", "May", "Jun"]
         : ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     datasets: [
@@ -48,7 +46,7 @@ const LineChart = () => {
       {
         label: "Total Revenue",
         data:
-          selectedRange === "Jan-Jun"
+          selectedPeriodOfData === "Jan - Jun"
             ? [100000, 200000, 350000, 525658, 600000, 400000]
             : [20000, 525658, 300000, 100000, 600000, 15658],
         borderColor: "#00bbef",
@@ -59,7 +57,7 @@ const LineChart = () => {
       {
         label: "Sales Revenue",
         data:
-          selectedRange === "Jan-Jun"
+          selectedPeriodOfData === "Jan - Jun"
             ? [200000, 500000, 350000, 300000, 400000, 200000]
             : [500000, 450000, 300000, 400000, 300000, 400000],
         borderColor: "#ff9226",
@@ -70,7 +68,7 @@ const LineChart = () => {
       {
         label: "Rental Revenue",
         data:
-          selectedRange === "Jan-Jun"
+          selectedPeriodOfData === "Jan - Jun"
             ? [300000, 400000, 350000, 400000, 200000, 500000]
             : [200000, 500000, 450000, 450000, 300000, 400000],
         borderColor: "#00f461",
@@ -82,7 +80,7 @@ const LineChart = () => {
       {
         label: "Total Deals",
         data:
-          selectedRange === "Jan-Jun"
+          selectedPeriodOfData === "Jan - Jun"
             ? [10, 20, 30, 40, 50, 60]
             : [70, 80, 90, 100, 110, 120],
         borderColor: "#0085aa",
@@ -93,7 +91,7 @@ const LineChart = () => {
       {
         label: "Sales Deals",
         data:
-          selectedRange === "Jan-Jun"
+          selectedPeriodOfData === "Jan - Jun"
             ? [7, 10, 24, 25, 22, 15]
             : [32, 52, 78, 82, 65, 95],
         borderColor: "#ce6f10",
@@ -104,7 +102,7 @@ const LineChart = () => {
       {
         label: "Rental Deals",
         data:
-          selectedRange === "Jan-Jun"
+          selectedPeriodOfData === "Jan - Jun"
             ? [3, 10, 6, 15, 28, 45]
             : [38, 28, 12, 18, 45, 25],
         borderColor: "#06a046",
@@ -293,63 +291,36 @@ const LineChart = () => {
   };
 
   return (
-    <>
-      <div className="flex items-center justify-between">
-        <h2 className="text-[1.8rem] font-bold text-white font-montAlter">
-          Deals & Revenue
-        </h2>
-
-        <div className="flex gap-[1rem] mb-[0.2rem]">
-          <select
-            onChange={(e) => setSelectedYear(e.target.value)}
-            className="px-[0.4rem] py-[0.2rem] text-[1.3rem] text-theme-blue font-semibold rounded-md outline-none bg-white *:font-semibold *:bg-theme-blue *:text-white"
+    <div className="w-full flex flex-col gap-[2rem] mt-[0.5rem]">
+      {/* Custom Legend  */}
+      <div className="w-full flex flex-wrap gap-[1.2rem] pr-[6%]">
+        {chartData?.datasets.map((dataset, index) => (
+          <div
+            key={index}
+            onClick={() => toggleDataset(dataset.label, index)}
+            className={`text-[1.35rem] leading-[1.3rem] font-semibold text-neutral-100 cursor-pointer flex items-center gap-[0.4rem] select-none`}
           >
-            <option value="2024">2024</option>
-            <option value="2023">2023</option>
-            <option value="2022">2022</option>
-          </select>
-
-          <select
-            onChange={(e) => setSelectedRange(e.target.value)}
-            className="px-[0.4rem] py-[0.2rem] text-[1.3rem] text-theme-blue font-semibold rounded-md outline-none bg-white *:font-semibold *:bg-theme-blue *:text-white"
-          >
-            <option value="Jan-Jun">Jan - Jun</option>
-            <option value="Jul-Dec">Jul - Dec</option>
-          </select>
-        </div>
-      </div>
-
-      <div className="w-full flex flex-col gap-[2rem] mt-[0.5rem]">
-        {/* Custom Legend  */}
-        <div className="w-full flex flex-wrap gap-[1.2rem] pr-[6%]">
-          {chartData?.datasets.map((dataset, index) => (
-            <div
-              key={index}
-              onClick={() => toggleDataset(dataset.label, index)}
-              className={`text-[1.35rem] leading-[1.3rem] font-semibold text-neutral-100 cursor-pointer flex items-center gap-[0.4rem] select-none`}
+            <span
+              className="size-[1.2rem] rounded-full mb-[0.1rem]"
+              style={{
+                backgroundColor: dataset.borderColor,
+              }}
+            ></span>
+            <span
+              className={`whitespace-nowrap ${
+                lineToggle.includes(dataset.label) &&
+                "line-through decoration-[0.3rem] decoration-theme-blue"
+              }`}
             >
-              <span
-                className="size-[1.2rem] rounded-full mb-[0.1rem]"
-                style={{
-                  backgroundColor: dataset.borderColor,
-                }}
-              ></span>
-              <span
-                className={`whitespace-nowrap ${
-                  lineToggle.includes(dataset.label) &&
-                  "line-through decoration-[0.3rem] decoration-theme-blue"
-                }`}
-              >
-                {dataset.label}
-              </span>
-            </div>
-          ))}
-        </div>
-
-        {/* Chart */}
-        <Line ref={chartRef} data={chartData} options={options} />
+              {dataset.label}
+            </span>
+          </div>
+        ))}
       </div>
-    </>
+
+      {/* Chart */}
+      <Line ref={chartRef} data={chartData} options={options} />
+    </div>
   );
 };
 

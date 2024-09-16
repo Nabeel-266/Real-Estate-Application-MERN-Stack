@@ -1,15 +1,94 @@
-import React from "react";
+import { useEffect, useRef, useState } from "react";
 
-const Dropdown = () => {
+// Import React Icon
+import { IoMdArrowDropdown } from "react-icons/io";
+
+const Dropdown = ({
+  size,
+  drpdBgColor,
+  inputColor,
+  dataTitle,
+  to,
+  options,
+  selectedYear,
+  onSelect,
+}) => {
+  const dropdownRef = useRef(null);
+  const [isOpenDropdown, setIsOpenDropdown] = useState(false);
+
+  // Dropdown Close when clicked outside of the dropdown
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpenDropdown(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside); // Add event listener
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside); // Cleanup event listener
+    };
+  }, []);
+
+  // Toggle dropdown open/close on input click
+  const toggleDropdown = () => {
+    setIsOpenDropdown((prevState) => !prevState);
+  };
+
   return (
-    <div className="w-full bg-[#082835d0] backdrop-blur-[20px] absolute top-[100%] left-0 rounded-md shadow-lg shadow-[#082835d0] py-[0.5rem]">
-      <ul className="text-[1.4rem] leading-[1.4rem] text-white font-semibold *:px-[1.2rem] *:py-[0.6rem]">
-        {[2022, 2023, 2024].map((year, index) => (
-          <li key={index} className="hover:bg-theme-blue cursor-pointer">
-            {year}
-          </li>
-        ))}
-      </ul>
+    <div ref={dropdownRef} className="relative group/dropdown">
+      {/* Input Area */}
+      <div
+        onClick={() => toggleDropdown()}
+        className={`w-[${size}rem] px-[1rem] flex items-center justify-between border-[2px] rounded-full overflow-hidden cursor-pointer select-none`}
+        style={
+          inputColor
+            ? { borderColor: inputColor, color: inputColor, fontWeight: 700 }
+            : { borderColor: "white", color: "white", fontWeight: 600 }
+        }
+      >
+        <input
+          type="text"
+          name={to}
+          value={selectedYear}
+          readOnly
+          className={`w-full p-[0.2rem] text-[1.4rem] leading-[1.4rem] outline-none pointer-events-none bg-transparent`}
+        />
+        <IoMdArrowDropdown className="text-[2.4rem]" />
+      </div>
+
+      {/* Dropdown */}
+      {isOpenDropdown && (
+        <div
+          className={`w-full max-h-[9rem] backdrop-blur-[50px] border-[2px]  absolute top-[100%] left-0 rounded-md shadow-lg shadow-[#082835d0] py-[0.5rem] overflow-auto scrollbar-slim-y ${
+            drpdBgColor ? "border-neutral-500" : "border-theme-blue"
+          }`}
+          style={
+            drpdBgColor
+              ? { backgroundColor: drpdBgColor }
+              : { backgroundColor: "#082835e0" }
+          }
+        >
+          <ul className="text-[1.4rem] leading-[1.4rem] font-semibold *:px-[1.2rem] *:py-[0.6rem]">
+            {options?.map((year, index) => (
+              <li
+                key={index}
+                onClick={() => {
+                  onSelect(dataTitle, to, year);
+                  setIsOpenDropdown(false);
+                }}
+                className={` cursor-pointer ${
+                  drpdBgColor
+                    ? "hover:bg-neutral-300 text-neutral-700"
+                    : "hover:bg-theme-blue text-white"
+                }`}
+              >
+                {year}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
