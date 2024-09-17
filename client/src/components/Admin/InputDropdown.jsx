@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 // Import React Icon
 import { IoMdArrowDropdown } from "react-icons/io";
 
-const Dropdown = ({
+const InputDropdown = ({
   size,
   drpdBgColor,
   inputColor,
@@ -97,4 +97,4 @@ const Dropdown = ({
   );
 };
 
-export default Dropdown;
+export default InputDropdown;

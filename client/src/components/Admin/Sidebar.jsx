@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 // Import React Icons
-import { MdOutlineMapsHomeWork } from "react-icons/md";
+import { MdOutlineMapsHomeWork, MdSupportAgent } from "react-icons/md";
 import { TbLayoutDashboard } from "react-icons/tb";
 import { FiUsers } from "react-icons/fi";
-import { PiUsersBold } from "react-icons/pi";
 import { LuLayoutList } from "react-icons/lu";
 import { MdOutlineContacts } from "react-icons/md";
 import { TbReport } from "react-icons/tb";
@@ -36,10 +35,10 @@ const Sidebar = () => {
       </header>
 
       {/* Navigations */}
-      <ul className="w-full flex flex-col gap-[0.6rem]">
+      <ul className="w-full flex flex-col gap-[0.4rem]">
         {[
           [TbLayoutDashboard, "Dashboard", "/admin/dashboard"],
-          [PiUsersBold, "Agents", "/admin/agents"],
+          [MdSupportAgent, "Agents", "/admin/agents"],
           [MdOutlineMapsHomeWork, "Properties", "/admin/properties"],
           [FiUsers, "Clients", "/admin/clients"],
           [LuLayoutList, "Listing", "/admin/listing"],
@@ -57,7 +56,7 @@ const Sidebar = () => {
           >
             <Link
               to={route}
-              className={`w-full relative z-10 flex items-center gap-[1rem] pl-[1.8rem] py-[0.8rem] font-semibold ${
+              className={`w-full relative z-10 flex items-center gap-[1rem] pl-[1.8rem] py-[0.9rem] font-semibold ${
                 isActiveTab === route.split("/")[2]
                   ? "text-white"
                   : "text-neutral-600 hover:text-theme-blue"

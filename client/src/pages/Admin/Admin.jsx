@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
 // Import React Icons
-import { MdOutlineMapsHomeWork } from "react-icons/md";
+import { MdOutlineMapsHomeWork, MdSupportAgent } from "react-icons/md";
 import { TbLayoutDashboard } from "react-icons/tb";
 import { FiUsers } from "react-icons/fi";
-import { PiUsersBold } from "react-icons/pi";
 import { LuLayoutList } from "react-icons/lu";
 import { MdOutlineContacts } from "react-icons/md";
 import { TbReport } from "react-icons/tb";
@@ -39,7 +38,7 @@ const Admin = () => {
               {panelTitle === "Dashboard" ? (
                 <TbLayoutDashboard />
               ) : panelTitle === "Agents" ? (
-                <PiUsersBold />
+                <MdSupportAgent />
               ) : panelTitle === "Properties" ? (
                 <MdOutlineMapsHomeWork />
               ) : panelTitle === "Clients" ? (

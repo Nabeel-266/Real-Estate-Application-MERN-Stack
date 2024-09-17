@@ -1,3 +1,9 @@
+export const dropdownOptions = {
+  year: ["2024", "2023", "2022", "2021", "2020"],
+  month: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+  monthRange: ["Jan - Jun", "Jul - Dec"],
+};
+
 export const DR_SummaryByPropertyTypes = [
   {
     summaryBy: "House",
