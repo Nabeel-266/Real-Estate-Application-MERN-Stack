@@ -219,6 +219,10 @@
     background-color: #fbbf24;
     opacity: 1;
   }
+
+  .buttonDropdownCont {
+    @apply bg-[#082835f0] backdrop-blur-[50px] text-white absolute top-[100%] right-0 rounded-lg shadow-lg shadow-neutral-400 space-y-[0.5rem];
+  }
 }
 
 /* @layer utilities {} */

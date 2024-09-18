@@ -67,25 +67,31 @@ const Agents = () => {
 
       {/* Section Bottom */}
       <section className="w-full">
-        <div className="w-full bg-neutral-100 px-[1.2rem] rounded-xl">
+        <div className="w-full bg-white px-[1.2rem] rounded-xl">
           {/* Top Side */}
-          <div className="w-full flex items-center justify-between  py-[1rem] rounded-t-xl">
+          <div className="w-full relative flex items-center justify-between  py-[1rem] rounded-t-xl">
             <h2 className="text-[2.2rem] font-bold text-theme-blue">
               Agents Record
             </h2>
 
             {/* Display Data Options */}
             <div className="flex items-center gap-[1rem]">
-              <ButtonDropdown to="Sort By" />
-              <ButtonDropdown to="Filter By" />
-              <ButtonDropdown to="Columns" />
+              <div className="relative">
+                <ButtonDropdown to="Sort By" />
+              </div>
+              <div className="">
+                <ButtonDropdown to="Filter By" />
+              </div>
+              <div className="relative">
+                <ButtonDropdown to="Columns" />
+              </div>
             </div>
           </div>
 
           <table className="w-full table-auto text-left">
             <thead>
-              <tr className="*:text-[1.55rem] *:leading-[1.6rem] *:font-bold *:text-theme-blue *:px-[1.2rem] *:py-[1.2rem] border-b-[2px] border-neutral-500">
-                <th className="relative group">Hello World</th>
+              <tr className="*:text-[1.55rem] *:leading-[1.6rem] *:font-bold *:text-neutral-800 *:px-[1.2rem] *:py-[1.2rem] border-b-[2px] border-neutral-600">
+                <th>Hello World</th>
                 <th>Sales | Rental Deals</th>
                 <th>Sales Rvn</th>
                 <th>Rental Rvn</th>
