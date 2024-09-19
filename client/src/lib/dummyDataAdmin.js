@@ -1,9 +1,10 @@
-export const dropdownOptions = {
+export const periodDropdownOptions = {
   year: ["2024", "2023", "2022", "2021", "2020"],
   month: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
   monthRange: ["Jan - Jun", "Jul - Dec"],
 };
 
+// Dashboard Panel
 export const DR_SummaryByPropertyTypes = [
   {
     summaryBy: "House",
@@ -257,5 +258,115 @@ export const DR_SummaryByPropertyCities = [
       sales: 500000,
       rental: 0,
     },
+  },
+];
+
+// Agent Panel
+
+export const agents = [
+  {
+    name: "Aslam Jaffar",
+    email: "slamjaffar@example.com",
+    mobileNumber: "03456789045",
+    cnic: "42101-1589967-9",
+    dateOfBirth: "Dec 26, 1992",
+    operatingCity: "Karachi",
+    joiningDate: "Apr 26, 2019",
+    deals: {
+      successed: {
+        sales: 6,
+        rental: 10,
+      },
+      active: {
+        sales: 1,
+        rental: 2,
+      },
+    },
+    comissionEarned: 325000,
+    badge: "Mid-Level",
+  },
+  {
+    name: "Muhammad Aleem",
+    email: "muhammadaleem@example.com",
+    mobileNumber: "03456789125",
+    cnic: "42101-1234567-8",
+    dateOfBirth: "Jan 15, 1985",
+    operatingCity: "Lahore",
+    joiningDate: "Mar 10, 2017",
+    deals: {
+      successed: {
+        sales: 8,
+        rental: 12,
+      },
+      active: {
+        sales: 1,
+        rental: 0,
+      },
+    },
+    comissionEarned: 450000,
+    badge: "Senior",
+  },
+  {
+    name: "Kamran Rashid",
+    email: "kamranrashid@example.com",
+    mobileNumber: "03456789224",
+    cnic: "42101-7654321-1",
+    dateOfBirth: "Jul 22, 1990",
+    operatingCity: "Islamabad",
+    joiningDate: "Jun 5, 2020",
+    deals: {
+      successed: {
+        sales: 4,
+        rental: 8,
+      },
+      active: {
+        sales: 1,
+        rental: 1,
+      },
+    },
+    comissionEarned: 275000,
+    badge: "Junior",
+  },
+  {
+    name: "Zakir Khan",
+    email: "zakirkhan@example.com",
+    mobileNumber: "03456789378",
+    cnic: "42101-9876543-2",
+    dateOfBirth: "Feb 28, 1994",
+    operatingCity: "Rawalpindi",
+    joiningDate: "Aug 15, 2021",
+    deals: {
+      successed: {
+        sales: 3,
+        rental: 6,
+      },
+      active: {
+        sales: 0,
+        rental: 2,
+      },
+    },
+    comissionEarned: 200000,
+    badge: "Junior",
+  },
+  {
+    name: "Hassan Ashraf",
+    email: "hasanashraf@example.com",
+    mobileNumber: "03456789432",
+    cnic: "42101-1478523-4",
+    dateOfBirth: "Oct 12, 1988",
+    operatingCity: "Peshawar",
+    joiningDate: "Jan 12, 2018",
+    deals: {
+      successed: {
+        sales: 10,
+        rental: 15,
+      },
+      active: {
+        sales: 2,
+        rental: 1,
+      },
+    },
+    comissionEarned: 550000,
+    badge: "Expert",
   },
 ];

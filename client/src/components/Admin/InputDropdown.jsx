@@ -41,11 +41,12 @@ const InputDropdown = ({
       <div
         onClick={() => toggleDropdown()}
         className={`w-[${size}rem] px-[1rem] flex items-center justify-between border-[2px] rounded-full overflow-hidden cursor-pointer select-none`}
-        style={
-          inputColor
-            ? { borderColor: inputColor, color: inputColor, fontWeight: 700 }
-            : { borderColor: "white", color: "white", fontWeight: 600 }
-        }
+        style={{
+          width: `${size}rem`,
+          borderColor: inputColor ? inputColor : "white",
+          color: inputColor ? inputColor : "white",
+          fontWeight: inputColor ? 700 : 600,
+        }}
       >
         <input
           type="text"

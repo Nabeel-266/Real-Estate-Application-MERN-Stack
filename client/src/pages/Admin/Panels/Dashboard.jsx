@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {
-  dropdownOptions,
+  periodDropdownOptions,
   DR_SummaryByPropertyTypes,
   DR_SummaryByPropertyCities,
 } from "../../../lib/dummyDataAdmin";
@@ -59,7 +59,7 @@ const Dashboard = () => {
       {/* Section One */}
       <section className="w-full flex gap-[2rem]">
         {/* Total Deals & Revenue  */}
-        <div className="w-full h-fit bg-theme-blue rounded-xl px-[1rem] py-[1rem] space-y-[0.6rem] shadow-[0.6rem_0.6rem_1.2rem_#082835d0]">
+        <div className="w-full h-fit bg-theme-blue rounded-xl px-[1rem] py-[1rem] space-y-[0.6rem] shadow-[0.6rem_0.6rem_1.2rem_#08283550]">
           <div className="w-full flex justify-between">
             <h2 className="text-[1.8rem] text-white font-bold">Total DR</h2>
 
@@ -68,7 +68,7 @@ const Dashboard = () => {
               size={"8.5"}
               dataTitle={"totalDR"}
               to={"year"}
-              options={dropdownOptions.year}
+              options={periodDropdownOptions.year}
               selectedYear={selectedPeriodOfData.totalDR.year}
               onSelect={handleSelect}
             />
@@ -102,7 +102,7 @@ const Dashboard = () => {
         </div>
 
         {/* Sales Deals & Revenue */}
-        <div className="w-full h-fit bg-theme-blue rounded-xl px-[1rem] py-[1rem] space-y-[0.6rem] shadow-[0rem_0.6rem_1.2rem_#082835c0]">
+        <div className="w-full h-fit bg-theme-blue rounded-xl px-[1rem] py-[1rem] space-y-[0.6rem] shadow-[0rem_0.6rem_1.2rem_#08283550]">
           <div className="w-full flex justify-between">
             <h2 className="text-[1.8rem] text-white font-bold">Sales DR</h2>
 
@@ -111,7 +111,7 @@ const Dashboard = () => {
               size={"8.5"}
               dataTitle={"salesDR"}
               to={"year"}
-              options={dropdownOptions.year}
+              options={periodDropdownOptions.year}
               selectedYear={selectedPeriodOfData.salesDR.year}
               onSelect={handleSelect}
             />
@@ -145,7 +145,7 @@ const Dashboard = () => {
         </div>
 
         {/* Rental Deals & Revenue */}
-        <div className="w-full h-fit bg-theme-blue rounded-xl px-[1rem] py-[1rem] space-y-[0.6rem] shadow-[0rem_0.6rem_1.2rem_#082835c0]">
+        <div className="w-full h-fit bg-theme-blue rounded-xl px-[1rem] py-[1rem] space-y-[0.6rem] shadow-[0rem_0.6rem_1.2rem_#08283550]">
           <div className="w-full flex justify-between">
             <h2 className="text-[1.8rem] text-white font-bold">Rental DR</h2>
 
@@ -154,7 +154,7 @@ const Dashboard = () => {
               size={"8.5"}
               dataTitle={"rentalDR"}
               to={"year"}
-              options={dropdownOptions.year}
+              options={periodDropdownOptions.year}
               selectedYear={selectedPeriodOfData.rentalDR.year}
               onSelect={handleSelect}
             />
@@ -204,7 +204,7 @@ const Dashboard = () => {
                 drpdBgColor={"#fffffff0"}
                 dataTitle={"graphDR"}
                 to={"year"}
-                options={dropdownOptions.year}
+                options={periodDropdownOptions.year}
                 selectedYear={selectedPeriodOfData.graphDR.year}
                 onSelect={handleSelect}
               />
@@ -215,7 +215,7 @@ const Dashboard = () => {
                 drpdBgColor={"#fffffff0"}
                 dataTitle={"graphDR"}
                 to={"monthRange"}
-                options={dropdownOptions.monthRange}
+                options={periodDropdownOptions.monthRange}
                 selectedYear={selectedPeriodOfData.graphDR.monthRange}
                 onSelect={handleSelect}
               />
@@ -244,7 +244,7 @@ const Dashboard = () => {
                 drpdBgColor={"#fffffff0"}
                 dataTitle={"propertyCategoryDR"}
                 to={"year"}
-                options={dropdownOptions.year}
+                options={periodDropdownOptions.year}
                 selectedYear={selectedPeriodOfData.propertyCategoryDR.year}
                 onSelect={handleSelect}
               />
@@ -255,7 +255,7 @@ const Dashboard = () => {
                 drpdBgColor={"#fffffff0"}
                 dataTitle={"propertyCategoryDR"}
                 to={"month"}
-                options={dropdownOptions.month}
+                options={periodDropdownOptions.month}
                 selectedYear={selectedPeriodOfData.propertyCategoryDR.month}
                 onSelect={handleSelect}
               />
@@ -327,7 +327,7 @@ const Dashboard = () => {
               inputColor={"#022835"}
               dataTitle={"summaryDR"}
               to={"year"}
-              options={dropdownOptions.year}
+              options={periodDropdownOptions.year}
               selectedYear={selectedPeriodOfData.summaryDR.year}
               onSelect={handleSelect}
             />
@@ -338,7 +338,7 @@ const Dashboard = () => {
               inputColor={"#022835"}
               dataTitle={"summaryDR"}
               to={"month"}
-              options={dropdownOptions.month}
+              options={periodDropdownOptions.month}
               selectedYear={selectedPeriodOfData.summaryDR.month}
               onSelect={handleSelect}
             />
@@ -349,7 +349,7 @@ const Dashboard = () => {
           <thead>
             <tr className="*:text-[1.55rem] *:leading-[1.6rem] *:font-bold *:text-theme-blue *:px-[1.2rem] *:py-[1.2rem] border-b-[2px] border-neutral-500">
               <th className="relative group">
-                <div className="flex gap-[0.6rem]">
+                <div className="flex gap-[0.6rem] cursor-pointer">
                   <p>{summarizedBy}</p>
                   <IoMdArrowDropdown />
                 </div>
@@ -405,34 +405,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-// {/* <div ref={dropdownRef} className="relative group/dropdown">
-//   {/* Input Area */}
-//   <div
-//     onClick={() => toggleDropdown("TDRYear")}
-//     className="w-[9rem] px-[0.8rem] flex items-center justify-between border-[2px] border-white rounded-full overflow-hidden cursor-pointer"
-//   >
-//     <input
-//       type="text"
-//       name="TDRYear"
-//       id="TDRYear"
-//       defaultValue={2024}
-//       className="w-full p-[0.2rem] text-[1.4rem] leading-[1.4rem] text-white font-semibold outline-none pointer-events-none bg-transparent"
-//       readOnly
-//     />
-//     <IoMdArrowDropdown className="text-[2.4rem] text-white" />
-//   </div>
-
-//   {/* Dropdown */}
-//   {dropdowns.TDRYear && (
-//     <div className="w-full bg-[#082835d0] backdrop-blur-[20px] absolute top-[100%] left-0 rounded-md shadow-lg shadow-[#082835d0] py-[0.5rem]">
-//       <ul className="text-[1.4rem] leading-[1.4rem] text-white font-semibold *:px-[1.2rem] *:py-[0.6rem]">
-//         {[2022, 2023, 2024].map((year, index) => (
-//           <li key={index} className="hover:bg-theme-blue cursor-pointer">
-//             {year}
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   )}
-// </div>; */}

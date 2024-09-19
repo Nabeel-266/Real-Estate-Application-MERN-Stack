@@ -7,8 +7,14 @@ import { FaUserShield } from "react-icons/fa6";
 
 // Import Components
 import ButtonDropdown from "../../../components/Admin/ButtonDropdown";
+import { agents } from "../../../lib/dummyDataAdmin";
 
 const Agents = () => {
+  function calculateAge(birthYear) {
+    const currentYear = new Date().getFullYear();
+    return currentYear - birthYear;
+  }
+
   return (
     <div className="w-full flex flex-col gap-[3rem]">
       {/* Section Top */}
@@ -67,9 +73,9 @@ const Agents = () => {
 
       {/* Section Bottom */}
       <section className="w-full">
-        <div className="w-full bg-white px-[1.2rem] rounded-xl">
+        <div className="w-full bg-white px-[0.5rem] rounded-xl">
           {/* Top Side */}
-          <div className="w-full relative flex items-center justify-between  py-[1rem] rounded-t-xl">
+          <div className="w-full relative flex items-center justify-between py-[1rem] rounded-t-xl">
             <h2 className="text-[2.2rem] font-bold text-theme-blue">
               Agents Record
             </h2>
@@ -88,31 +94,71 @@ const Agents = () => {
             </div>
           </div>
 
-          <table className="w-full table-auto text-left">
-            <thead>
-              <tr className="*:text-[1.55rem] *:leading-[1.6rem] *:font-bold *:text-neutral-800 *:px-[1.2rem] *:py-[1.2rem] border-b-[2px] border-neutral-600">
-                <th>Hello World</th>
-                <th>Sales | Rental Deals</th>
-                <th>Sales Rvn</th>
-                <th>Rental Rvn</th>
-                <th>Total Rvn</th>
-              </tr>
-            </thead>
-            <tbody>
-              {[1, 2, 3, 4, 5].map((_, index) => (
-                <tr
-                  key={index}
-                  className="border-t-[1px] border-neutral-400 *:text-[1.5rem] *:leading-[1.5rem] *:font-semibold *:text-neutral-700 *:px-[1.2rem] *:py-[1.4rem]"
-                >
-                  <td>Hello World</td>
-                  <td>Deals</td>
-                  <td>PKR 12345</td>
-                  <td>PKR 12345</td>
-                  <td>PKR 12345</td>
+          <div className="w-full overflow-auto">
+            <table className="w-full table-auto text-left">
+              <thead>
+                <tr className="border-b-[2px] border-neutral-600 *:text-[1.55rem] *:leading-[1.6rem] *:font-bold *:text-neutral-800 *:px-[1.5rem] *:py-[1.2rem] *:whitespace-nowrap">
+                  <th>Image</th>
+                  <th>Full Name</th>
+                  <th>Email Address</th>
+                  <th>Mobile Number</th>
+                  <th>Age</th>
+                  <th>Operating City</th>
+                  <th>Joining Date</th>
+                  <th>Successed Deals</th>
+                  <th>Active Deals</th>
+                  <th>Commission Earned</th>
+                  <th>Experience Badge</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {agents.map((agent, index) => (
+                  <tr
+                    key={index}
+                    className="border-t-[1px] border-neutral-400 *:text-[1.5rem] *:leading-[1.5rem] *:font-semibold *:text-neutral-700 *:px-[1.5rem] *:py-[1rem] *:whitespace-nowrap"
+                  >
+                    <td className="flex justify-center">
+                      <img
+                        src="/src/assets/user.png"
+                        alt="Agent"
+                        className="size-[2.6rem] rounded-full bg-theme-blue"
+                      />
+                    </td>
+                    <td>{agent.name}</td>
+                    <td>{agent.email}</td>
+                    <td>{agent.mobileNumber}</td>
+                    <td>{calculateAge(agent.dateOfBirth.split(" ")[2])}</td>
+                    <td>{agent.operatingCity}</td>
+                    <td>{agent.joiningDate}</td>
+                    <td>
+                      Sales - {agent.deals.successed.sales} | Rental -{" "}
+                      {agent.deals.successed.rental}
+                    </td>
+                    <td>
+                      Sales {agent.deals.active.sales} | Rental{" "}
+                      {agent.deals.active.rental}
+                    </td>
+                    <td>PKR {agent.comissionEarned.toLocaleString()}</td>
+                    <td className="text-center">
+                      <span
+                        className={`px-[1.5rem] py-[0.3rem] rounded-full ${
+                          agent.badge === "Junior"
+                            ? "bg-blue-300"
+                            : agent.badge === "Mid-Level"
+                            ? "bg-emerald-300"
+                            : agent.badge === "Senior"
+                            ? "bg-orange-300"
+                            : agent.badge === "Expert" && "bg-purple-300"
+                        }`}
+                      >
+                        {agent.badge}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
     </div>
