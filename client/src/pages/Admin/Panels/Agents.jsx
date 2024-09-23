@@ -1,4 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  agents,
+  agentsDataColumns,
+  agentsDataSortBy,
+} from "../../../lib/dummyDataAdmin";
 
 // Import React Icons
 import { MdSupportAgent } from "react-icons/md";
@@ -6,17 +11,79 @@ import { FaUserTie } from "react-icons/fa";
 import { FaUserShield } from "react-icons/fa6";
 
 // Import Components
-import ButtonDropdown from "../../../components/Admin/ButtonDropdown";
-import { agents } from "../../../lib/dummyDataAdmin";
+import FilterDropdown from "../../../components/Admin/Dropdowns/FilterDropdown";
+import SortDropdown from "../../../components/Admin/Dropdowns/SortDropdown";
+import ColumnsDropdown from "../../../components/Admin/Dropdowns/ColumnsDropdown";
 
 const Agents = () => {
+  const [agentsData, setAgentsData] = useState(agents);
+  const [selectedColumns, setSelectedColumns] = useState(agentsDataColumns);
+
+  // Toggle Agent Data Column visibility
+  const toggleAgentDataColumns = (column) => {
+    setSelectedColumns((prevSelected) =>
+      prevSelected.includes(column)
+        ? prevSelected.filter((col) => col !== column)
+        : [...prevSelected, column]
+    );
+  };
+
+  // Calculate Age by Birth Year
   function calculateAge(birthYear) {
     const currentYear = new Date().getFullYear();
     return currentYear - birthYear;
   }
 
+  // Sort Agents Handler
+  function sortAgentsData(sortBy, orderBy) {
+    return [...agents].sort((a, b) => {
+      let comparison = 0;
+
+      switch (sortBy) {
+        case "Full Name":
+          comparison = a.name.localeCompare(b.name);
+          break;
+
+        case "Age":
+          comparison = a.age - b.age;
+          break;
+
+        case "Joining Date":
+          comparison = new Date(a.joiningDate) - new Date(b.joiningDate);
+          break;
+
+        case "Successed Deals":
+          comparison = a.successedDeals - b.successedDeals;
+          break;
+
+        case "Active Deals":
+          comparison = a.activeDeals - b.activeDeals;
+          break;
+
+        case "Total Earned":
+          comparison = a.totalEarned - b.totalEarned;
+          break;
+
+        case "Highest Earned":
+          comparison = a.highestEarned - b.highestEarned;
+          break;
+
+        case "Experience":
+          comparison = a.experience - b.experience;
+          break;
+
+        default:
+          break;
+      }
+
+      return orderBy === "asc" ? comparison : -comparison;
+    });
+  }
+
+  // console.log(sortAgentsData("Age", "asc"));
+
   return (
-    <div className="w-full flex flex-col gap-[3rem]">
+    <div className="w-full flex flex-col gap-[2.5rem]">
       {/* Section Top */}
       <section className="w-full flex gap-[2rem]">
         {/* Total Agents */}
@@ -72,88 +139,160 @@ const Agents = () => {
       </section>
 
       {/* Section Bottom */}
-      <section className="w-full">
-        <div className="w-full bg-white px-[0.5rem] rounded-xl">
+      <section className="w-full overflow-hidden">
+        <div className="w-full bg-neutral-100 rounded-xl">
           {/* Top Side */}
-          <div className="w-full relative flex items-center justify-between py-[1rem] rounded-t-xl">
-            <h2 className="text-[2.2rem] font-bold text-theme-blue">
+          <div className="w-full relative z-[99] flex items-center justify-between px-[1.5rem] py-[1.5rem]">
+            <h2 className="text-[2.4rem] leading-[2.4rem] font-bold text-theme-blue">
               Agents Record
             </h2>
 
             {/* Display Data Options */}
             <div className="flex items-center gap-[1rem]">
               <div className="relative">
-                <ButtonDropdown to="Sort By" />
+                <SortDropdown dropdownData={agentsDataSortBy} />
               </div>
-              <div className="">
-                <ButtonDropdown to="Filter By" />
-              </div>
+
               <div className="relative">
-                <ButtonDropdown to="Columns" />
+                <ColumnsDropdown
+                  dropdownData={agentsDataColumns}
+                  selectedColumns={selectedColumns}
+                  toggleDataColumns={toggleAgentDataColumns}
+                />
+              </div>
+
+              <div>
+                <FilterDropdown to="Filter By" />
               </div>
             </div>
           </div>
 
-          <div className="w-full overflow-auto">
+          <div className="w-full overflow-auto scroll-smooth scrollbar-slim-x">
             <table className="w-full table-auto text-left">
               <thead>
-                <tr className="border-b-[2px] border-neutral-600 *:text-[1.55rem] *:leading-[1.6rem] *:font-bold *:text-neutral-800 *:px-[1.5rem] *:py-[1.2rem] *:whitespace-nowrap">
+                <tr className="border-b-[2px] border-neutral-600 *:text-[1.55rem] *:leading-[1.6rem] *:font-bold *:text-neutral-800 *:px-[1.6rem] *:py-[1.2rem] *:whitespace-nowrap">
                   <th>Image</th>
                   <th>Full Name</th>
-                  <th>Email Address</th>
-                  <th>Mobile Number</th>
-                  <th>Age</th>
-                  <th>Operating City</th>
-                  <th>Joining Date</th>
-                  <th>Successed Deals</th>
-                  <th>Active Deals</th>
-                  <th>Commission Earned</th>
-                  <th>Experience Badge</th>
+                  {selectedColumns.includes("Email Address") && (
+                    <th>Email Address</th>
+                  )}
+
+                  {selectedColumns.includes("Mobile Number") && (
+                    <th>Mobile Number</th>
+                  )}
+
+                  {selectedColumns.includes("CNIC Number") && (
+                    <th>CNIC Number</th>
+                  )}
+
+                  {selectedColumns.includes("Age") && <th>Age</th>}
+
+                  {selectedColumns.includes("Operating City") && (
+                    <th>Operating City</th>
+                  )}
+
+                  {selectedColumns.includes("Joining Date") && (
+                    <th>Joining Date</th>
+                  )}
+
+                  {selectedColumns.includes("Successed Deals") && (
+                    <th>Successed Deals</th>
+                  )}
+
+                  {selectedColumns.includes("Active Deals") && (
+                    <th>Active Deals</th>
+                  )}
+
+                  {selectedColumns.includes("Total Earned") && (
+                    <th>Total Earned</th>
+                  )}
+
+                  {selectedColumns.includes("Highest Earned") && (
+                    <th>Highest Earned</th>
+                  )}
+
+                  {selectedColumns.includes("Experience Badge") && (
+                    <th>Experience Badge</th>
+                  )}
                 </tr>
               </thead>
               <tbody>
-                {agents.map((agent, index) => (
+                {agentsData.map((agent, index) => (
                   <tr
                     key={index}
-                    className="border-t-[1px] border-neutral-400 *:text-[1.5rem] *:leading-[1.5rem] *:font-semibold *:text-neutral-700 *:px-[1.5rem] *:py-[1rem] *:whitespace-nowrap"
+                    className="border-t-[1px] border-neutral-400 *:text-[1.5rem] *:leading-[1.5rem] *:font-semibold *:text-neutral-700 *:px-[1.6rem] *:py-[0.6rem] *:whitespace-nowrap odd:bg-white"
                   >
-                    <td className="flex justify-center">
+                    <td>
                       <img
-                        src="/src/assets/user.png"
+                        src={agent.image}
                         alt="Agent"
-                        className="size-[2.6rem] rounded-full bg-theme-blue"
+                        className="size-[3.5rem] rounded-full object-cover"
                       />
                     </td>
+
                     <td>{agent.name}</td>
-                    <td>{agent.email}</td>
-                    <td>{agent.mobileNumber}</td>
-                    <td>{calculateAge(agent.dateOfBirth.split(" ")[2])}</td>
-                    <td>{agent.operatingCity}</td>
-                    <td>{agent.joiningDate}</td>
-                    <td>
-                      Sales - {agent.deals.successed.sales} | Rental -{" "}
-                      {agent.deals.successed.rental}
-                    </td>
-                    <td>
-                      Sales {agent.deals.active.sales} | Rental{" "}
-                      {agent.deals.active.rental}
-                    </td>
-                    <td>PKR {agent.comissionEarned.toLocaleString()}</td>
-                    <td className="text-center">
-                      <span
-                        className={`px-[1.5rem] py-[0.3rem] rounded-full ${
-                          agent.badge === "Junior"
-                            ? "bg-blue-300"
-                            : agent.badge === "Mid-Level"
-                            ? "bg-emerald-300"
-                            : agent.badge === "Senior"
-                            ? "bg-orange-300"
-                            : agent.badge === "Expert" && "bg-purple-300"
-                        }`}
-                      >
-                        {agent.badge}
-                      </span>
-                    </td>
+
+                    {selectedColumns.includes("Email Address") && (
+                      <td>{agent.email}</td>
+                    )}
+
+                    {selectedColumns.includes("Mobile Number") && (
+                      <td>{agent.mobileNumber}</td>
+                    )}
+
+                    {selectedColumns.includes("CNIC Number") && (
+                      <td>{agent.cnicNumber}</td>
+                    )}
+
+                    {selectedColumns.includes("Age") && <td>{agent.age}</td>}
+
+                    {selectedColumns.includes("Operating City") && (
+                      <td>{agent.operatingCity}</td>
+                    )}
+
+                    {selectedColumns.includes("Joining Date") && (
+                      <td>{agent.joiningDate}</td>
+                    )}
+
+                    {selectedColumns.includes("Successed Deals") && (
+                      <td>
+                        Sales - {agent.deals.successed.sales} | Rental -{" "}
+                        {agent.deals.successed.rental}
+                      </td>
+                    )}
+
+                    {selectedColumns.includes("Active Deals") && (
+                      <td>
+                        Sales {agent.deals.active.sales} | Rental{" "}
+                        {agent.deals.active.rental}
+                      </td>
+                    )}
+
+                    {selectedColumns.includes("Total Earned") && (
+                      <td>PKR {agent.totalEarned.toLocaleString()}</td>
+                    )}
+
+                    {selectedColumns.includes("Highest Earned") && (
+                      <td>PKR {agent.highestEarned.toLocaleString()}</td>
+                    )}
+
+                    {selectedColumns.includes("Experience Badge") && (
+                      <td>
+                        <span
+                          className={`px-[1.5rem] py-[0.3rem] rounded-full ${
+                            agent.badge === "Junior"
+                              ? "bg-blue-300"
+                              : agent.badge === "Mid-Level"
+                              ? "bg-emerald-300"
+                              : agent.badge === "Senior"
+                              ? "bg-orange-300"
+                              : agent.badge === "Expert" && "bg-purple-300"
+                          }`}
+                        >
+                          {agent.badge}
+                        </span>
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>

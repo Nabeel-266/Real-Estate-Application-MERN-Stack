@@ -11,7 +11,7 @@ import { IoMdArrowDropdown } from "react-icons/io";
 // Import Components
 import LineChart from "../../../components/Admin/Charts/LineChart";
 import DonutChart from "../../../components/Admin/Charts/DonutChart";
-import InputDropdown from "../../../components/Admin/InputDropdown";
+import InputDropdown from "../../../components/Admin/Dropdowns/InputDropdown";
 
 const Dashboard = () => {
   const [summarizedBy, setSummarizedBy] = useState("By Property Types");
