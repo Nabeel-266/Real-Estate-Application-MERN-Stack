@@ -83,7 +83,7 @@ const Agents = () => {
   // console.log(sortAgentsData("Age", "asc"));
 
   return (
-    <div className="w-full flex flex-col gap-[2.5rem]">
+    <div className="w-full flex flex-col gap-[2.5rem] p-[2rem]">
       {/* Section Top */}
       <section className="w-full flex gap-[2rem]">
         {/* Total Agents */}
@@ -139,165 +139,162 @@ const Agents = () => {
       </section>
 
       {/* Section Bottom */}
-      <section className="w-full overflow-hidden">
-        <div className="w-full bg-neutral-100 rounded-xl">
-          {/* Top Side */}
-          <div className="w-full relative z-[99] flex items-center justify-between px-[1.5rem] py-[1.5rem]">
-            <h2 className="text-[2.4rem] leading-[2.4rem] font-bold text-theme-blue">
-              Agents Record
-            </h2>
+      <section className="w-full relative bg-neutral-100 rounded-xl overflow-hidden">
+        {/* Top Header */}
+        <div className="w-full flex items-center justify-between px-[1.5rem] py-[1.5rem]">
+          <h2 className="text-[2.4rem] leading-[2.4rem] font-bold text-theme-blue">
+            Agents Record
+          </h2>
 
-            {/* Display Data Options */}
-            <div className="flex items-center gap-[1rem]">
-              <div className="relative">
-                <SortDropdown dropdownData={agentsDataSortBy} />
-              </div>
-
-              <div className="relative">
-                <ColumnsDropdown
-                  dropdownData={agentsDataColumns}
-                  selectedColumns={selectedColumns}
-                  toggleDataColumns={toggleAgentDataColumns}
-                />
-              </div>
-
-              <div>
-                <FilterDropdown to="Filter By" />
-              </div>
+          {/* Display Data Options */}
+          <div className="flex items-center gap-[1rem] ">
+            <div className="relative">
+              <SortDropdown dropdownData={agentsDataSortBy} />
             </div>
-          </div>
 
-          <div className="w-full overflow-auto scroll-smooth scrollbar-slim-x">
-            <table className="w-full table-auto text-left">
-              <thead>
-                <tr className="border-b-[2px] border-neutral-600 *:text-[1.55rem] *:leading-[1.6rem] *:font-bold *:text-neutral-800 *:px-[1.6rem] *:py-[1.2rem] *:whitespace-nowrap">
-                  <th>Image</th>
-                  <th>Full Name</th>
+            <div className="relative">
+              <ColumnsDropdown
+                dropdownData={agentsDataColumns}
+                selectedColumns={selectedColumns}
+                toggleDataColumns={toggleAgentDataColumns}
+              />
+            </div>
+
+            <FilterDropdown to="Filter By" />
+          </div>
+        </div>
+
+        {/* Table Container */}
+        <div className="w-full overflow-auto scroll-smooth scrollbar-slim-x">
+          <table className="w-full table-auto text-left">
+            <thead>
+              <tr className="border-b-[2px] border-neutral-600 *:text-[1.55rem] *:leading-[1.6rem] *:font-bold *:text-neutral-800 *:px-[1.6rem] *:py-[1.2rem] *:whitespace-nowrap">
+                <th>Image</th>
+                <th>Full Name</th>
+                {selectedColumns.includes("Email Address") && (
+                  <th>Email Address</th>
+                )}
+
+                {selectedColumns.includes("Mobile Number") && (
+                  <th>Mobile Number</th>
+                )}
+
+                {selectedColumns.includes("CNIC Number") && (
+                  <th>CNIC Number</th>
+                )}
+
+                {selectedColumns.includes("Age") && <th>Age</th>}
+
+                {selectedColumns.includes("Operating City") && (
+                  <th>Operating City</th>
+                )}
+
+                {selectedColumns.includes("Joining Date") && (
+                  <th>Joining Date</th>
+                )}
+
+                {selectedColumns.includes("Successed Deals") && (
+                  <th>Successed Deals</th>
+                )}
+
+                {selectedColumns.includes("Active Deals") && (
+                  <th>Active Deals</th>
+                )}
+
+                {selectedColumns.includes("Total Earned") && (
+                  <th>Total Earned</th>
+                )}
+
+                {selectedColumns.includes("Highest Earned") && (
+                  <th>Highest Earned</th>
+                )}
+
+                {selectedColumns.includes("Experience Badge") && (
+                  <th>Experience Badge</th>
+                )}
+              </tr>
+            </thead>
+            <tbody>
+              {agentsData.map((agent, index) => (
+                <tr
+                  key={index}
+                  className="border-t-[1px] border-neutral-400 *:text-[1.5rem] *:leading-[1.5rem] *:font-semibold *:text-neutral-700 *:px-[1.6rem] *:py-[0.6rem] *:whitespace-nowrap odd:bg-white"
+                >
+                  <td>
+                    <img
+                      src={agent.image}
+                      alt="Agent"
+                      className="size-[3.5rem] rounded-full object-cover"
+                    />
+                  </td>
+
+                  <td>{agent.name}</td>
+
                   {selectedColumns.includes("Email Address") && (
-                    <th>Email Address</th>
+                    <td>{agent.email}</td>
                   )}
 
                   {selectedColumns.includes("Mobile Number") && (
-                    <th>Mobile Number</th>
+                    <td>{agent.mobileNumber}</td>
                   )}
 
                   {selectedColumns.includes("CNIC Number") && (
-                    <th>CNIC Number</th>
+                    <td>{agent.cnicNumber}</td>
                   )}
 
-                  {selectedColumns.includes("Age") && <th>Age</th>}
+                  {selectedColumns.includes("Age") && <td>{agent.age}</td>}
 
                   {selectedColumns.includes("Operating City") && (
-                    <th>Operating City</th>
+                    <td>{agent.operatingCity}</td>
                   )}
 
                   {selectedColumns.includes("Joining Date") && (
-                    <th>Joining Date</th>
+                    <td>{agent.joiningDate}</td>
                   )}
 
                   {selectedColumns.includes("Successed Deals") && (
-                    <th>Successed Deals</th>
+                    <td>
+                      Sales - {agent.deals.successed.sales} | Rental -{" "}
+                      {agent.deals.successed.rental}
+                    </td>
                   )}
 
                   {selectedColumns.includes("Active Deals") && (
-                    <th>Active Deals</th>
+                    <td>
+                      Sales {agent.deals.active.sales} | Rental{" "}
+                      {agent.deals.active.rental}
+                    </td>
                   )}
 
                   {selectedColumns.includes("Total Earned") && (
-                    <th>Total Earned</th>
+                    <td>PKR {agent.totalEarned.toLocaleString()}</td>
                   )}
 
                   {selectedColumns.includes("Highest Earned") && (
-                    <th>Highest Earned</th>
+                    <td>PKR {agent.highestEarned.toLocaleString()}</td>
                   )}
 
                   {selectedColumns.includes("Experience Badge") && (
-                    <th>Experience Badge</th>
+                    <td>
+                      <span
+                        className={`px-[1.5rem] py-[0.3rem] rounded-full ${
+                          agent.badge === "Junior"
+                            ? "bg-blue-300"
+                            : agent.badge === "Mid-Level"
+                            ? "bg-emerald-300"
+                            : agent.badge === "Senior"
+                            ? "bg-orange-300"
+                            : agent.badge === "Expert" && "bg-purple-300"
+                        }`}
+                      >
+                        {agent.badge}
+                      </span>
+                    </td>
                   )}
                 </tr>
-              </thead>
-              <tbody>
-                {agentsData.map((agent, index) => (
-                  <tr
-                    key={index}
-                    className="border-t-[1px] border-neutral-400 *:text-[1.5rem] *:leading-[1.5rem] *:font-semibold *:text-neutral-700 *:px-[1.6rem] *:py-[0.6rem] *:whitespace-nowrap odd:bg-white"
-                  >
-                    <td>
-                      <img
-                        src={agent.image}
-                        alt="Agent"
-                        className="size-[3.5rem] rounded-full object-cover"
-                      />
-                    </td>
-
-                    <td>{agent.name}</td>
-
-                    {selectedColumns.includes("Email Address") && (
-                      <td>{agent.email}</td>
-                    )}
-
-                    {selectedColumns.includes("Mobile Number") && (
-                      <td>{agent.mobileNumber}</td>
-                    )}
-
-                    {selectedColumns.includes("CNIC Number") && (
-                      <td>{agent.cnicNumber}</td>
-                    )}
-
-                    {selectedColumns.includes("Age") && <td>{agent.age}</td>}
-
-                    {selectedColumns.includes("Operating City") && (
-                      <td>{agent.operatingCity}</td>
-                    )}
-
-                    {selectedColumns.includes("Joining Date") && (
-                      <td>{agent.joiningDate}</td>
-                    )}
-
-                    {selectedColumns.includes("Successed Deals") && (
-                      <td>
-                        Sales - {agent.deals.successed.sales} | Rental -{" "}
-                        {agent.deals.successed.rental}
-                      </td>
-                    )}
-
-                    {selectedColumns.includes("Active Deals") && (
-                      <td>
-                        Sales {agent.deals.active.sales} | Rental{" "}
-                        {agent.deals.active.rental}
-                      </td>
-                    )}
-
-                    {selectedColumns.includes("Total Earned") && (
-                      <td>PKR {agent.totalEarned.toLocaleString()}</td>
-                    )}
-
-                    {selectedColumns.includes("Highest Earned") && (
-                      <td>PKR {agent.highestEarned.toLocaleString()}</td>
-                    )}
-
-                    {selectedColumns.includes("Experience Badge") && (
-                      <td>
-                        <span
-                          className={`px-[1.5rem] py-[0.3rem] rounded-full ${
-                            agent.badge === "Junior"
-                              ? "bg-blue-300"
-                              : agent.badge === "Mid-Level"
-                              ? "bg-emerald-300"
-                              : agent.badge === "Senior"
-                              ? "bg-orange-300"
-                              : agent.badge === "Expert" && "bg-purple-300"
-                          }`}
-                        >
-                          {agent.badge}
-                        </span>
-                      </td>
-                    )}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+              ))}
+            </tbody>
+          </table>
         </div>
       </section>
     </div>

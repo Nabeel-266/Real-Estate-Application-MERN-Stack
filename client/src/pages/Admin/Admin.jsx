@@ -64,7 +64,7 @@ const Admin = () => {
             </div>
           </header>
 
-          <div className="w-full h-[calc(100dvh-6rem)] p-[2rem] overflow-auto scrollbar-panel">
+          <div className="w-full h-[calc(100dvh-6rem)] overflow-auto scrollbar-panel">
             <Outlet />
           </div>
         </main>

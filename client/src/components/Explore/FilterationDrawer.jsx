@@ -145,7 +145,7 @@ const FilterationDrawer = ({ isDrawerOpen, setIsDrawerOpen }) => {
 
   return (
     <aside
-      className={`w-[20%] min-w-[33rem] h-[calc(100dvh-6rem)] fixed z-[99] bottom-0 right-0 px-[1rem] bg-neutral-50 shadow-neutral-400 shadow-xl border-l-[0.2rem] border-neutral-100 ${
+      className={`w-[20%] min-w-[33rem] h-[calc(100dvh-6rem)] fixed z-[99] bottom-0 right-0 px-[1rem] bg-neutral-50 shadow-xl shadow-[#00000080] ring-2 ring-black ring-opacity-5 border-l-[0.2rem] border-neutral-100 ${
         isDrawerOpen ? "translate-x-[0%]" : "translate-x-[105%]"
       } transition-all duration-200`}
     >

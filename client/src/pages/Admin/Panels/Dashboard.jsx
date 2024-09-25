@@ -55,7 +55,7 @@ const Dashboard = () => {
   }, [summarizedBy]);
 
   return (
-    <div className="w-full flex flex-col gap-[2rem]">
+    <div className="w-full flex flex-col gap-[2rem] p-[2rem]">
       {/* Section One */}
       <section className="w-full flex gap-[2rem]">
         {/* Total Deals & Revenue  */}
