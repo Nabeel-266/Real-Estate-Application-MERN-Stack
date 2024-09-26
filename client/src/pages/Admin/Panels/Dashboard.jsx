@@ -59,7 +59,7 @@ const Dashboard = () => {
       {/* Section One */}
       <section className="w-full flex gap-[2rem]">
         {/* Total Deals & Revenue  */}
-        <div className="w-full h-fit bg-theme-blue rounded-xl px-[1rem] py-[1rem] space-y-[0.6rem] shadow-[0.6rem_0.6rem_1.2rem_#08283550]">
+        <div className="w-full h-fit bg-theme-blue rounded-xl px-[1rem] py-[1rem] space-y-[0.6rem] shadow-[0.4rem_0.4rem_0.8rem_#08283590]">
           <div className="w-full flex justify-between">
             <h2 className="text-[1.8rem] text-white font-bold">Total DR</h2>
 
@@ -102,7 +102,7 @@ const Dashboard = () => {
         </div>
 
         {/* Sales Deals & Revenue */}
-        <div className="w-full h-fit bg-theme-blue rounded-xl px-[1rem] py-[1rem] space-y-[0.6rem] shadow-[0rem_0.6rem_1.2rem_#08283550]">
+        <div className="w-full h-fit bg-theme-blue rounded-xl px-[1rem] py-[1rem] space-y-[0.6rem] shadow-[0.4rem_0.4rem_0.8rem_#08283590]">
           <div className="w-full flex justify-between">
             <h2 className="text-[1.8rem] text-white font-bold">Sales DR</h2>
 
@@ -145,7 +145,7 @@ const Dashboard = () => {
         </div>
 
         {/* Rental Deals & Revenue */}
-        <div className="w-full h-fit bg-theme-blue rounded-xl px-[1rem] py-[1rem] space-y-[0.6rem] shadow-[0rem_0.6rem_1.2rem_#08283550]">
+        <div className="w-full h-fit bg-theme-blue rounded-xl px-[1rem] py-[1rem] space-y-[0.6rem] shadow-[0.4rem_0.4rem_0.8rem_#08283590]">
           <div className="w-full flex justify-between">
             <h2 className="text-[1.8rem] text-white font-bold">Rental DR</h2>
 

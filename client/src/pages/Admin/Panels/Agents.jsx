@@ -87,7 +87,7 @@ const Agents = () => {
       {/* Section Top */}
       <section className="w-full flex gap-[2rem]">
         {/* Total Agents */}
-        <div className="w-fit h-fit flex items-center gap-[3rem] bg-theme-blue px-[1.5rem] py-[1.2rem] rounded-xl shadow-[0.4rem_0.4rem_1rem_#08283580] *:text-white">
+        <div className="w-fit h-fit flex items-center gap-[3rem] bg-theme-blue px-[1.5rem] py-[1.2rem] rounded-xl shadow-[0.4rem_0.4rem_0.8rem_#08283590] *:text-white">
           <div className="space-y-[1rem] select-none">
             <h2 className="text-[1.7rem] leading-[2rem] font-bold whitespace-nowrap">
               Total Agents
@@ -104,7 +104,7 @@ const Agents = () => {
         </div>
 
         {/* Active Agents */}
-        <div className="w-fit h-fit flex items-center gap-[3rem] bg-theme-blue px-[1.5rem] py-[1.2rem] rounded-xl shadow-[0.4rem_0.4rem_1rem_#08283580] *:text-white">
+        <div className="w-fit h-fit flex items-center gap-[3rem] bg-theme-blue px-[1.5rem] py-[1.2rem] rounded-xl shadow-[0.4rem_0.4rem_0.8rem_#08283590] *:text-white">
           <div className="space-y-[1rem] select-none">
             <h2 className="text-[1.7rem] leading-[2rem] font-bold whitespace-nowrap">
               Active Agents
@@ -121,7 +121,7 @@ const Agents = () => {
         </div>
 
         {/* Senior Agents */}
-        <div className="w-fit h-fit flex items-center gap-[3rem] bg-theme-blue px-[1.5rem] py-[1.2rem] rounded-xl shadow-[0.4rem_0.4rem_1rem_#08283580] *:text-white">
+        <div className="w-fit h-fit flex items-center gap-[3rem] bg-theme-blue px-[1.5rem] py-[1.2rem] rounded-xl shadow-[0.4rem_0.4rem_0.8rem_#08283590] *:text-white">
           <div className="space-y-[1rem] select-none">
             <h2 className="text-[1.7rem] leading-[2rem] font-bold whitespace-nowrap">
               Senior Agents
@@ -139,7 +139,7 @@ const Agents = () => {
       </section>
 
       {/* Section Bottom */}
-      <section className="w-full relative bg-neutral-100 rounded-xl overflow-hidden">
+      <section className="w-full relative bg-neutral-100 rounded-xl overflow-hidden border-neutral-200 border-[0.2rem]">
         {/* Top Header */}
         <div className="w-full flex items-center justify-between px-[1.5rem] py-[1.5rem]">
           <h2 className="text-[2.4rem] leading-[2.4rem] font-bold text-theme-blue">
