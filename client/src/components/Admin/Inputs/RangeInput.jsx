@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Range, getTrackBackground } from "react-range";
 
 const RangeInput = ({
@@ -92,4 +93,4 @@ const RangeInput = ({
   );
 };
 
-export default RangeInput;
+export default memo(RangeInput);

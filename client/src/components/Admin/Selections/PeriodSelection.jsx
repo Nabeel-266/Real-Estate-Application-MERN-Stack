@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from "react";
 // Import React Icon
 import { IoMdArrowDropdown } from "react-icons/io";
 
-const InputDropdown = ({
-  size,
+const PeriodSelection = ({
+  width,
   drpdBgColor,
   inputColor,
   dataTitle,
@@ -40,9 +40,9 @@ const InputDropdown = ({
       {/* Input Area */}
       <div
         onClick={() => toggleDropdown()}
-        className={`w-[${size}rem] px-[1rem] flex items-center justify-between border-[2px] rounded-full overflow-hidden cursor-pointer select-none`}
+        className={`px-[1rem] flex items-center justify-between border-[2px] rounded-full overflow-hidden cursor-pointer select-none`}
         style={{
-          width: `${size}rem`,
+          width,
           borderColor: inputColor ? inputColor : "white",
           color: inputColor ? inputColor : "white",
           fontWeight: inputColor ? 700 : 600,
@@ -98,4 +98,4 @@ const InputDropdown = ({
   );
 };
 
-export default InputDropdown;
+export default PeriodSelection;

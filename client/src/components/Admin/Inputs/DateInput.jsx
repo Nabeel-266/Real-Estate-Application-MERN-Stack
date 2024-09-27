@@ -1,4 +1,4 @@
-import React from "react";
+import { memo } from "react";
 
 const DateInput = ({
   inputFor,
@@ -23,4 +23,4 @@ const DateInput = ({
   );
 };
 
-export default DateInput;
+export default memo(DateInput);

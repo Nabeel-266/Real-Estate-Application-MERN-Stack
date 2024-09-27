@@ -1,4 +1,4 @@
-import React from "react";
+import { memo } from "react";
 
 const TypeInput = ({
   inputFor,
@@ -27,4 +27,4 @@ const TypeInput = ({
   );
 };
 
-export default TypeInput;
+export default memo(TypeInput);

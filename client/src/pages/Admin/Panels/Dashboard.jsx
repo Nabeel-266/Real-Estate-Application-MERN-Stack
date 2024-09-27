@@ -11,7 +11,7 @@ import { IoMdArrowDropdown } from "react-icons/io";
 // Import Components
 import LineChart from "../../../components/Admin/Charts/LineChart";
 import DonutChart from "../../../components/Admin/Charts/DonutChart";
-import InputDropdown from "../../../components/Admin/Dropdowns/InputDropdown";
+import PeriodSelection from "../../../components/Admin/Selections/PeriodSelection";
 
 const Dashboard = () => {
   const [summarizedBy, setSummarizedBy] = useState("By Property Types");
@@ -64,8 +64,8 @@ const Dashboard = () => {
             <h2 className="text-[1.8rem] text-white font-bold">Total DR</h2>
 
             {/* Select Year Dropdown */}
-            <InputDropdown
-              size={"8.5"}
+            <PeriodSelection
+              width="8.5rem"
               dataTitle={"totalDR"}
               to={"year"}
               options={periodDropdownOptions.year}
@@ -107,8 +107,8 @@ const Dashboard = () => {
             <h2 className="text-[1.8rem] text-white font-bold">Sales DR</h2>
 
             {/* Select Year Dropdown */}
-            <InputDropdown
-              size={"8.5"}
+            <PeriodSelection
+              width="8.5rem"
               dataTitle={"salesDR"}
               to={"year"}
               options={periodDropdownOptions.year}
@@ -150,8 +150,8 @@ const Dashboard = () => {
             <h2 className="text-[1.8rem] text-white font-bold">Rental DR</h2>
 
             {/* Select Year Dropdown */}
-            <InputDropdown
-              size={"8.5"}
+            <PeriodSelection
+              width="8.5rem"
               dataTitle={"rentalDR"}
               to={"year"}
               options={periodDropdownOptions.year}
@@ -199,8 +199,8 @@ const Dashboard = () => {
 
             <div className="flex gap-[1rem] mb-[0.2rem]">
               {/* Select Year Dropdown */}
-              <InputDropdown
-                size={"8.5"}
+              <PeriodSelection
+                width="8.5rem"
                 drpdBgColor={"#fffffff0"}
                 dataTitle={"graphDR"}
                 to={"year"}
@@ -210,8 +210,8 @@ const Dashboard = () => {
               />
 
               {/* Select Months-Range Dropdown */}
-              <InputDropdown
-                size={"12"}
+              <PeriodSelection
+                width="12rem"
                 drpdBgColor={"#fffffff0"}
                 dataTitle={"graphDR"}
                 to={"monthRange"}
@@ -239,8 +239,8 @@ const Dashboard = () => {
             {/* Select Month & Year */}
             <div className="flex gap-[1rem]">
               {/* Select Year Dropdown */}
-              <InputDropdown
-                size={"8.5"}
+              <PeriodSelection
+                width="8.5rem"
                 drpdBgColor={"#fffffff0"}
                 dataTitle={"propertyCategoryDR"}
                 to={"year"}
@@ -250,8 +250,8 @@ const Dashboard = () => {
               />
 
               {/* Select Month Dropdown */}
-              <InputDropdown
-                size={"8.5"}
+              <PeriodSelection
+                width="8.5rem"
                 drpdBgColor={"#fffffff0"}
                 dataTitle={"propertyCategoryDR"}
                 to={"month"}
@@ -270,7 +270,7 @@ const Dashboard = () => {
                 className={`text-[1.55rem] leading-[1.5rem] font-semibold text-neutral-100 flex items-center gap-[0.4rem] select-none`}
               >
                 <span
-                  className={`size-[1.2rem] rounded-full mb-[0.1rem] bg-slate-600 ${
+                  className={`width-[1.2rem] rounded-full mb-[0.1rem] bg-slate-600 ${
                     index === 0
                       ? "bg-[#00ef87]"
                       : index === 1
@@ -322,8 +322,8 @@ const Dashboard = () => {
           {/* Select Month & Year */}
           <div className="flex gap-[1rem]">
             {/* Select Year Dropdown */}
-            <InputDropdown
-              size={"8.5"}
+            <PeriodSelection
+              width="8.5rem"
               inputColor={"#022835"}
               dataTitle={"summaryDR"}
               to={"year"}
@@ -333,8 +333,8 @@ const Dashboard = () => {
             />
 
             {/* Select Month Dropdown */}
-            <InputDropdown
-              size={"8.5"}
+            <PeriodSelection
+              width="8.5rem"
               inputColor={"#022835"}
               dataTitle={"summaryDR"}
               to={"month"}
