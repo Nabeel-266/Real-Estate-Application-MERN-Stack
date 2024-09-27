@@ -1,4 +1,4 @@
-import React from "react";
+import { memo } from "react";
 
 const MinMaxInput = ({
   inputFor,
@@ -52,4 +52,4 @@ const MinMaxInput = ({
   );
 };
 
-export default MinMaxInput;
+export default memo(MinMaxInput);

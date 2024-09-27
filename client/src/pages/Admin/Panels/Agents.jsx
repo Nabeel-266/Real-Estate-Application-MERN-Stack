@@ -141,8 +141,8 @@ const Agents = () => {
       {/* Section Bottom */}
       <section className="w-full relative bg-neutral-100 rounded-xl overflow-hidden border-neutral-200 border-[0.2rem]">
         {/* Top Header */}
-        <div className="w-full flex items-center justify-between px-[1.5rem] py-[1.5rem]">
-          <h2 className="text-[2.4rem] leading-[2.4rem] font-bold text-theme-blue">
+        <div className="w-full flex items-center justify-between px-[1.5rem] pt-[1.4rem] pb-[1.2rem]">
+          <h2 className="text-[2.3rem] leading-[2.3rem] font-bold text-theme-blue">
             Agents Record
           </h2>
 

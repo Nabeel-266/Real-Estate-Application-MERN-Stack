@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 
 const TypeInput = ({
   inputFor,
@@ -9,7 +9,16 @@ const TypeInput = ({
   labelStyle,
   inputStyle,
   spaceBetween,
+  setQueryHanlder,
 }) => {
+  const [value, setValue] = useState("");
+
+  // Handle input change event and update the query state
+  const handleChange = (e) => {
+    setValue(e.target.value);
+    setQueryHanlder(e.target.name, e.target.value || "");
+  };
+
   return (
     <div className={spaceBetween}>
       <label htmlFor={inputFor} className={labelStyle}>
@@ -22,6 +31,8 @@ const TypeInput = ({
         autoComplete={autoComplete}
         placeholder={placeholder}
         className={inputStyle}
+        value={value}
+        onInput={handleChange}
       />
     </div>
   );

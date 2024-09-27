@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Combobox,
   ComboboxInput,
@@ -25,17 +25,32 @@ import { FiDelete } from "react-icons/fi";
 import SearchSelection from "../Selections/SearchSelection";
 import SimpleSelection from "../Selections/SimpleSelection";
 import MinMaxInput from "../Inputs/MinMaxInput";
+import { useSearchParams } from "react-router-dom";
 
 const ButtonDropdown = ({}) => {
   const filterBtnContRef = useRef(null);
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
   const [ageRange, setAgeRange] = useState([20, 60]);
   const [selectedCity, setSelectedCity] = useState(null);
   const [selectedBadge, setSelectedBadge] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState(null);
   const citiesName = [...cities.map((city) => city.name).sort()];
+  const [filterQuery, setFilterQuery] = useState({});
 
-  // console.log(selectedCity);
+  // console.log(filterQuery);
+
+  const setAgentsFilterQueryHandler = (key, value) => {
+    if (value.length > 0) {
+      setFilterQuery({ ...filterQuery, [key]: value });
+    } else {
+      setFilterQuery((prvQue) => {
+        const newQue = { ...prvQue };
+        delete newQue[key];
+        return newQue;
+      });
+    }
+  };
 
   return (
     <div ref={filterBtnContRef} className="space-y-[0.5rem]">
@@ -81,6 +96,7 @@ const ButtonDropdown = ({}) => {
               labelStyle="inputLabels"
               inputStyle="inputFields"
               spaceBetween="space-y-[0.6rem]"
+              setQueryHanlder={setAgentsFilterQueryHandler}
             />
 
             {/* Filter by Email Address */}
@@ -93,6 +109,7 @@ const ButtonDropdown = ({}) => {
               labelStyle="inputLabels"
               inputStyle="inputFields"
               spaceBetween="space-y-[0.6rem]"
+              setQueryHanlder={setAgentsFilterQueryHandler}
             />
 
             {/* Filter by Phone Number */}
@@ -105,6 +122,7 @@ const ButtonDropdown = ({}) => {
               labelStyle="inputLabels"
               inputStyle="inputFields numberInput"
               spaceBetween="space-y-[0.6rem]"
+              setQueryHanlder={setAgentsFilterQueryHandler}
             />
 
             {/* Filter by CNIC Number */}
@@ -117,6 +135,7 @@ const ButtonDropdown = ({}) => {
               labelStyle="inputLabels"
               inputStyle="inputFields numberInput"
               spaceBetween="space-y-[0.6rem]"
+              setQueryHanlder={setAgentsFilterQueryHandler}
             />
 
             {/* Filter by Age */}
