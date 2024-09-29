@@ -31,17 +31,18 @@ const ButtonDropdown = ({}) => {
   const filterBtnContRef = useRef(null);
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [ageRange, setAgeRange] = useState([20, 60]);
   const [selectedCity, setSelectedCity] = useState(null);
   const [selectedBadge, setSelectedBadge] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState(null);
   const citiesName = [...cities.map((city) => city.name).sort()];
   const [filterQuery, setFilterQuery] = useState({});
 
-  // console.log(filterQuery);
+  console.log(filterQuery);
 
   const setAgentsFilterQueryHandler = (key, value) => {
-    if (value.length > 0) {
+    // console.log(key, value);
+
+    if (value) {
       setFilterQuery({ ...filterQuery, [key]: value });
     } else {
       setFilterQuery((prvQue) => {
@@ -66,7 +67,9 @@ const ButtonDropdown = ({}) => {
       {/* Filter Dropdown */}
       <div
         className={`min-w-[42rem] w-full bg-neutral-50 text-theme-blue absolute top-0 right-0 rounded-l-lg shadow-xl shadow-[#00000040] ring-2 ring-black ring-opacity-5 transition-all duration-300 ${
-          isOpenDropdown ? "translate-y-[-1.5%]" : "translate-y-[-115%]"
+          isOpenDropdown
+            ? "translate-y-[-1.5%] opacity-100"
+            : "translate-y-[-115%] opacity-0"
         }`}
       >
         <div className="flex flex-col pt-[1.6rem] pb-[1rem]">
@@ -96,6 +99,7 @@ const ButtonDropdown = ({}) => {
               labelStyle="inputLabels"
               inputStyle="inputFields"
               spaceBetween="space-y-[0.6rem]"
+              filterQuery={filterQuery}
               setQueryHanlder={setAgentsFilterQueryHandler}
             />
 
@@ -109,6 +113,7 @@ const ButtonDropdown = ({}) => {
               labelStyle="inputLabels"
               inputStyle="inputFields"
               spaceBetween="space-y-[0.6rem]"
+              filterQuery={filterQuery}
               setQueryHanlder={setAgentsFilterQueryHandler}
             />
 
@@ -122,6 +127,7 @@ const ButtonDropdown = ({}) => {
               labelStyle="inputLabels"
               inputStyle="inputFields numberInput"
               spaceBetween="space-y-[0.6rem]"
+              filterQuery={filterQuery}
               setQueryHanlder={setAgentsFilterQueryHandler}
             />
 
@@ -135,65 +141,71 @@ const ButtonDropdown = ({}) => {
               labelStyle="inputLabels"
               inputStyle="inputFields numberInput"
               spaceBetween="space-y-[0.6rem]"
+              filterQuery={filterQuery}
               setQueryHanlder={setAgentsFilterQueryHandler}
             />
 
             {/* Filter by Age */}
             <RangeInput
+              inputFor="Age"
               minValue={20}
               maxValue={60}
-              range={ageRange}
-              setRange={setAgeRange}
               labelText="By Age"
               spaceBetween="space-y-[0.3rem]"
+              filterQuery={filterQuery}
+              setQueryHanlder={setAgentsFilterQueryHandler}
             />
 
             {/* Filter by Joining Date */}
             <DateInput
               inputFor="joiningDate"
               inputType="month"
-              labelText="By Joining Date"
+              labelText="By Joining Month"
               labelStyle="inputLabels"
               inputStyle="inputFields"
               spaceBetween="space-y-[0.6rem]"
+              filterQuery={filterQuery}
+              setQueryHanlder={setAgentsFilterQueryHandler}
             />
 
             {/* Filter by Operting City */}
             <SearchSelection
-              inputFor="operatingCity"
+              selectFor="operatingCity"
               labelText="By Operating City"
               placeholderText="Select a City"
               noOptionMessage="No City Found."
               optionsData={citiesName}
-              selectedValue={selectedCity}
-              setSelectedValue={setSelectedCity}
               labelStyle="inputLabels"
               inputStyle="inputFields"
               spaceBetween="space-y-[0.6rem]"
+              filterQuery={filterQuery}
+              setQueryHanlder={setAgentsFilterQueryHandler}
             />
 
             {/* By Experience Badge */}
             <SimpleSelection
+              selectFor="experienceBadge"
               labelText="By Experience Badge"
               placeholderText="Select a Badge"
               optionsData={["Junior", "Mid-Level", "Senior", "Expert"]}
-              selectedValue={selectedBadge}
-              setSelectedValue={setSelectedBadge}
               labelStyle="inputLabels"
               inputStyle="inputFields"
               spaceBetween="space-y-[0.6rem]"
+              filterQuery={filterQuery}
+              setQueryHanlder={setAgentsFilterQueryHandler}
             />
 
             {/* By Status */}
             <SimpleSelection
+              selectFor="status"
               labelText="By Status"
               placeholderText="Select a Status"
               optionsData={["Active", "Not Active"]}
-              selectedValue={selectedStatus}
-              setSelectedValue={setSelectedStatus}
               labelStyle="inputLabels"
               inputStyle="inputFields"
               spaceBetween="space-y-[0.6rem]"
+              filterQuery={filterQuery}
+              setQueryHanlder={setAgentsFilterQueryHandler}
             />
 
             {/* By Success Deals */}
@@ -205,6 +217,8 @@ const ButtonDropdown = ({}) => {
               inputStyle="inputFields pr-[1rem] focus:border-theme-blue"
               padMinMax={["10rem", "10.4rem"]}
               spaceBetween="space-y-[0.6rem]"
+              filterQuery={filterQuery}
+              setQueryHanlder={setAgentsFilterQueryHandler}
             />
 
             {/* By Total Earned */}
@@ -216,6 +230,8 @@ const ButtonDropdown = ({}) => {
               inputStyle="inputFields pr-[1rem] focus:border-theme-blue"
               padMinMax={["9.6rem", "10rem"]}
               spaceBetween="space-y-[0.6rem]"
+              filterQuery={filterQuery}
+              setQueryHanlder={setAgentsFilterQueryHandler}
             />
 
             {/* By Highest Earned */}
@@ -227,6 +243,8 @@ const ButtonDropdown = ({}) => {
               inputStyle="inputFields pr-[1rem] focus:border-theme-blue"
               padMinMax={["9.6rem", "10rem"]}
               spaceBetween="space-y-[0.6rem]"
+              filterQuery={filterQuery}
+              setQueryHanlder={setAgentsFilterQueryHandler}
             />
           </div>
 

@@ -1,15 +1,30 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import { Range, getTrackBackground } from "react-range";
 
 const RangeInput = ({
+  inputFor,
   minValue,
   maxValue,
-  range,
-  setRange,
   labelText,
   spaceBetween,
+  filterQuery,
+  setQueryHanlder,
 }) => {
+  const [range, setRange] = useState([minValue, maxValue]);
+
   const handleChange = (newValues) => {
+    if (newValues[0] !== range[0] && newValues[0] > minValue) {
+      setQueryHanlder(`min${inputFor}`, newValues[0]);
+    } else if (newValues[0] === minValue) {
+      setQueryHanlder(`min${inputFor}`, "");
+    }
+
+    if (newValues[1] !== range[1] && newValues[1] < maxValue) {
+      setQueryHanlder(`max${inputFor}`, newValues[1]);
+    } else if (newValues[1] === maxValue) {
+      setQueryHanlder(`max${inputFor}`, "");
+    }
+
     setRange(newValues);
   };
 

@@ -13,16 +13,16 @@ import { FiDelete } from "react-icons/fi";
 import { IoMdArrowDropdown } from "react-icons/io";
 
 const SearchSelection = ({
-  inputFor,
+  selectFor,
   labelText,
   placeholderText,
   noOptionMessage,
   optionsData,
-  selectedValue,
-  setSelectedValue,
   labelStyle,
   inputStyle,
   spaceBetween,
+  filterQuery,
+  setQueryHanlder,
 }) => {
   const [query, setQuery] = useState("");
 
@@ -34,23 +34,28 @@ const SearchSelection = ({
           option.toLowerCase().includes(query.toLowerCase())
         );
 
+  // Handle select change event and update the query state
+  const handleChange = (selectOption) => {
+    setQueryHanlder(selectFor, selectOption || null);
+  };
+
   return (
     <div className={spaceBetween}>
-      <label htmlFor={inputFor} className={labelStyle}>
+      <label htmlFor={selectFor} className={labelStyle}>
         {labelText}
       </label>
 
       <Combobox
-        value={selectedValue}
-        onChange={setSelectedValue}
+        value={filterQuery[selectFor] ?? null}
+        onChange={handleChange}
         onClose={() => setQuery("")}
       >
         <div className="w-full relative">
           <ComboboxInput
-            name={inputFor}
-            id={inputFor}
-            onChange={(event) => setQuery(event.target.value)}
-            displayValue={(city) => (city ? city : "")}
+            name={selectFor}
+            id={selectFor}
+            onChange={(e) => setQuery(e.target.value)}
+            displayValue={(value) => (value ? value : "")}
             placeholder={placeholderText}
             className={inputStyle}
           />
@@ -74,30 +79,31 @@ const SearchSelection = ({
                   </span>
                 </ComboboxOption>
 
-                {filteredData.map((city, index) => (
+                {filteredData.map((option, index) => (
                   <ComboboxOption
                     key={index}
-                    value={city}
+                    value={option}
                     className="selectOption"
                   >
-                    {({ selected }) => (
-                      <>
-                        <span
-                          className={`truncate ${
-                            selected ? "font-bold" : "font-semibold"
-                          }`}
-                        >
-                          {city}
-                        </span>
-                        {selected ? (
-                          <span
-                            className={`absolute inset-y-0 left-0 flex items-center ml-[0.8rem]`}
-                          >
-                            <FaCheck />
-                          </span>
-                        ) : null}
-                      </>
-                    )}
+                    <>
+                      <span
+                        className={`truncate ${
+                          filterQuery[selectFor] === option
+                            ? "font-bold"
+                            : "font-semibold"
+                        }`}
+                      >
+                        {option}
+                      </span>
+
+                      <span
+                        className={`absolute inset-y-0 left-0 flex items-center ml-[0.8rem] ${
+                          filterQuery[selectFor] === option ? "block" : "hidden"
+                        }`}
+                      >
+                        <FaCheck />
+                      </span>
+                    </>
                   </ComboboxOption>
                 ))}
               </>

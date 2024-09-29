@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { memo } from "react";
 
 const TypeInput = ({
   inputFor,
@@ -9,14 +9,12 @@ const TypeInput = ({
   labelStyle,
   inputStyle,
   spaceBetween,
+  filterQuery,
   setQueryHanlder,
 }) => {
-  const [value, setValue] = useState("");
-
   // Handle input change event and update the query state
   const handleChange = (e) => {
-    setValue(e.target.value);
-    setQueryHanlder(e.target.name, e.target.value || "");
+    setQueryHanlder(e.target.name, e.target.value);
   };
 
   return (
@@ -31,8 +29,8 @@ const TypeInput = ({
         autoComplete={autoComplete}
         placeholder={placeholder}
         className={inputStyle}
-        value={value}
-        onInput={handleChange}
+        value={filterQuery[inputFor] || ""}
+        onChange={handleChange}
       />
     </div>
   );

@@ -8,7 +8,13 @@ const MinMaxInput = ({
   inputStyle,
   padMinMax,
   spaceBetween,
+  filterQuery,
+  setQueryHanlder,
 }) => {
+  const handleChange = (e) => {
+    setQueryHanlder(e.target.name, e.target.value);
+  };
+
   return (
     <div className={spaceBetween}>
       <h6 className={labelStyle}>{labelText}</h6>
@@ -22,6 +28,8 @@ const MinMaxInput = ({
             type="number"
             name={`min${inputFor}`}
             id={`min${inputFor}`}
+            value={filterQuery[`min${inputFor}`] || ""}
+            onChange={handleChange}
             className={`${inputStyle} numberInput peer/input`}
             style={{ paddingLeft: padMinMax[0] }}
           />
@@ -39,6 +47,8 @@ const MinMaxInput = ({
             type="number"
             name={`max${inputFor}`}
             id={`max${inputFor}`}
+            value={filterQuery[`max${inputFor}`] || ""}
+            onChange={handleChange}
             className={`${inputStyle} numberInput peer/input`}
             style={{ paddingLeft: padMinMax[1] }}
           />

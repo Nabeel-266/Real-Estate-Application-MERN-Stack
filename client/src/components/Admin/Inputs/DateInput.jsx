@@ -7,7 +7,14 @@ const DateInput = ({
   labelStyle,
   inputStyle,
   spaceBetween,
+  filterQuery,
+  setQueryHanlder,
 }) => {
+  // Handle input change event and update the query state
+  const handleChange = (e) => {
+    setQueryHanlder(e.target.name, e.target.value);
+  };
+
   return (
     <div className={spaceBetween}>
       <label htmlFor={inputFor} className={labelStyle}>
@@ -18,6 +25,8 @@ const DateInput = ({
         name={inputFor}
         id={inputFor}
         className={inputStyle}
+        value={filterQuery[inputFor] || ""}
+        onInput={handleChange}
       />
     </div>
   );
