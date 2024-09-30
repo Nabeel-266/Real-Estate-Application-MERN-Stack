@@ -28,7 +28,7 @@ const SortDropdown = ({ dropdownData }) => {
   }, []);
 
   return (
-    <div ref={sortBtnContRef} className="space-y-[0.5rem]">
+    <div ref={sortBtnContRef} className="space-y-[0.6rem]">
       {/* Sort Dropdown Button */}
       <button
         onClick={() => setIsOpenDropdown((prevState) => !prevState)}
@@ -40,7 +40,7 @@ const SortDropdown = ({ dropdownData }) => {
 
       {/* Sort Dropdown */}
       <div
-        className="min-w-[20rem] w-fit overflow-hidden buttonDropdownCont transition-all duration-200"
+        className="buttonDropdownCont"
         style={{
           height: isOpenDropdown
             ? `${dropdownRef.current.scrollHeight}px`
@@ -49,10 +49,10 @@ const SortDropdown = ({ dropdownData }) => {
       >
         <div
           ref={dropdownRef}
-          className="space-y-[0.5rem] pt-[1.2rem] pb-[0.5rem]"
+          className="space-y-[0.5rem] pt-[1.2rem] pb-[0.8rem]"
         >
           {/* Sort by */}
-          <div className="space-y-[0.4rem]">
+          <div className="space-y-[0.5rem]">
             <h5 className="text-[1.4rem] leading-[1.4rem] font-semibold px-[1rem]">
               Sort
             </h5>
@@ -61,7 +61,7 @@ const SortDropdown = ({ dropdownData }) => {
                 <li
                   key={index}
                   // onClick={() => setSummarizedBy(by)}
-                  className="flex items-center relative hover:bg-theme-blue hover:text-white whitespace-nowrap"
+                  className="flex items-center relative hover:text-[1.35rem] hover:bg-cyan-950 whitespace-nowrap"
                 >
                   <span>{by}</span>
                   <FaCheck className="absolute right-[1rem]" />
@@ -71,7 +71,7 @@ const SortDropdown = ({ dropdownData }) => {
           </div>
 
           {/* Order By */}
-          <div className="space-y-[0.4rem] border-t-[0.1rem] border-theme-blue pt-[1rem]">
+          <div className="space-y-[0.5rem] border-t-[0.1rem] border-cyan-950 pt-[0.8rem]">
             <h5 className="text-[1.4rem] leading-[1.4rem] font-semibold px-[1rem]">
               Order
             </h5>
@@ -80,7 +80,7 @@ const SortDropdown = ({ dropdownData }) => {
                 <li
                   key={index}
                   // onClick={() => setOrder(order)}
-                  className="flex items-center gap-[1rem] hover:bg-theme-blue hover:text-white whitespace-nowrap"
+                  className="flex items-center gap-[1rem] hover:bg-cyan-950 whitespace-nowrap"
                 >
                   {order === "Ascending" ? <FaArrowDown /> : <FaArrowUp />}
                   <span>{order}</span>

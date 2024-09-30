@@ -9,8 +9,8 @@ const ColumnsDropdown = ({
   selectedColumns,
   toggleDataColumns,
 }) => {
-  const columnsBtnContRef = useRef(null);
   const dropdownRef = useRef(null);
+  const columnsBtnContRef = useRef(null);
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);
 
   // Dropdown Close when clicked outside
@@ -31,7 +31,7 @@ const ColumnsDropdown = ({
   }, []);
 
   return (
-    <div ref={columnsBtnContRef} className="space-y-[0.5rem]">
+    <div ref={columnsBtnContRef} className="space-y-[0.6rem]">
       {/* Column Dropdown Button */}
       <button
         onClick={() => setIsOpenDropdown((prevState) => !prevState)}
@@ -43,7 +43,7 @@ const ColumnsDropdown = ({
 
       {/* Column Dropdown */}
       <div
-        className="min-w-[20rem] w-fit overflow-hidden buttonDropdownCont transition-all duration-200"
+        className="buttonDropdownCont"
         style={{
           height: isOpenDropdown
             ? `${dropdownRef.current.scrollHeight}px`
@@ -52,17 +52,17 @@ const ColumnsDropdown = ({
       >
         <div
           ref={dropdownRef}
-          className="space-y-[0.6rem] pt-[1.2rem] pb-[0.5rem]"
+          className="space-y-[0.6rem] pt-[1.2rem] pb-[0.8rem]"
         >
           <h5 className="text-[1.4rem] leading-[1.4rem] font-semibold px-[1rem]">
             Select Columns
           </h5>
 
-          <div className="text-[1.3rem] leading-[1.3rem] font-medium *:px-[1rem] *:pr-[1rem] *:py-[0.8rem] *:transition-all *:cursor-pointer">
+          <div className="text-[1.3rem] leading-[1.3rem] font-medium *:px-[1rem] *:py-[0.8rem] *:transition-all *:cursor-pointer">
             {dropdownData.map((column, index) => (
               <label
                 key={index}
-                className="flex items-center relative hover:bg-theme-blue hover:text-white whitespace-nowrap"
+                className="flex items-center relative hover:text-[1.35rem] hover:bg-cyan-950 whitespace-nowrap"
               >
                 <input
                   type="checkbox"

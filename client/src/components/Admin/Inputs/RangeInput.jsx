@@ -10,7 +10,10 @@ const RangeInput = ({
   filterQuery,
   setQueryHanlder,
 }) => {
-  const [range, setRange] = useState([minValue, maxValue]);
+  const [range, setRange] = useState([
+    filterQuery[`min${inputFor}`] || minValue,
+    filterQuery[`max${inputFor}`] || maxValue,
+  ]);
 
   const handleChange = (newValues) => {
     if (newValues[0] !== range[0] && newValues[0] > minValue) {

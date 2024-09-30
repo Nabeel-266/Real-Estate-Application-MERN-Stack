@@ -1,47 +1,48 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  Combobox,
-  ComboboxInput,
-  ComboboxButton,
-  ComboboxOption,
-  ComboboxOptions,
-  Listbox,
-  ListboxButton,
-  ListboxOption,
-  ListboxOptions,
-} from "@headlessui/react";
+import { useSearchParams } from "react-router-dom";
 import { cities } from "../../../lib/dummyData";
+
+// Import React Icons
+import { FaXmark } from "react-icons/fa6";
+import { HiMiniAdjustmentsHorizontal } from "react-icons/hi2";
 
 // Import Component
 import RangeInput from "../Inputs/RangeInput";
 import TypeInput from "../Inputs/TypeInput";
 import DateInput from "../Inputs/DateInput";
-
-// Import React Icons
-import { FaCheck, FaXmark } from "react-icons/fa6";
-import { HiMiniAdjustmentsHorizontal } from "react-icons/hi2";
-import { IoMdArrowDropdown } from "react-icons/io";
-import { FiDelete } from "react-icons/fi";
 import SearchSelection from "../Selections/SearchSelection";
 import SimpleSelection from "../Selections/SimpleSelection";
 import MinMaxInput from "../Inputs/MinMaxInput";
-import { useSearchParams } from "react-router-dom";
 
 const ButtonDropdown = ({}) => {
   const filterBtnContRef = useRef(null);
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [selectedCity, setSelectedCity] = useState(null);
-  const [selectedBadge, setSelectedBadge] = useState(null);
-  const [selectedStatus, setSelectedStatus] = useState(null);
   const citiesName = [...cities.map((city) => city.name).sort()];
   const [filterQuery, setFilterQuery] = useState({});
 
-  console.log(filterQuery);
+  useEffect(() => {
+    setFilterQuery({
+      name: searchParams.get("name") || "",
+      email: searchParams.get("email") || "",
+      mobileNumber: searchParams.get("mobileNumber") || "",
+      cnicNumber: searchParams.get("cnicNumber") || "",
+      minAge: searchParams.get("minAge") || "",
+      maxAge: searchParams.get("maxAge") || "",
+      joiningDate: searchParams.get("joiningDate") || "",
+      operatingCity: searchParams.get("operatingCity") || "",
+      experienceBadge: searchParams.get("experienceBadge") || "",
+      status: searchParams.get("status") || "",
+      minSuccessDeals: searchParams.get("minSuccessDeals") || "",
+      maxSuccessDeals: searchParams.get("maxSuccessDeals") || "",
+      minTotalEarn: searchParams.get("minTotalEarn") || "",
+      maxTotalEarn: searchParams.get("maxTotalEarn") || "",
+      minHighestEarn: searchParams.get("minHighestEarn") || "",
+      maxHighestEarn: searchParams.get("maxHighestEarn") || "",
+    });
+  }, [searchParams]);
 
   const setAgentsFilterQueryHandler = (key, value) => {
-    // console.log(key, value);
-
     if (value) {
       setFilterQuery({ ...filterQuery, [key]: value });
     } else {
@@ -51,6 +52,27 @@ const ButtonDropdown = ({}) => {
         return newQue;
       });
     }
+  };
+
+  // Apply Agents Filter Queries in Search Params
+  const applyAgentsFilterQueryHandler = () => {
+    const filterValues = Object.entries(filterQuery)
+      .filter((objProps) => objProps[1] !== "")
+      .reduce((acc, [key, value]) => {
+        acc[key] = value;
+        return acc;
+      }, {});
+
+    console.log(filterQuery);
+
+    setSearchParams(filterValues);
+    setIsOpenDropdown(false);
+  };
+
+  // Clear Agents Filter Queries in Search Params
+  const clearAgentsFilterQueryHandler = () => {
+    setSearchParams({});
+    setIsOpenDropdown(false);
   };
 
   return (
@@ -249,16 +271,26 @@ const ButtonDropdown = ({}) => {
           </div>
 
           {/* Dropdown Action Button */}
-          <div className="flex items-center justify-end gap-[1.5rem] mx-[1rem] px-[0.6rem] pt-[1.2rem] pb-[0.6rem] border-t-[0.2rem] border-neutral-200">
+          <div className="flex items-center justify-end gap-[1.2rem] mx-[1rem] px-[0.6rem] pt-[1.2rem] pb-[0.6rem] border-t-[0.2rem] border-neutral-200">
             <button
               onClick={() => setIsOpenDropdown(false)}
-              className="text-[1.6rem] leading-[1.6rem] font-bold text-neutral-800 text-center px-[1rem] py-[0.8rem] rounded-full border-[0.2rem] border-neutral-800 whitespace-nowrap hover:bg-neutral-800 hover:text-white transition-all"
+              className="text-[1.6rem] leading-[1.6rem] font-bold text-neutral-800 text-center px-[1.5rem] py-[0.8rem] rounded-full border-[0.2rem] border-neutral-800 whitespace-nowrap hover:bg-neutral-800 hover:text-white transition-all"
             >
-              Cancel
+              Close
             </button>
 
-            <button className="text-[1.6rem] leading-[1.6rem] font-semibold bg-theme-blue text-white text-center px-[1.5rem] py-[0.8rem] rounded-full border-[0.2rem] border-theme-blue whitespace-nowrap active:scale-[0.98] transition-all">
+            <button
+              onClick={() => applyAgentsFilterQueryHandler()}
+              className="text-[1.6rem] leading-[1.6rem] font-semibold bg-theme-blue text-white text-center px-[1.5rem] py-[0.8rem] rounded-full border-[0.2rem] border-theme-blue whitespace-nowrap active:scale-[0.98] transition-all"
+            >
               Apply Filter
+            </button>
+
+            <button
+              onClick={() => clearAgentsFilterQueryHandler()}
+              className="text-[1.6rem] leading-[1.6rem] font-semibold bg-transparent text-theme-blue text-center px-[1.5rem] py-[0.8rem] rounded-full border-[0.2rem] border-theme-blue whitespace-nowrap active:scale-[0.98] transition-all"
+            >
+              Clear Filter
             </button>
           </div>
         </div>

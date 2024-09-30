@@ -36,7 +36,7 @@ const SearchSelection = ({
 
   // Handle select change event and update the query state
   const handleChange = (selectOption) => {
-    setQueryHanlder(selectFor, selectOption || null);
+    setQueryHanlder(selectFor, selectOption || "");
   };
 
   return (
@@ -46,7 +46,7 @@ const SearchSelection = ({
       </label>
 
       <Combobox
-        value={filterQuery[selectFor] ?? null}
+        value={filterQuery[selectFor] ?? ""}
         onChange={handleChange}
         onClose={() => setQuery("")}
       >
@@ -72,7 +72,7 @@ const SearchSelection = ({
             ) : (
               <>
                 {/* Clear Selection Option */}
-                <ComboboxOption value={null} className="selectOptionClearBtn">
+                <ComboboxOption value={""} className="selectOptionClearBtn">
                   <FiDelete className="rotate-180 text-[1.6rem]" />
                   <span className="truncate font-semibold">
                     Clear Selection

@@ -220,7 +220,7 @@
   }
 
   .buttonDropdownCont {
-    @apply bg-theme-blue backdrop-blur-[5px] text-white absolute top-[100%] right-0 rounded-lg shadow-lg shadow-[#00000050] space-y-[0.5rem];
+    @apply min-w-[20rem] w-fit overflow-hidden bg-theme-blue text-white absolute top-[100%] right-0 rounded-lg shadow-lg shadow-[#00000050] transition-all duration-200;
   }
 
   /* --> For Panels Input and Select <-- */

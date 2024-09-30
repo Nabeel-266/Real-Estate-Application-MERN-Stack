@@ -29,7 +29,7 @@ const TypeInput = ({
         autoComplete={autoComplete}
         placeholder={placeholder}
         className={inputStyle}
-        value={filterQuery[inputFor] || ""}
+        value={filterQuery[inputFor]}
         onChange={handleChange}
       />
     </div>
