@@ -270,12 +270,12 @@ const Dashboard = () => {
                 className={`text-[1.55rem] leading-[1.5rem] font-semibold text-neutral-100 flex items-center gap-[0.4rem] select-none`}
               >
                 <span
-                  className={`width-[1.2rem] rounded-full mb-[0.1rem] bg-slate-600 ${
+                  className={`size-[1.2rem] rounded-full mb-[0.1rem]  ${
                     index === 0
-                      ? "bg-[#00ef87]"
+                      ? "bg-cyan-300"
                       : index === 1
-                      ? "bg-[#00b3e5]"
-                      : "bg-[#ff9f40]"
+                      ? "bg-cyan-700"
+                      : "bg-cyan-500"
                   }`}
                 ></span>
                 <span className="whitespace-nowrap">{label}</span>
@@ -288,11 +288,11 @@ const Dashboard = () => {
               data={{
                 label: "Deals",
                 data: [10, 5, 8],
-                backgroundColor: ["#00ef87f0", "#00b3e5f0", "#ff9f40f0"],
-                hoverBackgroundColor: ["#00ef87f0", "#00b3e5f0", "#ff9f40f0"],
+                backgroundColor: ["#67e8f9f0", "#0e7490f0", "#06b6d4f0"],
+                hoverBackgroundColor: ["#67e8f9f0", "#0e7490f0", "#06b6d4f0"],
                 borderWidth: 4,
                 borderColor: "transparent",
-                hoverBorderColor: ["#00ef87", "#00b3e5", "#ff9f40"],
+                hoverBorderColor: ["#67e8f9", "#0e7490", "#06b6d4"],
               }}
             />
 
@@ -300,11 +300,11 @@ const Dashboard = () => {
               data={{
                 label: "Revenue",
                 data: [1000000, 5000000, 2000000],
-                backgroundColor: ["#00ef87f0", "#00b3e5f0", "#ff9f40f0"],
-                hoverBackgroundColor: ["#00ef87f0", "#00b3e5f0", "#ff9f40f0"],
+                backgroundColor: ["#67e8f9f0", "#0e7490f0", "#06b6d4f0"],
+                hoverBackgroundColor: ["#67e8f9f0", "#0e7490f0", "#06b6d4f0"],
                 borderWidth: 4,
                 borderColor: "transparent",
-                hoverBorderColor: ["#00ef87", "#00b3e5", "#ff9f40"],
+                hoverBorderColor: ["#67e8f9", "#0e7490", "#06b6d4"],
               }}
             />
           </div>

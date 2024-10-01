@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
+// Import React Icons
+import { RiUserAddLine } from "react-icons/ri";
+
 // Import Components
 import Sidebar from "../../components/Admin/Sidebar";
+import AddAgentModal from "../../components/Admin/Modals/AddAgentModal";
 
 const Admin = () => {
   const routeLocation = useLocation();
   const [panelTitle, setPanelTitle] = useState("Dashboard");
+  const [isOpenAddAgentModal, setIsOpenAddAgentModal] = useState(false);
 
   useEffect(() => {
     const panelName = routeLocation.pathname.split("/")[2];
@@ -29,7 +34,17 @@ const Admin = () => {
               <span>{panelTitle}</span>
             </h2>
 
-            <div className="flex items-center gap-[1rem] select-none">
+            <div className="flex items-center gap-[1.5rem] select-none">
+              {panelTitle === "Agents" && (
+                <button
+                  onClick={() => setIsOpenAddAgentModal(true)}
+                  className="text-[1.6rem] leading-[2rem] font-semibold text-theme-blue px-[1rem] py-[0.3rem] flex items-center gap-[0.5rem] rounded-lg border-[0.2rem] border-theme-blue whitespace-nowrap hover:bg-theme-blue hover:text-white transition-all"
+                >
+                  <RiUserAddLine size="1.8rem" />
+                  <span>Add Agent</span>
+                </button>
+              )}
+
               <img
                 src="/src/assets/user.png"
                 alt="Admin"
@@ -42,6 +57,11 @@ const Admin = () => {
             <Outlet />
           </div>
         </main>
+
+        {/* Modals */}
+        {isOpenAddAgentModal && (
+          <AddAgentModal setIsOpenModal={setIsOpenAddAgentModal} />
+        )}
       </div>
     </div>
   );

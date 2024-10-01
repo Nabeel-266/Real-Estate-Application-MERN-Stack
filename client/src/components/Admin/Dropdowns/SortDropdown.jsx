@@ -32,7 +32,7 @@ const SortDropdown = ({ dropdownData }) => {
       {/* Sort Dropdown Button */}
       <button
         onClick={() => setIsOpenDropdown((prevState) => !prevState)}
-        className="text-[1.6rem] leading-[1.6rem] font-semibold text-theme-blue px-[1rem] py-[0.4rem] flex items-center gap-[0.5rem] rounded-md border-[0.2rem] border-theme-blue whitespace-nowrap hover:bg-theme-blue hover:text-white transition-all"
+        className="text-[1.6rem] leading-[1.6rem] font-semibold text-theme-blue px-[1rem] py-[0.4rem] flex items-center gap-[0.5rem] rounded-lg border-[0.2rem] border-theme-blue whitespace-nowrap hover:bg-theme-blue hover:text-white transition-all"
       >
         <HiMiniArrowsUpDown size="1.8rem" />
         <span>Sort By</span>

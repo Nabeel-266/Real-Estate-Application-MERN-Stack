@@ -25,7 +25,7 @@ const DateInput = ({
         name={inputFor}
         id={inputFor}
         className={inputStyle}
-        value={filterQuery[inputFor]}
+        value={filterQuery[inputFor] || ""}
         onInput={handleChange}
       />
     </div>

@@ -63,8 +63,6 @@ const ButtonDropdown = ({}) => {
         return acc;
       }, {});
 
-    console.log(filterQuery);
-
     setSearchParams(filterValues);
     setIsOpenDropdown(false);
   };
@@ -80,7 +78,7 @@ const ButtonDropdown = ({}) => {
       {/* Filter Dropdown Button */}
       <button
         onClick={() => setIsOpenDropdown((prevState) => !prevState)}
-        className="text-[1.6rem] leading-[1.6rem] font-semibold text-theme-blue px-[1rem] py-[0.4rem] flex items-center gap-[0.5rem] rounded-md border-[0.2rem] border-theme-blue whitespace-nowrap hover:bg-theme-blue hover:text-white transition-all"
+        className="text-[1.6rem] leading-[1.6rem] font-semibold text-theme-blue px-[1rem] py-[0.4rem] flex items-center gap-[0.5rem] rounded-lg border-[0.2rem] border-theme-blue whitespace-nowrap hover:bg-theme-blue hover:text-white transition-all"
       >
         <HiMiniAdjustmentsHorizontal size="1.8rem" />
         <span>Filter By</span>
@@ -113,7 +111,7 @@ const ButtonDropdown = ({}) => {
           <div className="w-full max-h-[30rem] grid grid-cols-2 gap-[1.5rem] px-[1.2rem] py-[1.2rem] overflow-auto scrollbar-dropdown-dark">
             {/* Filter by Name */}
             <TypeInput
-              inputFor="name"
+              inputFor={["name", "byName"]}
               inputType="text"
               labelText="By Name"
               autoComplete="off"
@@ -121,13 +119,13 @@ const ButtonDropdown = ({}) => {
               labelStyle="inputLabels"
               inputStyle="inputFields"
               spaceBetween="space-y-[0.6rem]"
-              filterQuery={filterQuery}
-              setQueryHanlder={setAgentsFilterQueryHandler}
+              state={filterQuery}
+              setState={setAgentsFilterQueryHandler}
             />
 
             {/* Filter by Email Address */}
             <TypeInput
-              inputFor="email"
+              inputFor={["email", "byEmail"]}
               inputType="text"
               labelText="By Email Address"
               autoComplete="off"
@@ -135,13 +133,13 @@ const ButtonDropdown = ({}) => {
               labelStyle="inputLabels"
               inputStyle="inputFields"
               spaceBetween="space-y-[0.6rem]"
-              filterQuery={filterQuery}
-              setQueryHanlder={setAgentsFilterQueryHandler}
+              state={filterQuery}
+              setState={setAgentsFilterQueryHandler}
             />
 
             {/* Filter by Phone Number */}
             <TypeInput
-              inputFor="mobileNumber"
+              inputFor={["mobileNumber", "byMobileNumber"]}
               inputType="number"
               labelText="By Mobile Number"
               autoComplete="off"
@@ -149,13 +147,13 @@ const ButtonDropdown = ({}) => {
               labelStyle="inputLabels"
               inputStyle="inputFields numberInput"
               spaceBetween="space-y-[0.6rem]"
-              filterQuery={filterQuery}
-              setQueryHanlder={setAgentsFilterQueryHandler}
+              state={filterQuery}
+              setState={setAgentsFilterQueryHandler}
             />
 
             {/* Filter by CNIC Number */}
             <TypeInput
-              inputFor="cnicNumber"
+              inputFor={["cnicNumber", "byCNICNumber"]}
               inputType="number"
               labelText="By CNIC Number"
               autoComplete="off"
@@ -163,8 +161,8 @@ const ButtonDropdown = ({}) => {
               labelStyle="inputLabels"
               inputStyle="inputFields numberInput"
               spaceBetween="space-y-[0.6rem]"
-              filterQuery={filterQuery}
-              setQueryHanlder={setAgentsFilterQueryHandler}
+              state={filterQuery}
+              setState={setAgentsFilterQueryHandler}
             />
 
             {/* Filter by Age */}
@@ -274,21 +272,21 @@ const ButtonDropdown = ({}) => {
           <div className="flex items-center justify-end gap-[1.2rem] mx-[1rem] px-[0.6rem] pt-[1.2rem] pb-[0.6rem] border-t-[0.2rem] border-neutral-200">
             <button
               onClick={() => setIsOpenDropdown(false)}
-              className="text-[1.6rem] leading-[1.6rem] font-bold text-neutral-800 text-center px-[1.5rem] py-[0.8rem] rounded-full border-[0.2rem] border-neutral-800 whitespace-nowrap hover:bg-neutral-800 hover:text-white transition-all"
+              className="text-[1.6rem] leading-[1.6rem] font-bold text-neutral-800 text-center px-[1.5rem] py-[0.6rem] rounded-full border-[0.2rem] border-neutral-800 whitespace-nowrap hover:bg-neutral-800 hover:text-white transition-all"
             >
               Close
             </button>
 
             <button
               onClick={() => applyAgentsFilterQueryHandler()}
-              className="text-[1.6rem] leading-[1.6rem] font-semibold bg-theme-blue text-white text-center px-[1.5rem] py-[0.8rem] rounded-full border-[0.2rem] border-theme-blue whitespace-nowrap active:scale-[0.98] transition-all"
+              className="text-[1.6rem] leading-[1.6rem] font-semibold bg-theme-blue text-white text-center px-[1.5rem] py-[0.6rem] rounded-full border-[0.2rem] border-theme-blue whitespace-nowrap active:scale-[0.98] transition-all"
             >
               Apply Filter
             </button>
 
             <button
               onClick={() => clearAgentsFilterQueryHandler()}
-              className="text-[1.6rem] leading-[1.6rem] font-semibold bg-transparent text-theme-blue text-center px-[1.5rem] py-[0.8rem] rounded-full border-[0.2rem] border-theme-blue whitespace-nowrap active:scale-[0.98] transition-all"
+              className="text-[1.6rem] leading-[1.6rem] font-semibold bg-transparent text-theme-blue text-center px-[1.5rem] py-[0.6rem] rounded-full border-[0.2rem] border-theme-blue whitespace-nowrap active:scale-[0.98] transition-all"
             >
               Clear Filter
             </button>

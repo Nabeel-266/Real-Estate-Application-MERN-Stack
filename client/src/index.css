@@ -244,6 +244,14 @@
   .selectOptionClearBtn {
     @apply select-none relative py-[0.5rem] pl-[0.8rem] pr-[1rem] text-[1.4rem] leading-[1.8rem] text-red-700 hover:text-white hover:bg-red-500 transition-all flex items-center gap-[0.6rem];
   }
+
+  .formInputLabels {
+    @apply text-[1.6rem] leading-[1.6rem] font-bold text-theme-blue px-[0.5rem] cursor-default;
+  }
+
+  .formInputFields {
+    @apply w-full text-[1.55rem] leading-[1.5rem] font-semibold text-neutral-800 px-[0.8rem] py-[0.6rem] rounded-lg outline-none bg-transparent border-[0.2rem] border-neutral-400 focus:border-theme-blue placeholder:text-neutral-700 transition-all select-none;
+  }
 }
 
 /* @layer utilities {} */

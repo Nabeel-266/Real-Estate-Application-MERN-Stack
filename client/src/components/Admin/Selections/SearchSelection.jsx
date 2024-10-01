@@ -73,7 +73,7 @@ const SearchSelection = ({
               <>
                 {/* Clear Selection Option */}
                 <ComboboxOption value={""} className="selectOptionClearBtn">
-                  <FiDelete className="rotate-180 text-[1.6rem]" />
+                  <FiDelete className="text-[1.6rem]" />
                   <span className="truncate font-semibold">
                     Clear Selection
                   </span>

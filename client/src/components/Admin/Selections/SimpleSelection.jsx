@@ -43,7 +43,7 @@ const SimpleSelection = ({
           <ListboxOptions className="selectOptionsBox">
             {/* Clear Selection Option */}
             <ListboxOption value={null} className="selectOptionClearBtn">
-              <FiDelete className="rotate-180 text-[1.6rem]" />
+              <FiDelete className="text-[1.6rem]" />
               <span className="truncate font-semibold">Clear Selection</span>
             </ListboxOption>
 

@@ -6,9 +6,8 @@ import {
 } from "../../../lib/dummyDataAdmin";
 
 // Import React Icons
-import { MdSupportAgent } from "react-icons/md";
-import { FaUserTie } from "react-icons/fa";
-import { FaUserShield } from "react-icons/fa6";
+import { FaUsers } from "react-icons/fa";
+import { FaUserCheck, FaUserTie } from "react-icons/fa6";
 
 // Import Components
 import FilterDropdown from "../../../components/Admin/Dropdowns/FilterDropdown";
@@ -87,7 +86,7 @@ const Agents = () => {
       {/* Section Top */}
       <section className="w-full flex gap-[2rem]">
         {/* Total Agents */}
-        <div className="w-fit h-fit flex items-center gap-[3rem] bg-theme-blue px-[1.5rem] py-[1.2rem] rounded-xl shadow-[0.4rem_0.4rem_0.8rem_#08283590] *:text-white">
+        <div className="w-fit h-fit flex items-center gap-[3rem] bg-theme-blue px-[1.5rem] py-[1.2rem] rounded-xl shadow-[0.4rem_0.4rem_0.8rem_#00000060] *:text-white">
           <div className="space-y-[1rem] select-none">
             <h2 className="text-[1.7rem] leading-[2rem] font-bold whitespace-nowrap">
               Total Agents
@@ -99,12 +98,12 @@ const Agents = () => {
           </div>
 
           <div className="flex items-center justify-center">
-            <MdSupportAgent size="5rem" />
+            <FaUsers size="5rem" />
           </div>
         </div>
 
         {/* Active Agents */}
-        <div className="w-fit h-fit flex items-center gap-[3rem] bg-theme-blue px-[1.5rem] py-[1.2rem] rounded-xl shadow-[0.4rem_0.4rem_0.8rem_#08283590] *:text-white">
+        <div className="w-fit h-fit flex items-center gap-[3rem] bg-theme-blue px-[1.5rem] py-[1.2rem] rounded-xl shadow-[0.4rem_0.4rem_0.8rem_#00000060] *:text-white">
           <div className="space-y-[1rem] select-none">
             <h2 className="text-[1.7rem] leading-[2rem] font-bold whitespace-nowrap">
               Active Agents
@@ -116,15 +115,15 @@ const Agents = () => {
           </div>
 
           <div className="flex items-center justify-center">
-            <FaUserTie size="3.8rem" />
+            <FaUserCheck size="4.5rem" />
           </div>
         </div>
 
-        {/* Senior Agents */}
-        <div className="w-fit h-fit flex items-center gap-[3rem] bg-theme-blue px-[1.5rem] py-[1.2rem] rounded-xl shadow-[0.4rem_0.4rem_0.8rem_#08283590] *:text-white">
+        {/* Expert Agents */}
+        <div className="w-fit h-fit flex items-center gap-[3rem] bg-theme-blue px-[1.5rem] py-[1.2rem] rounded-xl shadow-[0.4rem_0.4rem_0.8rem_#00000060] *:text-white">
           <div className="space-y-[1rem] select-none">
             <h2 className="text-[1.7rem] leading-[2rem] font-bold whitespace-nowrap">
-              Senior Agents
+              Expert Agents
             </h2>
 
             <p className="text-[3rem] leading-[3.2rem] ml-[0.5rem] font-bold text-theme-yellow">
@@ -133,13 +132,13 @@ const Agents = () => {
           </div>
 
           <div className="flex items-center justify-center">
-            <FaUserShield size="4.4rem" />
+            <FaUserTie size="4rem" />
           </div>
         </div>
       </section>
 
       {/* Section Bottom */}
-      <section className="w-full relative bg-neutral-100 rounded-xl overflow-hidden border-neutral-200 border-[0.2rem]">
+      <section className="w-full relative bg-neutral-100 rounded-xl overflow-hidden border-neutral-300 border-[0.2rem]">
         {/* Top Header */}
         <div className="w-full flex items-center justify-between px-[1.5rem] pt-[1.4rem] pb-[1.2rem]">
           <h2 className="text-[2.3rem] leading-[2.3rem] font-bold text-theme-blue">

@@ -49,8 +49,8 @@ const LineChart = ({ selectedPeriodOfData }) => {
           selectedPeriodOfData === "Jan - Jun"
             ? [100000, 200000, 350000, 525658, 600000, 400000]
             : [20000, 525658, 300000, 100000, 600000, 15658],
-        borderColor: "#00bbef",
-        pointBackgroundColor: "#00bbef",
+        borderColor: "#06b6d4",
+        pointBackgroundColor: "#06b6d4",
         yAxisID: "y",
         ...commonDatasetsStyle,
       },
@@ -60,8 +60,8 @@ const LineChart = ({ selectedPeriodOfData }) => {
           selectedPeriodOfData === "Jan - Jun"
             ? [200000, 500000, 350000, 300000, 400000, 200000]
             : [500000, 450000, 300000, 400000, 300000, 400000],
-        borderColor: "#ff9226",
-        pointBackgroundColor: "#ff9226",
+        borderColor: "#10b981",
+        pointBackgroundColor: "#10b981",
         yAxisID: "y",
         ...commonDatasetsStyle,
       },
@@ -71,8 +71,8 @@ const LineChart = ({ selectedPeriodOfData }) => {
           selectedPeriodOfData === "Jan - Jun"
             ? [300000, 400000, 350000, 400000, 200000, 500000]
             : [200000, 500000, 450000, 450000, 300000, 400000],
-        borderColor: "#00f461",
-        pointBackgroundColor: "#00f461",
+        borderColor: "#6366f1",
+        pointBackgroundColor: "#6366f1",
         yAxisID: "y",
         ...commonDatasetsStyle,
       },
@@ -83,8 +83,8 @@ const LineChart = ({ selectedPeriodOfData }) => {
           selectedPeriodOfData === "Jan - Jun"
             ? [10, 20, 30, 40, 50, 60]
             : [70, 80, 90, 100, 110, 120],
-        borderColor: "#0085aa",
-        pointBackgroundColor: "#0085aa",
+        borderColor: "#06748e",
+        pointBackgroundColor: "#06748e",
         yAxisID: "y1",
         ...commonDatasetsStyle,
       },
@@ -94,8 +94,8 @@ const LineChart = ({ selectedPeriodOfData }) => {
           selectedPeriodOfData === "Jan - Jun"
             ? [7, 10, 24, 25, 22, 15]
             : [32, 52, 78, 82, 65, 95],
-        borderColor: "#ce6f10",
-        pointBackgroundColor: "#ce6f10",
+        borderColor: "#047857",
+        pointBackgroundColor: "#047857",
         yAxisID: "y1",
         ...commonDatasetsStyle,
       },
@@ -105,8 +105,8 @@ const LineChart = ({ selectedPeriodOfData }) => {
           selectedPeriodOfData === "Jan - Jun"
             ? [3, 10, 6, 15, 28, 45]
             : [38, 28, 12, 18, 45, 25],
-        borderColor: "#06a046",
-        pointBackgroundColor: "#06a046",
+        borderColor: "#3730a3",
+        pointBackgroundColor: "#3730a3",
         yAxisID: "y1",
         ...commonDatasetsStyle,
       },
@@ -291,7 +291,7 @@ const LineChart = ({ selectedPeriodOfData }) => {
   };
 
   return (
-    <div className="w-full flex flex-col gap-[2rem] mt-[0.5rem]">
+    <div className="w-full flex flex-col gap-[2rem] mt-[0.5rem] bg-emerald-00">
       {/* Custom Legend  */}
       <div className="w-full flex flex-wrap gap-[1.2rem] pr-[6%]">
         {chartData?.datasets.map((dataset, index) => (
