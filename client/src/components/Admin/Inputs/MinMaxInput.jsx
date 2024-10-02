@@ -7,7 +7,7 @@ const MinMaxInput = ({
   labelStyle,
   inputStyle,
   padMinMax,
-  spaceBetween,
+  contStyle,
   filterQuery,
   setQueryHanlder,
 }) => {
@@ -16,7 +16,7 @@ const MinMaxInput = ({
   };
 
   return (
-    <div className={spaceBetween}>
+    <div className={contStyle}>
       <h6 className={labelStyle}>{labelText}</h6>
 
       <div className="w-full flex gap-[1rem]">

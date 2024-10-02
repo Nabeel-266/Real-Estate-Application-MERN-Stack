@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { Range, getTrackBackground } from "react-range";
 
 const RangeInput = ({
@@ -6,33 +6,37 @@ const RangeInput = ({
   minValue,
   maxValue,
   labelText,
-  spaceBetween,
-  filterQuery,
-  setQueryHanlder,
+  contStyle,
+  state,
+  setStateHandler,
 }) => {
-  const [range, setRange] = useState([
-    filterQuery[`min${inputFor}`] || minValue,
-    filterQuery[`max${inputFor}`] || maxValue,
-  ]);
+  const [range, setRange] = useState([minValue, maxValue]);
+
+  useEffect(() => {
+    setRange([
+      +state[`min${inputFor}`] || minValue,
+      +state[`max${inputFor}`] || maxValue,
+    ]);
+  }, [state]);
 
   const handleChange = (newValues) => {
     if (newValues[0] !== range[0] && newValues[0] > minValue) {
-      setQueryHanlder(`min${inputFor}`, newValues[0]);
+      setStateHandler(`min${inputFor}`, newValues[0]);
     } else if (newValues[0] === minValue) {
-      setQueryHanlder(`min${inputFor}`, "");
+      setStateHandler(`min${inputFor}`, "");
     }
 
     if (newValues[1] !== range[1] && newValues[1] < maxValue) {
-      setQueryHanlder(`max${inputFor}`, newValues[1]);
+      setStateHandler(`max${inputFor}`, newValues[1]);
     } else if (newValues[1] === maxValue) {
-      setQueryHanlder(`max${inputFor}`, "");
+      setStateHandler(`max${inputFor}`, "");
     }
 
     setRange(newValues);
   };
 
   return (
-    <div className={spaceBetween}>
+    <div className={contStyle}>
       <label className="text-[1.6rem] leading-[1.6rem] font-bold text-theme-blue px-[0.5rem]">
         {labelText}: {range[0]} - {range[1]}
       </label>

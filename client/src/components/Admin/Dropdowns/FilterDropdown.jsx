@@ -118,9 +118,9 @@ const ButtonDropdown = ({}) => {
               placeholder="eg. Ahmed Bilal"
               labelStyle="inputLabels"
               inputStyle="inputFields"
-              spaceBetween="space-y-[0.6rem]"
+              contStyle="space-y-[0.6rem]"
               state={filterQuery}
-              setState={setAgentsFilterQueryHandler}
+              setStateHandler={setAgentsFilterQueryHandler}
             />
 
             {/* Filter by Email Address */}
@@ -132,9 +132,9 @@ const ButtonDropdown = ({}) => {
               placeholder="eg. abc@example.com"
               labelStyle="inputLabels"
               inputStyle="inputFields"
-              spaceBetween="space-y-[0.6rem]"
+              contStyle="space-y-[0.6rem]"
               state={filterQuery}
-              setState={setAgentsFilterQueryHandler}
+              setStateHandler={setAgentsFilterQueryHandler}
             />
 
             {/* Filter by Phone Number */}
@@ -146,9 +146,9 @@ const ButtonDropdown = ({}) => {
               placeholder="eg. 03xxxxxxxxx"
               labelStyle="inputLabels"
               inputStyle="inputFields numberInput"
-              spaceBetween="space-y-[0.6rem]"
+              contStyle="space-y-[0.6rem]"
               state={filterQuery}
-              setState={setAgentsFilterQueryHandler}
+              setStateHandler={setAgentsFilterQueryHandler}
             />
 
             {/* Filter by CNIC Number */}
@@ -160,9 +160,9 @@ const ButtonDropdown = ({}) => {
               placeholder="eg. 42101xxxxxxxx"
               labelStyle="inputLabels"
               inputStyle="inputFields numberInput"
-              spaceBetween="space-y-[0.6rem]"
+              contStyle="space-y-[0.6rem]"
               state={filterQuery}
-              setState={setAgentsFilterQueryHandler}
+              setStateHandler={setAgentsFilterQueryHandler}
             />
 
             {/* Filter by Age */}
@@ -171,35 +171,35 @@ const ButtonDropdown = ({}) => {
               minValue={20}
               maxValue={60}
               labelText="By Age"
-              spaceBetween="space-y-[0.3rem]"
-              filterQuery={filterQuery}
-              setQueryHanlder={setAgentsFilterQueryHandler}
+              contStyle="space-y-[0.3rem]"
+              state={filterQuery}
+              setStateHandler={setAgentsFilterQueryHandler}
             />
 
             {/* Filter by Joining Date */}
             <DateInput
-              inputFor="joiningDate"
+              inputFor={["joiningDate", "byJoiningDate"]}
               inputType="month"
               labelText="By Joining Month"
               labelStyle="inputLabels"
               inputStyle="inputFields"
-              spaceBetween="space-y-[0.6rem]"
-              filterQuery={filterQuery}
-              setQueryHanlder={setAgentsFilterQueryHandler}
+              contStyle="space-y-[0.6rem]"
+              state={filterQuery}
+              setStateHandler={setAgentsFilterQueryHandler}
             />
 
             {/* Filter by Operting City */}
             <SearchSelection
-              selectFor="operatingCity"
+              selectFor={["operatingCity", "byOperatingCity"]}
               labelText="By Operating City"
               placeholderText="Select a City"
               noOptionMessage="No City Found."
               optionsData={citiesName}
               labelStyle="inputLabels"
               inputStyle="inputFields"
-              spaceBetween="space-y-[0.6rem]"
-              filterQuery={filterQuery}
-              setQueryHanlder={setAgentsFilterQueryHandler}
+              contStyle="space-y-[0.6rem]"
+              state={filterQuery}
+              setStateHandler={setAgentsFilterQueryHandler}
             />
 
             {/* By Experience Badge */}
@@ -210,9 +210,9 @@ const ButtonDropdown = ({}) => {
               optionsData={["Junior", "Mid-Level", "Senior", "Expert"]}
               labelStyle="inputLabels"
               inputStyle="inputFields"
-              spaceBetween="space-y-[0.6rem]"
-              filterQuery={filterQuery}
-              setQueryHanlder={setAgentsFilterQueryHandler}
+              contStyle="space-y-[0.6rem]"
+              state={filterQuery}
+              setStateHanlder={setAgentsFilterQueryHandler}
             />
 
             {/* By Status */}
@@ -223,9 +223,9 @@ const ButtonDropdown = ({}) => {
               optionsData={["Active", "Not Active"]}
               labelStyle="inputLabels"
               inputStyle="inputFields"
-              spaceBetween="space-y-[0.6rem]"
-              filterQuery={filterQuery}
-              setQueryHanlder={setAgentsFilterQueryHandler}
+              contStyle="space-y-[0.6rem]"
+              state={filterQuery}
+              setStateHanlder={setAgentsFilterQueryHandler}
             />
 
             {/* By Success Deals */}
@@ -236,7 +236,7 @@ const ButtonDropdown = ({}) => {
               labelStyle="inputLabels"
               inputStyle="inputFields pr-[1rem] focus:border-theme-blue"
               padMinMax={["10rem", "10.4rem"]}
-              spaceBetween="space-y-[0.6rem]"
+              contStyle="space-y-[0.6rem]"
               filterQuery={filterQuery}
               setQueryHanlder={setAgentsFilterQueryHandler}
             />
@@ -249,7 +249,7 @@ const ButtonDropdown = ({}) => {
               labelStyle="inputLabels"
               inputStyle="inputFields pr-[1rem] focus:border-theme-blue"
               padMinMax={["9.6rem", "10rem"]}
-              spaceBetween="space-y-[0.6rem]"
+              contStyle="space-y-[0.6rem]"
               filterQuery={filterQuery}
               setQueryHanlder={setAgentsFilterQueryHandler}
             />
@@ -262,7 +262,7 @@ const ButtonDropdown = ({}) => {
               labelStyle="inputLabels"
               inputStyle="inputFields pr-[1rem] focus:border-theme-blue"
               padMinMax={["9.6rem", "10rem"]}
-              spaceBetween="space-y-[0.6rem]"
+              contStyle="space-y-[0.6rem]"
               filterQuery={filterQuery}
               setQueryHanlder={setAgentsFilterQueryHandler}
             />

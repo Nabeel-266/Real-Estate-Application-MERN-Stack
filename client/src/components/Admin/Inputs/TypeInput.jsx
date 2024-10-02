@@ -8,17 +8,17 @@ const TypeInput = ({
   placeholder,
   labelStyle,
   inputStyle,
-  spaceBetween,
+  contStyle,
   state,
-  setState,
+  setStateHandler,
 }) => {
   // Handle input change event and update the query state
   const handleChange = (e) => {
-    setState(e.target.name, e.target.value);
+    setStateHandler(e.target.name, e.target.value);
   };
 
   return (
-    <div className={spaceBetween}>
+    <div className={contStyle}>
       <label htmlFor={inputFor[1]} className={labelStyle}>
         {labelText}
       </label>
@@ -29,9 +29,10 @@ const TypeInput = ({
         autoComplete={autoComplete}
         placeholder={placeholder}
         className={inputStyle}
-        value={state[inputFor] || ""}
+        value={state[inputFor[0]] || ""}
         onChange={handleChange}
       />
+      <p className="formInputErrors hidden">Error Message is here</p>
     </div>
   );
 };

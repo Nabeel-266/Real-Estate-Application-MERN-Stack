@@ -234,7 +234,7 @@
   }
 
   .selectOptionsBox {
-    @apply w-full max-h-[18rem] absolute bottom-[100%] z-[10] bg-white rounded-2xl py-[0.5rem] shadow-lg ring-1 ring-black ring-opacity-5 overflow-auto scrollbar-panel border-[0.2rem] border-neutral-400 *:cursor-pointer;
+    @apply w-full max-h-[18.2rem] absolute bottom-[100%] z-[10] bg-white rounded-2xl py-[0.5rem] shadow-lg ring-1 ring-black ring-opacity-5 overflow-auto scrollbar-dropdown-dark border-[0.2rem] border-neutral-400 *:cursor-pointer;
   }
 
   .selectOption {
@@ -251,6 +251,10 @@
 
   .formInputFields {
     @apply w-full text-[1.55rem] leading-[1.5rem] font-semibold text-neutral-800 px-[0.8rem] py-[0.6rem] rounded-lg outline-none bg-transparent border-[0.2rem] border-neutral-400 focus:border-theme-blue placeholder:text-neutral-700 transition-all select-none;
+  }
+
+  .formInputErrors {
+    @apply mt-[0.6rem] px-[0.5rem] text-[1.3rem] leading-[1.3rem] text-red-800 font-semibold;
   }
 }
 

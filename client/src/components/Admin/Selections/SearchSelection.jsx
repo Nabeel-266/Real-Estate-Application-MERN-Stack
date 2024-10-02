@@ -20,9 +20,9 @@ const SearchSelection = ({
   optionsData,
   labelStyle,
   inputStyle,
-  spaceBetween,
-  filterQuery,
-  setQueryHanlder,
+  contStyle,
+  state,
+  setStateHandler,
 }) => {
   const [query, setQuery] = useState("");
 
@@ -36,24 +36,24 @@ const SearchSelection = ({
 
   // Handle select change event and update the query state
   const handleChange = (selectOption) => {
-    setQueryHanlder(selectFor, selectOption || "");
+    setStateHandler(selectFor[0], selectOption || "");
   };
 
   return (
-    <div className={spaceBetween}>
-      <label htmlFor={selectFor} className={labelStyle}>
+    <div className={contStyle}>
+      <label htmlFor={selectFor[1]} className={labelStyle}>
         {labelText}
       </label>
 
       <Combobox
-        value={filterQuery[selectFor] ?? ""}
+        value={state[selectFor[0]] ?? null}
         onChange={handleChange}
         onClose={() => setQuery("")}
       >
         <div className="w-full relative">
           <ComboboxInput
-            name={selectFor}
-            id={selectFor}
+            name={selectFor[0]}
+            id={selectFor[1]}
             onChange={(e) => setQuery(e.target.value)}
             displayValue={(value) => (value ? value : "")}
             placeholder={placeholderText}
@@ -88,7 +88,7 @@ const SearchSelection = ({
                     <>
                       <span
                         className={`truncate ${
-                          filterQuery[selectFor] === option
+                          state[selectFor[0]] === option
                             ? "font-bold"
                             : "font-semibold"
                         }`}
@@ -98,7 +98,7 @@ const SearchSelection = ({
 
                       <span
                         className={`absolute inset-y-0 left-0 flex items-center ml-[0.8rem] ${
-                          filterQuery[selectFor] === option ? "block" : "hidden"
+                          state[selectFor[0]] === option ? "block" : "hidden"
                         }`}
                       >
                         <FaCheck />
