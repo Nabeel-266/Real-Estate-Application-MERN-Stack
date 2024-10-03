@@ -30,6 +30,7 @@ import Account from "./components/User/Account";
 import MyProperties from "./components/User/MyProperties";
 import NotFound from "./pages/NotFound";
 import Property from "./pages/Property";
+// For Admin Pages
 import Admin from "./pages/Admin/Admin";
 import Dashboard from "./pages/Admin/Panels/Dashboard";
 import Properties from "./pages/Admin/Panels/Properties";
@@ -39,6 +40,7 @@ import Contacts from "./pages/Admin/Panels/Contacts";
 import Reports from "./pages/Admin/Panels/Reports";
 import Settings from "./pages/Admin/Panels/Settings";
 import Listing from "./pages/Admin/Panels/Listing";
+import AgentDetails from "./pages/Admin/Overviews/AgentDetails";
 
 const ClientLayout = () => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
@@ -180,6 +182,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/settings",
         element: <Settings />,
+      },
+      {
+        path: "/admin/agent/:agentId",
+        element: <AgentDetails />,
       },
     ],
   },

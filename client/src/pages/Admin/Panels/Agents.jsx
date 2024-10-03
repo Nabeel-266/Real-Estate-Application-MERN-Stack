@@ -217,7 +217,7 @@ const Agents = () => {
               {agentsData.map((agent, index) => (
                 <tr
                   key={index}
-                  className="border-t-[1px] border-neutral-400 odd:bg-white cursor-pointer *:text-[1.5rem] *:leading-[1.5rem] *:font-semibold *:text-neutral-700 *:px-[1.6rem] *:py-[0.6rem] *:whitespace-nowrap hover:bg-slate-400"
+                  className="border-t-[1px] border-neutral-400 odd:bg-white cursor-pointer *:text-[1.5rem] *:leading-[1.5rem] *:font-semibold *:text-neutral-700 *:px-[1.6rem] *:py-[0.6rem] *:whitespace-nowrap"
                 >
                   <td>
                     <img

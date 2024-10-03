@@ -1,21 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { getSingleProperty } from "../api/propertyAPI's";
 import { useParams } from "react-router-dom";
-import { Map, Marker, Overlay, ZoomControl } from "pigeon-maps";
-import { cities, landmarksNearby } from "../lib/dummyData";
+import { Map, Marker, ZoomControl } from "pigeon-maps";
+import { landmarksNearby } from "../lib/dummyData";
 
 // Import React Icons
-import { FiMail } from "react-icons/fi";
-import {
-  FaArrowRight,
-  FaArrowRightLong,
-  FaChevronRight,
-  FaRegImage,
-} from "react-icons/fa6";
+import { FaRegImage } from "react-icons/fa6";
 import { LuBath } from "react-icons/lu";
 import { LiaBedSolid } from "react-icons/lia";
 import { BiArea, BiFullscreen } from "react-icons/bi";
-import { MdOutlineEmail, MdOutlineTimer } from "react-icons/md";
 import { HiOutlineClock, HiOutlineLocationMarker } from "react-icons/hi";
 import { TbMessage2 } from "react-icons/tb";
 import { VscCallIncoming } from "react-icons/vsc";
