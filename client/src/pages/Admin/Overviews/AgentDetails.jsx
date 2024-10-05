@@ -124,7 +124,7 @@ const AgentDetails = () => {
       </div>
 
       {/* Operational Stats */}
-      <div className="w-full space-y-[2rem]">
+      <div className="w-[90%] space-y-[2rem]">
         {/* Operational Stats Header */}
         <div className="w-full flex items-center justify-between">
           <h2 className="flex items-center gap-[0rem] text-[2.2rem] leading-[2.2rem] text-theme-blue font-bold uppercase underline underline-offset-[0.3rem]">
@@ -136,111 +136,111 @@ const AgentDetails = () => {
         {/* Operational Stats Content */}
         <div className="w-full flex flex-wrap gap-[2rem]">
           {/* Operating City */}
-          <div className="flex items-center gap-[1.2rem] pl-[1.5rem] pr-[2.5rem] py-[1.5rem] bg-neutral-200 rounded-3xl shadow-xl border-[2px] border-neutral-300">
+          <div className="flex items-center gap-[1.2rem] pl-[1.5rem] pr-[2.5rem] pt-[1rem] pb-[1.2rem] bg-neutral-200 rounded-3xl shadow-xl border-[2px] border-neutral-300">
             {/* Icon */}
-            <div className="w-fit p-[1.2rem] rounded-full bg-white text-theme-blue">
-              <FaCity size="3.5rem" className="drop-shadow-lg" />
+            <div className="size-[5rem] flex items-center justify-center rounded-full bg-white text-theme-blue">
+              <FaCity size="3rem" className="drop-shadow-lg" />
             </div>
 
             {/* Text */}
             <div className="flex flex-col items-start gap-[0.7rem]">
-              <h3 className="text-[1.75rem] leading-[1.8rem] text-neutral-800 font-bold whitespace-nowrap">
+              <h3 className="text-[1.7rem] leading-[1.8rem] text-neutral-800 font-bold whitespace-nowrap">
                 Operating City
               </h3>
-              <p className="text-white bg-theme-blue text-[1.6rem] leading-[1.5rem] font-semibold px-[1.5rem] py-[0.5rem] rounded-full shadow-lg whitespace-nowrap">
+              <p className="text-white bg-theme-blue text-[1.5rem] leading-[1.4rem] font-semibold px-[1.5rem] py-[0.5rem] rounded-full shadow-lg whitespace-nowrap">
                 Karachi
               </p>
             </div>
           </div>
 
           {/* Joining Date */}
-          <div className="flex items-center gap-[1.2rem] pl-[1.5rem] pr-[2.5rem] py-[1.5rem] bg-neutral-200 rounded-3xl shadow-xl border-[2px] border-neutral-300">
+          <div className="flex items-center gap-[1.2rem] pl-[1.5rem] pr-[2.5rem] pt-[1rem] pb-[1.2rem] bg-neutral-200 rounded-3xl shadow-xl border-[2px] border-neutral-300">
             {/* Icon */}
-            <div className="w-fit p-[1.4rem] rounded-full bg-white text-theme-blue">
+            <div className="size-[5rem] flex items-center justify-center rounded-full bg-white text-theme-blue">
               <BsFillCalendarRangeFill
-                size="2.6rem"
+                size="2.5rem"
                 className="drop-shadow-lg"
               />
             </div>
 
             {/* Text */}
             <div className="flex flex-col items-start gap-[0.7rem]">
-              <h3 className="text-[1.75rem] leading-[1.8rem] text-neutral-800 font-bold whitespace-nowrap">
+              <h3 className="text-[1.7rem] leading-[1.8rem] text-neutral-800 font-bold whitespace-nowrap">
                 Joining Date
               </h3>
-              <p className="text-white bg-theme-blue text-[1.6rem] leading-[1.5rem] font-semibold px-[1.5rem] py-[0.5rem] rounded-full shadow-lg whitespace-nowrap">
+              <p className="text-white bg-theme-blue text-[1.5rem] leading-[1.4rem] font-semibold px-[1.5rem] py-[0.5rem] rounded-full shadow-lg whitespace-nowrap">
                 Dec 29, 2020
               </p>
             </div>
           </div>
 
           {/* Successful Deals */}
-          <div className="flex items-center gap-[1.2rem] pl-[1.5rem] pr-[2.5rem] py-[1.5rem] bg-neutral-200 rounded-3xl shadow-xl border-[2px] border-neutral-300">
+          <div className="flex items-center gap-[1.2rem] pl-[1.5rem] pr-[2.5rem] pt-[1rem] pb-[1.2rem] bg-neutral-200 rounded-3xl shadow-xl border-[2px] border-neutral-300">
             {/* Icon */}
-            <div className="w-fit p-[1rem] rounded-full bg-white text-theme-blue">
+            <div className="size-[5rem] flex items-center justify-center rounded-full bg-white text-theme-blue">
               <FaHandshake size="3.3rem" className="drop-shadow-lg" />
             </div>
 
             {/* Text */}
             <div className="flex flex-col items-start gap-[0.7rem]">
-              <h3 className="text-[1.75rem] leading-[1.8rem] text-neutral-800 font-bold whitespace-nowrap">
+              <h3 className="text-[1.7rem] leading-[1.8rem] text-neutral-800 font-bold whitespace-nowrap">
                 Successful Deals
               </h3>
-              <p className="text-white bg-theme-blue text-[1.6rem] leading-[1.5rem] font-semibold px-[1.5rem] py-[0.5rem] rounded-full shadow-lg whitespace-nowrap">
+              <p className="text-white bg-theme-blue text-[1.5rem] leading-[1.4rem] font-semibold px-[1.5rem] py-[0.5rem] rounded-full shadow-lg whitespace-nowrap">
                 20 Deals
               </p>
             </div>
           </div>
 
           {/* Total Earned */}
-          <div className="flex items-center gap-[1.2rem] pl-[1.5rem] pr-[2.5rem] py-[1.5rem] bg-neutral-200 rounded-3xl shadow-xl border-[2px] border-neutral-300">
+          <div className="flex items-center gap-[1.2rem] pl-[1.5rem] pr-[2.5rem] pt-[1rem] pb-[1.2rem] bg-neutral-200 rounded-3xl shadow-xl border-[2px] border-neutral-300">
             {/* Icon */}
-            <div className="w-fit p-[1.2rem] rounded-full bg-white text-theme-blue">
+            <div className="size-[5rem] flex items-center justify-center rounded-full bg-white text-theme-blue">
               <FaMoneyCheck size="3rem" className="drop-shadow-lg" />
             </div>
 
             {/* Text */}
             <div className="flex flex-col items-start gap-[0.7rem]">
-              <h3 className="text-[1.75rem] leading-[1.8rem] text-neutral-800 font-bold whitespace-nowrap">
+              <h3 className="text-[1.7rem] leading-[1.8rem] text-neutral-800 font-bold whitespace-nowrap">
                 Total Earned
               </h3>
-              <p className="text-white bg-theme-blue text-[1.6rem] leading-[1.5rem] font-semibold px-[1.5rem] py-[0.5rem] rounded-full shadow-lg whitespace-nowrap">
+              <p className="text-white bg-theme-blue text-[1.5rem] leading-[1.4rem] font-semibold px-[1.5rem] py-[0.5rem] rounded-full shadow-lg whitespace-nowrap">
                 PKR 1500000
               </p>
             </div>
           </div>
 
           {/* Highest Earned */}
-          <div className="flex items-center gap-[1.2rem] pl-[1.5rem] pr-[2.5rem] py-[1.5rem] bg-neutral-200 rounded-3xl shadow-xl border-[2px] border-neutral-300">
+          <div className="flex items-center gap-[1.2rem] pl-[1.5rem] pr-[2.5rem] pt-[1rem] pb-[1.2rem] bg-neutral-200 rounded-3xl shadow-xl border-[2px] border-neutral-300">
             {/* Icon */}
-            <div className="w-fit p-[1.2rem] rounded-full bg-white text-theme-blue">
+            <div className="size-[5rem] flex items-center justify-center rounded-full bg-white text-theme-blue">
               <FaMoneyBillTrendUp size="3rem" className="drop-shadow-lg" />
             </div>
 
             {/* Text */}
             <div className="flex flex-col items-start gap-[0.7rem]">
-              <h3 className="text-[1.75rem] leading-[1.8rem] text-neutral-800 font-bold whitespace-nowrap">
+              <h3 className="text-[1.7rem] leading-[1.8rem] text-neutral-800 font-bold whitespace-nowrap">
                 Highest Earned
               </h3>
-              <p className="text-white bg-theme-blue text-[1.6rem] leading-[1.5rem] font-semibold px-[1.5rem] py-[0.5rem] rounded-full shadow-lg whitespace-nowrap">
+              <p className="text-white bg-theme-blue text-[1.5rem] leading-[1.4rem] font-semibold px-[1.5rem] py-[0.5rem] rounded-full shadow-lg whitespace-nowrap">
                 PKR 180000
               </p>
             </div>
           </div>
 
           {/* Service Period */}
-          <div className="flex items-center gap-[1.2rem] pl-[1.5rem] pr-[2.5rem] py-[1.5rem] bg-neutral-200 rounded-3xl shadow-xl border-[2px] border-neutral-300">
+          <div className="flex items-center gap-[1.2rem] pl-[1.5rem] pr-[2.5rem] pt-[1rem] pb-[1.2rem] bg-neutral-200 rounded-3xl shadow-xl border-[2px] border-neutral-300">
             {/* Icon */}
-            <div className="w-fit p-[1.2rem] rounded-full bg-white text-theme-blue">
+            <div className="size-[5rem] flex items-center justify-center rounded-full bg-white text-theme-blue">
               <FaServicestack size="3rem" className="drop-shadow-lg" />
             </div>
 
             {/* Text */}
             <div className="flex flex-col items-start gap-[0.7rem]">
-              <h3 className="text-[1.75rem] leading-[1.8rem] text-neutral-800 font-bold whitespace-nowrap">
+              <h3 className="text-[1.7rem] leading-[1.8rem] text-neutral-800 font-bold whitespace-nowrap">
                 Period of Service
               </h3>
-              <p className="text-white bg-theme-blue text-[1.6rem] leading-[1.5rem] font-semibold px-[1.5rem] py-[0.5rem] rounded-full shadow-lg whitespace-nowrap">
+              <p className="text-white bg-theme-blue text-[1.5rem] leading-[1.4rem] font-semibold px-[1.5rem] py-[0.5rem] rounded-full shadow-lg whitespace-nowrap">
                 2 years
               </p>
             </div>
@@ -248,17 +248,63 @@ const AgentDetails = () => {
         </div>
       </div>
 
-      {/* Track Record */}
+      {/* Deal Record */}
       <div className="w-full space-y-[1.5rem]">
-        {/* Track Record Header */}
+        {/* Deal Record Header */}
         <div className="w-full flex items-center justify-between">
           <h2 className="flex items-center gap-[0rem] text-[2.2rem] leading-[2.2rem] text-theme-blue font-bold uppercase underline underline-offset-[0.3rem]">
             <HiArrowSmRight size="1.8rem" />
-            <span>Track Record</span>
+            <span>Deal Record</span>
           </h2>
         </div>
 
-        {/* Track Record Content */}
+        {/* Deal Record Table */}
+        <div className="w-full overflow-auto scroll-smooth scrollbar-slim-x">
+          <table className="w-full table-auto text-left">
+            <thead>
+              <tr className="border-b-[2px] border-neutral-600 *:text-[1.55rem] *:leading-[1.6rem] *:font-bold *:text-neutral-800 *:px-[1.6rem] *:py-[1.2rem] *:whitespace-nowrap">
+                <th>Image</th>
+                <th>Full Name</th>
+                <th>Email Address</th>
+
+                <th>Mobile Number</th>
+
+                <th>CNIC Number</th>
+                <th>Age</th>
+
+                <th>Operating City</th>
+
+                <th>Joining Date</th>
+
+                <th>Experience Badge</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-t-[1px] border-neutral-400 odd:bg-white cursor-pointer *:text-[1.5rem] *:leading-[1.5rem] *:font-semibold *:text-neutral-700 *:px-[1.6rem] *:py-[0.6rem] *:whitespace-nowrap">
+                <td>nabeel</td>
+
+                <td>nabeel</td>
+
+                <td>nabeel</td>
+
+                <td>nabeel</td>
+                <td>nabeel</td>
+
+                <td>nabeel</td>
+
+                <td>nabeel</td>
+
+                <td>
+                  <span
+                    className={`px-[1.5rem] py-[0.3rem] rounded-full bg-purple-300 `}
+                  >
+                    Badge
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
@@ -266,10 +312,29 @@ const AgentDetails = () => {
 
 export default AgentDetails;
 
+// ${
+//   agent?.badge === "Junior"
+//     ? "bg-blue-300"
+//     : agent?.badge === "Mid-Level"
+//     ? "bg-emerald-300"
+//     : agent?.badge === "Senior"
+//     ? "bg-orange-300"
+//     : agent?.badge === "Expert" &&
+// }
+
 // Accepted Deals
 // Successed Deals
 // Active Deals
 // Rejected Deals
+
+// Property Type
+// Purpose
+// Amount
+// Status
+// Accept On
+// Final On
+// Total Commission
+// Commission Earned
 
 // import { BsFillCalendarRangeFill } from "react-icons/bs";
 // import { RiCake2Fill } from "react-icons/ri";
