@@ -17,7 +17,7 @@ import { FaMoneyCheck } from "react-icons/fa";
 
 const AgentDetails = () => {
   return (
-    <div className="w-full flex flex-col gap-[5rem] p-[2rem]">
+    <div className="w-full flex flex-col gap-[6rem] p-[2rem]">
       {/* Core Details */}
       <div className="w-full space-y-[1.5rem]">
         {/* Core Details Header */}
@@ -124,9 +124,9 @@ const AgentDetails = () => {
       </div>
 
       {/* Operational Stats */}
-      <div className="w-[90%] space-y-[2rem]">
+      <div className="w-full space-y-[2rem]">
         {/* Operational Stats Header */}
-        <div className="w-full flex items-center justify-between">
+        <div className="w-full">
           <h2 className="flex items-center gap-[0rem] text-[2.2rem] leading-[2.2rem] text-theme-blue font-bold uppercase underline underline-offset-[0.3rem]">
             <HiArrowSmRight size="1.8rem" />
             <span>Operational Stats</span>
@@ -136,7 +136,7 @@ const AgentDetails = () => {
         {/* Operational Stats Content */}
         <div className="w-full flex flex-wrap gap-[2rem]">
           {/* Operating City */}
-          <div className="flex items-center gap-[1.2rem] pl-[1.5rem] pr-[2.5rem] pt-[1rem] pb-[1.2rem] bg-neutral-200 rounded-3xl shadow-xl border-[2px] border-neutral-300">
+          <div className="flex items-center gap-[1.2rem] pl-[1.2rem] pr-[2.2rem] pt-[1rem] pb-[1.2rem] bg-neutral-200 rounded-3xl shadow-xl border-[2px] border-neutral-300">
             {/* Icon */}
             <div className="size-[5rem] flex items-center justify-center rounded-full bg-white text-theme-blue">
               <FaCity size="3rem" className="drop-shadow-lg" />
@@ -154,7 +154,7 @@ const AgentDetails = () => {
           </div>
 
           {/* Joining Date */}
-          <div className="flex items-center gap-[1.2rem] pl-[1.5rem] pr-[2.5rem] pt-[1rem] pb-[1.2rem] bg-neutral-200 rounded-3xl shadow-xl border-[2px] border-neutral-300">
+          <div className="flex items-center gap-[1.2rem] pl-[1.2rem] pr-[2.2rem] pt-[1rem] pb-[1.2rem] bg-neutral-200 rounded-3xl shadow-xl border-[2px] border-neutral-300">
             {/* Icon */}
             <div className="size-[5rem] flex items-center justify-center rounded-full bg-white text-theme-blue">
               <BsFillCalendarRangeFill
@@ -175,7 +175,7 @@ const AgentDetails = () => {
           </div>
 
           {/* Successful Deals */}
-          <div className="flex items-center gap-[1.2rem] pl-[1.5rem] pr-[2.5rem] pt-[1rem] pb-[1.2rem] bg-neutral-200 rounded-3xl shadow-xl border-[2px] border-neutral-300">
+          <div className="flex items-center gap-[1.2rem] pl-[1.2rem] pr-[2.2rem] pt-[1rem] pb-[1.2rem] bg-neutral-200 rounded-3xl shadow-xl border-[2px] border-neutral-300">
             {/* Icon */}
             <div className="size-[5rem] flex items-center justify-center rounded-full bg-white text-theme-blue">
               <FaHandshake size="3.3rem" className="drop-shadow-lg" />
@@ -193,7 +193,7 @@ const AgentDetails = () => {
           </div>
 
           {/* Total Earned */}
-          <div className="flex items-center gap-[1.2rem] pl-[1.5rem] pr-[2.5rem] pt-[1rem] pb-[1.2rem] bg-neutral-200 rounded-3xl shadow-xl border-[2px] border-neutral-300">
+          <div className="flex items-center gap-[1.2rem] pl-[1.2rem] pr-[2.2rem] pt-[1rem] pb-[1.2rem] bg-neutral-200 rounded-3xl shadow-xl border-[2px] border-neutral-300">
             {/* Icon */}
             <div className="size-[5rem] flex items-center justify-center rounded-full bg-white text-theme-blue">
               <FaMoneyCheck size="3rem" className="drop-shadow-lg" />
@@ -211,7 +211,7 @@ const AgentDetails = () => {
           </div>
 
           {/* Highest Earned */}
-          <div className="flex items-center gap-[1.2rem] pl-[1.5rem] pr-[2.5rem] pt-[1rem] pb-[1.2rem] bg-neutral-200 rounded-3xl shadow-xl border-[2px] border-neutral-300">
+          <div className="flex items-center gap-[1.2rem] pl-[1.2rem] pr-[2.2rem] pt-[1rem] pb-[1.2rem] bg-neutral-200 rounded-3xl shadow-xl border-[2px] border-neutral-300">
             {/* Icon */}
             <div className="size-[5rem] flex items-center justify-center rounded-full bg-white text-theme-blue">
               <FaMoneyBillTrendUp size="3rem" className="drop-shadow-lg" />
@@ -229,7 +229,7 @@ const AgentDetails = () => {
           </div>
 
           {/* Service Period */}
-          <div className="flex items-center gap-[1.2rem] pl-[1.5rem] pr-[2.5rem] pt-[1rem] pb-[1.2rem] bg-neutral-200 rounded-3xl shadow-xl border-[2px] border-neutral-300">
+          <div className="flex items-center gap-[1.2rem] pl-[1.2rem] pr-[2.2rem] pt-[1rem] pb-[1.2rem] bg-neutral-200 rounded-3xl shadow-xl border-[2px] border-neutral-300">
             {/* Icon */}
             <div className="size-[5rem] flex items-center justify-center rounded-full bg-white text-theme-blue">
               <FaServicestack size="3rem" className="drop-shadow-lg" />
@@ -249,59 +249,58 @@ const AgentDetails = () => {
       </div>
 
       {/* Deal Record */}
-      <div className="w-full space-y-[1.5rem]">
+      <div className="w-full space-y-[2rem]">
         {/* Deal Record Header */}
         <div className="w-full flex items-center justify-between">
           <h2 className="flex items-center gap-[0rem] text-[2.2rem] leading-[2.2rem] text-theme-blue font-bold uppercase underline underline-offset-[0.3rem]">
             <HiArrowSmRight size="1.8rem" />
             <span>Deal Record</span>
           </h2>
+
+          <button className="text-[1.6rem] leading-[1.6rem] font-semibold text-theme-blue px-[0.6rem] py-[0.4rem] flex items-center gap-[0.5rem] rounded-lg border-[2px] border-theme-blue whitespace-nowrap hover:bg-theme-blue hover:text-white transition-all">
+            <BiEditAlt size="1.7rem" />
+            <span>Sort By</span>
+          </button>
         </div>
 
         {/* Deal Record Table */}
         <div className="w-full overflow-auto scroll-smooth scrollbar-slim-x">
           <table className="w-full table-auto text-left">
             <thead>
-              <tr className="border-b-[2px] border-neutral-600 *:text-[1.55rem] *:leading-[1.6rem] *:font-bold *:text-neutral-800 *:px-[1.6rem] *:py-[1.2rem] *:whitespace-nowrap">
-                <th>Image</th>
-                <th>Full Name</th>
-                <th>Email Address</th>
-
-                <th>Mobile Number</th>
-
-                <th>CNIC Number</th>
-                <th>Age</th>
-
-                <th>Operating City</th>
-
-                <th>Joining Date</th>
-
-                <th>Experience Badge</th>
+              <tr className="border-b-[2px] border-neutral-600 text-center *:text-[1.6rem] *:leading-[1.6rem] *:font-bold *:text-theme-blue *:px-[1.6rem] *:py-[1.2rem] *:whitespace-nowrap">
+                <th className="text-left">Asset</th>
+                <th>Purpose</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Accepted On</th>
+                <th>Closed On</th>
+                <th>Profit Share</th>
+                <th>Compensation</th>
               </tr>
             </thead>
+
             <tbody>
-              <tr className="border-t-[1px] border-neutral-400 odd:bg-white cursor-pointer *:text-[1.5rem] *:leading-[1.5rem] *:font-semibold *:text-neutral-700 *:px-[1.6rem] *:py-[0.6rem] *:whitespace-nowrap">
-                <td>nabeel</td>
-
-                <td>nabeel</td>
-
-                <td>nabeel</td>
-
-                <td>nabeel</td>
-                <td>nabeel</td>
-
-                <td>nabeel</td>
-
-                <td>nabeel</td>
-
-                <td>
-                  <span
-                    className={`px-[1.5rem] py-[0.3rem] rounded-full bg-purple-300 `}
-                  >
-                    Badge
-                  </span>
-                </td>
-              </tr>
+              {[1, 2, 3, 4, 5].map((t, i) => (
+                <tr
+                  key={i}
+                  className="border-t-[1px] border-neutral-400 text-center even:bg-neutral-200 cursor-pointer *:text-[1.5rem] *:leading-[1.5rem] *:font-semibold *:text-neutral-700 *:px-[1.6rem] *:py-[1.5rem] *:whitespace-nowrap"
+                >
+                  <td className="text-left">Appartment</td>
+                  <td>Sale</td>
+                  <td>1.2 Crore</td>
+                  <td>
+                    <span
+                      className={`px-[1.5rem] py-[0.3rem] rounded-full bg-purple-300 `}
+                    >
+                      Successed
+                    </span>
+                  </td>
+                  <td>Dec 12 - 2023</td>
+                  <td>Apr 06 - 2024</td>
+                  <td>240,000</td>
+                  <td>180,000</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
@@ -327,14 +326,10 @@ export default AgentDetails;
 // Active Deals
 // Rejected Deals
 
-// Property Type
-// Purpose
-// Amount
-// Status
-// Accept On
-// Final On
-// Total Commission
-// Commission Earned
+// Pending -> abhi under review hai
+// Progress -> abhi baat cheet chal rahi hai
+// Successed -> complete hogai hai successfully
+// Rejected -> details sahi nahi hain property ki
 
 // import { BsFillCalendarRangeFill } from "react-icons/bs";
 // import { RiCake2Fill } from "react-icons/ri";

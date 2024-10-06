@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   agents,
   agentsDataColumns,
@@ -15,6 +16,7 @@ import SortDropdown from "../../../components/Admin/Dropdowns/SortDropdown";
 import ColumnsDropdown from "../../../components/Admin/Dropdowns/ColumnsDropdown";
 
 const Agents = () => {
+  const navigate = useNavigate();
   const [agentsData, setAgentsData] = useState(agents);
   const [selectedColumns, setSelectedColumns] = useState(agentsDataColumns);
 
@@ -78,6 +80,10 @@ const Agents = () => {
       return orderBy === "asc" ? comparison : -comparison;
     });
   }
+
+  const agentDetailsNavigateHandler = (refernceKey) => {
+    navigate(`/admin/agent/${refernceKey}`);
+  };
 
   // console.log(sortAgentsData("Age", "asc"));
 
@@ -213,10 +219,12 @@ const Agents = () => {
                 )}
               </tr>
             </thead>
+
             <tbody>
               {agentsData.map((agent, index) => (
                 <tr
                   key={index}
+                  onClick={() => agentDetailsNavigateHandler(agent.name)}
                   className="border-t-[1px] border-neutral-400 odd:bg-white cursor-pointer *:text-[1.5rem] *:leading-[1.5rem] *:font-semibold *:text-neutral-700 *:px-[1.6rem] *:py-[0.6rem] *:whitespace-nowrap"
                 >
                   <td>
