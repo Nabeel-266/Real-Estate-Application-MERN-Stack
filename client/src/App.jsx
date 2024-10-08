@@ -35,6 +35,7 @@ import Admin from "./pages/Admin/Admin";
 import Dashboard from "./pages/Admin/Panels/Dashboard";
 import Properties from "./pages/Admin/Panels/Properties";
 import Clients from "./pages/Admin/Panels/Clients";
+import Users from "./pages/Admin/Panels/Users";
 import Agents from "./pages/Admin/Panels/Agents";
 import Contacts from "./pages/Admin/Panels/Contacts";
 import Reports from "./pages/Admin/Panels/Reports";
@@ -166,6 +167,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/clients",
         element: <Clients />,
+      },
+      {
+        path: "/admin/users",
+        element: <Users />,
       },
       {
         path: "/admin/listing",

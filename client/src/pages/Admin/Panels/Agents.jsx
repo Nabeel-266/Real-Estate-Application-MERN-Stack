@@ -15,6 +15,25 @@ import FilterDropdown from "../../../components/Admin/Dropdowns/FilterDropdown";
 import SortDropdown from "../../../components/Admin/Dropdowns/SortDropdown";
 import ColumnsDropdown from "../../../components/Admin/Dropdowns/ColumnsDropdown";
 
+// Example data for cards and table
+const agentStats = [
+  {
+    title: "Total Agents",
+    count: 120,
+    icon: <FaUsers />,
+  },
+  {
+    title: "Active Agents",
+    count: 60,
+    icon: <FaUserCheck />,
+  },
+  {
+    title: "Expert Agents",
+    count: 15,
+    icon: <FaUserTie />,
+  },
+];
+
 const Agents = () => {
   const navigate = useNavigate();
   const [agentsData, setAgentsData] = useState(agents);
@@ -91,63 +110,38 @@ const Agents = () => {
     <div className="w-full flex flex-col gap-[2.5rem] p-[2rem]">
       {/* Section Top */}
       <section className="w-full flex gap-[2rem]">
-        {/* Total Agents */}
-        <div className="w-fit h-fit flex items-center gap-[3rem] bg-theme-blue px-[1.5rem] py-[1.2rem] rounded-xl shadow-[0.4rem_0.4rem_0.8rem_#00000060] *:text-white">
-          <div className="space-y-[1rem] select-none">
-            <h2 className="text-[1.7rem] leading-[2rem] font-bold whitespace-nowrap">
-              Total Agents
-            </h2>
+        {agentStats.map((stat, index) => (
+          <div className="min-w-[25rem] w-[28%] max-w-[28rem] relative overflow-hidden bg-theme-blue rounded-xl shadow-[0.4rem_0.4rem_0.8rem_#00000060]">
+            <div
+              className={`absolute z-[1] top-0 bottom-0 right-[1rem] flex items-center justify-center text-[#ffffff30] ${
+                stat.title.includes("Total")
+                  ? "text-[6.9rem]"
+                  : stat.title.includes("Active")
+                  ? "text-[6rem]"
+                  : "text-[5rem]"
+              }`}
+            >
+              {stat.icon}
+            </div>
 
-            <p className="text-[3rem] leading-[3.2rem] ml-[0.5rem] font-bold text-theme-yellow">
-              125
-            </p>
+            <div className="relative z-10 h-fit flex flex-col items-start gap-[1rem] text-white px-[1.5rem] pt-[1.2rem] pb-[1.2rem]">
+              <h2 className="text-[1.6rem] leading-[1.6rem] font-bold whitespace-nowrap">
+                {stat.title}
+              </h2>
+
+              <p className="text-[2.8rem] leading-[2.8rem] font-bold text-theme-yellow">
+                {stat.count}
+              </p>
+            </div>
           </div>
-
-          <div className="flex items-center justify-center">
-            <FaUsers size="5rem" />
-          </div>
-        </div>
-
-        {/* Active Agents */}
-        <div className="w-fit h-fit flex items-center gap-[3rem] bg-theme-blue px-[1.5rem] py-[1.2rem] rounded-xl shadow-[0.4rem_0.4rem_0.8rem_#00000060] *:text-white">
-          <div className="space-y-[1rem] select-none">
-            <h2 className="text-[1.7rem] leading-[2rem] font-bold whitespace-nowrap">
-              Active Agents
-            </h2>
-
-            <p className="text-[3rem] leading-[3.2rem] ml-[0.5rem] font-bold text-theme-yellow">
-              75
-            </p>
-          </div>
-
-          <div className="flex items-center justify-center">
-            <FaUserCheck size="4.5rem" />
-          </div>
-        </div>
-
-        {/* Expert Agents */}
-        <div className="w-fit h-fit flex items-center gap-[3rem] bg-theme-blue px-[1.5rem] py-[1.2rem] rounded-xl shadow-[0.4rem_0.4rem_0.8rem_#00000060] *:text-white">
-          <div className="space-y-[1rem] select-none">
-            <h2 className="text-[1.7rem] leading-[2rem] font-bold whitespace-nowrap">
-              Expert Agents
-            </h2>
-
-            <p className="text-[3rem] leading-[3.2rem] ml-[0.5rem] font-bold text-theme-yellow">
-              25
-            </p>
-          </div>
-
-          <div className="flex items-center justify-center">
-            <FaUserTie size="4rem" />
-          </div>
-        </div>
+        ))}
       </section>
 
       {/* Section Bottom */}
       <section className="w-full relative bg-neutral-100 rounded-xl overflow-hidden border-neutral-300 border-[0.2rem]">
         {/* Top Header */}
         <div className="w-full flex items-center justify-between px-[1.5rem] pt-[1.4rem] pb-[1.2rem]">
-          <h2 className="text-[2.3rem] leading-[2.3rem] font-bold text-theme-blue">
+          <h2 className="text-[2.2rem] leading-[2.2rem] font-bold text-theme-blue">
             Agents Record
           </h2>
 
@@ -225,7 +219,7 @@ const Agents = () => {
                 <tr
                   key={index}
                   onClick={() => agentDetailsNavigateHandler(agent.name)}
-                  className="border-t-[1px] border-neutral-400 odd:bg-white cursor-pointer *:text-[1.5rem] *:leading-[1.5rem] *:font-semibold *:text-neutral-700 *:px-[1.6rem] *:py-[0.6rem] *:whitespace-nowrap"
+                  className="border-t-[1px] border-neutral-400 odd:bg-white cursor-pointer *:text-[1.4rem] *:leading-[1.5rem] *:font-semibold *:text-neutral-700 *:px-[1.6rem] *:py-[0.6rem] *:whitespace-nowrap"
                 >
                   <td>
                     <img

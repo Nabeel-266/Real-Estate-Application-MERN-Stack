@@ -9,6 +9,7 @@ import { LuLayoutList } from "react-icons/lu";
 import { MdOutlineContacts } from "react-icons/md";
 import { TbReport } from "react-icons/tb";
 import { LuSettings } from "react-icons/lu";
+import { FaUsersRectangle } from "react-icons/fa6";
 
 const Sidebar = () => {
   const location = useLocation();
@@ -41,6 +42,7 @@ const Sidebar = () => {
           [MdSupportAgent, "Agents", "/admin/agents"],
           [MdOutlineMapsHomeWork, "Properties", "/admin/properties"],
           [FiUsers, "Clients", "/admin/clients"],
+          [FaUsersRectangle, "Users", "/admin/users"],
           [LuLayoutList, "Listing", "/admin/listing"],
           [MdOutlineContacts, "Contacts", "/admin/contacts"],
           [TbReport, "Reports", "/admin/reports"],
