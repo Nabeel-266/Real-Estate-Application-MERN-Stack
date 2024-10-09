@@ -283,7 +283,7 @@ const AgentDetails = () => {
               {[1, 2, 3, 4, 5].map((t, i) => (
                 <tr
                   key={i}
-                  className="border-t-[1px] border-neutral-400 text-center even:bg-neutral-200 cursor-pointer *:text-[1.5rem] *:leading-[1.5rem] *:font-semibold *:text-neutral-700 *:px-[1.6rem] *:py-[1.5rem] *:whitespace-nowrap"
+                  className="border-t-[1px] border-neutral-400 text-center even:bg-neutral-200 cursor-pointer *:text-[1.5rem] *:leading-[1.5rem] *:font-semibold *:text-neutral-700 *:px-[1.6rem] *:py-[1.3rem] *:whitespace-nowrap"
                 >
                   <td className="text-left">Appartment</td>
                   <td>Sale</td>
@@ -330,30 +330,3 @@ export default AgentDetails;
 // Progress -> abhi baat cheet chal rahi hai
 // Successed -> complete hogai hai successfully
 // Rejected -> details sahi nahi hain property ki
-
-// import { BsFillCalendarRangeFill } from "react-icons/bs";
-// import { RiCake2Fill } from "react-icons/ri";
-// import { IoBriefcase } from "react-icons/io5";
-// import { FaGraduationCap } from "react-icons/fa6";
-// import { RiHeart2Fill } from "react-icons/ri";
-// import { HiLocationMarker } from "react-icons/hi";
-
-//   <p>Name: Muhammad Nabeel</p>
-//   <p>Identifier Key: @muhammad_nabeel_91756</p>
-//   <p>Email Address: nabeelmajeed266@gmail.com</p>
-//   <p>Mobile Number: 03345678564</p>
-//   <p>CNIC Number: 42301-44578955-3</p>
-//   + + + + + + + + + + + + + + + + +
-//   <p>Age: 26 Years</p>
-//   <p>Date Of Birth: Decemeber 26, 2000</p>
-//   <p>Experience: 5 Years</p>
-//   <p>Education: Under Graduate</p>
-//   <p>Marital Status: Single</p>
-//   <p>Residential Address: Flat no 12, Al Amna Avenue, Sector 09, </p>
-//   + + + + + + + + + + + + + + + + +
-//   <p>Operating City: Karachi</p>
-//   <p>Joining Date: Decemeber 26, 2000</p>
-//   <p>Successful Deals: 15</p>
-//   <p>Total Earned: 1500000</p>
-//   <p>Highest Earned: 1500000</p>
-//   <p>Period of service: 2 years</p>

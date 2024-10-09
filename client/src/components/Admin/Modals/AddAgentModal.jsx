@@ -197,10 +197,57 @@ const AddAgentModal = ({ setIsOpenModal }) => {
 
               {/* For Experience Tenure */}
               <SimpleSelection
-                selectFor="experienceBadge"
-                labelText="Experience Badge"
-                placeholderText="Select a Badge"
-                optionsData={["Junior", "Mid-Level", "Senior", "Expert"]}
+                selectFor="yearOfExperience"
+                labelText="Year of Experience"
+                placeholderText="Select a Experience"
+                optionsData={[
+                  "None",
+                  "Less than 1 year",
+                  "1 year",
+                  "2 years",
+                  "3 years",
+                  "4 years",
+                  "5 years",
+                  "5+ years",
+                ]}
+                labelStyle="formInputLabels"
+                inputStyle="formInputFields"
+                contStyle="space-y-[0.6rem]"
+                state={agentData}
+                setStateHandler={agentDataChangeHandler}
+              />
+
+              {/* For Last Education */}
+              <SimpleSelection
+                selectFor="lastEducation"
+                labelText="Last Education"
+                placeholderText="Select a Education"
+                optionsData={[
+                  "Matriculation",
+                  "Intermediate",
+                  "Under Graduate",
+                  "Graduate",
+                  "Post Graduate",
+                ]}
+                labelStyle="formInputLabels"
+                inputStyle="formInputFields"
+                contStyle="space-y-[0.6rem]"
+                state={agentData}
+                setStateHandler={agentDataChangeHandler}
+              />
+
+              {/* For Marital Status */}
+              <SimpleSelection
+                selectFor="maritalStatus"
+                labelText="Marital Status"
+                placeholderText="Select a Marital Status"
+                optionsData={[
+                  "Single",
+                  "Married",
+                  "Divorced",
+                  "Separated",
+                  "Widowed",
+                ]}
                 labelStyle="formInputLabels"
                 inputStyle="formInputFields"
                 contStyle="space-y-[0.6rem]"
@@ -230,25 +277,6 @@ const AddAgentModal = ({ setIsOpenModal }) => {
                   No File Chosen
                 </span>
               </div>
-
-              {/* For Last Education */}
-              <SimpleSelection
-                selectFor="lastEducation"
-                labelText="Last Education"
-                placeholderText="Select a Education"
-                optionsData={[
-                  "Matriculation",
-                  "Intermediate",
-                  "Under Graduate",
-                  "Graduate",
-                  "Post Graduate",
-                ]}
-                labelStyle="formInputLabels"
-                inputStyle="formInputFields"
-                contStyle="space-y-[0.6rem]"
-                state={agentData}
-                setStateHandler={agentDataChangeHandler}
-              />
             </fieldset>
 
             {/* Buttons */}

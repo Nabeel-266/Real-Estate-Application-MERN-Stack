@@ -14,7 +14,7 @@ import SearchSelection from "../Selections/SearchSelection";
 import SimpleSelection from "../Selections/SimpleSelection";
 import MinMaxInput from "../Inputs/MinMaxInput";
 
-const ButtonDropdown = ({}) => {
+const FilterDropdown = () => {
   const filterBtnContRef = useRef(null);
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -23,6 +23,7 @@ const ButtonDropdown = ({}) => {
 
   useEffect(() => {
     setFilterQuery({
+      idCode: searchParams.get("id") || "",
       name: searchParams.get("name") || "",
       email: searchParams.get("email") || "",
       mobileNumber: searchParams.get("mobileNumber") || "",
@@ -86,13 +87,11 @@ const ButtonDropdown = ({}) => {
 
       {/* Filter Dropdown */}
       <div
-        className={`min-w-[42rem] w-full bg-neutral-50 text-theme-blue absolute top-0 right-0 rounded-l-lg shadow-xl shadow-[#00000040] ring-2 ring-black ring-opacity-5 transition-all duration-300 ${
-          isOpenDropdown
-            ? "translate-y-[-1.5%] opacity-100"
-            : "translate-y-[-115%] opacity-0"
+        className={`min-w-[42rem] w-full bg-neutral-50 text-theme-blue absolute top-[-0.5rem] right-0 rounded-xl shadow-lg shadow-[#00000040] border-neutral-300 border-[0.2rem] transition-all duration-300 ${
+          isOpenDropdown ? "translate-x-[0%]" : "translate-x-[115%]"
         }`}
       >
-        <div className="flex flex-col pt-[1.6rem] pb-[1rem]">
+        <div className="w-full flex flex-col pt-[1.6rem] pb-[1rem]">
           {/* Dropdown Header */}
           <div className="flex items-center justify-between mx-[1rem] px-[0.6rem] pb-[1.2rem] border-b-[0.2rem] border-neutral-200">
             <h5 className="text-[2rem] leading-[2rem] font-bold">
@@ -109,6 +108,20 @@ const ButtonDropdown = ({}) => {
 
           {/* Dropdown Inputs */}
           <div className="w-full max-h-[30rem] grid grid-cols-2 gap-[1.5rem] px-[1.2rem] py-[1.2rem] overflow-auto scrollbar-dropdown-dark">
+            {/* Filter by ID Code */}
+            <TypeInput
+              inputFor={["idCode", "byIdCode"]}
+              inputType="number"
+              labelText="By Id Code"
+              autoComplete="off"
+              placeholder="eg. xxxxx"
+              labelStyle="inputLabels"
+              inputStyle="inputFields numberInput"
+              contStyle="space-y-[0.6rem]"
+              state={filterQuery}
+              setStateHandler={setAgentsFilterQueryHandler}
+            />
+
             {/* Filter by Name */}
             <TypeInput
               inputFor={["name", "byName"]}
@@ -297,4 +310,4 @@ const ButtonDropdown = ({}) => {
   );
 };
 
-export default ButtonDropdown;
+export default FilterDropdown;

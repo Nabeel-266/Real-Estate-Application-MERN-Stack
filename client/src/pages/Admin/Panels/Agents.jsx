@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   agents,
@@ -111,7 +111,10 @@ const Agents = () => {
       {/* Section Top */}
       <section className="w-full flex gap-[2rem]">
         {agentStats.map((stat, index) => (
-          <div className="min-w-[25rem] w-[28%] max-w-[28rem] relative overflow-hidden bg-theme-blue rounded-xl shadow-[0.4rem_0.4rem_0.8rem_#00000060]">
+          <div
+            key={index}
+            className="min-w-[25rem] w-[28%] max-w-[28rem] relative overflow-hidden bg-theme-blue rounded-xl shadow-[0.4rem_0.4rem_0.8rem_#00000060]"
+          >
             <div
               className={`absolute z-[1] top-0 bottom-0 right-[1rem] flex items-center justify-center text-[#ffffff30] ${
                 stat.title.includes("Total")
@@ -138,164 +141,169 @@ const Agents = () => {
       </section>
 
       {/* Section Bottom */}
-      <section className="w-full relative bg-neutral-100 rounded-xl overflow-hidden border-neutral-300 border-[0.2rem]">
-        {/* Top Header */}
-        <div className="w-full flex items-center justify-between px-[1.5rem] pt-[1.4rem] pb-[1.2rem]">
-          <h2 className="text-[2.2rem] leading-[2.2rem] font-bold text-theme-blue">
-            Agents Record
-          </h2>
+      <section className="w-full bg-neutral-100 relative overflow-x-clip rounded-xl">
+        <div className="w-full border-neutral-300 border-[0.2rem] rounded-xl">
+          {/* Top Header */}
+          <div className="w-full flex items-center justify-between px-[1.5rem] pt-[1.4rem] pb-[1rem]">
+            <h2 className="text-[2.3rem] leading-[2.3rem] font-bold text-theme-blue">
+              Agents Directory
+            </h2>
 
-          {/* Display Data Options */}
-          <div className="flex items-center gap-[1rem] ">
-            <div className="relative">
-              <SortDropdown dropdownData={agentsDataSortBy} />
+            {/* Sort, Columns & Filter */}
+            <div className="flex items-center gap-[1rem] ">
+              <div className="relative">
+                <SortDropdown dropdownData={agentsDataSortBy} />
+              </div>
+
+              <div className="relative">
+                <ColumnsDropdown
+                  dropdownData={agentsDataColumns}
+                  selectedColumns={selectedColumns}
+                  toggleDataColumns={toggleAgentDataColumns}
+                />
+              </div>
+
+              <FilterDropdown to="Filter By" />
             </div>
-
-            <div className="relative">
-              <ColumnsDropdown
-                dropdownData={agentsDataColumns}
-                selectedColumns={selectedColumns}
-                toggleDataColumns={toggleAgentDataColumns}
-              />
-            </div>
-
-            <FilterDropdown to="Filter By" />
           </div>
-        </div>
 
-        {/* Table Container */}
-        <div className="w-full overflow-auto scroll-smooth scrollbar-slim-x">
-          <table className="w-full table-auto text-left">
-            <thead>
-              <tr className="border-b-[2px] border-neutral-600 *:text-[1.55rem] *:leading-[1.6rem] *:font-bold *:text-neutral-800 *:px-[1.6rem] *:py-[1.2rem] *:whitespace-nowrap">
-                <th>Image</th>
-                <th>Full Name</th>
-                {selectedColumns.includes("Email Address") && (
-                  <th>Email Address</th>
-                )}
-
-                {selectedColumns.includes("Mobile Number") && (
-                  <th>Mobile Number</th>
-                )}
-
-                {selectedColumns.includes("CNIC Number") && (
-                  <th>CNIC Number</th>
-                )}
-
-                {selectedColumns.includes("Age") && <th>Age</th>}
-
-                {selectedColumns.includes("Operating City") && (
-                  <th>Operating City</th>
-                )}
-
-                {selectedColumns.includes("Joining Date") && (
-                  <th>Joining Date</th>
-                )}
-
-                {selectedColumns.includes("Successed Deals") && (
-                  <th>Successed Deals</th>
-                )}
-
-                {selectedColumns.includes("Active Deals") && (
-                  <th>Active Deals</th>
-                )}
-
-                {selectedColumns.includes("Total Earned") && (
-                  <th>Total Earned</th>
-                )}
-
-                {selectedColumns.includes("Highest Earned") && (
-                  <th>Highest Earned</th>
-                )}
-
-                {selectedColumns.includes("Experience Badge") && (
-                  <th>Experience Badge</th>
-                )}
-              </tr>
-            </thead>
-
-            <tbody>
-              {agentsData.map((agent, index) => (
-                <tr
-                  key={index}
-                  onClick={() => agentDetailsNavigateHandler(agent.name)}
-                  className="border-t-[1px] border-neutral-400 odd:bg-white cursor-pointer *:text-[1.4rem] *:leading-[1.5rem] *:font-semibold *:text-neutral-700 *:px-[1.6rem] *:py-[0.6rem] *:whitespace-nowrap"
-                >
-                  <td>
-                    <img
-                      src={agent.image}
-                      alt="Agent"
-                      className="size-[3.5rem] rounded-full object-cover"
-                    />
-                  </td>
-
-                  <td>{agent.name}</td>
-
+          {/* Table Container */}
+          <div className="w-full overflow-auto scroll-smooth scrollbar-slim-x">
+            <table className="w-full table-auto text-left">
+              <thead>
+                <tr className="border-b-[2px] border-neutral-600 *:text-[1.55rem] *:leading-[1.6rem] *:font-bold *:text-neutral-800 *:px-[1.6rem] *:py-[1.2rem] *:whitespace-nowrap">
+                  <th>Image</th>
+                  <th>Id Code</th>
+                  <th>Full Name</th>
                   {selectedColumns.includes("Email Address") && (
-                    <td>{agent.email}</td>
+                    <th>Email Address</th>
                   )}
 
                   {selectedColumns.includes("Mobile Number") && (
-                    <td>{agent.mobileNumber}</td>
+                    <th>Mobile Number</th>
                   )}
 
                   {selectedColumns.includes("CNIC Number") && (
-                    <td>{agent.cnicNumber}</td>
+                    <th>CNIC Number</th>
                   )}
 
-                  {selectedColumns.includes("Age") && <td>{agent.age}</td>}
+                  {selectedColumns.includes("Age") && <th>Age</th>}
 
                   {selectedColumns.includes("Operating City") && (
-                    <td>{agent.operatingCity}</td>
+                    <th>Operating City</th>
                   )}
 
                   {selectedColumns.includes("Joining Date") && (
-                    <td>{agent.joiningDate}</td>
+                    <th>Joining Date</th>
                   )}
 
                   {selectedColumns.includes("Successed Deals") && (
-                    <td>
-                      Sales - {agent.deals.successed.sales} | Rental -{" "}
-                      {agent.deals.successed.rental}
-                    </td>
+                    <th>Successed Deals</th>
                   )}
 
                   {selectedColumns.includes("Active Deals") && (
-                    <td>
-                      Sales {agent.deals.active.sales} | Rental{" "}
-                      {agent.deals.active.rental}
-                    </td>
+                    <th>Active Deals</th>
                   )}
 
                   {selectedColumns.includes("Total Earned") && (
-                    <td>PKR {agent.totalEarned.toLocaleString()}</td>
+                    <th>Total Earned</th>
                   )}
 
                   {selectedColumns.includes("Highest Earned") && (
-                    <td>PKR {agent.highestEarned.toLocaleString()}</td>
+                    <th>Highest Earned</th>
                   )}
 
                   {selectedColumns.includes("Experience Badge") && (
-                    <td>
-                      <span
-                        className={`px-[1.5rem] py-[0.3rem] rounded-full ${
-                          agent.badge === "Junior"
-                            ? "bg-blue-300"
-                            : agent.badge === "Mid-Level"
-                            ? "bg-emerald-300"
-                            : agent.badge === "Senior"
-                            ? "bg-orange-300"
-                            : agent.badge === "Expert" && "bg-purple-300"
-                        }`}
-                      >
-                        {agent.badge}
-                      </span>
-                    </td>
+                    <th>Experience Badge</th>
                   )}
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+
+              <tbody>
+                {agentsData.map((agent, index) => (
+                  <tr
+                    key={index}
+                    onClick={() => agentDetailsNavigateHandler(agent.name)}
+                    className="border-t-[1px] border-neutral-400 odd:bg-white cursor-pointer *:text-[1.5rem] *:leading-[1.5rem] *:font-semibold *:text-neutral-700 *:px-[1.6rem] *:py-[0.6rem] *:whitespace-nowrap"
+                  >
+                    <td>
+                      <img
+                        src={agent.image}
+                        alt="Agent"
+                        className="size-[3.5rem] rounded-full object-cover"
+                      />
+                    </td>
+
+                    <td>12754</td>
+
+                    <td>{agent.name}</td>
+
+                    {selectedColumns.includes("Email Address") && (
+                      <td>{agent.email}</td>
+                    )}
+
+                    {selectedColumns.includes("Mobile Number") && (
+                      <td>{agent.mobileNumber}</td>
+                    )}
+
+                    {selectedColumns.includes("CNIC Number") && (
+                      <td>{agent.cnicNumber}</td>
+                    )}
+
+                    {selectedColumns.includes("Age") && <td>{agent.age}</td>}
+
+                    {selectedColumns.includes("Operating City") && (
+                      <td>{agent.operatingCity}</td>
+                    )}
+
+                    {selectedColumns.includes("Joining Date") && (
+                      <td>{agent.joiningDate}</td>
+                    )}
+
+                    {selectedColumns.includes("Successed Deals") && (
+                      <td>
+                        Sales - {agent.deals.successed.sales} | Rental -{" "}
+                        {agent.deals.successed.rental}
+                      </td>
+                    )}
+
+                    {selectedColumns.includes("Active Deals") && (
+                      <td>
+                        Sales {agent.deals.active.sales} | Rental{" "}
+                        {agent.deals.active.rental}
+                      </td>
+                    )}
+
+                    {selectedColumns.includes("Total Earned") && (
+                      <td>PKR {agent.totalEarned.toLocaleString()}</td>
+                    )}
+
+                    {selectedColumns.includes("Highest Earned") && (
+                      <td>PKR {agent.highestEarned.toLocaleString()}</td>
+                    )}
+
+                    {selectedColumns.includes("Experience Badge") && (
+                      <td>
+                        <span
+                          className={`px-[1.5rem] py-[0.3rem] rounded-full ${
+                            agent.badge === "Junior"
+                              ? "bg-blue-300"
+                              : agent.badge === "Mid-Level"
+                              ? "bg-emerald-300"
+                              : agent.badge === "Senior"
+                              ? "bg-orange-300"
+                              : agent.badge === "Expert" && "bg-purple-300"
+                          }`}
+                        >
+                          {agent.badge}
+                        </span>
+                      </td>
+                    )}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
     </div>

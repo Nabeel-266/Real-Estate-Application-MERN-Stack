@@ -529,3 +529,32 @@ export const agents = [
     badge: "Expert",
   },
 ];
+
+// Properties Panel
+export const propertiesDataColumns = [
+  "Purpose",
+  "Size",
+  "Demand",
+  "Location In",
+  "Status",
+  "Pending On",
+  "Published On",
+  "Finalized On",
+  "Revenue Earned",
+];
+
+export const propertiesDataSortBy = ["Created At", "Demand", "Revenue Earn"];
+
+/*
+Id Key
+Type
+Size
+Purpose
+Demand
+Location In
+Status
+Requested On
+Active On
+Finalized On
+Revenue By
+*/
