@@ -1,24 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { cities } from "../../../lib/dummyData";
 
 // Import React Icons
 import { FaXmark } from "react-icons/fa6";
 import { HiMiniAdjustmentsHorizontal } from "react-icons/hi2";
 
 // Import Component
-import RangeInput from "../Inputs/RangeInput";
-import TypeInput from "../Inputs/TypeInput";
-import DateInput from "../Inputs/DateInput";
-import SearchSelection from "../Selections/SearchSelection";
-import SimpleSelection from "../Selections/SimpleSelection";
-import MinMaxInput from "../Inputs/MinMaxInput";
+import AgentFilterFields from "../Fieldsets/AgentFilterFields";
+import PropertyFilterFields from "../Fieldsets/PropertyFilterFields";
 
-const FilterDropdown = () => {
+const FilterDropdown = ({ to }) => {
   const filterBtnContRef = useRef(null);
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
-  const citiesName = [...cities.map((city) => city.name).sort()];
   const [filterQuery, setFilterQuery] = useState({});
 
   useEffect(() => {
@@ -91,11 +85,11 @@ const FilterDropdown = () => {
           isOpenDropdown ? "translate-x-[0%]" : "translate-x-[115%]"
         }`}
       >
-        <div className="w-full flex flex-col pt-[1.6rem] pb-[1rem]">
+        <div className="w-full flex flex-col">
           {/* Dropdown Header */}
-          <div className="flex items-center justify-between mx-[1rem] px-[0.6rem] pb-[1.2rem] border-b-[0.2rem] border-neutral-200">
+          <div className="h-[5rem] flex items-center justify-between mx-[1rem] px-[0.6rem] border-b-[0.2rem] border-neutral-200">
             <h5 className="text-[2rem] leading-[2rem] font-bold">
-              Filter Agent's
+              Filter {to}
             </h5>
 
             <button
@@ -107,182 +101,24 @@ const FilterDropdown = () => {
           </div>
 
           {/* Dropdown Inputs */}
-          <div className="w-full max-h-[30rem] grid grid-cols-2 gap-[1.5rem] px-[1.2rem] py-[1.2rem] overflow-auto scrollbar-dropdown-dark">
-            {/* Filter by ID Code */}
-            <TypeInput
-              inputFor={["idCode", "byIdCode"]}
-              inputType="number"
-              labelText="By Id Code"
-              autoComplete="off"
-              placeholder="eg. xxxxx"
-              labelStyle="inputLabels"
-              inputStyle="inputFields numberInput"
-              contStyle="space-y-[0.6rem]"
-              state={filterQuery}
-              setStateHandler={setAgentsFilterQueryHandler}
-            />
-
-            {/* Filter by Name */}
-            <TypeInput
-              inputFor={["name", "byName"]}
-              inputType="text"
-              labelText="By Name"
-              autoComplete="off"
-              placeholder="eg. Ahmed Bilal"
-              labelStyle="inputLabels"
-              inputStyle="inputFields"
-              contStyle="space-y-[0.6rem]"
-              state={filterQuery}
-              setStateHandler={setAgentsFilterQueryHandler}
-            />
-
-            {/* Filter by Email Address */}
-            <TypeInput
-              inputFor={["email", "byEmail"]}
-              inputType="text"
-              labelText="By Email Address"
-              autoComplete="off"
-              placeholder="eg. abc@example.com"
-              labelStyle="inputLabels"
-              inputStyle="inputFields"
-              contStyle="space-y-[0.6rem]"
-              state={filterQuery}
-              setStateHandler={setAgentsFilterQueryHandler}
-            />
-
-            {/* Filter by Phone Number */}
-            <TypeInput
-              inputFor={["mobileNumber", "byMobileNumber"]}
-              inputType="number"
-              labelText="By Mobile Number"
-              autoComplete="off"
-              placeholder="eg. 03xxxxxxxxx"
-              labelStyle="inputLabels"
-              inputStyle="inputFields numberInput"
-              contStyle="space-y-[0.6rem]"
-              state={filterQuery}
-              setStateHandler={setAgentsFilterQueryHandler}
-            />
-
-            {/* Filter by CNIC Number */}
-            <TypeInput
-              inputFor={["cnicNumber", "byCNICNumber"]}
-              inputType="number"
-              labelText="By CNIC Number"
-              autoComplete="off"
-              placeholder="eg. 42101xxxxxxxx"
-              labelStyle="inputLabels"
-              inputStyle="inputFields numberInput"
-              contStyle="space-y-[0.6rem]"
-              state={filterQuery}
-              setStateHandler={setAgentsFilterQueryHandler}
-            />
-
-            {/* Filter by Age */}
-            <RangeInput
-              inputFor="Age"
-              minValue={20}
-              maxValue={60}
-              labelText="By Age"
-              contStyle="space-y-[0.3rem]"
-              state={filterQuery}
-              setStateHandler={setAgentsFilterQueryHandler}
-            />
-
-            {/* Filter by Joining Date */}
-            <DateInput
-              inputFor={["joiningDate", "byJoiningDate"]}
-              inputType="month"
-              labelText="By Joining Month"
-              labelStyle="inputLabels"
-              inputStyle="inputFields"
-              contStyle="space-y-[0.6rem]"
-              state={filterQuery}
-              setStateHandler={setAgentsFilterQueryHandler}
-            />
-
-            {/* Filter by Operting City */}
-            <SearchSelection
-              selectFor={["operatingCity", "byOperatingCity"]}
-              labelText="By Operating City"
-              placeholderText="Select a City"
-              noOptionMessage="No City Found."
-              optionsData={citiesName}
-              labelStyle="inputLabels"
-              inputStyle="inputFields"
-              contStyle="space-y-[0.6rem]"
-              state={filterQuery}
-              setStateHandler={setAgentsFilterQueryHandler}
-            />
-
-            {/* By Experience Badge */}
-            <SimpleSelection
-              selectFor="experienceBadge"
-              labelText="By Experience Badge"
-              placeholderText="Select a Badge"
-              optionsData={["Junior", "Mid-Level", "Senior", "Expert"]}
-              labelStyle="inputLabels"
-              inputStyle="inputFields"
-              contStyle="space-y-[0.6rem]"
-              state={filterQuery}
-              setStateHanlder={setAgentsFilterQueryHandler}
-            />
-
-            {/* By Status */}
-            <SimpleSelection
-              selectFor="status"
-              labelText="By Status"
-              placeholderText="Select a Status"
-              optionsData={["Active", "Not Active"]}
-              labelStyle="inputLabels"
-              inputStyle="inputFields"
-              contStyle="space-y-[0.6rem]"
-              state={filterQuery}
-              setStateHanlder={setAgentsFilterQueryHandler}
-            />
-
-            {/* By Success Deals */}
-            <MinMaxInput
-              inputFor="SuccessDeals"
-              inputTag="Deal"
-              labelText="By Success Deals"
-              labelStyle="inputLabels"
-              inputStyle="inputFields pr-[1rem] focus:border-theme-blue"
-              padMinMax={["10rem", "10.4rem"]}
-              contStyle="space-y-[0.6rem]"
-              filterQuery={filterQuery}
-              setQueryHanlder={setAgentsFilterQueryHandler}
-            />
-
-            {/* By Total Earned */}
-            <MinMaxInput
-              inputFor="TotalEarn"
-              inputTag="PKR"
-              labelText="By Total Earned"
-              labelStyle="inputLabels"
-              inputStyle="inputFields pr-[1rem] focus:border-theme-blue"
-              padMinMax={["9.6rem", "10rem"]}
-              contStyle="space-y-[0.6rem]"
-              filterQuery={filterQuery}
-              setQueryHanlder={setAgentsFilterQueryHandler}
-            />
-
-            {/* By Highest Earned */}
-            <MinMaxInput
-              inputFor="HighestEarn"
-              inputTag="PKR"
-              labelText="By Highest Earned"
-              labelStyle="inputLabels"
-              inputStyle="inputFields pr-[1rem] focus:border-theme-blue"
-              padMinMax={["9.6rem", "10rem"]}
-              contStyle="space-y-[0.6rem]"
-              filterQuery={filterQuery}
-              setQueryHanlder={setAgentsFilterQueryHandler}
-            />
+          <div className="w-full max-h-[22.5rem] grid grid-cols-2 gap-[1.5rem] px-[1.2rem] py-[1.2rem] overflow-auto scrollbar-dropdown-dark">
+            {to === "Agents" ? (
+              <AgentFilterFields
+                state={filterQuery}
+                setStateHandler={setAgentsFilterQueryHandler}
+              />
+            ) : (
+              to === "Properties" && (
+                <PropertyFilterFields
+                  state={filterQuery}
+                  setStateHandler={setAgentsFilterQueryHandler}
+                />
+              )
+            )}
           </div>
 
           {/* Dropdown Action Button */}
-          <div className="flex items-center justify-end gap-[1.2rem] mx-[1rem] px-[0.6rem] pt-[1.2rem] pb-[0.6rem] border-t-[0.2rem] border-neutral-200">
+          <div className="h-[5.4rem] flex items-center justify-end gap-[1.2rem] mx-[1rem] px-[0.6rem] border-t-[0.2rem] border-neutral-200">
             <button
               onClick={() => setIsOpenDropdown(false)}
               className="text-[1.6rem] leading-[1.6rem] font-bold text-neutral-800 text-center px-[1.5rem] py-[0.6rem] rounded-full border-[0.2rem] border-neutral-800 whitespace-nowrap hover:bg-neutral-800 hover:text-white transition-all"

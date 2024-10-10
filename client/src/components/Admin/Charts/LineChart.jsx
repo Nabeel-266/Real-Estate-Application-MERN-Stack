@@ -179,7 +179,6 @@ const LineChart = ({ selectedPeriodOfData }) => {
             family: "'Montserrat Alternates', sans-serif",
             size: 13,
             weight: "500",
-            color: "#ffffff",
           },
         },
       },
@@ -291,7 +290,7 @@ const LineChart = ({ selectedPeriodOfData }) => {
   };
 
   return (
-    <div className="w-full flex flex-col gap-[2rem] mt-[0.5rem] bg-emerald-00">
+    <div className="w-full flex flex-col gap-[2rem] mt-[0.5rem]">
       {/* Custom Legend  */}
       <div className="w-full flex flex-wrap gap-[1.2rem] pr-[6%]">
         {chartData?.datasets.map((dataset, index) => (
@@ -306,6 +305,7 @@ const LineChart = ({ selectedPeriodOfData }) => {
                 backgroundColor: dataset.borderColor,
               }}
             ></span>
+
             <span
               className={`whitespace-nowrap ${
                 lineToggle.includes(dataset.label) &&

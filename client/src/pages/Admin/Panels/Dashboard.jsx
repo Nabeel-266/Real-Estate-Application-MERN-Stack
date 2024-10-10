@@ -56,7 +56,7 @@ const Dashboard = () => {
 
   return (
     <div className="w-full flex flex-col gap-[2rem] p-[2rem]">
-      {/* Section One */}
+      {/* Section Top */}
       <section className="w-full flex gap-[2rem]">
         {/* Total Deals & Revenue  */}
         <div className="w-full h-fit bg-theme-blue rounded-xl px-[1rem] py-[1rem] space-y-[0.6rem] shadow-[0.4rem_0.4rem_0.8rem_#08283590]">
@@ -188,12 +188,12 @@ const Dashboard = () => {
         </div>
       </section>
 
-      {/* Section Two */}
+      {/* Section Middle */}
       <section className="w-full flex gap-[2rem]">
-        {/* Revenue & Deals Chart */}
+        {/* Deals & Revenue Chart */}
         <div className="w-[53%] min-w-[40rem] h-fit bg-theme-blue p-[1.6rem] rounded-3xl flex flex-col gap-[1rem]">
           <div className="flex items-center justify-between">
-            <h2 className="text-[1.8rem] font-bold text-white font-montAlter">
+            <h2 className="text-[1.8rem] font-bold text-white">
               Deals & Revenue
             </h2>
 
@@ -222,13 +222,12 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Chart */}
           <LineChart
             selectedPeriodOfData={selectedPeriodOfData.graphDR.monthRange}
           />
         </div>
 
-        {/* Revenue & Deals Chart by Property Category */}
+        {/* Deals & Revenue Chart by Property Category */}
         <div className="w-[47%] min-w-[30rem] h-fit flex flex-col gap-[1rem] bg-theme-blue px-[2rem] pb-[1.8rem] pt-[1.5rem] rounded-3xl">
           {/* Chart Top */}
           <div className="w-full space-y-[0.8rem]">
@@ -311,7 +310,7 @@ const Dashboard = () => {
         </div>
       </section>
 
-      {/* Section Three */}
+      {/* Section Bottom */}
       <section className="w-full">
         {/* Top Header */}
         <div className="w-full flex items-center justify-between px-[1.2rem] pt-[1.2rem] pb-[1.4rem] rounded-t-xl">

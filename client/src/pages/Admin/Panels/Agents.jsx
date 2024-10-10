@@ -14,6 +14,7 @@ import { FaUserCheck, FaUserTie } from "react-icons/fa6";
 import FilterDropdown from "../../../components/Admin/Dropdowns/FilterDropdown";
 import SortDropdown from "../../../components/Admin/Dropdowns/SortDropdown";
 import ColumnsDropdown from "../../../components/Admin/Dropdowns/ColumnsDropdown";
+import { TbArrowBigRightLinesFilled } from "react-icons/tb";
 
 // Example data for cards and table
 const agentStats = [
@@ -113,10 +114,10 @@ const Agents = () => {
         {agentStats.map((stat, index) => (
           <div
             key={index}
-            className="min-w-[25rem] w-[28%] max-w-[28rem] relative overflow-hidden bg-theme-blue rounded-xl shadow-[0.4rem_0.4rem_0.8rem_#00000060]"
+            className="w-[32%] min-w-[26rem] max-w-[33rem] relative overflow-hidden bg-theme-blue rounded-xl shadow-[0.4rem_0.4rem_0.8rem_#00000060]"
           >
             <div
-              className={`absolute z-[1] top-0 bottom-0 right-[1rem] flex items-center justify-center text-[#ffffff30] ${
+              className={`absolute z-[1] top-0 bottom-0 right-[1.5rem] flex items-center justify-center text-[#ffffff30] ${
                 stat.title.includes("Total")
                   ? "text-[6.9rem]"
                   : stat.title.includes("Active")
@@ -132,8 +133,9 @@ const Agents = () => {
                 {stat.title}
               </h2>
 
-              <p className="text-[2.8rem] leading-[2.8rem] font-bold text-theme-yellow">
-                {stat.count}
+              <p className="flex items-center gap-[1rem] text-[3rem] leading-[2.8rem] font-bold">
+                <TbArrowBigRightLinesFilled size="2.2rem" />
+                <span className="text-theme-yellow ">{stat.count}</span>
               </p>
             </div>
           </div>
@@ -141,11 +143,11 @@ const Agents = () => {
       </section>
 
       {/* Section Bottom */}
-      <section className="w-full bg-neutral-100 relative overflow-x-clip rounded-xl">
-        <div className="w-full border-neutral-300 border-[0.2rem] rounded-xl">
+      <section className="w-full bg-white relative overflow-x-clip rounded-xl">
+        <div className="w-full bg-neutral-100 border-neutral-300 border-[0.2rem] rounded-xl">
           {/* Top Header */}
           <div className="w-full flex items-center justify-between px-[1.5rem] pt-[1.4rem] pb-[1rem]">
-            <h2 className="text-[2.3rem] leading-[2.3rem] font-bold text-theme-blue">
+            <h2 className="text-[2.1rem] leading-[2rem] font-bold text-theme-blue">
               Agents Directory
             </h2>
 
@@ -163,7 +165,7 @@ const Agents = () => {
                 />
               </div>
 
-              <FilterDropdown to="Filter By" />
+              <FilterDropdown to="Agents" />
             </div>
           </div>
 
@@ -171,7 +173,7 @@ const Agents = () => {
           <div className="w-full overflow-auto scroll-smooth scrollbar-slim-x">
             <table className="w-full table-auto text-left">
               <thead>
-                <tr className="border-b-[2px] border-neutral-600 *:text-[1.55rem] *:leading-[1.6rem] *:font-bold *:text-neutral-800 *:px-[1.6rem] *:py-[1.2rem] *:whitespace-nowrap">
+                <tr className="border-b-[2px] border-neutral-300 *:text-[1.55rem] *:leading-[1.6rem] *:font-bold *:text-neutral-800 *:px-[1.6rem] *:py-[1.2rem] *:whitespace-nowrap">
                   <th>Image</th>
                   <th>Id Code</th>
                   <th>Full Name</th>
@@ -234,7 +236,7 @@ const Agents = () => {
                       />
                     </td>
 
-                    <td>12754</td>
+                    <td>AG-12754</td>
 
                     <td>{agent.name}</td>
 

@@ -535,7 +535,7 @@ export const propertiesDataColumns = [
   "Purpose",
   "Size",
   "Demand",
-  "Location In",
+  "Located In",
   "Status",
   "Pending On",
   "Published On",
@@ -544,17 +544,3 @@ export const propertiesDataColumns = [
 ];
 
 export const propertiesDataSortBy = ["Created At", "Demand", "Revenue Earn"];
-
-/*
-Id Key
-Type
-Size
-Purpose
-Demand
-Location In
-Status
-Requested On
-Active On
-Finalized On
-Revenue By
-*/

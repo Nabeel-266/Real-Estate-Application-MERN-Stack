@@ -8,11 +8,11 @@ const MinMaxInput = ({
   inputStyle,
   padMinMax,
   contStyle,
-  filterQuery,
-  setQueryHanlder,
+  state,
+  setStateHandler,
 }) => {
   const handleChange = (e) => {
-    setQueryHanlder(e.target.name, e.target.value);
+    setStateHandler(e.target.name, e.target.value);
   };
 
   return (
@@ -28,7 +28,7 @@ const MinMaxInput = ({
             type="number"
             name={`min${inputFor}`}
             id={`min${inputFor}`}
-            value={filterQuery[`min${inputFor}`] || ""}
+            value={state[`min${inputFor}`] || ""}
             onChange={handleChange}
             className={`${inputStyle} numberInput peer/input`}
             style={{ paddingLeft: padMinMax[0] }}
@@ -47,7 +47,7 @@ const MinMaxInput = ({
             type="number"
             name={`max${inputFor}`}
             id={`max${inputFor}`}
-            value={filterQuery[`max${inputFor}`] || ""}
+            value={state[`max${inputFor}`] || ""}
             onChange={handleChange}
             className={`${inputStyle} numberInput peer/input`}
             style={{ paddingLeft: padMinMax[1] }}
