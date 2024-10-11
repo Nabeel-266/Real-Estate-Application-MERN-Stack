@@ -4,7 +4,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-function DonutChart({ data }) {
+function DashboardDonutChart({ data }) {
   const chartData = {
     labels: ["Residential", "Plot", "Commercial"], // Categories
     datasets: [data],
@@ -57,17 +57,4 @@ function DonutChart({ data }) {
   );
 }
 
-export default DonutChart;
-
-// {
-//     label: "Revenue (PKR)", // Revenue data
-//     data: [1000000, 5000000, 2000000], // Revenue for each category
-//     backgroundColor: ["#FF9F40", "#4BC0C0", "#9966FF"], // Different colors for revenue
-//     hoverBackgroundColor: ["#FF9F40", "#4BC0C0", "#9966FF"],
-//   },
-
-//   label: function (tooltipItem) {
-//     const datasetLabel = tooltipItem.dataset.label || "";
-//     const value = tooltipItem.raw;
-//     return `${datasetLabel}: ${value.toLocaleString()} PKR`;
-//   },
+export default DashboardDonutChart;

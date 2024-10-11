@@ -32,7 +32,7 @@ const commonDatasetsStyle = {
   pointHoverBorderWidth: 3,
 };
 
-const LineChart = ({ selectedPeriodOfData }) => {
+const DashboardLineChart = ({ selectedPeriodOfData }) => {
   const chartRef = useRef(null);
   const [lineToggle, setLineToggle] = useState([]);
 
@@ -324,4 +324,4 @@ const LineChart = ({ selectedPeriodOfData }) => {
   );
 };
 
-export default LineChart;
+export default DashboardLineChart;

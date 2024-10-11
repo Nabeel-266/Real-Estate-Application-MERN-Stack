@@ -8,6 +8,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  layouts,
 } from "chart.js";
 
 ChartJS.register(
@@ -19,28 +20,31 @@ ChartJS.register(
   Legend
 );
 
-const BarChart = () => {
+const PropertiesBarChart = () => {
   const chartRef = useRef(null);
   const [lineToggle, setLineToggle] = useState([]);
 
   // Example data - you can fetch or compute this dynamically
   const chartData = {
-    labels: ["Finalized", "Published", "Pending"],
+    labels: ["Residential", "Commercial", "Plots"],
     datasets: [
       {
-        label: "Residential",
+        label: "Finalized",
         data: [12, 19, 3], // Example data for Residential properties
         backgroundColor: "#082835e0",
+        hoverBackgroundColor: "#082835f0",
       },
       {
-        label: "Commercial",
+        label: "Published",
         data: [8, 13, 7], // Example data for Commercial properties
         backgroundColor: "#082835b0",
+        hoverBackgroundColor: "#082835c0",
       },
       {
-        label: "Plots",
+        label: "Pending",
         data: [6, 10, 4], // Example data for Plots properties
         backgroundColor: "#08283580",
+        hoverBackgroundColor: "#08283590",
       },
     ],
   };
@@ -73,11 +77,11 @@ const BarChart = () => {
           },
 
           label: function (context, i) {
-            return `${context.dataset.label}: ${context.raw} PR's`;
+            return `${context.raw} ${context.dataset.label}`;
           },
         },
         backgroundColor: "#fff",
-        titleColor: "#333",
+        titleColor: "#082835",
         bodyColor: "#333",
         bodySpacing: 10,
         cornerRadius: 10,
@@ -156,17 +160,17 @@ const BarChart = () => {
   };
 
   return (
-    <div className="w-full flex flex-col gap-[2rem] mt-[0.5rem]">
+    <div className="w-full flex flex-col gap-[1.2rem]">
       {/* Custom Legend  */}
-      <div className="w-full flex flex-wrap gap-[1.2rem] pr-[6%]">
+      <div className="w-full flex flex-wrap gap-[1.5rem]">
         {chartData?.datasets.map((dataset, index) => (
           <div
             key={index}
             onClick={() => toggleDataset(dataset.label, index)}
-            className={`text-[1.35rem] leading-[1.3rem] font-semibold text-theme-blue cursor-pointer flex items-center gap-[0.4rem] select-none`}
+            className={`text-[1.5rem] leading-[1.5rem] font-semibold text-theme-blue cursor-pointer flex items-center gap-[0.4rem] select-none`}
           >
             <span
-              className="size-[1.2rem] rounded-full mb-[0.1rem]"
+              className="size-[1.2rem] rounded-full"
               style={{
                 backgroundColor: dataset.backgroundColor,
               }}
@@ -185,9 +189,11 @@ const BarChart = () => {
       </div>
 
       {/* Chart */}
-      <Bar ref={chartRef} data={chartData} options={options} />
+      <div className="w-full flex bg-neutral-200 rounded-2xl p-[1.5rem]">
+        <Bar ref={chartRef} data={chartData} options={options} />
+      </div>
     </div>
   );
 };
 
-export default BarChart;
+export default PropertiesBarChart;

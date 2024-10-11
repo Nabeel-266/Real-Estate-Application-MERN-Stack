@@ -9,8 +9,8 @@ import {
 import { IoMdArrowDropdown } from "react-icons/io";
 
 // Import Components
-import LineChart from "../../../components/Admin/Charts/LineChart";
-import DonutChart from "../../../components/Admin/Charts/DonutChart";
+import DashboardLineChart from "../../../components/Admin/Charts/DashboardLineChart";
+import DashboardDonutChart from "../../../components/Admin/Charts/DashboardDonutChart";
 import PeriodSelection from "../../../components/Admin/Selections/PeriodSelection";
 
 const Dashboard = () => {
@@ -191,8 +191,9 @@ const Dashboard = () => {
       {/* Section Middle */}
       <section className="w-full flex gap-[2rem]">
         {/* Deals & Revenue Chart */}
-        <div className="w-[53%] min-w-[40rem] h-fit bg-theme-blue p-[1.6rem] rounded-3xl flex flex-col gap-[1rem]">
-          <div className="flex items-center justify-between">
+        <div className="w-[53%] min-w-[40rem] h-fit bg-theme-blue px-[1.8rem] py-[1.5rem] rounded-3xl flex flex-col gap-[1rem]">
+          {/* Chart Top */}
+          <div className="flex items-start justify-between">
             <h2 className="text-[1.8rem] font-bold text-white">
               Deals & Revenue
             </h2>
@@ -222,17 +223,17 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <LineChart
+          <DashboardLineChart
             selectedPeriodOfData={selectedPeriodOfData.graphDR.monthRange}
           />
         </div>
 
         {/* Deals & Revenue Chart by Property Category */}
-        <div className="w-[47%] min-w-[30rem] h-fit flex flex-col gap-[1rem] bg-theme-blue px-[2rem] pb-[1.8rem] pt-[1.5rem] rounded-3xl">
+        <div className="w-[47%] min-w-[30rem] h-fit flex flex-col gap-[1rem] bg-theme-blue px-[1.8rem] py-[1.5rem] rounded-3xl">
           {/* Chart Top */}
-          <div className="w-full space-y-[0.8rem]">
-            <h2 className="text-[1.8rem] font-bold text-white">
-              Property Category - DR
+          <div className="w-full space-y-[1.4rem]">
+            <h2 className="text-[1.8rem] leading-[1.8rem] font-bold text-white">
+              DR by Property Categories
             </h2>
 
             {/* Select Month & Year */}
@@ -283,7 +284,7 @@ const Dashboard = () => {
           </div>
 
           <div className="w-full flex items-center justify-center gap-[2rem] mt-[1rem]">
-            <DonutChart
+            <DashboardDonutChart
               data={{
                 label: "Deals",
                 data: [10, 5, 8],
@@ -295,7 +296,7 @@ const Dashboard = () => {
               }}
             />
 
-            <DonutChart
+            <DashboardDonutChart
               data={{
                 label: "Revenue",
                 data: [1000000, 5000000, 2000000],

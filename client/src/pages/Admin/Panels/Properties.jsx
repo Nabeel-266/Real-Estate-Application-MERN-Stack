@@ -18,7 +18,8 @@ import {
 import FilterDropdown from "../../../components/Admin/Dropdowns/FilterDropdown";
 import SortDropdown from "../../../components/Admin/Dropdowns/SortDropdown";
 import ColumnsDropdown from "../../../components/Admin/Dropdowns/ColumnsDropdown";
-import BarChart from "../../../components/Admin/Charts/BarChart";
+import PropertiesBarChart from "../../../components/Admin/Charts/PropertiesBarChart";
+import PropertiesDonutChart from "../../../components/Admin/Charts/PropertiesDonutChart";
 
 // Example data for cards and table
 const propertyStats = [
@@ -28,7 +29,7 @@ const propertyStats = [
     icon: <BsBuildingFillCheck />,
   },
   {
-    title: "Active Properties",
+    title: "Published Properties",
     count: 60,
     icon: <MdAddHomeWork />,
   },
@@ -62,11 +63,11 @@ const Properties = () => {
           >
             <div
               className={`absolute z-[1] top-0 bottom-0 right-[1.5rem] flex items-center justify-center text-[#ffffff30] ${
-                stat.title.includes("Active")
-                  ? "text-[6.4rem]"
-                  : stat.title.includes("Pending")
-                  ? "text-[5.1rem]"
-                  : "text-[5.5rem]"
+                stat.title.includes("Finalized")
+                  ? "text-[5.5rem]"
+                  : stat.title.includes("Published")
+                  ? "text-[6.6rem]"
+                  : "text-[5.1rem]"
               }`}
             >
               {stat.icon}
@@ -87,14 +88,104 @@ const Properties = () => {
       </section>
 
       {/* Section Middle */}
-      <div className="w-[62%] min-w-[50rem] flex flex-col gap-[1rem] bg-neutral-100 p-[2rem] rounded-3xl border-neutral-300 border-[0.2rem]">
-        {/* Heading */}
-        <h2 className="text-[2rem] leading-[2rem] font-bold text-theme-blue">
-          Property Categories Grouped by Status
-        </h2>
+      <section className="w-full space-y-[2rem]">
+        {/* Top Header */}
+        <div className="w-full">
+          <h2 className="text-[2.1rem] leading-[2.1rem] font-bold text-theme-blue">
+            Properties Distribute by Status
+          </h2>
+        </div>
 
-        <BarChart />
-      </div>
+        {/* Charts */}
+        <div className="w-full flex gap-[3rem]">
+          <div className="w-[58%] min-w-[50rem] flex flex-col gap-[1rem] bg-neutral-100 p-[1.5rem] rounded-3xl border-neutral-300 border-[0.2rem]">
+            {/* Heading */}
+            <h3 className="text-[1.8rem] leading-[1.8rem] font-bold text-theme-blue">
+              Grouped by Category
+            </h3>
+
+            <PropertiesBarChart />
+          </div>
+
+          <div className="w-[40%] min-w-[30rem] flex flex-col gap-[1rem] bg-neutral-100 p-[1.5rem] rounded-3xl border-neutral-300 border-[0.2rem]">
+            {/* Heading */}
+            <h3 className="text-[1.8rem] leading-[1.8rem] font-bold text-theme-blue flex flex-col gap-[0.6rem]">
+              Grouped by Purpose
+            </h3>
+
+            {/* Custom Legend  */}
+            <div className="w-full flex flex-wrap gap-[1.2rem]">
+              {["Finalized", "Published", "Pending"].map((label, index) => (
+                <div
+                  key={index}
+                  className={`text-[1.5rem] leading-[1.5rem] font-semibold text-theme-blue flex items-center gap-[0.4rem] select-none`}
+                >
+                  <span
+                    className={`size-[1.2rem] rounded-full ${
+                      index === 0
+                        ? "bg-theme-blue opacity-80"
+                        : index === 1
+                        ? "bg-theme-blue opacity-60"
+                        : "bg-theme-blue opacity-40"
+                    }`}
+                  ></span>
+                  <span className="whitespace-nowrap">{label}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="w-full h-full flex bg-neutral-200 rounded-2xl p-[1.2rem] mt-[0.2rem]">
+              <div className="w-full flex flex-col-reverse items-center justify-end gap-[1rem] overflow-hidden">
+                <h5 className="text-[1.7rem] leading-[1.7rem] font-bold text-theme-blue">
+                  Sale
+                </h5>
+
+                <div className="w-[95%]">
+                  <PropertiesDonutChart
+                    data={{
+                      label: "Sale",
+                      data: [10, 5, 8],
+                      backgroundColor: ["#082835e0", "#082835b0", "#08283580"],
+                      hoverBackgroundColor: [
+                        "#082835e0",
+                        "#082835b0",
+                        "#08283580",
+                      ],
+                      borderWidth: 4,
+                      borderColor: "transparent",
+                      hoverBorderColor: ["#223f4c", "#4c646f", "#758893"],
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div className="w-full flex flex-col items-center justify-end gap-[1.2rem] overflow-hidden">
+                <h5 className="text-[1.7rem] leading-[1.7rem] font-bold text-theme-blue">
+                  Rent
+                </h5>
+
+                <div className="w-[95%]">
+                  <PropertiesDonutChart
+                    data={{
+                      label: "Rent",
+                      data: [12, 8, 10],
+                      backgroundColor: ["#082835e0", "#082835b0", "#08283580"],
+                      hoverBackgroundColor: [
+                        "#082835e0",
+                        "#082835b0",
+                        "#08283580",
+                      ],
+                      borderWidth: 4,
+                      borderColor: "transparent",
+                      hoverBorderColor: ["#223f4c", "#4c646f", "#758893"],
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Section Bottom */}
       <section className="w-full min-h-[40rem] bg-white relative overflow-clip rounded-xl">
