@@ -110,7 +110,7 @@ const Agents = () => {
   return (
     <div className="w-full flex flex-col gap-[2.5rem] p-[2rem]">
       {/* Section Top */}
-      <section className="w-full flex gap-[2rem]">
+      <section className="w-full flex justify-between gap-[2rem]">
         {agentStats.map((stat, index) => (
           <div
             key={index}
@@ -119,10 +119,10 @@ const Agents = () => {
             <div
               className={`absolute z-[1] top-0 bottom-0 right-[1.5rem] flex items-center justify-center text-[#ffffff30] ${
                 stat.title.includes("Total")
-                  ? "text-[6.9rem]"
+                  ? "text-[7rem] mb-[0.2rem]"
                   : stat.title.includes("Active")
                   ? "text-[6rem]"
-                  : "text-[5rem]"
+                  : "text-[4.8rem]"
               }`}
             >
               {stat.icon}

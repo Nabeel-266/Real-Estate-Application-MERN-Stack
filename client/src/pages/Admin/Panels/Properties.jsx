@@ -8,11 +8,7 @@ import {
 import { FaHourglassHalf } from "react-icons/fa";
 import { BsBuildingFillCheck } from "react-icons/bs";
 import { MdAddHomeWork } from "react-icons/md";
-import { FaArrowRightLong, FaArrowsTurnRight } from "react-icons/fa6";
-import {
-  TbArrowBigRightLines,
-  TbArrowBigRightLinesFilled,
-} from "react-icons/tb";
+import { TbArrowBigRightLinesFilled } from "react-icons/tb";
 
 // Import Components
 import FilterDropdown from "../../../components/Admin/Dropdowns/FilterDropdown";
@@ -64,10 +60,10 @@ const Properties = () => {
             <div
               className={`absolute z-[1] top-0 bottom-0 right-[1.5rem] flex items-center justify-center text-[#ffffff30] ${
                 stat.title.includes("Finalized")
-                  ? "text-[5.5rem]"
+                  ? "text-[5.4rem]"
                   : stat.title.includes("Published")
-                  ? "text-[6.6rem]"
-                  : "text-[5.1rem]"
+                  ? "text-[6.4rem]"
+                  : "text-[5rem]"
               }`}
             >
               {stat.icon}
@@ -96,8 +92,9 @@ const Properties = () => {
           </h2>
         </div>
 
-        {/* Charts */}
+        {/* Charts Area */}
         <div className="w-full flex gap-[3rem]">
+          {/* Properties Bar Chart Content */}
           <div className="w-[58%] min-w-[50rem] flex flex-col gap-[1rem] bg-neutral-100 p-[1.5rem] rounded-3xl border-neutral-300 border-[0.2rem]">
             {/* Heading */}
             <h3 className="text-[1.8rem] leading-[1.8rem] font-bold text-theme-blue">
@@ -107,6 +104,7 @@ const Properties = () => {
             <PropertiesBarChart />
           </div>
 
+          {/* Properties Donut Chart Content */}
           <div className="w-[40%] min-w-[30rem] flex flex-col gap-[1rem] bg-neutral-100 p-[1.5rem] rounded-3xl border-neutral-300 border-[0.2rem]">
             {/* Heading */}
             <h3 className="text-[1.8rem] leading-[1.8rem] font-bold text-theme-blue flex flex-col gap-[0.6rem]">
@@ -123,10 +121,10 @@ const Properties = () => {
                   <span
                     className={`size-[1.2rem] rounded-full ${
                       index === 0
-                        ? "bg-theme-blue opacity-80"
+                        ? "bg-[#082835e0]"
                         : index === 1
-                        ? "bg-theme-blue opacity-60"
-                        : "bg-theme-blue opacity-40"
+                        ? "bg-[#082835b0]"
+                        : "bg-[#08283580]"
                     }`}
                   ></span>
                   <span className="whitespace-nowrap">{label}</span>
@@ -134,9 +132,10 @@ const Properties = () => {
               ))}
             </div>
 
-            <div className="w-full h-full flex bg-neutral-200 rounded-2xl p-[1.2rem] mt-[0.2rem]">
+            {/* Chart */}
+            <div className="w-full h-full flex bg-neutral-200 rounded-2xl p-[1.2rem] mt-[0.2rem] select-none">
               <div className="w-full flex flex-col-reverse items-center justify-end gap-[1rem] overflow-hidden">
-                <h5 className="text-[1.7rem] leading-[1.7rem] font-bold text-theme-blue">
+                <h5 className="text-[1.7rem] leading-[1.7rem] font-semibold text-white bg-theme-blue px-[1.2rem] py-[0.4rem] rounded-full">
                   Sale
                 </h5>
 
@@ -160,7 +159,7 @@ const Properties = () => {
               </div>
 
               <div className="w-full flex flex-col items-center justify-end gap-[1.2rem] overflow-hidden">
-                <h5 className="text-[1.7rem] leading-[1.7rem] font-bold text-theme-blue">
+                <h5 className="text-[1.7rem] leading-[1.7rem] font-semibold text-white bg-theme-blue px-[1.2rem] py-[0.4rem] rounded-full">
                   Rent
                 </h5>
 
