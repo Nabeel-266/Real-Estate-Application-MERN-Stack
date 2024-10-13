@@ -88,7 +88,7 @@ const Properties = () => {
         {/* Top Header */}
         <div className="w-full">
           <h2 className="text-[2.1rem] leading-[2.1rem] font-bold text-theme-blue">
-            Properties Distribute by Status
+            Property Distribution by Status
           </h2>
         </div>
 
