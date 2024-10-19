@@ -544,3 +544,27 @@ export const propertiesDataColumns = [
 ];
 
 export const propertiesDataSortBy = ["Created At", "Demand", "Revenue Earn"];
+
+// Clients Panel
+export const clientsDataColumns = [
+  "Email Address",
+  "Contact Number",
+  "Role",
+  "From City",
+  "Deal's",
+  "Total Commission",
+];
+
+export const clientsDataSortBy = ["Created At", "Deals", "Total Commission"];
+
+// Users Panel
+export const usersDataColumns = [
+  "Email Address",
+  "Mobile Number",
+  "Live In",
+  "Join At",
+  "Last Login",
+  "Status",
+];
+
+export const usersDataSortBy = ["Join At", "Last Login"];

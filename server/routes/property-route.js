@@ -1,7 +1,7 @@
 import express from "express";
 
 // Import Middleware
-import { uploads } from "../helpers/storage.js";
+import { upload } from "../helpers/storage.js";
 import { validateToken } from "../helpers/token.js";
 
 // Import Controllers
@@ -26,7 +26,11 @@ propertyRouter.get("/:propertyId", getProperty);
 propertyRouter.get("/user/:userId", getUserProperty);
 
 //* For Upload Property Images
-propertyRouter.post("/uploadPropertyImages", uploads, uploadPropertyImages);
+propertyRouter.post(
+  "/uploadPropertyImages",
+  upload.array("files", 12),
+  uploadPropertyImages
+);
 
 //* For Create a New Property
 propertyRouter.post("/createProperty", validateToken, createProperty);

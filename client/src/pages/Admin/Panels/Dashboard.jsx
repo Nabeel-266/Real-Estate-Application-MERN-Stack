@@ -312,96 +312,100 @@ const Dashboard = () => {
       </section>
 
       {/* Section Bottom */}
-      <section className="w-full">
-        {/* Top Header */}
-        <div className="w-full flex items-center justify-between px-[1.2rem] pt-[1.2rem] pb-[1.4rem] rounded-t-xl">
-          <h2 className="text-[2rem] font-bold text-theme-blue">
-            Deals & Revenue Summary
-          </h2>
+      <section className="w-full bg-white relative overflow-x-clip rounded-xl">
+        <div className="w-full bg-neutral-100 border-neutral-300 border-[0.2rem] rounded-xl">
+          {/* Top Header */}
+          <div className="w-full flex items-center justify-between px-[1.2rem] pt-[1.2rem] pb-[1.4rem] rounded-t-xl">
+            <h2 className="text-[2rem] font-bold text-theme-blue">
+              Deals & Revenue Summary
+            </h2>
 
-          {/* Select Month & Year */}
-          <div className="flex gap-[1rem]">
-            {/* Select Year Dropdown */}
-            <PeriodSelection
-              width="8.5rem"
-              inputColor={"#022835"}
-              dataTitle={"summaryDR"}
-              to={"year"}
-              options={periodDropdownOptions.year}
-              selectedYear={selectedPeriodOfData.summaryDR.year}
-              onSelect={handleSelect}
-            />
+            {/* Select Month & Year */}
+            <div className="flex gap-[1rem]">
+              {/* Select Year Dropdown */}
+              <PeriodSelection
+                width="8.5rem"
+                inputColor={"#022835"}
+                dataTitle={"summaryDR"}
+                to={"year"}
+                options={periodDropdownOptions.year}
+                selectedYear={selectedPeriodOfData.summaryDR.year}
+                onSelect={handleSelect}
+              />
 
-            {/* Select Month Dropdown */}
-            <PeriodSelection
-              width="8.5rem"
-              inputColor={"#022835"}
-              dataTitle={"summaryDR"}
-              to={"month"}
-              options={periodDropdownOptions.month}
-              selectedYear={selectedPeriodOfData.summaryDR.month}
-              onSelect={handleSelect}
-            />
+              {/* Select Month Dropdown */}
+              <PeriodSelection
+                width="8.5rem"
+                inputColor={"#022835"}
+                dataTitle={"summaryDR"}
+                to={"month"}
+                options={periodDropdownOptions.month}
+                selectedYear={selectedPeriodOfData.summaryDR.month}
+                onSelect={handleSelect}
+              />
+            </div>
           </div>
-        </div>
 
-        {/* Table Container */}
-        <div className="w-full overflow-auto scroll-smooth scrollbar-slim-x">
-          <table className="w-full table-auto text-left">
-            <thead>
-              <tr className="border-b-[2px] border-neutral-500 *:text-[1.55rem] *:leading-[1.6rem] *:font-bold *:text-theme-blue *:px-[1.2rem] *:py-[1rem] *:whitespace-nowrap">
-                <th className="relative group">
-                  <p className="flex gap-[0.6rem] cursor-default">
-                    <span>{summarizedBy}</span>
-                    <IoMdArrowDropdown />
-                  </p>
+          {/* Table Container */}
+          <div className="w-full overflow-auto scroll-smooth scrollbar-slim-x">
+            <table className="w-full table-auto text-left">
+              <thead>
+                <tr className="border-b-[2px] border-neutral-500 *:text-[1.55rem] *:leading-[1.6rem] *:font-bold *:text-theme-blue *:px-[1.2rem] *:py-[1rem] *:whitespace-nowrap">
+                  <th className="relative group">
+                    <p className="flex gap-[0.6rem] cursor-default">
+                      <span>{summarizedBy}</span>
+                      <IoMdArrowDropdown />
+                    </p>
 
-                  <div className="w-full bg-theme-blue text-white absolute top-[100%] left-0 rounded-lg shadow-lg shadow-neutral-200 py-[0.4rem] border-[1px] border-neutral-500 hidden group-hover:block">
-                    <ul className="text-[1.4rem] leading-[1.4rem] font-semibold *:px-[1.2rem] *:py-[0.8rem] *:transition-all *:cursor-pointer">
-                      {["By Property Types", "By Property Cities"].map(
-                        (by, index) => (
-                          <li
-                            key={index}
-                            onClick={() => setSummarizedBy(by)}
-                            className="whitespace-nowrap hover:bg-white hover:text-theme-blue"
-                          >
-                            {by}
-                          </li>
-                        )
-                      )}
-                    </ul>
-                  </div>
-                </th>
-                <th>Sales | Rental Deals</th>
-                <th>Sales Rvn</th>
-                <th>Rental Rvn</th>
-                <th>Total Rvn</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {summarizedData.map(({ summaryBy, deals, revenue }, index) => (
-                <tr
-                  key={index}
-                  className="border-t-[1px] border-neutral-400 even:bg-neutral-200 *:leading-[1.5rem] *:font-semibold *: *:px-[1.2rem] *:py-[1.3rem] *:whitespace-nowrap"
-                >
-                  <td className="text-[1.5rem] text-theme-blue">{summaryBy}</td>
-                  <td className="text-[1.4rem] text-neutral-700">
-                    {deals.sales} Deals | {deals.rental} Deals
-                  </td>
-                  <td className="text-[1.4rem] text-neutral-700">
-                    PKR {revenue.sales.toLocaleString()}
-                  </td>
-                  <td className="text-[1.4rem] text-neutral-700">
-                    PKR {revenue.rental.toLocaleString()}
-                  </td>
-                  <td className="text-[1.4rem] text-neutral-700">
-                    PKR {(revenue.sales + revenue.rental).toLocaleString()}
-                  </td>
+                    <div className="w-full bg-theme-blue text-white absolute top-[100%] left-0 rounded-lg shadow-lg shadow-neutral-200 py-[0.4rem] border-[1px] border-neutral-500 hidden group-hover:block">
+                      <ul className="text-[1.4rem] leading-[1.4rem] font-semibold *:px-[1.2rem] *:py-[0.8rem] *:transition-all *:cursor-pointer">
+                        {["By Property Types", "By Property Cities"].map(
+                          (by, index) => (
+                            <li
+                              key={index}
+                              onClick={() => setSummarizedBy(by)}
+                              className="whitespace-nowrap hover:bg-white hover:text-theme-blue"
+                            >
+                              {by}
+                            </li>
+                          )
+                        )}
+                      </ul>
+                    </div>
+                  </th>
+                  <th>Sales | Rental Deals</th>
+                  <th>Sales Rvn</th>
+                  <th>Rental Rvn</th>
+                  <th>Total Rvn</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+
+              <tbody>
+                {summarizedData.map(({ summaryBy, deals, revenue }, index) => (
+                  <tr
+                    key={index}
+                    className="border-t-[1px] border-neutral-400 odd:bg-white *:leading-[1.5rem] *:font-semibold *: *:px-[1.2rem] *:py-[1.3rem] *:whitespace-nowrap"
+                  >
+                    <td className="text-[1.5rem] text-theme-blue">
+                      {summaryBy}
+                    </td>
+                    <td className="text-[1.4rem] text-neutral-700">
+                      {deals.sales} Deals | {deals.rental} Deals
+                    </td>
+                    <td className="text-[1.4rem] text-neutral-700">
+                      PKR {revenue.sales.toLocaleString()}
+                    </td>
+                    <td className="text-[1.4rem] text-neutral-700">
+                      PKR {revenue.rental.toLocaleString()}
+                    </td>
+                    <td className="text-[1.4rem] text-neutral-700">
+                      PKR {(revenue.sales + revenue.rental).toLocaleString()}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
     </div>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {
-  propertiesDataColumns,
-  propertiesDataSortBy,
+  clientsDataColumns,
+  clientsDataSortBy,
 } from "../../../lib/dummyDataAdmin";
 
 // Import React Icons
@@ -95,7 +95,7 @@ const clientCountbyCity = [
 ];
 
 const Clients = () => {
-  const [selectedColumns, setSelectedColumns] = useState(propertiesDataColumns);
+  const [selectedColumns, setSelectedColumns] = useState(clientsDataColumns);
 
   // Toggle Properties Data Column Visibility
   const togglePropertiesDataColumns = (column) => {
@@ -161,12 +161,12 @@ const Clients = () => {
                     {city}
                   </h2>
                   <p className="text-[1.3rem] leading-[1.3rem] font-medium text-neutral-800">
-                    City
+                    Clients
                   </p>
                 </div>
 
                 {/* Client Count */}
-                <div className="text-theme-blue">
+                <div className="text-theme-blue flex flex-col">
                   <span className="text-[2.4rem] leading-[2.4rem] font-bold">
                     {count}
                   </span>
@@ -189,12 +189,12 @@ const Clients = () => {
             {/* Sort, Columns & Filter */}
             <div className="flex items-center gap-[1rem] ">
               <div className="relative">
-                <SortDropdown dropdownData={propertiesDataSortBy} />
+                <SortDropdown dropdownData={clientsDataSortBy} />
               </div>
 
               <div className="relative">
                 <ColumnsDropdown
-                  dropdownData={propertiesDataColumns}
+                  dropdownData={clientsDataColumns}
                   selectedColumns={selectedColumns}
                   toggleDataColumns={togglePropertiesDataColumns}
                 />
@@ -206,38 +206,28 @@ const Clients = () => {
 
           {/* Table Container */}
           <div className="w-full overflow-auto scroll-smooth scrollbar-slim-x">
-            <table className="w-full table-auto text-left">
+            <table className="w-full table-auto">
               <thead>
-                <tr className="border-b-[2px] border-neutral-300 text-center *:text-[1.55rem] *:leading-[1.6rem] *:font-bold *:text-theme-blue *:px-[1.6rem] *:py-[1rem] *:whitespace-nowrap ">
+                <tr className="border-b-[2px] border-neutral-300 text-center *:text-[1.55rem] *:leading-[1.6rem] *:font-bold *:text-theme-blue *:px-[1.6rem] *:py-[1rem] *:whitespace-nowrap">
                   <th className="text-left">Id Code</th>
-                  <th className="text-left">Full Name</th>
+                  <th>Client Name</th>
 
-                  {selectedColumns.includes("Purpose") && (
+                  {selectedColumns.includes("Email Address") && (
                     <th>Email Address</th>
                   )}
 
-                  {selectedColumns.includes("Size") && <th>Contact Number</th>}
-
-                  {selectedColumns.includes("Demand") && <th>Role</th>}
-
-                  {selectedColumns.includes("Located In") && <th>From City</th>}
-
-                  {selectedColumns.includes("Status") && <th>Status</th>}
-
-                  {selectedColumns.includes("Pending On") && (
-                    <th>Pending On</th>
+                  {selectedColumns.includes("Contact Number") && (
+                    <th>Contact Number</th>
                   )}
 
-                  {selectedColumns.includes("Published On") && (
-                    <th>Published On</th>
-                  )}
+                  {selectedColumns.includes("Role") && <th>Role</th>}
 
-                  {selectedColumns.includes("Finalized On") && (
-                    <th>Finalized On</th>
-                  )}
+                  {selectedColumns.includes("From City") && <th>From City</th>}
 
-                  {selectedColumns.includes("Revenue Earned") && (
-                    <th>Revenue Earned</th>
+                  {selectedColumns.includes("Deal's") && <th>Deal's</th>}
+
+                  {selectedColumns.includes("Total Commission") && (
+                    <th>Total Commission</th>
                   )}
                 </tr>
               </thead>
@@ -250,40 +240,22 @@ const Clients = () => {
                   >
                     <td className="text-left">CL-12485</td>
 
-                    <td className="text-left">Syed Ali Ansari</td>
+                    <td>Syed Ali Ansari</td>
 
-                    {selectedColumns.includes("Purpose") && (
+                    {selectedColumns.includes("Email Address") && (
                       <th>aliansari@gmail.com</th>
                     )}
-                    {selectedColumns.includes("Size") && <th>03312548965</th>}
-
-                    {selectedColumns.includes("Demand") && <th>Seller</th>}
-
-                    {selectedColumns.includes("Located In") && <th>Karachi</th>}
-
-                    {selectedColumns.includes("Status") && (
-                      <th>
-                        <span
-                          className={`px-[1.5rem] py-[0.3rem] rounded-full bg-blue-300 `}
-                        >
-                          Finalized
-                        </span>
-                      </th>
+                    {selectedColumns.includes("Contact Number") && (
+                      <th>03312548965</th>
                     )}
 
-                    {selectedColumns.includes("Pending On") && (
-                      <th>Sep 12 - 2023</th>
-                    )}
+                    {selectedColumns.includes("Role") && <th>Seller</th>}
 
-                    {selectedColumns.includes("Published On") && (
-                      <th>Nov 03 - 2023</th>
-                    )}
+                    {selectedColumns.includes("From City") && <th>Karachi</th>}
 
-                    {selectedColumns.includes("Finalized On") && (
-                      <th>Feb 25 - 2024</th>
-                    )}
+                    {selectedColumns.includes("Deal's") && <th>1 Deal</th>}
 
-                    {selectedColumns.includes("Revenue Earned") && (
+                    {selectedColumns.includes("Total Commission") && (
                       <th>PKR 240000</th>
                     )}
                   </tr>

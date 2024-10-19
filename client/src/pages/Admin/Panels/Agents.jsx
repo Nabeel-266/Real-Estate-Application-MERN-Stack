@@ -176,7 +176,7 @@ const Agents = () => {
                 <tr className="border-b-[2px] border-neutral-300 *:text-[1.55rem] *:leading-[1.6rem] *:font-bold *:text-neutral-800 *:px-[1.6rem] *:py-[1.2rem] *:whitespace-nowrap">
                   <th>Image</th>
                   <th>Id Code</th>
-                  <th>Full Name</th>
+                  <th>Agent Name</th>
                   {selectedColumns.includes("Email Address") && (
                     <th>Email Address</th>
                   )}

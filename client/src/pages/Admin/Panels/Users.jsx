@@ -1,7 +1,15 @@
+import { useState } from "react";
+import { usersDataColumns, usersDataSortBy } from "../../../lib/dummyDataAdmin";
+
 // Import React Icons
 import { HiMiniUserGroup, HiUserPlus } from "react-icons/hi2";
 import { PiUserSwitchFill } from "react-icons/pi";
 import { TbArrowBigRightLinesFilled } from "react-icons/tb";
+
+// Import Components
+import SortDropdown from "../../../components/Admin/Dropdowns/SortDropdown";
+import ColumnsDropdown from "../../../components/Admin/Dropdowns/ColumnsDropdown";
+import FilterDropdown from "../../../components/Admin/Dropdowns/FilterDropdown";
 
 // Example data for cards and table
 const usersStats = [
@@ -23,6 +31,17 @@ const usersStats = [
 ];
 
 const Users = () => {
+  const [selectedColumns, setSelectedColumns] = useState(usersDataColumns);
+
+  // Toggle Properties Data Column Visibility
+  const togglePropertiesDataColumns = (column) => {
+    setSelectedColumns((prevSelected) =>
+      prevSelected.includes(column)
+        ? prevSelected.filter((col) => col !== column)
+        : [...prevSelected, column]
+    );
+  };
+
   return (
     <div className="w-full flex flex-col gap-[3rem] px-[2rem] pt-[2rem] pb-[4rem]">
       {/* Section Top */}
@@ -56,6 +75,105 @@ const Users = () => {
             </div>
           </div>
         ))}
+      </section>
+
+      {/* Section Bottom */}
+      <section className="w-full min-h-[40rem] bg-white relative overflow-clip rounded-xl">
+        <div className="w-full bg-neutral-100 border-neutral-300 border-[0.2rem] rounded-xl">
+          {/* Top Header */}
+          <div className="w-full flex items-center justify-between px-[1.5rem] pt-[1.4rem] pb-[1rem]">
+            <h2 className="text-[2.1rem] leading-[2rem] font-bold text-theme-blue">
+              Users Directory
+            </h2>
+
+            {/* Sort, Columns & Filter */}
+            <div className="flex items-center gap-[1rem] ">
+              <div className="relative">
+                <SortDropdown dropdownData={usersDataSortBy} />
+              </div>
+
+              <div className="relative">
+                <ColumnsDropdown
+                  dropdownData={usersDataColumns}
+                  selectedColumns={selectedColumns}
+                  toggleDataColumns={togglePropertiesDataColumns}
+                />
+              </div>
+
+              <FilterDropdown to="Properties" />
+            </div>
+          </div>
+
+          {/* Table Container */}
+          <div className="w-full overflow-auto scroll-smooth scrollbar-slim-x">
+            <table className="w-full table-auto">
+              <thead>
+                <tr className="border-b-[2px] border-neutral-300 text-center *:text-[1.55rem] *:leading-[1.6rem] *:font-bold *:text-theme-blue *:px-[1.6rem] *:py-[1rem] *:whitespace-nowrap">
+                  <th className="text-left">Id Code</th>
+                  <th>User Name</th>
+
+                  {selectedColumns.includes("Email Address") && (
+                    <th>Email Address</th>
+                  )}
+
+                  {selectedColumns.includes("Mobile Number") && (
+                    <th>Mobile Number</th>
+                  )}
+
+                  {selectedColumns.includes("Live In") && <th>Live In</th>}
+
+                  {selectedColumns.includes("Join At") && <th>Join At</th>}
+
+                  {selectedColumns.includes("Last Login") && (
+                    <th>Last Login</th>
+                  )}
+
+                  {selectedColumns.includes("Status") && <th>Status</th>}
+                </tr>
+              </thead>
+
+              <tbody>
+                {[1, 2, 3, 4, 5].map((_, index) => (
+                  <tr
+                    key={index}
+                    className="border-t-[1px] border-neutral-300 odd:bg-white cursor-pointer text-center *:text-[1.5rem] *:leading-[1.5rem] *:font-semibold *:text-neutral-700 *:px-[1.6rem] *:py-[1.3rem] *:whitespace-nowrap"
+                  >
+                    <td className="text-left">US-12485</td>
+
+                    <td>Syed Ali Ansari</td>
+
+                    {selectedColumns.includes("Email Address") && (
+                      <th>aliansari@gmail.com</th>
+                    )}
+                    {selectedColumns.includes("Mobile Number") && (
+                      <th>03312548965</th>
+                    )}
+
+                    {selectedColumns.includes("Live In") && <th>Karachi</th>}
+
+                    {selectedColumns.includes("Join At") && (
+                      <th>Sep 12 - 2023</th>
+                    )}
+
+                    {selectedColumns.includes("Last Login") && (
+                      <th>Jan 26 - 2024</th>
+                    )}
+
+                    {selectedColumns.includes("Status") && (
+                      <th>
+                        <span
+                          className={`px-[1.5rem] py-[0.3rem] rounded-full bg-green-300 `}
+                        >
+                          Active
+                        </span>
+                      </th>
+                    )}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </section>
     </div>
   );

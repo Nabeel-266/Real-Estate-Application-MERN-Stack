@@ -261,6 +261,7 @@ const Properties = () => {
                     <td className="text-left">Appartment</td>
 
                     {selectedColumns.includes("Purpose") && <th>Sale</th>}
+
                     {selectedColumns.includes("Size") && <th>1200 Sq. Ft</th>}
 
                     {selectedColumns.includes("Demand") && <th>1.2 Crore</th>}
