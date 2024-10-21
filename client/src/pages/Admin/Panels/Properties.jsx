@@ -88,14 +88,14 @@ const Properties = () => {
         {/* Top Header */}
         <div className="w-full">
           <h2 className="text-[2.1rem] leading-[2.1rem] font-bold text-theme-blue">
-            Property Distribution by Status
+            Properties Distribution by Status
           </h2>
         </div>
 
         {/* Charts Area */}
         <div className="w-full flex gap-[3rem]">
           {/* Properties Bar Chart Content */}
-          <div className="w-[58%] min-w-[50rem] flex flex-col gap-[1rem] bg-neutral-100 p-[1.5rem] rounded-3xl border-neutral-300 border-[0.2rem]">
+          <div className="w-[58%] min-w-[50rem] flex flex-col gap-[1.2rem] bg-neutral-100 p-[1.5rem] rounded-3xl border-neutral-300 border-[0.2rem]">
             {/* Heading */}
             <h3 className="text-[1.8rem] leading-[1.8rem] font-bold text-theme-blue">
               Grouped by Category
@@ -105,7 +105,7 @@ const Properties = () => {
           </div>
 
           {/* Properties Donut Chart Content */}
-          <div className="w-[40%] min-w-[30rem] flex flex-col gap-[1rem] bg-neutral-100 p-[1.5rem] rounded-3xl border-neutral-300 border-[0.2rem]">
+          <div className="w-[40%] min-w-[30rem] flex flex-col gap-[1.2rem] bg-neutral-100 p-[1.5rem] rounded-3xl border-neutral-300 border-[0.2rem]">
             {/* Heading */}
             <h3 className="text-[1.8rem] leading-[1.8rem] font-bold text-theme-blue flex flex-col gap-[0.6rem]">
               Grouped by Purpose

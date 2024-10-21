@@ -7,6 +7,7 @@ import { PiUserSwitchFill } from "react-icons/pi";
 import { TbArrowBigRightLinesFilled } from "react-icons/tb";
 
 // Import Components
+import UsersLineChart from "../../../components/Admin/Charts/UsersLineChart";
 import SortDropdown from "../../../components/Admin/Dropdowns/SortDropdown";
 import ColumnsDropdown from "../../../components/Admin/Dropdowns/ColumnsDropdown";
 import FilterDropdown from "../../../components/Admin/Dropdowns/FilterDropdown";
@@ -77,6 +78,25 @@ const Users = () => {
         ))}
       </section>
 
+      {/* Section Middle */}
+      <section className="w-full flex gap-[2rem]">
+        {/* Users Surges & Logins Chart */}
+        <div className="w-[58%] min-w-[50rem] flex flex-col gap-[1rem] bg-neutral-100 p-[1.5rem] rounded-3xl border-neutral-300 border-[0.2rem]">
+          {/* Chart Top */}
+          <div className="flex items-start justify-between">
+            <h2 className="text-[1.9rem] leading-[2.4rem] font-bold text-theme-blue">
+              User Surges & Logins
+            </h2>
+
+            <p className="text-[1.4rem] leading-[2rem] text-theme-blue font-medium px-[1rem] border-[0.2rem] border-neutral-300 rounded-full select-none">
+              Last 6 months
+            </p>
+          </div>
+
+          <UsersLineChart />
+        </div>
+      </section>
+
       {/* Section Bottom */}
       <section className="w-full min-h-[40rem] bg-white relative overflow-clip rounded-xl">
         <div className="w-full bg-neutral-100 border-neutral-300 border-[0.2rem] rounded-xl">
@@ -124,8 +144,12 @@ const Users = () => {
 
                   {selectedColumns.includes("Join At") && <th>Join At</th>}
 
-                  {selectedColumns.includes("Last Login") && (
-                    <th>Last Login</th>
+                  {selectedColumns.includes("Last Login At") && (
+                    <th>Last Login At</th>
+                  )}
+
+                  {selectedColumns.includes("Last Updated At") && (
+                    <th>Last Updated At</th>
                   )}
 
                   {selectedColumns.includes("Status") && <th>Status</th>}
@@ -155,8 +179,12 @@ const Users = () => {
                       <th>Sep 12 - 2023</th>
                     )}
 
-                    {selectedColumns.includes("Last Login") && (
+                    {selectedColumns.includes("Last Login At") && (
                       <th>Jan 26 - 2024</th>
+                    )}
+
+                    {selectedColumns.includes("Last Updated At") && (
+                      <th>Feb 12 - 2024</th>
                     )}
 
                     {selectedColumns.includes("Status") && (

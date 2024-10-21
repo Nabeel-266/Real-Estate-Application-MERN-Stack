@@ -1,7 +1,6 @@
 export const periodDropdownOptions = {
   year: ["2024", "2023", "2022", "2021", "2020"],
   month: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-  monthRange: ["Jan - Jun", "Jul - Dec"],
 };
 
 // Dashboard Panel
@@ -563,7 +562,8 @@ export const usersDataColumns = [
   "Mobile Number",
   "Live In",
   "Join At",
-  "Last Login",
+  "Last Login At",
+  "Last Updated At",
   "Status",
 ];
 

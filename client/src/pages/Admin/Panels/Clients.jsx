@@ -146,12 +146,12 @@ const Clients = () => {
         {/* Top Header */}
         <div className="w-full">
           <h2 className="text-[2.1rem] leading-[2.1rem] font-bold text-theme-blue">
-            Client Distribution by City
+            Clients Distribution by City
           </h2>
         </div>
 
         {/* Content Area */}
-        <div className="w-full bg-neutral-200 grid grid-cols-4 gap-[1.5rem] p-[1.5rem] rounded-xl">
+        <div className="w-full bg-neutral-200 grid grid-cols-4 gap-[1.5rem] p-[1.5rem] rounded-xl border-neutral-300 border-[0.2rem]">
           {clientCountbyCity.map(({ city, count }) => (
             <div className="bg-white shadow-lg rounded-xl p-[1.5rem]">
               <div className="flex justify-between items-center gap-[1rem]">

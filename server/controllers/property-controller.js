@@ -44,7 +44,7 @@ export const uploadPropertyImages = async (req, res, next) => {
       );
     }
   } catch (error) {
-    console.log(error.message, "==> error in uploading profile pic");
+    console.log(error.message, "==> error in uploading property images");
     next(error);
   }
 };

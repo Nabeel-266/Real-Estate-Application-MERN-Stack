@@ -22,7 +22,6 @@ const Dashboard = () => {
     totalDR: { year: "2024" },
     salesDR: { year: "2024" },
     rentalDR: { year: "2024" },
-    graphDR: { year: "2024", monthRange: "Jan - Jun" },
     propertyCategoryDR: { year: "2024", month: "Jan" },
     summaryDR: { year: "2024", month: "Jan" },
   });
@@ -69,7 +68,7 @@ const Dashboard = () => {
               dataTitle={"totalDR"}
               to={"year"}
               options={periodDropdownOptions.year}
-              selectedYear={selectedPeriodOfData.totalDR.year}
+              selectedPeriod={selectedPeriodOfData.totalDR.year}
               onSelect={handleSelect}
             />
           </div>
@@ -112,7 +111,7 @@ const Dashboard = () => {
               dataTitle={"salesDR"}
               to={"year"}
               options={periodDropdownOptions.year}
-              selectedYear={selectedPeriodOfData.salesDR.year}
+              selectedPeriod={selectedPeriodOfData.salesDR.year}
               onSelect={handleSelect}
             />
           </div>
@@ -155,7 +154,7 @@ const Dashboard = () => {
               dataTitle={"rentalDR"}
               to={"year"}
               options={periodDropdownOptions.year}
-              selectedYear={selectedPeriodOfData.rentalDR.year}
+              selectedPeriod={selectedPeriodOfData.rentalDR.year}
               onSelect={handleSelect}
             />
           </div>
@@ -191,45 +190,23 @@ const Dashboard = () => {
       {/* Section Middle */}
       <section className="w-full flex gap-[2rem]">
         {/* Deals & Revenue Chart */}
-        <div className="w-[53%] min-w-[40rem] h-fit bg-theme-blue px-[1.8rem] py-[1.5rem] rounded-3xl flex flex-col gap-[1rem]">
+        <div className="w-[54%] min-w-[40rem] h-fit bg-theme-blue px-[1.8rem] py-[1.5rem] rounded-3xl flex flex-col gap-[1rem]">
           {/* Chart Top */}
           <div className="flex items-start justify-between">
-            <h2 className="text-[1.8rem] font-bold text-white">
+            <h2 className="text-[1.9rem] leading-[2.4rem] font-bold text-white">
               Deals & Revenue
             </h2>
 
-            <div className="flex gap-[1rem] mb-[0.2rem]">
-              {/* Select Year Dropdown */}
-              <PeriodSelection
-                width="8.5rem"
-                drpdBgColor={"#fffffff0"}
-                dataTitle={"graphDR"}
-                to={"year"}
-                options={periodDropdownOptions.year}
-                selectedYear={selectedPeriodOfData.graphDR.year}
-                onSelect={handleSelect}
-              />
-
-              {/* Select Months-Range Dropdown */}
-              <PeriodSelection
-                width="12rem"
-                drpdBgColor={"#fffffff0"}
-                dataTitle={"graphDR"}
-                to={"monthRange"}
-                options={periodDropdownOptions.monthRange}
-                selectedYear={selectedPeriodOfData.graphDR.monthRange}
-                onSelect={handleSelect}
-              />
-            </div>
+            <p className="text-[1.4rem] leading-[2rem] text-neutral-100 font-medium px-[1rem] border-[0.2rem] border-neutral-200 rounded-full select-none">
+              Last 6 months
+            </p>
           </div>
 
-          <DashboardLineChart
-            selectedPeriodOfData={selectedPeriodOfData.graphDR.monthRange}
-          />
+          <DashboardLineChart />
         </div>
 
         {/* Deals & Revenue Chart by Property Category */}
-        <div className="w-[47%] min-w-[30rem] h-fit flex flex-col gap-[1rem] bg-theme-blue px-[1.8rem] py-[1.5rem] rounded-3xl">
+        <div className="w-[46%] min-w-[30rem] flex flex-col gap-[1.2rem] bg-theme-blue px-[1.8rem] py-[1.7rem] rounded-3xl">
           {/* Chart Top */}
           <div className="w-full space-y-[1.4rem]">
             <h2 className="text-[1.8rem] leading-[1.8rem] font-bold text-white">
@@ -245,7 +222,7 @@ const Dashboard = () => {
                 dataTitle={"propertyCategoryDR"}
                 to={"year"}
                 options={periodDropdownOptions.year}
-                selectedYear={selectedPeriodOfData.propertyCategoryDR.year}
+                selectedPeriod={selectedPeriodOfData.propertyCategoryDR.year}
                 onSelect={handleSelect}
               />
 
@@ -256,7 +233,7 @@ const Dashboard = () => {
                 dataTitle={"propertyCategoryDR"}
                 to={"month"}
                 options={periodDropdownOptions.month}
-                selectedYear={selectedPeriodOfData.propertyCategoryDR.month}
+                selectedPeriod={selectedPeriodOfData.propertyCategoryDR.month}
                 onSelect={handleSelect}
               />
             </div>
@@ -329,7 +306,7 @@ const Dashboard = () => {
                 dataTitle={"summaryDR"}
                 to={"year"}
                 options={periodDropdownOptions.year}
-                selectedYear={selectedPeriodOfData.summaryDR.year}
+                selectedPeriod={selectedPeriodOfData.summaryDR.year}
                 onSelect={handleSelect}
               />
 
@@ -340,7 +317,7 @@ const Dashboard = () => {
                 dataTitle={"summaryDR"}
                 to={"month"}
                 options={periodDropdownOptions.month}
-                selectedYear={selectedPeriodOfData.summaryDR.month}
+                selectedPeriod={selectedPeriodOfData.summaryDR.month}
                 onSelect={handleSelect}
               />
             </div>

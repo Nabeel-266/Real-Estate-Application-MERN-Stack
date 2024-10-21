@@ -10,7 +10,7 @@ const PeriodSelection = ({
   dataTitle,
   to,
   options,
-  selectedYear,
+  selectedPeriod,
   onSelect,
 }) => {
   const dropdownRef = useRef(null);
@@ -51,7 +51,7 @@ const PeriodSelection = ({
         <input
           type="text"
           name={to}
-          value={selectedYear}
+          value={selectedPeriod}
           readOnly
           className={`w-full p-[0.2rem] text-[1.4rem] leading-[1.4rem] outline-none pointer-events-none bg-transparent`}
         />

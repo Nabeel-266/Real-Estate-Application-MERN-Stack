@@ -32,61 +32,27 @@ const commonDatasetsStyle = {
   pointHoverBorderWidth: 3,
 };
 
-const DashboardLineChart = () => {
+const UsersLineChart = () => {
   const chartRef = useRef(null);
   const [lineToggle, setLineToggle] = useState([]);
 
   const chartData = {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
     datasets: [
-      // Left Y-axis (Deal datasets)
       {
-        label: "Total Deals",
-        data: [10, 20, 30, 40, 50, 60],
-        borderColor: "#06748e",
-        pointBackgroundColor: "#06748e",
-        yAxisID: "y1",
-        ...commonDatasetsStyle,
-      },
-      {
-        label: "Sales Deals",
-        data: [7, 10, 24, 25, 22, 15],
-        borderColor: "#047857",
-        pointBackgroundColor: "#047857",
-        yAxisID: "y1",
-        ...commonDatasetsStyle,
-      },
-      {
-        label: "Rental Deals",
-        data: [3, 10, 6, 15, 28, 45],
-        borderColor: "#3730a3",
-        pointBackgroundColor: "#3730a3",
-        yAxisID: "y1",
-        ...commonDatasetsStyle,
-      },
-      // Right Y-axis (Revenue datasets)
-      {
-        label: "Total Revenue",
-        data: [100000, 200000, 350000, 525658, 600000, 400000],
-        borderColor: "#06b6d4",
-        pointBackgroundColor: "#06b6d4",
+        label: "User Surges",
+        data: [20, 40, 65, 55, 70, 80],
+        borderColor: "#314b55",
+        pointBackgroundColor: "#314b55",
         yAxisID: "y",
         ...commonDatasetsStyle,
       },
       {
-        label: "Sales Revenue",
-        data: [200000, 500000, 350000, 300000, 400000, 200000],
-        borderColor: "#10b981",
-        pointBackgroundColor: "#10b981",
-        yAxisID: "y",
-        ...commonDatasetsStyle,
-      },
-      {
-        label: "Rental Revenue",
-        data: [300000, 400000, 350000, 400000, 200000, 500000],
-        borderColor: "#6366f1",
-        pointBackgroundColor: "#6366f1",
-        yAxisID: "y",
+        label: "User Logins",
+        data: [80, 140, 135, 180, 200, 210],
+        borderColor: "#697b82",
+        pointBackgroundColor: "#697b82",
+        yAxisID: "y1",
         ...commonDatasetsStyle,
       },
     ],
@@ -120,9 +86,7 @@ const DashboardLineChart = () => {
           },
 
           label: function (context) {
-            return context.dataset.label.includes("Deals")
-              ? `${context.raw} Deals`
-              : `PKR ${context.raw.toLocaleString()}`;
+            return `${context.raw} ${context.dataset.label}`;
           },
         },
         backgroundColor: "#fff",
@@ -149,102 +113,64 @@ const DashboardLineChart = () => {
     },
     scales: {
       x: {
-        grid: {
-          lineWidth: 0,
-        },
         ticks: {
-          color: "#ffffff",
+          color: "#082835",
           font: {
             family: "'Montserrat Alternates', sans-serif",
-            size: 13,
-            weight: "500",
+            size: 14,
+            weight: "600",
           },
+        },
+        grid: {
+          lineWidth: 0,
+          tickLength: 15,
         },
       },
       y: {
-        type: "linear",
-        display: true,
-        position: "right",
-        beginAtZero: true,
-        ticks: {
-          maxTicksLimit: 7,
-          color: "#ffffff",
-          padding: 5,
-          font: {
-            family: "'Montserrat Alternates', sans-serif",
-            size: 12,
-            weight: "500",
-          },
-          callback: function (value) {
-            const formattedPrice = convertPrice(value);
-            return `PKR ${formattedPrice}`;
-          },
-        },
-        grid: {
-          color: "rgba(0, 0, 0, 0.2)",
-          lineWidth: 1,
-          tickLength: 12,
-        },
-      },
-      y1: {
         type: "linear",
         display: true,
         position: "left",
         beginAtZero: true,
         ticks: {
           maxTicksLimit: 7,
-          color: "#ffffff",
+          color: "#082835",
           padding: 5,
           font: {
             family: "'Montserrat Alternates', sans-serif",
-            size: 12,
-            weight: "500",
+            size: 13,
+            weight: "600",
           },
         },
         grid: {
           drawOnChartArea: false,
-          color: "rgba(0, 0, 0, 0.2)",
-          lineWidth: 1,
-          tickLength: 12,
+          color: "rgba(0, 0, 0, 0.0)",
+          lineWidth: 0,
+          tickLength: 10,
+        },
+      },
+      y1: {
+        type: "linear",
+        display: true,
+        position: "right",
+        beginAtZero: true,
+        ticks: {
+          maxTicksLimit: 7,
+          color: "#082835",
+          padding: 5,
+          font: {
+            family: "'Montserrat Alternates', sans-serif",
+            size: 13,
+            weight: "600",
+          },
+        },
+        grid: {
+          drawOnChartArea: false,
+          color: "rgba(0, 0, 0, 0)",
+          lineWidth: 0,
+          tickLength: 10,
         },
       },
     },
-  };
-
-  // Price Formatter Function
-  const convertPrice = (value) => {
-    let number = parseFloat(value);
-    if (isNaN(number)) return "";
-
-    let formattedNumber;
-    let unit = "";
-
-    if (number >= 1e11) {
-      formattedNumber = number / 1e11;
-      unit = " Kharab";
-    } else if (number >= 1e9) {
-      formattedNumber = number / 1e9;
-      unit = " Arab";
-    } else if (number >= 1e7) {
-      formattedNumber = number / 1e7;
-      unit = " Crore";
-    } else if (number >= 1e5) {
-      formattedNumber = number / 1e5;
-      unit = " Lac";
-    } else if (number >= 1e3) {
-      formattedNumber = number / 1e3;
-      unit = " k";
-    } else {
-      formattedNumber = number;
-    }
-
-    if (formattedNumber % 1 === 0) {
-      return formattedNumber.toFixed(0) + unit;
-    } else if ((formattedNumber * 10) % 1 === 0) {
-      return formattedNumber.toFixed(1) + unit;
-    } else {
-      return formattedNumber.toFixed(2) + unit;
-    }
   };
 
   // Toggle Dataset Function
@@ -269,17 +195,17 @@ const DashboardLineChart = () => {
   };
 
   return (
-    <div className="w-full flex flex-col gap-[2rem] mt-[0.5rem]">
+    <div className="w-full flex flex-col gap-[1.2rem]">
       {/* Custom Legend  */}
-      <div className="w-full flex flex-wrap gap-[1.2rem] pr-[14%]">
+      <div className="w-full flex flex-wrap gap-[1.2rem]">
         {chartData?.datasets.map((dataset, index) => (
           <div
             key={index}
             onClick={() => toggleDataset(dataset.label, index)}
-            className={`text-[1.35rem] leading-[1.3rem] font-semibold text-neutral-100 cursor-pointer flex items-center gap-[0.4rem] select-none`}
+            className={`text-[1.5rem] leading-[1.5rem] font-semibold text-theme-blue cursor-pointer flex items-center gap-[0.4rem] select-none`}
           >
             <span
-              className="size-[1.2rem] rounded-full mb-[0.1rem]"
+              className="size-[1.2rem] rounded-full"
               style={{
                 backgroundColor: dataset.borderColor,
               }}
@@ -298,9 +224,11 @@ const DashboardLineChart = () => {
       </div>
 
       {/* Chart */}
-      <Line ref={chartRef} data={chartData} options={options} />
+      <div className="w-full bg-neutral-200 rounded-2xl p-[1.5rem]">
+        <Line ref={chartRef} data={chartData} options={options} />
+      </div>
     </div>
   );
 };
 
-export default DashboardLineChart;
+export default UsersLineChart;
