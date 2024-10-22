@@ -6,7 +6,7 @@ import {
 
 // Import React Icons
 import { HiUsers } from "react-icons/hi2";
-import { PiUserSwitchFill } from "react-icons/pi";
+import { PiStarFourFill } from "react-icons/pi";
 import { GiTakeMyMoney } from "react-icons/gi";
 import { FaHouseChimneyUser } from "react-icons/fa6";
 import { TbArrowBigRightLinesFilled } from "react-icons/tb";
@@ -142,11 +142,12 @@ const Clients = () => {
       </section>
 
       {/* Section Middle */}
-      <section className="w-full space-y-[2rem]">
+      <section className="w-full space-y-[1.8rem]">
         {/* Top Header */}
         <div className="w-full">
-          <h2 className="text-[2.1rem] leading-[2.1rem] font-bold text-theme-blue">
-            Clients Distribution by City
+          <h2 className="flex items-center gap-[0.4rem] text-[2.1rem] leading-[2.1rem] font-bold text-theme-blue">
+            <PiStarFourFill size="1.2rem" className="rotate-12" />
+            <span>Clients Distribution by City</span>
           </h2>
         </div>
 
@@ -224,10 +225,10 @@ const Clients = () => {
 
                   {selectedColumns.includes("From City") && <th>From City</th>}
 
-                  {selectedColumns.includes("Deal's") && <th>Deal's</th>}
+                  {selectedColumns.includes("Deals") && <th>Deals</th>}
 
-                  {selectedColumns.includes("Total Commission") && (
-                    <th>Total Commission</th>
+                  {selectedColumns.includes("Commission") && (
+                    <th>Commission</th>
                   )}
                 </tr>
               </thead>
@@ -253,9 +254,9 @@ const Clients = () => {
 
                     {selectedColumns.includes("From City") && <th>Karachi</th>}
 
-                    {selectedColumns.includes("Deal's") && <th>1 Deal</th>}
+                    {selectedColumns.includes("Deals") && <th>1 Deal</th>}
 
-                    {selectedColumns.includes("Total Commission") && (
+                    {selectedColumns.includes("Commission") && (
                       <th>PKR 240000</th>
                     )}
                   </tr>

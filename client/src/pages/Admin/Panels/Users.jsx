@@ -11,6 +11,7 @@ import UsersLineChart from "../../../components/Admin/Charts/UsersLineChart";
 import SortDropdown from "../../../components/Admin/Dropdowns/SortDropdown";
 import ColumnsDropdown from "../../../components/Admin/Dropdowns/ColumnsDropdown";
 import FilterDropdown from "../../../components/Admin/Dropdowns/FilterDropdown";
+import UsersDonutChart from "../../../components/Admin/Charts/UsersDonutChart";
 
 // Example data for cards and table
 const usersStats = [
@@ -79,11 +80,11 @@ const Users = () => {
       </section>
 
       {/* Section Middle */}
-      <section className="w-full flex gap-[2rem]">
-        {/* Users Surges & Logins Chart */}
-        <div className="w-[58%] min-w-[50rem] flex flex-col gap-[1rem] bg-neutral-100 p-[1.5rem] rounded-3xl border-neutral-300 border-[0.2rem]">
+      <section className="w-full flex gap-[3rem]">
+        {/* Users Surges & Logins Chart Cont */}
+        <div className="w-[58%] min-w-[50rem] h-fit flex flex-col gap-[1rem] bg-neutral-100 p-[1.5rem] rounded-3xl border-neutral-300 border-[0.2rem]">
           {/* Chart Top */}
-          <div className="flex items-start justify-between">
+          <div className="flex items-center justify-between">
             <h2 className="text-[1.9rem] leading-[2.4rem] font-bold text-theme-blue">
               User Surges & Logins
             </h2>
@@ -94,6 +95,17 @@ const Users = () => {
           </div>
 
           <UsersLineChart />
+        </div>
+
+        {/* Users Profile Chart Cont */}
+        <div className="w-[42%] min-w-[30rem] flex flex-col gap-[1rem] bg-neutral-100 p-[1.5rem] rounded-3xl border-neutral-300 border-[0.2rem]">
+          {/* Chart Heading */}
+          <h3 className="text-[1.9rem] leading-[2.4rem] font-bold text-theme-blue">
+            Users Profile Stages
+          </h3>
+
+          {/* Chart */}
+          <UsersDonutChart />
         </div>
       </section>
 

@@ -9,6 +9,7 @@ import { FaHourglassHalf } from "react-icons/fa";
 import { BsBuildingFillCheck } from "react-icons/bs";
 import { MdAddHomeWork } from "react-icons/md";
 import { TbArrowBigRightLinesFilled } from "react-icons/tb";
+import { PiStarFourFill } from "react-icons/pi";
 
 // Import Components
 import FilterDropdown from "../../../components/Admin/Dropdowns/FilterDropdown";
@@ -84,11 +85,12 @@ const Properties = () => {
       </section>
 
       {/* Section Middle */}
-      <section className="w-full space-y-[2rem]">
+      <section className="w-full space-y-[1.8rem]">
         {/* Top Header */}
         <div className="w-full">
-          <h2 className="text-[2.1rem] leading-[2.1rem] font-bold text-theme-blue">
-            Properties Distribution by Status
+          <h2 className="flex items-center gap-[0.4rem] text-[2.1rem] leading-[2.1rem] font-bold text-theme-blue">
+            <PiStarFourFill size="1.2rem" className="rotate-12" />
+            <span>Properties Distribution by Status</span>
           </h2>
         </div>
 
@@ -107,7 +109,7 @@ const Properties = () => {
           {/* Properties Donut Chart Content */}
           <div className="w-[40%] min-w-[30rem] flex flex-col gap-[1.2rem] bg-neutral-100 p-[1.5rem] rounded-3xl border-neutral-300 border-[0.2rem]">
             {/* Heading */}
-            <h3 className="text-[1.8rem] leading-[1.8rem] font-bold text-theme-blue flex flex-col gap-[0.6rem]">
+            <h3 className="text-[1.8rem] leading-[1.8rem] font-bold text-theme-blue">
               Grouped by Purpose
             </h3>
 
@@ -218,7 +220,7 @@ const Properties = () => {
             <table className="w-full table-auto text-left">
               <thead>
                 <tr className="border-b-[2px] border-neutral-300 text-center *:text-[1.55rem] *:leading-[1.6rem] *:font-bold *:text-theme-blue *:px-[1.6rem] *:py-[1rem] *:whitespace-nowrap ">
-                  <th className="text-left">Id</th>
+                  <th className="text-left">Id Code</th>
                   <th className="text-left">Type</th>
 
                   {selectedColumns.includes("Purpose") && <th>Purpose</th>}
