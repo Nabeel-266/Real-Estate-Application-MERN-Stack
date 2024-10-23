@@ -30,7 +30,7 @@ const AgentFilterFields = ({ state, setStateHandler }) => {
 
       {/* Filter by Name */}
       <TypeInput
-        inputFor={["name", "byName"]}
+        inputFor={["name", "byAgentName"]}
         inputType="text"
         labelText="By Name"
         autoComplete="off"
@@ -121,7 +121,7 @@ const AgentFilterFields = ({ state, setStateHandler }) => {
         setStateHandler={setStateHandler}
       />
 
-      {/* By Experience Badge */}
+      {/* Filter by Experience Badge */}
       <SimpleSelection
         selectFor="experienceBadge"
         labelText="By Experience Badge"
@@ -130,11 +130,12 @@ const AgentFilterFields = ({ state, setStateHandler }) => {
         labelStyle="inputLabels"
         inputStyle="inputFields"
         contStyle="space-y-[0.6rem]"
+        bottom={false}
         state={state}
-        setStateHanlder={setStateHandler}
+        setStateHandler={setStateHandler}
       />
 
-      {/* By Status */}
+      {/* Filter by Status */}
       <SimpleSelection
         selectFor="status"
         labelText="By Status"
@@ -143,11 +144,12 @@ const AgentFilterFields = ({ state, setStateHandler }) => {
         labelStyle="inputLabels"
         inputStyle="inputFields"
         contStyle="space-y-[0.6rem]"
+        bottom={false}
         state={state}
-        setStateHanlder={setStateHandler}
+        setStateHandler={setStateHandler}
       />
 
-      {/* By Success Deals */}
+      {/* Filter by Success Deals */}
       <MinMaxInput
         inputFor="SuccessDeals"
         inputTag="Deal"
@@ -160,7 +162,7 @@ const AgentFilterFields = ({ state, setStateHandler }) => {
         setStateHandler={setStateHandler}
       />
 
-      {/* By Total Earned */}
+      {/* Filter by Total Earned */}
       <MinMaxInput
         inputFor="TotalEarn"
         inputTag="PKR"
@@ -173,7 +175,7 @@ const AgentFilterFields = ({ state, setStateHandler }) => {
         setStateHandler={setStateHandler}
       />
 
-      {/* By Highest Earned */}
+      {/* Filter by Highest Earned */}
       <MinMaxInput
         inputFor="HighestEarn"
         inputTag="PKR"

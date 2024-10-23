@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 // Import React Icons
 import { FaXmark } from "react-icons/fa6";
@@ -10,34 +10,48 @@ import AgentFilterFields from "../Fieldsets/AgentFilterFields";
 import PropertyFilterFields from "../Fieldsets/PropertyFilterFields";
 
 const FilterDropdown = ({ to }) => {
+  const routeLocation = useLocation().pathname.split("/")[2];
   const filterBtnContRef = useRef(null);
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [filterQuery, setFilterQuery] = useState({});
 
   useEffect(() => {
-    setFilterQuery({
-      idCode: searchParams.get("id") || "",
-      name: searchParams.get("name") || "",
-      email: searchParams.get("email") || "",
-      mobileNumber: searchParams.get("mobileNumber") || "",
-      cnicNumber: searchParams.get("cnicNumber") || "",
-      minAge: searchParams.get("minAge") || "",
-      maxAge: searchParams.get("maxAge") || "",
-      joiningDate: searchParams.get("joiningDate") || "",
-      operatingCity: searchParams.get("operatingCity") || "",
-      experienceBadge: searchParams.get("experienceBadge") || "",
-      status: searchParams.get("status") || "",
-      minSuccessDeals: searchParams.get("minSuccessDeals") || "",
-      maxSuccessDeals: searchParams.get("maxSuccessDeals") || "",
-      minTotalEarn: searchParams.get("minTotalEarn") || "",
-      maxTotalEarn: searchParams.get("maxTotalEarn") || "",
-      minHighestEarn: searchParams.get("minHighestEarn") || "",
-      maxHighestEarn: searchParams.get("maxHighestEarn") || "",
-    });
-  }, [searchParams]);
+    if (routeLocation === "agents") {
+      setFilterQuery({
+        idCode: searchParams.get("idCode") || "",
+        name: searchParams.get("name") || "",
+        email: searchParams.get("email") || "",
+        mobileNumber: searchParams.get("mobileNumber") || "",
+        cnicNumber: searchParams.get("cnicNumber") || "",
+        minAge: searchParams.get("minAge") || "",
+        maxAge: searchParams.get("maxAge") || "",
+        joiningDate: searchParams.get("joiningDate") || "",
+        operatingCity: searchParams.get("operatingCity") || "",
+        experienceBadge: searchParams.get("experienceBadge") || "",
+        status: searchParams.get("status") || "",
+        minSuccessDeals: searchParams.get("minSuccessDeals") || "",
+        maxSuccessDeals: searchParams.get("maxSuccessDeals") || "",
+        minTotalEarn: searchParams.get("minTotalEarn") || "",
+        maxTotalEarn: searchParams.get("maxTotalEarn") || "",
+        minHighestEarn: searchParams.get("minHighestEarn") || "",
+        maxHighestEarn: searchParams.get("maxHighestEarn") || "",
+      });
+    } else if (routeLocation === "properties") {
+      setFilterQuery({
+        idCode: searchParams.get("idCode") || "",
+        purpose: searchParams.get("purpose") || "",
+        category: searchParams.get("category") || "",
+        type: searchParams.get("type") || "",
+        city: searchParams.get("city") || "",
+        minPrice: searchParams.get("minPrice") || "",
+        maxPrice: searchParams.get("maxPrice") || "",
+        status: searchParams.get("status") || "",
+      });
+    }
+  }, [searchParams, routeLocation]);
 
-  const setAgentsFilterQueryHandler = (key, value) => {
+  const setFilterQueryHandler = (key, value) => {
     if (value) {
       setFilterQuery({ ...filterQuery, [key]: value });
     } else {
@@ -49,8 +63,8 @@ const FilterDropdown = ({ to }) => {
     }
   };
 
-  // Apply Agents Filter Queries in Search Params
-  const applyAgentsFilterQueryHandler = () => {
+  // Apply Filter Queries in Search Params
+  const applyFilterQueryHandler = () => {
     const filterValues = Object.entries(filterQuery)
       .filter((objProps) => objProps[1] !== "")
       .reduce((acc, [key, value]) => {
@@ -62,8 +76,8 @@ const FilterDropdown = ({ to }) => {
     setIsOpenDropdown(false);
   };
 
-  // Clear Agents Filter Queries in Search Params
-  const clearAgentsFilterQueryHandler = () => {
+  // Clear Filter Queries in Search Params
+  const clearFilterQueryHandler = () => {
     setSearchParams({});
     setIsOpenDropdown(false);
   };
@@ -101,17 +115,17 @@ const FilterDropdown = ({ to }) => {
           </div>
 
           {/* Dropdown Inputs */}
-          <div className="w-full max-h-[22.5rem] grid grid-cols-2 gap-[1.5rem] px-[1.2rem] py-[1.2rem] overflow-auto scrollbar-dropdown-dark">
+          <div className="w-full max-h-[30rem] grid grid-cols-2 gap-[1.5rem] px-[1.2rem] py-[1.2rem] overflow-auto scrollbar-dropdown-dark">
             {to === "Agents" ? (
               <AgentFilterFields
                 state={filterQuery}
-                setStateHandler={setAgentsFilterQueryHandler}
+                setStateHandler={setFilterQueryHandler}
               />
             ) : (
               to === "Properties" && (
                 <PropertyFilterFields
                   state={filterQuery}
-                  setStateHandler={setAgentsFilterQueryHandler}
+                  setStateHandler={setFilterQueryHandler}
                 />
               )
             )}
@@ -127,14 +141,14 @@ const FilterDropdown = ({ to }) => {
             </button>
 
             <button
-              onClick={() => applyAgentsFilterQueryHandler()}
+              onClick={() => applyFilterQueryHandler()}
               className="text-[1.6rem] leading-[1.6rem] font-semibold bg-theme-blue text-white text-center px-[1.5rem] py-[0.6rem] rounded-full border-[0.2rem] border-theme-blue whitespace-nowrap active:scale-[0.98] transition-all"
             >
               Apply Filter
             </button>
 
             <button
-              onClick={() => clearAgentsFilterQueryHandler()}
+              onClick={() => clearFilterQueryHandler()}
               className="text-[1.6rem] leading-[1.6rem] font-semibold bg-transparent text-theme-blue text-center px-[1.5rem] py-[0.6rem] rounded-full border-[0.2rem] border-theme-blue whitespace-nowrap active:scale-[0.98] transition-all"
             >
               Clear Filter

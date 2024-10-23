@@ -21,6 +21,7 @@ const SearchSelection = ({
   labelStyle,
   inputStyle,
   contStyle,
+  bottom,
   state,
   setStateHandler,
 }) => {
@@ -64,7 +65,11 @@ const SearchSelection = ({
             <IoMdArrowDropdown className="text-[1.8rem] text-theme-blue" />
           </ComboboxButton>
 
-          <ComboboxOptions className="selectOptionsBox">
+          <ComboboxOptions
+            className={`selectOptionsBox ${
+              bottom ? "top-[100%]" : "bottom-[100%]"
+            }`}
+          >
             {filteredData.length === 0 && query !== "" ? (
               <p className="text-[1.4rem] leading-[1.6rem] font-semibold text-neutral-700 cursor-default select-none py-[0.2rem] px-[1rem]">
                 {noOptionMessage}

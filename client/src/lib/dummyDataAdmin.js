@@ -544,14 +544,40 @@ export const propertiesDataColumns = [
 
 export const propertiesDataSortBy = ["Created At", "Demand", "Revenue Earn"];
 
+export const typesOfProperty = [
+  "House",
+  "Appartment",
+  "House Portion",
+  "Room",
+  "Office",
+  "Shop",
+  "Restaurant",
+  "Residential Plot",
+  "Commercial Plot",
+  "Farmhouse Plot",
+  "Farm House",
+  "Guest House",
+  "Hostel",
+  "Hotel",
+  "Basement",
+  "Agricultural Land",
+  "Industrial Land",
+  "Warehouse",
+  "Hall",
+  "Plaza",
+  "Gym",
+  "Theatre",
+  "Factory",
+];
+
 // Clients Panel
 export const clientsDataColumns = [
   "Email Address",
   "Contact Number",
   "Role",
   "From City",
-  "Deal's",
-  "Total Commission",
+  "Deals",
+  "Commission",
 ];
 
 export const clientsDataSortBy = ["Created At", "Deals", "Total Commission"];

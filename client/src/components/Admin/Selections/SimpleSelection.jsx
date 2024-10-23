@@ -19,6 +19,7 @@ const SimpleSelection = ({
   labelStyle,
   inputStyle,
   contStyle,
+  bottom,
   state,
   setStateHandler,
 }) => {
@@ -40,7 +41,11 @@ const SimpleSelection = ({
             <IoMdArrowDropdown className="text-[1.8rem] text-theme-blue" />
           </ListboxButton>
 
-          <ListboxOptions className="selectOptionsBox">
+          <ListboxOptions
+            className={`selectOptionsBox ${
+              bottom ? "top-[100%]" : "bottom-[100%]"
+            }`}
+          >
             {/* Clear Selection Option */}
             <ListboxOption value={null} className="selectOptionClearBtn">
               <FiDelete className="text-[1.6rem]" />
