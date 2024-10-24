@@ -8,6 +8,8 @@ import { HiMiniAdjustmentsHorizontal } from "react-icons/hi2";
 // Import Component
 import AgentFilterFields from "../Fieldsets/AgentFilterFields";
 import PropertyFilterFields from "../Fieldsets/PropertyFilterFields";
+import ClientFilterFields from "../Fieldsets/ClientFilterFields";
+import UserFilterFields from "../Fieldsets/UserFilterFields";
 
 const FilterDropdown = ({ to }) => {
   const routeLocation = useLocation().pathname.split("/")[2];
@@ -121,13 +123,23 @@ const FilterDropdown = ({ to }) => {
                 state={filterQuery}
                 setStateHandler={setFilterQueryHandler}
               />
+            ) : to === "Properties" ? (
+              <PropertyFilterFields
+                state={filterQuery}
+                setStateHandler={setFilterQueryHandler}
+              />
+            ) : to === "Clients" ? (
+              <ClientFilterFields
+                state={filterQuery}
+                setStateHandler={setFilterQueryHandler}
+              />
+            ) : to === "Users" ? (
+              <UserFilterFields
+                state={filterQuery}
+                setStateHandler={setFilterQueryHandler}
+              />
             ) : (
-              to === "Properties" && (
-                <PropertyFilterFields
-                  state={filterQuery}
-                  setStateHandler={setFilterQueryHandler}
-                />
-              )
+              ""
             )}
           </div>
 

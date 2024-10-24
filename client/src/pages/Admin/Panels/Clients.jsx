@@ -201,7 +201,7 @@ const Clients = () => {
                 />
               </div>
 
-              <FilterDropdown to="Properties" />
+              <FilterDropdown to="Clients" />
             </div>
           </div>
 

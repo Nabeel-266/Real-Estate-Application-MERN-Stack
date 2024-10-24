@@ -132,7 +132,7 @@ const Users = () => {
                 />
               </div>
 
-              <FilterDropdown to="Properties" />
+              <FilterDropdown to="Users" />
             </div>
           </div>
 
