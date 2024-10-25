@@ -14,9 +14,9 @@ const AgentFilterFields = ({ state, setStateHandler }) => {
 
   return (
     <>
-      {/* Filter by ID Code */}
+      {/* Filter by Agent Agent ID Code */}
       <TypeInput
-        inputFor={["idCode", "byIdCode"]}
+        inputFor={["idCode", "byAgentIdCode"]}
         inputType="number"
         labelText="By Id Code"
         autoComplete="off"
@@ -28,7 +28,7 @@ const AgentFilterFields = ({ state, setStateHandler }) => {
         setStateHandler={setStateHandler}
       />
 
-      {/* Filter by Name */}
+      {/* Filter by Agent Name */}
       <TypeInput
         inputFor={["name", "byAgentName"]}
         inputType="text"
@@ -42,9 +42,9 @@ const AgentFilterFields = ({ state, setStateHandler }) => {
         setStateHandler={setStateHandler}
       />
 
-      {/* Filter by Email Address */}
+      {/* Filter by Agent Email Address */}
       <TypeInput
-        inputFor={["email", "byEmail"]}
+        inputFor={["email", "byAgentEmail"]}
         inputType="text"
         labelText="By Email Address"
         autoComplete="off"
@@ -56,9 +56,9 @@ const AgentFilterFields = ({ state, setStateHandler }) => {
         setStateHandler={setStateHandler}
       />
 
-      {/* Filter by Phone Number */}
+      {/* Filter by Agent Mobile Number */}
       <TypeInput
-        inputFor={["mobileNumber", "byMobileNumber"]}
+        inputFor={["mobileNumber", "byAgentMobileNumber"]}
         inputType="number"
         labelText="By Mobile Number"
         autoComplete="off"
@@ -70,9 +70,9 @@ const AgentFilterFields = ({ state, setStateHandler }) => {
         setStateHandler={setStateHandler}
       />
 
-      {/* Filter by CNIC Number */}
+      {/* Filter by Agent CNIC Number */}
       <TypeInput
-        inputFor={["cnicNumber", "byCNICNumber"]}
+        inputFor={["cnicNumber", "byAgentCNICNumber"]}
         inputType="number"
         labelText="By CNIC Number"
         autoComplete="off"
@@ -84,7 +84,7 @@ const AgentFilterFields = ({ state, setStateHandler }) => {
         setStateHandler={setStateHandler}
       />
 
-      {/* Filter by Age */}
+      {/* Filter by Agent Age */}
       <RangeInput
         inputFor="Age"
         minValue={20}
@@ -95,7 +95,7 @@ const AgentFilterFields = ({ state, setStateHandler }) => {
         setStateHandler={setStateHandler}
       />
 
-      {/* Filter by Joining Date */}
+      {/* Filter by Agent Joining Date */}
       <DateInput
         inputFor={["joiningDate", "byJoiningDate"]}
         inputType="month"
@@ -107,7 +107,7 @@ const AgentFilterFields = ({ state, setStateHandler }) => {
         setStateHandler={setStateHandler}
       />
 
-      {/* Filter by Operting City */}
+      {/* Filter by Agent Operting City */}
       <SearchSelection
         selectFor={["operatingCity", "byOperatingCity"]}
         labelText="By Operating City"
@@ -121,7 +121,7 @@ const AgentFilterFields = ({ state, setStateHandler }) => {
         setStateHandler={setStateHandler}
       />
 
-      {/* Filter by Experience Badge */}
+      {/* Filter by Agent Experience Badge */}
       <SimpleSelection
         selectFor="experienceBadge"
         labelText="By Experience Badge"
@@ -135,7 +135,7 @@ const AgentFilterFields = ({ state, setStateHandler }) => {
         setStateHandler={setStateHandler}
       />
 
-      {/* Filter by Status */}
+      {/* Filter by Agent Status */}
       <SimpleSelection
         selectFor="status"
         labelText="By Status"
@@ -149,7 +149,7 @@ const AgentFilterFields = ({ state, setStateHandler }) => {
         setStateHandler={setStateHandler}
       />
 
-      {/* Filter by Success Deals */}
+      {/* Filter by Agent Success Deals */}
       <MinMaxInput
         inputFor="SuccessDeals"
         inputTag="Deal"
@@ -162,7 +162,7 @@ const AgentFilterFields = ({ state, setStateHandler }) => {
         setStateHandler={setStateHandler}
       />
 
-      {/* Filter by Total Earned */}
+      {/* Filter by Agent Total Earned */}
       <MinMaxInput
         inputFor="TotalEarn"
         inputTag="PKR"
@@ -175,7 +175,7 @@ const AgentFilterFields = ({ state, setStateHandler }) => {
         setStateHandler={setStateHandler}
       />
 
-      {/* Filter by Highest Earned */}
+      {/* Filter by Agent Highest Earned */}
       <MinMaxInput
         inputFor="HighestEarn"
         inputTag="PKR"
