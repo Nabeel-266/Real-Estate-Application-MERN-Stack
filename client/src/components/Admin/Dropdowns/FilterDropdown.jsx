@@ -18,6 +18,7 @@ const FilterDropdown = ({ to }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [filterQuery, setFilterQuery] = useState({});
 
+  // Set Initail Filter Query Object based on Panel
   useEffect(() => {
     if (routeLocation === "agents") {
       setFilterQuery({
@@ -49,6 +50,27 @@ const FilterDropdown = ({ to }) => {
         minPrice: searchParams.get("minPrice") || "",
         maxPrice: searchParams.get("maxPrice") || "",
         status: searchParams.get("status") || "",
+      });
+    } else if (routeLocation === "clients") {
+      setFilterQuery({
+        idCode: searchParams.get("idCode") || "",
+        name: searchParams.get("name") || "",
+        email: searchParams.get("email") || "",
+        mobileNumber: searchParams.get("mobileNumber") || "",
+        liveInCity: searchParams.get("liveInCity") || "",
+        role: searchParams.get("role") || "",
+      });
+    } else if (routeLocation === "users") {
+      setFilterQuery({
+        idCode: searchParams.get("idCode") || "",
+        name: searchParams.get("name") || "",
+        email: searchParams.get("email") || "",
+        mobileNumber: searchParams.get("mobileNumber") || "",
+        liveInCity: searchParams.get("liveInCity") || "",
+        status: searchParams.get("status") || "",
+        joinedAt: searchParams.get("joinedAt") || "",
+        lastLoginAt: searchParams.get("lastLoginAt") || "",
+        lastUpdatedAt: searchParams.get("lastUpdatedAt") || "",
       });
     }
   }, [searchParams, routeLocation]);

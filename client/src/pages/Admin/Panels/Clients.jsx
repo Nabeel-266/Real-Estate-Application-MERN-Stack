@@ -179,7 +179,7 @@ const Clients = () => {
       </section>
 
       {/* Section Bottom */}
-      <section className="w-full min-h-[40rem] bg-white relative overflow-clip rounded-xl">
+      <section className="w-full bg-white relative overflow-clip rounded-xl">
         <div className="w-full bg-neutral-100 border-neutral-300 border-[0.2rem] rounded-xl">
           {/* Top Header */}
           <div className="w-full flex items-center justify-between px-[1.5rem] pt-[1.4rem] pb-[1rem]">
@@ -206,7 +206,7 @@ const Clients = () => {
           </div>
 
           {/* Table Container */}
-          <div className="w-full overflow-auto scroll-smooth scrollbar-slim-x">
+          <div className="w-full min-h-[43rem] overflow-auto scroll-smooth scrollbar-slim-x">
             <table className="w-full table-auto">
               <thead>
                 <tr className="border-b-[2px] border-neutral-300 text-center *:text-[1.55rem] *:leading-[1.6rem] *:font-bold *:text-theme-blue *:px-[1.6rem] *:py-[1rem] *:whitespace-nowrap">
@@ -237,7 +237,7 @@ const Clients = () => {
                 {[1, 2, 3, 4, 5].map((_, index) => (
                   <tr
                     key={index}
-                    className="border-t-[1px] border-neutral-300 odd:bg-white cursor-pointer text-center *:text-[1.5rem] *:leading-[1.5rem] *:font-semibold *:text-neutral-700 *:px-[1.6rem] *:py-[1.3rem] *:whitespace-nowrap"
+                    className="border-b-[1px] border-neutral-300 odd:bg-white cursor-pointer text-center *:text-[1.5rem] *:leading-[1.5rem] *:font-semibold *:text-neutral-700 *:px-[1.6rem] *:py-[1.3rem] *:whitespace-nowrap"
                   >
                     <td className="text-left">CL-12485</td>
 

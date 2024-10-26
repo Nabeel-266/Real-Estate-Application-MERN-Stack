@@ -110,8 +110,8 @@ const Users = () => {
       </section>
 
       {/* Section Bottom */}
-      <section className="w-full min-h-[40rem] bg-white relative overflow-clip rounded-xl">
-        <div className="w-full bg-neutral-100 border-neutral-300 border-[0.2rem] rounded-xl">
+      <section className="w-full bg-white relative overflow-clip rounded-xl">
+        <div className="w-full bg-neutral-100 border-neutral-300 border-[0.2rem] rounded-xl overflow-clip">
           {/* Top Header */}
           <div className="w-full flex items-center justify-between px-[1.5rem] pt-[1.4rem] pb-[1rem]">
             <h2 className="text-[2.1rem] leading-[2rem] font-bold text-theme-blue">
@@ -137,7 +137,7 @@ const Users = () => {
           </div>
 
           {/* Table Container */}
-          <div className="w-full overflow-auto scroll-smooth scrollbar-slim-x">
+          <div className="w-full min-h-[43rem] overflow-auto scroll-smooth scrollbar-slim-x">
             <table className="w-full table-auto">
               <thead>
                 <tr className="border-b-[2px] border-neutral-300 text-center *:text-[1.55rem] *:leading-[1.6rem] *:font-bold *:text-theme-blue *:px-[1.6rem] *:py-[1rem] *:whitespace-nowrap">
@@ -154,7 +154,9 @@ const Users = () => {
 
                   {selectedColumns.includes("Live In") && <th>Live In</th>}
 
-                  {selectedColumns.includes("Join At") && <th>Join At</th>}
+                  {selectedColumns.includes("Status") && <th>Status</th>}
+
+                  {selectedColumns.includes("Joined At") && <th>Joined At</th>}
 
                   {selectedColumns.includes("Last Login At") && (
                     <th>Last Login At</th>
@@ -163,8 +165,6 @@ const Users = () => {
                   {selectedColumns.includes("Last Updated At") && (
                     <th>Last Updated At</th>
                   )}
-
-                  {selectedColumns.includes("Status") && <th>Status</th>}
                 </tr>
               </thead>
 
@@ -172,7 +172,7 @@ const Users = () => {
                 {[1, 2, 3, 4, 5].map((_, index) => (
                   <tr
                     key={index}
-                    className="border-t-[1px] border-neutral-300 odd:bg-white cursor-pointer text-center *:text-[1.5rem] *:leading-[1.5rem] *:font-semibold *:text-neutral-700 *:px-[1.6rem] *:py-[1.3rem] *:whitespace-nowrap"
+                    className="border-b-[1px] border-neutral-300 odd:bg-white cursor-pointer text-center *:text-[1.5rem] *:leading-[1.5rem] *:font-semibold *:text-neutral-700 *:px-[1.6rem] *:py-[1.3rem] *:whitespace-nowrap"
                   >
                     <td className="text-left">US-12485</td>
 
@@ -187,7 +187,17 @@ const Users = () => {
 
                     {selectedColumns.includes("Live In") && <th>Karachi</th>}
 
-                    {selectedColumns.includes("Join At") && (
+                    {selectedColumns.includes("Status") && (
+                      <th>
+                        <span
+                          className={`px-[1.5rem] py-[0.3rem] rounded-full bg-green-300 `}
+                        >
+                          Active
+                        </span>
+                      </th>
+                    )}
+
+                    {selectedColumns.includes("Joined At") && (
                       <th>Sep 12 - 2023</th>
                     )}
 
@@ -197,16 +207,6 @@ const Users = () => {
 
                     {selectedColumns.includes("Last Updated At") && (
                       <th>Feb 12 - 2024</th>
-                    )}
-
-                    {selectedColumns.includes("Status") && (
-                      <th>
-                        <span
-                          className={`px-[1.5rem] py-[0.3rem] rounded-full bg-green-300 `}
-                        >
-                          Active
-                        </span>
-                      </th>
                     )}
                   </tr>
                 ))}

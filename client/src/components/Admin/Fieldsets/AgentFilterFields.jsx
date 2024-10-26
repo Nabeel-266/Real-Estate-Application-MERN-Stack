@@ -140,7 +140,7 @@ const AgentFilterFields = ({ state, setStateHandler }) => {
         selectFor="status"
         labelText="By Status"
         placeholderText="Select a Status"
-        optionsData={["Active", "Not Active"]}
+        optionsData={["Active", "Inactive"]}
         labelStyle="inputLabels"
         inputStyle="inputFields"
         contStyle="space-y-[0.6rem]"

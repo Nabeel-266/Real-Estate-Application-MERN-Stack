@@ -587,10 +587,10 @@ export const usersDataColumns = [
   "Email Address",
   "Mobile Number",
   "Live In",
-  "Join At",
+  "Joined At",
   "Last Login At",
   "Last Updated At",
   "Status",
 ];
 
-export const usersDataSortBy = ["Join At", "Last Login"];
+export const usersDataSortBy = ["Joined At", "Last Login"];

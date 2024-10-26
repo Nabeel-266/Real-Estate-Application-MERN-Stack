@@ -170,7 +170,7 @@ const Agents = () => {
           </div>
 
           {/* Table Container */}
-          <div className="w-full overflow-auto scroll-smooth scrollbar-slim-x">
+          <div className="w-full min-h-[43rem] overflow-auto scroll-smooth scrollbar-slim-x">
             <table className="w-full table-auto text-left">
               <thead>
                 <tr className="border-b-[2px] border-neutral-300 *:text-[1.55rem] *:leading-[1.6rem] *:font-bold *:text-neutral-800 *:px-[1.6rem] *:py-[1.2rem] *:whitespace-nowrap">
@@ -226,7 +226,7 @@ const Agents = () => {
                   <tr
                     key={index}
                     onClick={() => agentDetailsNavigateHandler(agent.name)}
-                    className="border-t-[1px] border-neutral-400 odd:bg-white cursor-pointer *:text-[1.5rem] *:leading-[1.5rem] *:font-semibold *:text-neutral-700 *:px-[1.6rem] *:py-[0.6rem] *:whitespace-nowrap"
+                    className="border-b-[1px] border-neutral-400 odd:bg-white cursor-pointer *:text-[1.5rem] *:leading-[1.5rem] *:font-semibold *:text-neutral-700 *:px-[1.6rem] *:py-[0.6rem] *:whitespace-nowrap"
                   >
                     <td>
                       <img
