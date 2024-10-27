@@ -9,9 +9,9 @@ import {
 import { IoMdArrowDropdown } from "react-icons/io";
 
 // Import Components
-import DashboardLineChart from "../../../components/Admin/Charts/DashboardLineChart";
-import DashboardDonutChart from "../../../components/Admin/Charts/DashboardDonutChart";
-import PeriodSelection from "../../../components/Admin/Selections/PeriodSelection";
+import DashboardLineChart from "../../components/Charts/DashboardLineChart";
+import DashboardDonutChart from "../../components/Charts/DashboardDonutChart";
+import PeriodSelection from "../../components/Selections/PeriodSelection";
 
 const Dashboard = () => {
   const [summarizedBy, setSummarizedBy] = useState("By Property Types");

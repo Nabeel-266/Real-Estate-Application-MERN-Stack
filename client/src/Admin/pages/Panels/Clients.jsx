@@ -12,9 +12,9 @@ import { FaHouseChimneyUser } from "react-icons/fa6";
 import { TbArrowBigRightLinesFilled } from "react-icons/tb";
 
 // Import Components
-import FilterDropdown from "../../../components/Admin/Dropdowns/FilterDropdown";
-import SortDropdown from "../../../components/Admin/Dropdowns/SortDropdown";
-import ColumnsDropdown from "../../../components/Admin/Dropdowns/ColumnsDropdown";
+import SortDropdown from "../../components/Dropdowns/SortDropdown";
+import ColumnsDropdown from "../../components/Dropdowns/ColumnsDropdown";
+import FilterDropdown from "../../components/Dropdowns/FilterDropdown";
 
 // Example data for cards and table
 const clientsStats = [

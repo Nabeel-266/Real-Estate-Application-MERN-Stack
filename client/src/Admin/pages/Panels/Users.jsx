@@ -7,11 +7,11 @@ import { PiUserSwitchFill } from "react-icons/pi";
 import { TbArrowBigRightLinesFilled } from "react-icons/tb";
 
 // Import Components
-import UsersLineChart from "../../../components/Admin/Charts/UsersLineChart";
-import SortDropdown from "../../../components/Admin/Dropdowns/SortDropdown";
-import ColumnsDropdown from "../../../components/Admin/Dropdowns/ColumnsDropdown";
-import FilterDropdown from "../../../components/Admin/Dropdowns/FilterDropdown";
-import UsersDonutChart from "../../../components/Admin/Charts/UsersDonutChart";
+import UsersLineChart from "../../components/Charts/UsersLineChart";
+import SortDropdown from "../../components/Dropdowns/SortDropdown";
+import ColumnsDropdown from "../../components/Dropdowns/ColumnsDropdown";
+import FilterDropdown from "../../components/Dropdowns/FilterDropdown";
+import UsersDonutChart from "../../components/Charts/UsersDonutChart";
 
 // Example data for cards and table
 const usersStats = [

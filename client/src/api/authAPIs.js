@@ -141,6 +141,7 @@ export const resendOTPtoUser = async (userDoc, dispatch) => {
   }
 };
 
+// For USER FORGOT PASSWORD
 export const forgotPassword = async (email) => {
   try {
     const response = await axios.post(`${FORGOT_PASSWORD}`, { email });
@@ -162,7 +163,7 @@ export const forgotPassword = async (email) => {
   }
 };
 
-// For CHECK USER Token
+// For CHECK USER TOKEN
 export const checkToken = async (dispatch) => {
   try {
     const response = await axios.get(`${CHECK_TOKEN}`);

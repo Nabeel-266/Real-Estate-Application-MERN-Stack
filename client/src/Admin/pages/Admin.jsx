@@ -5,8 +5,8 @@ import { Outlet, useLocation } from "react-router-dom";
 import { RiUserAddLine } from "react-icons/ri";
 
 // Import Components
-import Sidebar from "../../components/Admin/Sidebar";
-import AddAgentModal from "../../components/Admin/Modals/AddAgentModal";
+import Sidebar from "../components/Sidebar";
+import AddAgentModal from "../components/Modals/AddAgentModal";
 
 const Admin = () => {
   const routeLocation = useLocation();

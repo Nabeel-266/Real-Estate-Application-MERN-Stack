@@ -12,11 +12,11 @@ import { TbArrowBigRightLinesFilled } from "react-icons/tb";
 import { PiStarFourFill } from "react-icons/pi";
 
 // Import Components
-import FilterDropdown from "../../../components/Admin/Dropdowns/FilterDropdown";
-import SortDropdown from "../../../components/Admin/Dropdowns/SortDropdown";
-import ColumnsDropdown from "../../../components/Admin/Dropdowns/ColumnsDropdown";
-import PropertiesBarChart from "../../../components/Admin/Charts/PropertiesBarChart";
-import PropertiesDonutChart from "../../../components/Admin/Charts/PropertiesDonutChart";
+import SortDropdown from "../../components/Dropdowns/SortDropdown";
+import ColumnsDropdown from "../../components/Dropdowns/ColumnsDropdown";
+import FilterDropdown from "../../components/Dropdowns/FilterDropdown";
+import PropertiesBarChart from "../../components/Charts/PropertiesBarChart";
+import PropertiesDonutChart from "../../components/Charts/PropertiesDonutChart";
 
 // Example data for cards and table
 const propertyStats = [

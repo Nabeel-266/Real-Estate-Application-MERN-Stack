@@ -30,18 +30,19 @@ import Account from "./components/User/Account";
 import MyProperties from "./components/User/MyProperties";
 import NotFound from "./pages/NotFound";
 import Property from "./pages/Property";
+
 // For Admin Pages
-import Admin from "./pages/Admin/Admin";
-import Dashboard from "./pages/Admin/Panels/Dashboard";
-import Properties from "./pages/Admin/Panels/Properties";
-import Clients from "./pages/Admin/Panels/Clients";
-import Users from "./pages/Admin/Panels/Users";
-import Agents from "./pages/Admin/Panels/Agents";
-import Contacts from "./pages/Admin/Panels/Contacts";
-import Reports from "./pages/Admin/Panels/Reports";
-import Settings from "./pages/Admin/Panels/Settings";
-import Listing from "./pages/Admin/Panels/Listing";
-import AgentDetails from "./pages/Admin/Overviews/AgentDetails";
+import Admin from "./Admin/pages/Admin";
+import Dashboard from "./Admin/pages/Panels/Dashboard";
+import Agents from "./Admin/pages/Panels/Agents";
+import Properties from "./Admin/pages/Panels/Properties";
+import Clients from "./Admin/pages/Panels/Clients";
+import Users from "./Admin/pages/Panels/Users";
+import Listing from "./Admin/pages/Panels/Listing";
+import Contacts from "./Admin/pages/Panels/Contacts";
+import Reports from "./Admin/pages/Panels/Reports";
+import Settings from "./Admin/pages/Panels/Settings";
+import AgentDetails from "./Admin/pages/Overviews/AgentDetails";
 
 const ClientLayout = () => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
