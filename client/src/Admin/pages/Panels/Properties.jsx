@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   propertiesDataColumns,
   propertiesDataSortBy,
@@ -38,6 +39,7 @@ const propertyStats = [
 ];
 
 const Properties = () => {
+  const navigate = useNavigate();
   const [selectedColumns, setSelectedColumns] = useState(propertiesDataColumns);
 
   // Toggle Properties Data Column Visibility
@@ -47,6 +49,10 @@ const Properties = () => {
         ? prevSelected.filter((col) => col !== column)
         : [...prevSelected, column]
     );
+  };
+
+  const propertyDetailsNavigateHandler = (refernceKey) => {
+    navigate(`/admin/property/${refernceKey}`);
   };
 
   return (
@@ -256,6 +262,7 @@ const Properties = () => {
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((_, index) => (
                   <tr
                     key={index}
+                    onClick={() => propertyDetailsNavigateHandler(index)}
                     className="border-t-[1px] border-neutral-300 odd:bg-white cursor-pointer text-center *:text-[1.5rem] *:leading-[1.5rem] *:font-semibold *:text-neutral-700 *:px-[1.6rem] *:py-[1.3rem] *:whitespace-nowrap"
                   >
                     <td className="text-left">PR-42156</td>

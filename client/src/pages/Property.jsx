@@ -129,7 +129,7 @@ const Property = () => {
                   {/* Property Image Display Section */}
                   <section
                     ref={imageSection}
-                    className="w-[100%] laptopSm:h-[75dvh] relative z-[1] grid grid-cols-3 grid-rows-2 gap-[1rem]"
+                    className="w-full laptopSm:h-[75dvh] relative z-[1] grid grid-cols-3 grid-rows-2 gap-[1rem]"
                   >
                     {images.slice(0, 3).map((imageURL, index) => (
                       <div

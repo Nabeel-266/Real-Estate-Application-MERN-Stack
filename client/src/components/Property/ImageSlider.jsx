@@ -17,7 +17,7 @@ const ImageSlider = ({ images, isOpenSlider }) => {
 
   return (
     <div className="fixed z-[990] top-0 left-0 bottom-0 right-0 bg-[#222] flex justify-center items-center">
-      <div className="w-full tabletRg:w-[85%] laptopSm:w-[75%] relative flex items-center justify-center bg-transparent rounded-md overflow-hidden transition-all hover:bg-[#ffffff20] group/picture">
+      <div className="w-full tabletRg:w-[90%] laptopSm:w-[80%] relative flex items-center justify-center bg-transparent rounded-md overflow-hidden transition-all hover:bg-[#ffffff20] group/picture">
         <Swiper
           modules={[Pagination]}
           slidesPerView={1}

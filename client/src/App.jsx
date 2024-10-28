@@ -43,6 +43,7 @@ import Contacts from "./Admin/pages/Panels/Contacts";
 import Reports from "./Admin/pages/Panels/Reports";
 import Settings from "./Admin/pages/Panels/Settings";
 import AgentDetails from "./Admin/pages/Overviews/AgentDetails";
+import PropertyDetails from "./Admin/pages/Overviews/PropertyDetails";
 
 const ClientLayout = () => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
@@ -192,6 +193,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/agent/:agentId",
         element: <AgentDetails />,
+      },
+      {
+        path: "/admin/property/:propertyId",
+        element: <PropertyDetails />,
       },
     ],
   },
