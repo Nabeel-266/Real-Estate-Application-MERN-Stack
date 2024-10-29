@@ -335,11 +335,11 @@ const Property = () => {
                       </section>
 
                       {/* Map Side */}
-                      <section
-                        ref={mapRef}
-                        className="w-full laptopRg:w-[33%] h-[40rem] pt-[1rem] flex flex-col gap-[2rem]"
-                      >
-                        <div className="mapCont w-full h-full relative border-[0.2rem] border-neutral-300 rounded-xl shadow-xl shadow-neutral-200 overflow-hidden">
+                      <section className="w-full laptopRg:w-[33%] h-[40rem] pt-[1rem] flex flex-col gap-[2rem]">
+                        <div
+                          ref={mapRef}
+                          className="mapCont w-full h-full relative border-[0.2rem] border-neutral-300 rounded-xl shadow-xl shadow-neutral-200 overflow-hidden"
+                        >
                           <button
                             onClick={handleFullScreen}
                             className="text-[2.2rem] p-[0.3rem] bg-white text-neutral-700 absolute z-[1] top-[1rem] right-[1rem]"
