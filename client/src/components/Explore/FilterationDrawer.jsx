@@ -370,29 +370,6 @@ const FilterationDrawer = ({ isDrawerOpen, setIsDrawerOpen }) => {
           >
             Min Price
           </label>
-
-          {/* Property Price Dropdown */}
-          {/* {dropdownOpen.prices && (
-            <div
-              ref={dropdownRef}
-              className="w-full py-[0.5rem] shadow-lg border-[0.2rem] bg-white border-neutral-300 rounded-md absolute z-10 top-[100%] left-0"
-            >
-              <ul className="w-full max-h-[19rem] overflow-auto scrollbar-slim-y ">
-                <h6 className="text-[1.6rem] leading-[1.6rem] font-semibold text-neutral-800 px-[1.5rem] py-[0.6rem]">
-                  Select Price
-                </h6>
-                {priceRanges?.map(({ value, label }, index) => (
-                  <li
-                    key={index}
-                    onClick={() => selectPriceHandler(value, label)}
-                    className="w-full text-[1.5rem] leading-[1.6rem] font-medium text-neutral-700 px-[1.5rem] py-[0.8rem] hover:bg-theme-blue hover:text-white transition-all"
-                  >
-                    {label}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )} */}
         </div>
 
         {/* For Max Price */}

@@ -15,6 +15,7 @@ import { TbArrowBigRightLinesFilled } from "react-icons/tb";
 import SortDropdown from "../../components/Dropdowns/SortDropdown";
 import ColumnsDropdown from "../../components/Dropdowns/ColumnsDropdown";
 import FilterDropdown from "../../components/Dropdowns/FilterDropdown";
+import { useNavigate } from "react-router-dom";
 
 // Example data for cards and table
 const clientsStats = [
@@ -95,6 +96,7 @@ const clientCountbyCity = [
 ];
 
 const Clients = () => {
+  const navigate = useNavigate();
   const [selectedColumns, setSelectedColumns] = useState(clientsDataColumns);
 
   // Toggle Properties Data Column Visibility
@@ -104,6 +106,10 @@ const Clients = () => {
         ? prevSelected.filter((col) => col !== column)
         : [...prevSelected, column]
     );
+  };
+
+  const clientDetailsNavigateHandler = (refernceKey) => {
+    navigate(`/admin/client/${refernceKey}`);
   };
 
   return (
@@ -237,6 +243,7 @@ const Clients = () => {
                 {[1, 2, 3, 4, 5].map((_, index) => (
                   <tr
                     key={index}
+                    onClick={() => clientDetailsNavigateHandler(index)}
                     className="border-b-[1px] border-neutral-300 odd:bg-white cursor-pointer text-center *:text-[1.5rem] *:leading-[1.5rem] *:font-semibold *:text-neutral-700 *:px-[1.6rem] *:py-[1.3rem] *:whitespace-nowrap"
                   >
                     <td className="text-left">CL-12485</td>

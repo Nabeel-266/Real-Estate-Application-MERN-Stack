@@ -19,6 +19,11 @@ const Admin = () => {
       panelName.charAt(0).toUpperCase() + panelName.slice(1).toLowerCase();
 
     setPanelTitle(currentPanelTitle);
+
+    const outletElement = document.querySelector(".outletCont");
+    if (outletElement) {
+      outletElement.scrollTop = 0;
+    }
   }, [routeLocation]);
 
   return (
@@ -31,7 +36,14 @@ const Admin = () => {
         <main className="w-[calc(100%-25rem)] h-full">
           <header className="mx-[1%] h-[6rem] flex items-center justify-between px-[1rem] border-b-[1px] border-neutral-200">
             <h2 className="text-[2.4rem] leading-[2.2rem] font-bold text-neutral-800 flex items-center gap-[0.8rem] mt-[0.8rem]">
-              <span>{panelTitle}</span>
+              <span>
+                {panelTitle === "Agent" ||
+                panelTitle === "Property" ||
+                panelTitle === "Client" ||
+                panelTitle === "User"
+                  ? `${panelTitle} Details`
+                  : panelTitle}
+              </span>
             </h2>
 
             <div className="flex items-center gap-[1.5rem] select-none">
@@ -53,7 +65,7 @@ const Admin = () => {
             </div>
           </header>
 
-          <div className="w-full h-[calc(100dvh-6rem)] overflow-auto scrollbar-panel">
+          <div className="outletCont w-full h-[calc(100dvh-6rem)] overflow-auto scrollbar-panel">
             <Outlet />
           </div>
         </main>

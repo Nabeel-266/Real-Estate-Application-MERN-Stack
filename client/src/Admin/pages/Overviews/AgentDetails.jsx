@@ -19,7 +19,7 @@ const AgentDetails = () => {
   return (
     <div className="w-full flex flex-col gap-[6rem] p-[2rem]">
       {/* Core Details */}
-      <div className="w-full space-y-[1.5rem]">
+      <div className="w-full space-y-[2rem]">
         {/* Core Details Header */}
         <div className="w-full flex items-center justify-between">
           <h2 className="flex items-center gap-[0rem] text-[2.2rem] leading-[2.2rem] text-theme-blue font-bold uppercase underline underline-offset-[0.3rem]">
@@ -42,7 +42,7 @@ const AgentDetails = () => {
               <img
                 src="/src/assets/user.png"
                 alt="ProfilePicture"
-                className="size-[10rem] object-cover rounded-full border-[0.2rem] border-theme-blue"
+                className="size-[10rem] object-cover rounded-full border-[0.2rem] border-theme-blue select-none"
               />
 
               {/* Name & Identifier Key */}
@@ -95,7 +95,7 @@ const AgentDetails = () => {
               </div>
             </div>
 
-            {/* Date Of Birth, Experience & Marital Status */}
+            {/* Date Of Birth & Education */}
             <div className="w-full flex gap-[1rem]">
               {/* Date Of Birth */}
               <div className="w-full space-y-[0.7rem] p-[1rem] bg-neutral-200 rounded-xl text-[1.6rem] leading-[1.6rem]">
@@ -103,7 +103,7 @@ const AgentDetails = () => {
                 <p className="text-neutral-700 font-semibold">Dec 26, 2000</p>
               </div>
 
-              {/* Experience */}
+              {/* Education */}
               <div className="w-full space-y-[0.7rem] p-[1rem] bg-neutral-200 rounded-xl text-[1.6rem] leading-[1.6rem]">
                 <h5 className="text-theme-blue font-bold">Education</h5>
                 <p className="text-neutral-700 font-semibold">Under Graduate</p>

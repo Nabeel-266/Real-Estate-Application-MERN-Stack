@@ -288,7 +288,7 @@ const PropertyDetails = () => {
           </div>
 
           {/* Info Side */}
-          <div className="w-[37%]">
+          <div className="w-[37%] flex flex-col gap-[2rem]">
             {/* Location Map */}
             <div
               ref={mapRef}
@@ -319,7 +319,7 @@ const PropertyDetails = () => {
             </div>
 
             {/* Timeline Record  */}
-            <div className="w-full px-[0.5rem] py-[2.8rem] space-y-[0.5rem]">
+            <div className="w-full px-[0.5rem] py-[2rem] space-y-[0.5rem]">
               <h3 className="text-[2rem] leading-[2rem] font-bold text-theme-blue">
                 Timeline Record
               </h3>
