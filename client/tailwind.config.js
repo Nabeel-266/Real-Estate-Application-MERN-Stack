@@ -67,7 +67,6 @@ export default {
       mont: ["'Montserrat'", "sans-serif"],
       quick: ["'Quicksand'", "sans-serif"],
       sans: ["'DM Sans'", "sans-serif"],
-      manrope: ["'Manrope'", "sans-serif"],
     },
   },
   plugins: [],

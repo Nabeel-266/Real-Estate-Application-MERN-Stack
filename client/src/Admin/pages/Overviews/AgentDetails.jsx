@@ -19,7 +19,7 @@ const AgentDetails = () => {
   return (
     <div className="w-full flex flex-col gap-[6rem] p-[2rem]">
       {/* Core Details */}
-      <div className="w-full space-y-[2rem]">
+      <div className="w-full space-y-[2.2rem]">
         {/* Core Details Header */}
         <div className="w-full flex items-center justify-between">
           <h2 className="flex items-center gap-[0rem] text-[2.2rem] leading-[2.2rem] text-theme-blue font-bold uppercase underline underline-offset-[0.3rem]">
@@ -35,14 +35,14 @@ const AgentDetails = () => {
 
         {/* Core Details Content */}
         <div className="w-full flex">
-          <section className="w-[48%] space-y-[2rem]">
+          <section className="w-[48%] space-y-[2.5rem]">
             {/* Picture, Name & Identifier */}
             <div className="w-full flex items-center gap-[1.5rem]">
               {/* Profile Picture */}
               <img
                 src="/src/assets/user.png"
                 alt="ProfilePicture"
-                className="size-[10rem] object-cover rounded-full border-[0.2rem] border-theme-blue select-none"
+                className="size-[9rem] object-cover rounded-full border-[0.2rem] border-theme-blue select-none"
               />
 
               {/* Name & Identifier Key */}
