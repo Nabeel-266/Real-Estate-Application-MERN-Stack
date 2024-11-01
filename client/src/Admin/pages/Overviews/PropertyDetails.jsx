@@ -10,11 +10,11 @@ import { BiArea, BiFullscreen } from "react-icons/bi";
 import { HiOutlineClock, HiOutlineLocationMarker } from "react-icons/hi";
 import { HiMiniCalendarDays } from "react-icons/hi2";
 import { FaDotCircle } from "react-icons/fa";
+import { MdOutlineEmail } from "react-icons/md";
+import { TiPhoneOutline } from "react-icons/ti";
 
 // Import Components
 import ImageSlider from "../../../components/Property/ImageSlider";
-import { MdOutlineEmail } from "react-icons/md";
-import { TiPhoneOutline } from "react-icons/ti";
 
 const propertyImages = [
   "/src/assets/Properties/house-02.jpg",
