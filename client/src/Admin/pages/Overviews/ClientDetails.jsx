@@ -75,7 +75,7 @@ const client = {
 
 const ClientDetails = () => {
   return (
-    <div className="w-full flex flex-col gap-[6rem] p-[2rem]">
+    <div className="w-full flex flex-col gap-[5rem] p-[2rem]">
       {/* Core Details */}
       <div className="w-full space-y-[2.2rem]">
         {/* Core Details Header */}

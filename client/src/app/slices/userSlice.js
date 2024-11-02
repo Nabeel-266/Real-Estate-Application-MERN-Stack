@@ -23,26 +23,10 @@ const userSlice = createSlice({
     setUnAuthUser(state, action) {
       state.unAuthenticUser = action.payload;
     },
-    // resetUser(state) {
-    //   state.authenticUser = null;
-    //   state.pending = false;
-    //   state.failed = false;
-    // },
-    // updateUserProfileImg(state, action) {
-    //   if (state.authenticUser) {
-    //     state.authenticUser.profileImg = action.payload;
-    //   }
-    // },
   },
 });
 
-export const {
-  setLoading,
-  setError,
-  setAuthUser,
-  setUnAuthUser,
-  //   resetUser,
-  //   updateUserProfileImg,
-} = userSlice.actions;
+export const { setLoading, setError, setAuthUser, setUnAuthUser } =
+  userSlice.actions;
 
 export default userSlice.reducer;

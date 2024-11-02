@@ -47,7 +47,17 @@ import PropertyDetails from "./Admin/pages/Overviews/PropertyDetails";
 import ClientDetails from "./Admin/pages/Overviews/ClientDetails";
 
 const ClientLayout = () => {
+  const dispatch = useDispatch();
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
+
+  const memoizedCheckToken = useCallback(
+    () => checkToken(dispatch),
+    [dispatch]
+  );
+
+  useEffect(() => {
+    memoizedCheckToken();
+  }, [memoizedCheckToken]);
 
   return (
     <>
@@ -152,7 +162,6 @@ const router = createBrowserRouter([
     ],
   },
   {
-    // path: "/",
     element: <Admin />,
     children: [
       {
@@ -208,17 +217,6 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  const dispatch = useDispatch();
-
-  const memoizedCheckToken = useCallback(
-    () => checkToken(dispatch),
-    [dispatch]
-  );
-
-  useEffect(() => {
-    memoizedCheckToken();
-  }, [memoizedCheckToken]);
-
   return (
     <div className="app bg-white relative overflow-hidden">
       <RouterProvider router={router} />

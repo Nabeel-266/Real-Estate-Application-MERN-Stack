@@ -13,7 +13,7 @@ import { FaDotCircle } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";
 import { TiPhoneOutline } from "react-icons/ti";
 import { PiTagSimpleBold } from "react-icons/pi";
-import { IoPricetagOutline } from "react-icons/io5";
+import { IoPricetag } from "react-icons/io5";
 
 // Import Components
 import ImageSlider from "../../../components/Property/ImageSlider";
@@ -99,8 +99,8 @@ const PropertyDetails = () => {
 
             {/* Price */}
             <p className="relative text-theme-blue px-[0.6rem] py-[0.3rem] rounded-lg border-[0.1rem] border-dashed border-theme-blue select-none mb-[0.2rem]">
-              <span className="absolute top-0 right-[96%]">
-                <IoPricetagOutline size="2.2rem" className="-rotate-12" />
+              <span className="absolute top-[-1%] right-[96%]">
+                <IoPricetag size="2rem" className="-rotate-12" />
               </span>
 
               <span className="text-[1.7rem] leading-[1.7rem] font-semibold mr-[0.8rem]">
@@ -115,7 +115,7 @@ const PropertyDetails = () => {
         </section>
 
         {/* Property Images */}
-        <section className="w-full laptopSm:max-h-[60dvh] relative z-[1] grid grid-cols-5 grid-rows-2 gap-[1rem] mb-[2.5rem]">
+        <section className="w-full laptopSm:max-h-[60dvh] relative z-[1] grid grid-cols-5 grid-rows-2 gap-[1rem] select-none mb-[2.5rem]">
           {propertyImages.map((imageURL, index) => (
             <div
               key={index}
@@ -295,8 +295,8 @@ const PropertyDetails = () => {
               </div>
             </section>
 
-            {/* Timeline Record  */}
-            <div className="w-full py-[2rem]">
+            {/* Timeline Record Details  */}
+            <div className="w-full py-[2.5rem] border-t-[0.1rem] border-neutral-200">
               <h3 className="text-[2rem] leading-[2rem] font-bold text-theme-blue mb-[0.5rem]">
                 Timeline Record
               </h3>
@@ -307,9 +307,12 @@ const PropertyDetails = () => {
               </p>
 
               {/* Timeline Records */}
-              <div className="w-full grid grid-cols-2 gap-[2.5rem]">
-                {timelineRecords.map(({ title, date, time }) => (
-                  <div className="w-full even:self-end space-y-[0.6rem] rounded-xl">
+              <div className="w-full grid grid-cols-2 gap-[3rem_2rem]">
+                {timelineRecords.map(({ title, date, time }, index) => (
+                  <div
+                    key={index}
+                    className="w-full even:self-end space-y-[0.6rem] rounded-xl"
+                  >
                     <h6 className="text-[1.55rem] leading-[1.6rem] font-bold text-neutral-700">
                       {title} Timestamp
                     </h6>
@@ -334,7 +337,7 @@ const PropertyDetails = () => {
             {/* Location Map */}
             <div
               ref={mapRef}
-              className="w-full h-[30rem] relative border-[0.2rem] border-neutral-300 rounded-xl shadow-xl shadow-[#00000010] overflow-hidden"
+              className="w-full h-[25rem] relative border-[0.2rem] border-neutral-300 rounded-xl shadow-xl shadow-[#00000010] overflow-hidden"
             >
               <button
                 onClick={handleFullScreen}
@@ -363,7 +366,7 @@ const PropertyDetails = () => {
             {/* Lead Agent Details */}
             <section className="w-full p-[4%] bg-neutral-100 rounded-xl overflow-hidden shadow-lg shadow-[#00000010] border-[0.2rem] border-neutral-200">
               {/* Title */}
-              <h4 className="text-[2rem] leading-[2rem] font-bold text-theme-blue select-none mb-[1.2rem]">
+              <h4 className="text-[1.8rem] leading-[1.8rem] font-bold text-theme-blue select-none mb-[1.2rem]">
                 Lead Agent
               </h4>
 
@@ -392,7 +395,7 @@ const PropertyDetails = () => {
               {/* Others */}
               <div className="w-full space-y-[0.8rem]">
                 {/* Email and Mobile Number */}
-                <div className="w-full space-y-[0.8rem] text-neutral-700 text-[1.4rem] leading-[1.4rem] font-semibold tracking-wide px-[0.2rem] *:flex *:items-center *:gap-[0.8rem]">
+                <div className="w-full space-y-[0.7rem] text-neutral-700 text-[1.4rem] leading-[1.5rem] font-semibold tracking-wide px-[0.2rem] *:flex *:items-center *:gap-[0.8rem]">
                   <p>
                     <PiTagSimpleBold
                       size="1.8rem"
@@ -417,6 +420,44 @@ const PropertyDetails = () => {
                     <span>03345678564</span>
                   </p>
                 </div>
+              </div>
+            </section>
+
+            {/* Presenter Details */}
+            <section className="w-full p-[4%] bg-neutral-50 rounded-xl overflow-hidden shadow-lg shadow-[#00000010] border-[0.2rem] border-neutral-200">
+              {/* Title */}
+              <h4 className="text-[1.8rem] leading-[1.8rem] font-bold text-theme-blue select-none mb-[1.2rem]">
+                Presenter Details
+              </h4>
+
+              {/* Name */}
+              <div className="flex flex-col gap-[0.5rem] mb-[1.2rem]">
+                <span className="text-[1.4rem] leading-[1.4rem] font-medium text-neutral-800 select-none">
+                  Name
+                </span>
+                <span className="text-[1.55rem] leading-[1.55rem] font-semibold text-neutral-700">
+                  Juanid Farooq
+                </span>
+              </div>
+
+              {/* Account Identity */}
+              <div className="flex flex-col gap-[0.6rem] mb-[1.2rem]">
+                <span className="text-[1.4rem] leading-[1.4rem] font-medium text-neutral-800 select-none">
+                  Account Identity
+                </span>
+                <span className="text-[1.55rem] leading-[1.55rem] font-semibold text-neutral-700">
+                  @junaid_farooq_91266
+                </span>
+              </div>
+
+              {/* Contact Number */}
+              <div className="flex flex-col gap-[0.6rem]">
+                <span className="text-[1.4rem] leading-[1.4rem] font-medium text-neutral-800 select-none">
+                  Contact Number
+                </span>
+                <span className="text-[1.55rem] leading-[1.55rem] font-semibold text-neutral-700">
+                  +92 3345678564
+                </span>
               </div>
             </section>
           </div>
