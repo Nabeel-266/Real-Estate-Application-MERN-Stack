@@ -12,6 +12,8 @@ import { HiMiniCalendarDays } from "react-icons/hi2";
 import { FaDotCircle } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";
 import { TiPhoneOutline } from "react-icons/ti";
+import { PiTagSimpleBold } from "react-icons/pi";
+import { IoPricetagOutline } from "react-icons/io5";
 
 // Import Components
 import ImageSlider from "../../../components/Property/ImageSlider";
@@ -51,8 +53,69 @@ const PropertyDetails = () => {
     <div className="w-full p-[2rem]">
       {/* Property Images & Property Details */}
       <div className="w-full flex flex-col">
+        {/* Property Specifications */}
+        <section className="w-full flex justify-between bg-white px-[0.5rem] rounded-xl mb-[2rem]">
+          {/* Left Side */}
+          <div className="flex flex-col">
+            <h2 className="text-[2.2rem] leading-[2.2rem] text-theme-blue font-bold mb-[1.5rem]">
+              Appartment For Sale
+            </h2>
+
+            {/* City */}
+            <p className="flex items-center gap-[0.5rem] text-[1.7rem] leading-[1.7rem] text-neutral-800 font-semibold mb-[0.8rem]">
+              <HiOutlineLocationMarker size="1.8rem" />
+              <span>Dera Ghazi Khan</span>
+            </p>
+
+            {/* Size */}
+            <p className="flex items-center gap-[0.5rem] text-[1.7rem] leading-[1.7rem] text-neutral-800 font-semibold mb-[1.5rem]">
+              <BiArea size="1.8rem" />
+              <span>1200 Sq.ft</span>
+            </p>
+
+            {/* Bedroom & Bathroom */}
+            <div className="w-full flex items-center gap-[1.2rem] text-[1.55rem] leading-[1.6rem] text-neutral-700 font-semibold select-none *:border *:border-neutral-700 *:border-dashed *:rounded-full">
+              {/* Bedroom */}
+              <p className="flex items-center gap-[0.6rem] px-[1rem] py-[0.4rem]">
+                <LiaBedSolid size="1.9rem" />
+                <span className="mt-[0.2rem]">4 Beds</span>
+              </p>
+
+              {/* Bathroom */}
+              <p className="bath flex items-center gap-[0.6rem] px-[1rem] py-[0.5rem] ">
+                <LuBath size="1.7rem" />
+                <span className="mt-[0.2rem]">3 Bath</span>
+              </p>
+            </div>
+          </div>
+
+          {/* Right Side */}
+          <div className="flex flex-col items-end justify-between">
+            {/* Status */}
+            <p className="text-[1.4rem] leading-[1.4rem] font-semibold text-yellow-700 bg-yellow-200 flex items-center gap-[0.4rem] px-[1.2rem] py-[0.5rem] rounded-full select-none">
+              <FaDotCircle size="1.2rem" />
+              Pending
+            </p>
+
+            {/* Price */}
+            <p className="relative text-theme-blue px-[0.6rem] py-[0.3rem] rounded-lg border-[0.1rem] border-dashed border-theme-blue select-none mb-[0.2rem]">
+              <span className="absolute top-0 right-[96%]">
+                <IoPricetagOutline size="2.2rem" className="-rotate-12" />
+              </span>
+
+              <span className="text-[1.7rem] leading-[1.7rem] font-semibold mr-[0.8rem]">
+                PKR
+              </span>
+
+              <span className="text-[2.2rem] leading-[2.2rem] font-bold">
+                2.4 Crore
+              </span>
+            </p>
+          </div>
+        </section>
+
         {/* Property Images */}
-        <section className="w-full laptopSm:max-h-[60dvh] relative z-[1] grid grid-cols-5 grid-rows-2 gap-[1rem]">
+        <section className="w-full laptopSm:max-h-[60dvh] relative z-[1] grid grid-cols-5 grid-rows-2 gap-[1rem] mb-[2.5rem]">
           {propertyImages.map((imageURL, index) => (
             <div
               key={index}
@@ -78,11 +141,11 @@ const PropertyDetails = () => {
         </section>
 
         {/* Property Details & Info */}
-        <div className="w-full flex gap-[3%]">
+        <div className="w-full flex gap-[4%]">
           {/* Details Side */}
           <div className="w-[60%]">
             {/* Primary Details */}
-            <section className="w-full flex flex-col gap-[1.5rem] py-[2.2rem]">
+            <section className="w-full flex-col gap-[1.5rem] pb-[2.2rem] border-b-[0.1rem] border-neutral-200 mb-[1.4rem] hidden">
               {/* Title & Status */}
               <div className="w-full flex items-center justify-between">
                 <h2 className="text-[2.3rem] leading-[2.3rem] text-neutral-800 font-bold">
@@ -136,7 +199,7 @@ const PropertyDetails = () => {
             {/* Secondary Details */}
             <section className="w-full flex flex-col">
               {/* Condition */}
-              <div className="border-t-[0.1rem] border-neutral-200 py-[1.4rem]">
+              <div className="border-b-[0.1rem] border-neutral-200 pb-[1.4rem]">
                 <h6 className="text-[1.8rem] font-bold select-none text-theme-blue">
                   Condition
                 </h6>
@@ -146,7 +209,7 @@ const PropertyDetails = () => {
               </div>
 
               {/* Description */}
-              <div className="border-t-[0.1rem] border-neutral-200 py-[1.4rem]">
+              <div className="border-b-[0.1rem] border-neutral-200 py-[1.4rem]">
                 <h6 className="text-[1.8rem] font-bold select-none text-theme-blue">
                   Description
                 </h6>
@@ -156,7 +219,7 @@ const PropertyDetails = () => {
               </div>
 
               {/* Features */}
-              <div className="border-t-[0.1rem] border-neutral-200 pt-[1.4rem] pb-[1.8rem]">
+              <div className="border-b-[0.1rem] border-neutral-200 pt-[1.4rem] pb-[1.8rem]">
                 <h6 className="text-[1.8rem] font-bold select-none text-theme-blue">
                   Features
                 </h6>
@@ -185,7 +248,7 @@ const PropertyDetails = () => {
               </div>
 
               {/* Near By Places */}
-              <div className="border-t-[0.1rem] border-neutral-200 pt-[1.4rem] pb-[1.8rem]">
+              <div className="border-b-[0.1rem] border-neutral-200 pt-[1.4rem] pb-[1.8rem]">
                 <h6 className="text-[1.8rem] font-bold select-none text-theme-blue">
                   Near by Facility
                 </h6>
@@ -212,7 +275,7 @@ const PropertyDetails = () => {
               </div>
 
               {/* Visiting Schedule */}
-              <div className="border-t-[0.1rem] border-neutral-200 pt-[1.4rem] pb-[1.8rem]">
+              <div className="pt-[1.4rem] pb-[1.8rem]">
                 <h6 className="text-[1.8rem] font-bold select-none text-theme-blue">
                   Visiting Schedule
                 </h6>
@@ -232,67 +295,46 @@ const PropertyDetails = () => {
               </div>
             </section>
 
-            {/* Property Representative Agent Details */}
-            <section className="w-full py-[2rem] space-y-[1rem]">
-              {/* Title */}
-              <h4 className="text-[2rem] font-bold text-theme-blue select-none">
-                Property Representative Agent
-              </h4>
+            {/* Timeline Record  */}
+            <div className="w-full py-[2rem]">
+              <h3 className="text-[2rem] leading-[2rem] font-bold text-theme-blue mb-[0.5rem]">
+                Timeline Record
+              </h3>
 
-              {/* Card */}
-              <div className="w-fit bg-theme-blue flex flex-col gap-[1.2rem] px-[1.6rem] pt-[1.2rem] pb-[1.6rem] rounded-xl shadow-lg">
-                {/* Image and Identity */}
-                <div className="w-full flex items-center gap-[1.2rem]">
-                  {/* Agent Image */}
-                  <div>
-                    <img
-                      src="/src/assets/Agents/agent03.png"
-                      alt="Agent"
-                      className="size-[4.2rem] object-cover rounded-full border-[0.2rem] border-orange-400 select-none"
-                    />
-                  </div>
+              <p className="text-[1.4rem] leading-[1.8rem] font-medium text-neutral-800 mb-[2rem]">
+                Track milestones and updates of property with precise date and
+                time logs.
+              </p>
 
-                  {/* Agent Identity */}
-                  <div className="flex flex-col gap-[0.4rem]">
-                    <h6 className="text-[1.55rem] leading-[1.55rem] font-semibold text-white">
-                      Muhammad Nabeel
+              {/* Timeline Records */}
+              <div className="w-full grid grid-cols-2 gap-[2.5rem]">
+                {timelineRecords.map(({ title, date, time }) => (
+                  <div className="w-full even:self-end space-y-[0.6rem] rounded-xl">
+                    <h6 className="text-[1.55rem] leading-[1.6rem] font-bold text-neutral-700">
+                      {title} Timestamp
                     </h6>
-                    <p className="text-[1.4rem] leading-[1.4rem] font-medium text-neutral-300">
-                      @muhammad_nabeel_91756
+
+                    <p className="flex items-center gap-[0.5rem] text-[1.4rem] leading-[1.4rem] font-semibold text-neutral-700">
+                      <HiMiniCalendarDays size="1.6rem" />
+                      <span>On {date}</span>
+                    </p>
+
+                    <p className="flex items-center gap-[0.5rem] text-[1.4rem] leading-[1.4rem] font-semibold text-neutral-700">
+                      <HiOutlineClock size="1.6rem" />
+                      <span>At {time}</span>
                     </p>
                   </div>
-                </div>
-
-                {/* Others */}
-                <div className="w-full space-y-[0.8rem]">
-                  {/* Experience Badge */}
-                  <p className="w-fit text-[1.4rem] leading-[1.4rem] font-bold text-neutral-800 px-[1.5rem] py-[0.4rem] bg-orange-400 rounded-full">
-                    Senior
-                  </p>
-
-                  {/* Email and Mobile Number */}
-                  <div className="w-full space-y-[0.5rem] text-neutral-100 text-[1.4rem] leading-[1.4rem] font-semibold tracking-wide *:flex *:items-center *:gap-[0.8rem] px-[1rem] py-[0.8rem] bg-[#ffffff20] rounded-lg">
-                    <p>
-                      <MdOutlineEmail size="1.8rem" className="text-white" />
-                      <span>nabeelmajeed266@gmail.com</span>
-                    </p>
-
-                    <p>
-                      <TiPhoneOutline size="1.8rem" className="text-white" />
-                      <span>03345678564</span>
-                    </p>
-                  </div>
-                </div>
+                ))}
               </div>
-            </section>
+            </div>
           </div>
 
           {/* Info Side */}
-          <div className="w-[37%] flex flex-col gap-[2rem]">
+          <div className="w-[36%] flex flex-col gap-[2.5rem]">
             {/* Location Map */}
             <div
               ref={mapRef}
-              className="w-full h-[30rem] relative border-[0.2rem] border-neutral-300 rounded-xl shadow-xl shadow-[#00000010] overflow-hidden mt-[2.5rem]"
+              className="w-full h-[30rem] relative border-[0.2rem] border-neutral-300 rounded-xl shadow-xl shadow-[#00000010] overflow-hidden"
             >
               <button
                 onClick={handleFullScreen}
@@ -318,38 +360,65 @@ const PropertyDetails = () => {
               </Map>
             </div>
 
-            {/* Timeline Record  */}
-            <div className="w-full px-[0.5rem] py-[2rem] space-y-[0.5rem]">
-              <h3 className="text-[2rem] leading-[2rem] font-bold text-theme-blue">
-                Timeline Record
-              </h3>
+            {/* Lead Agent Details */}
+            <section className="w-full p-[4%] bg-neutral-100 rounded-xl overflow-hidden shadow-lg shadow-[#00000010] border-[0.2rem] border-neutral-200">
+              {/* Title */}
+              <h4 className="text-[2rem] leading-[2rem] font-bold text-theme-blue select-none mb-[1.2rem]">
+                Lead Agent
+              </h4>
 
-              <p className="text-[1.4rem] leading-[1.8rem] font-medium text-neutral-800">
-                Track milestones and updates of property with precise date and
-                time logs.
-              </p>
+              {/* Agent Image & Identity */}
+              <div className="w-full flex items-center gap-[1.2rem] mb-[1.2rem]">
+                {/* Agent Image */}
+                <div>
+                  <img
+                    src="/src/assets/Agents/agent03.png"
+                    alt="Agent"
+                    className="size-[4.2rem] object-cover rounded-full select-none"
+                  />
+                </div>
 
-              {/* Timeline Records */}
-              <div className="w-full flex flex-col gap-[1.2rem] py-[1rem]">
-                {timelineRecords.map(({ title, date, time }) => (
-                  <div className="w-[75%] bg-neutral-100 even:self-end p-[1rem] space-y-[0.6rem] rounded-xl border-[0.2rem] border-neutral-200">
-                    <h6 className="text-[1.6rem] leading-[1.6rem] font-bold text-neutral-700">
-                      {title} Timestamp
-                    </h6>
-
-                    <p className="flex items-center gap-[0.5rem] text-[1.4rem] leading-[1.4rem] font-semibold text-neutral-700">
-                      <HiMiniCalendarDays size="1.6rem" />
-                      <span>On {date}</span>
-                    </p>
-
-                    <p className="flex items-center gap-[0.5rem] text-[1.4rem] leading-[1.4rem] font-semibold text-neutral-700">
-                      <HiOutlineClock size="1.6rem" />
-                      <span>At {time}</span>
-                    </p>
-                  </div>
-                ))}
+                {/* Agent Identity */}
+                <div className="flex flex-col gap-[0.4rem]">
+                  <h6 className="text-[1.55rem] leading-[1.55rem] font-semibold text-neutral-800">
+                    Muhammad Nabeel
+                  </h6>
+                  <p className="text-[1.4rem] leading-[1.4rem] font-medium text-neutral-700">
+                    Senior Agent
+                  </p>
+                </div>
               </div>
-            </div>
+
+              {/* Others */}
+              <div className="w-full space-y-[0.8rem]">
+                {/* Email and Mobile Number */}
+                <div className="w-full space-y-[0.8rem] text-neutral-700 text-[1.4rem] leading-[1.4rem] font-semibold tracking-wide px-[0.2rem] *:flex *:items-center *:gap-[0.8rem]">
+                  <p>
+                    <PiTagSimpleBold
+                      size="1.8rem"
+                      className="text-neutral-700"
+                    />
+                    <span>@muhammad_nabeel_91756</span>
+                  </p>
+
+                  <p>
+                    <MdOutlineEmail
+                      size="1.8rem"
+                      className="text-neutral-700"
+                    />
+                    <span>nabeelmajeed266@gmail.com</span>
+                  </p>
+
+                  <p>
+                    <TiPhoneOutline
+                      size="1.8rem"
+                      className="text-neutral-700"
+                    />
+                    <span>03345678564</span>
+                  </p>
+                </div>
+              </div>
+            </section>
           </div>
         </div>
       </div>
@@ -366,3 +435,208 @@ const PropertyDetails = () => {
 };
 
 export default PropertyDetails;
+
+// import React from "react";
+// import {
+//   FaBed,
+//   FaBath,
+//   FaRulerCombined,
+//   FaPhoneAlt,
+//   FaUser,
+//   FaMapMarkerAlt,
+//   FaRegCalendar,
+// } from "react-icons/fa";
+// import { BsHouseDoor, BsTag } from "react-icons/bs";
+
+// const property = {
+//   purpose: "Sell",
+//   category: "Residential",
+//   type: "House",
+//   city: "Karachi",
+//   size: "2 Kanal",
+//   price: "2,50,00,000",
+//   condition: "Excellent - in a good shape and well maintained",
+//   images: [
+//     "/src/assets/Properties/house-02.jpg",
+//     "/src/assets/Properties/room-05.jpg",
+//     "/src/assets/Properties/room-04.jpg",
+//     "/src/assets/Properties/balcony-02.jpg",
+//   ],
+//   contactNumber: "+92 3455785785",
+//   username: "Muhammad Junaid",
+//   bedroom: "4",
+//   bathroom: "4",
+//   features: [
+//     "Swimming Pool",
+//     "Garden",
+//     "Parking",
+//     "Security",
+//     "Central AC",
+//     "Servant Quarter",
+//     "Kitchen",
+//     "Balcony",
+//     "Gym",
+//     "Elevator",
+//     "Backup Power",
+//     "Gas",
+//     "Water Supply",
+//   ],
+//   description: "This is my beautiful house where you have seen",
+//   status: "drafted",
+//   createdAt: "2024-08-15T05:22:35.517+00:00",
+//   updatedAt: "2024-08-15T05:22:35.517+00:00",
+// };
+
+// const PropertyDetails = () => {
+//   return (
+//     <div className="min-h-screen bg-gray-50 py-8">
+//       <div className="max-w-7xl mx-auto px-4">
+//         {/* Property Header */}
+//         <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+//           <div className="flex justify-between items-start">
+//             <div>
+//               <div className="flex items-center gap-3 mb-2">
+//                 <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold">
+//                   {property.purpose}
+//                 </span>
+//                 <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold">
+//                   {property.category}
+//                 </span>
+//               </div>
+//               <h1 className="text-3xl font-bold text-gray-900 mb-2">
+//                 {property.type} for {property.purpose}
+//               </h1>
+//               <div className="flex items-center text-gray-600">
+//                 <FaMapMarkerAlt className="mr-2" />
+//                 <span>{property.city}</span>
+//               </div>
+//             </div>
+//             <div className="text-right">
+//               <p className="text-3xl font-bold text-green-600">
+//                 PKR {property.price}
+//               </p>
+//               <p className="text-gray-500">{property.size}</p>
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* Image Gallery */}
+//         <div className="grid grid-cols-3 gap-4 mb-6">
+//           {property.images.map((image, index) => (
+//             <div
+//               key={index}
+//               className={`rounded-lg overflow-hidden ${
+//                 index === 0 ? "col-span-2 row-span-2" : ""
+//               }`}
+//             >
+//               <img
+//                 src={image}
+//                 alt={`Property ${index + 1}`}
+//                 className="w-full h-full object-cover"
+//               />
+//             </div>
+//           ))}
+//         </div>
+
+//         {/* Property Details Grid */}
+//         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+//           {/* Main Details */}
+//           <div className="md:col-span-2">
+//             <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+//               <h2 className="text-2xl font-bold mb-4">Property Details</h2>
+
+//               {/* Key Features */}
+//               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+//                 <div className="flex items-center gap-2">
+//                   <FaBed className="text-gray-400 text-xl" />
+//                   <div>
+//                     <p className="text-sm text-gray-500">Bedrooms</p>
+//                     <p className="font-semibold">{property.bedroom}</p>
+//                   </div>
+//                 </div>
+//                 <div className="flex items-center gap-2">
+//                   <FaBath className="text-gray-400 text-xl" />
+//                   <div>
+//                     <p className="text-sm text-gray-500">Bathrooms</p>
+//                     <p className="font-semibold">{property.bathroom}</p>
+//                   </div>
+//                 </div>
+//                 <div className="flex items-center gap-2">
+//                   <FaRulerCombined className="text-gray-400 text-xl" />
+//                   <div>
+//                     <p className="text-sm text-gray-500">Size</p>
+//                     <p className="font-semibold">{property.size}</p>
+//                   </div>
+//                 </div>
+//                 <div className="flex items-center gap-2">
+//                   <BsHouseDoor className="text-gray-400 text-xl" />
+//                   <div>
+//                     <p className="text-sm text-gray-500">Condition</p>
+//                     <p className="font-semibold">{property.condition}</p>
+//                   </div>
+//                 </div>
+//               </div>
+
+//               {/* Description */}
+//               <div className="mb-6">
+//                 <h3 className="text-xl font-semibold mb-3">Description</h3>
+//                 <p className="text-gray-600">{property.description}</p>
+//               </div>
+
+//               {/* Features */}
+//               <div>
+//                 <h3 className="text-xl font-semibold mb-3">Features</h3>
+//                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+//                   {property.features.map((feature, index) => (
+//                     <div key={index} className="flex items-center gap-2">
+//                       <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+//                       <span className="text-gray-600">{feature}</span>
+//                     </div>
+//                   ))}
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+
+//           {/* Contact Information */}
+//           <div className="md:col-span-1">
+//             <div className="bg-white rounded-lg shadow-lg p-6">
+//               <h2 className="text-2xl font-bold mb-4">Contact Information</h2>
+//               <div className="space-y-4">
+//                 <div className="flex items-center gap-3">
+//                   <FaUser className="text-gray-400" />
+//                   <div>
+//                     <p className="text-sm text-gray-500">Listed by</p>
+//                     <p className="font-semibold">{property.username}</p>
+//                   </div>
+//                 </div>
+//                 <div className="flex items-center gap-3">
+//                   <FaPhoneAlt className="text-gray-400" />
+//                   <div>
+//                     <p className="text-sm text-gray-500">Contact Number</p>
+//                     <p className="font-semibold">{property.contactNumber}</p>
+//                   </div>
+//                 </div>
+//                 <div className="flex items-center gap-3">
+//                   <FaRegCalendar className="text-gray-400" />
+//                   <div>
+//                     <p className="text-sm text-gray-500">Listed Date</p>
+//                     <p className="font-semibold">
+//                       {new Date(property.createdAt).toLocaleDateString()}
+//                     </p>
+//                   </div>
+//                 </div>
+
+//                 <button className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">
+//                   Contact Seller
+//                 </button>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default PropertyDetails;
