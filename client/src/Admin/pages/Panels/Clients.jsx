@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   clientsDataColumns,
   clientsDataSortBy,
@@ -15,7 +16,6 @@ import { TbArrowBigRightLinesFilled } from "react-icons/tb";
 import SortDropdown from "../../components/Dropdowns/SortDropdown";
 import ColumnsDropdown from "../../components/Dropdowns/ColumnsDropdown";
 import FilterDropdown from "../../components/Dropdowns/FilterDropdown";
-import { useNavigate } from "react-router-dom";
 
 // Example data for cards and table
 const clientsStats = [
@@ -150,10 +150,10 @@ const Clients = () => {
       {/* Section Middle */}
       <section className="w-full space-y-[1.8rem]">
         {/* Top Header */}
-        <div className="w-full">
-          <h2 className="flex items-center gap-[0.4rem] text-[2.1rem] leading-[2.1rem] font-bold text-theme-blue">
-            <PiStarFourFill size="1.2rem" className="rotate-12" />
-            <span>Clients Distribution by City</span>
+        <div className="w-fit flex items-center gap-[0.4rem] text-theme-blue">
+          <PiStarFourFill size="1.2rem" className="rotate-12" />
+          <h2 className="text-[2.2rem] leading-[2.2rem] font-bold">
+            Clients Distribution by City
           </h2>
         </div>
 

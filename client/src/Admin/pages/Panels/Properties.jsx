@@ -93,10 +93,10 @@ const Properties = () => {
       {/* Section Middle */}
       <section className="w-full space-y-[1.8rem]">
         {/* Top Header */}
-        <div className="w-full">
-          <h2 className="flex items-center gap-[0.4rem] text-[2.1rem] leading-[2.1rem] font-bold text-theme-blue">
-            <PiStarFourFill size="1.2rem" className="rotate-12" />
-            <span>Properties Distribution by Status</span>
+        <div className="w-fit flex items-center gap-[0.4rem] text-theme-blue">
+          <PiStarFourFill size="1.2rem" className="rotate-12" />
+          <h2 className="text-[2.2rem] leading-[2.2rem] font-bold">
+            Properties Distribution by Status
           </h2>
         </div>
 

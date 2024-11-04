@@ -587,9 +587,9 @@ export const usersDataColumns = [
   "Email Address",
   "Mobile Number",
   "Live In",
-  "Joined At",
-  "Last Login At",
-  "Last Updated At",
+  "Joined On",
+  "Last Login On",
+  "Last Updated On",
   "Status",
 ];
 

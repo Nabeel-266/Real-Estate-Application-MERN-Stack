@@ -47,7 +47,7 @@
   }
 
   .scrollbar-slim-x::-webkit-scrollbar {
-    height: 0.7rem;
+    height: 0.6rem;
   }
 
   .scrollbar-slim-x::-webkit-scrollbar-thumb {
@@ -223,7 +223,7 @@
     @apply min-w-[20rem] w-fit overflow-hidden bg-theme-blue text-white absolute top-[100%] right-0 rounded-lg shadow-lg shadow-[#00000050] transition-all duration-200;
   }
 
-  /* --> For Panels Input and Select <-- */
+  /* --> For Admin Panels Inputs and Selects <-- */
 
   .inputLabels {
     @apply text-[1.6rem] leading-[1.6rem] font-bold text-theme-blue px-[0.5rem] cursor-default;

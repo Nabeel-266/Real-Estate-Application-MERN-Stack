@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { usersDataColumns, usersDataSortBy } from "../../../lib/dummyDataAdmin";
 
 // Import React Icons
@@ -33,6 +34,7 @@ const usersStats = [
 ];
 
 const Users = () => {
+  const navigate = useNavigate();
   const [selectedColumns, setSelectedColumns] = useState(usersDataColumns);
 
   // Toggle Properties Data Column Visibility
@@ -42,6 +44,10 @@ const Users = () => {
         ? prevSelected.filter((col) => col !== column)
         : [...prevSelected, column]
     );
+  };
+
+  const userDetailsNavigateHandler = (refernceKey) => {
+    navigate(`/admin/user/${refernceKey}`);
   };
 
   return (
@@ -156,14 +162,14 @@ const Users = () => {
 
                   {selectedColumns.includes("Status") && <th>Status</th>}
 
-                  {selectedColumns.includes("Joined At") && <th>Joined At</th>}
+                  {selectedColumns.includes("Joined On") && <th>Joined On</th>}
 
-                  {selectedColumns.includes("Last Login At") && (
-                    <th>Last Login At</th>
+                  {selectedColumns.includes("Last Login On") && (
+                    <th>Last Login On</th>
                   )}
 
-                  {selectedColumns.includes("Last Updated At") && (
-                    <th>Last Updated At</th>
+                  {selectedColumns.includes("Last Updated On") && (
+                    <th>Last Updated On</th>
                   )}
                 </tr>
               </thead>
@@ -172,6 +178,7 @@ const Users = () => {
                 {[1, 2, 3, 4, 5].map((_, index) => (
                   <tr
                     key={index}
+                    onClick={() => userDetailsNavigateHandler(index)}
                     className="border-b-[1px] border-neutral-300 odd:bg-white cursor-pointer text-center *:text-[1.5rem] *:leading-[1.5rem] *:font-semibold *:text-neutral-700 *:px-[1.6rem] *:py-[1.3rem] *:whitespace-nowrap"
                   >
                     <td className="text-left">US-12485</td>
@@ -197,15 +204,15 @@ const Users = () => {
                       </th>
                     )}
 
-                    {selectedColumns.includes("Joined At") && (
+                    {selectedColumns.includes("Joined On") && (
                       <th>Sep 12 - 2023</th>
                     )}
 
-                    {selectedColumns.includes("Last Login At") && (
+                    {selectedColumns.includes("Last Login On") && (
                       <th>Jan 26 - 2024</th>
                     )}
 
-                    {selectedColumns.includes("Last Updated At") && (
+                    {selectedColumns.includes("Last Updated On") && (
                       <th>Feb 12 - 2024</th>
                     )}
                   </tr>

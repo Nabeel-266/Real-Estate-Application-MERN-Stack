@@ -45,6 +45,7 @@ import Settings from "./Admin/pages/Panels/Settings";
 import AgentDetails from "./Admin/pages/Overviews/AgentDetails";
 import PropertyDetails from "./Admin/pages/Overviews/PropertyDetails";
 import ClientDetails from "./Admin/pages/Overviews/ClientDetails";
+import UserDetails from "./Admin/pages/Overviews/UserDetails";
 
 const ClientLayout = () => {
   const dispatch = useDispatch();
@@ -211,6 +212,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/client/:clientId",
         element: <ClientDetails />,
+      },
+      {
+        path: "/admin/user/:userId",
+        element: <UserDetails />,
       },
     ],
   },

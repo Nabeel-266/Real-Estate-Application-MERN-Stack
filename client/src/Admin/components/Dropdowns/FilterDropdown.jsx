@@ -68,9 +68,9 @@ const FilterDropdown = ({ to }) => {
         mobileNumber: searchParams.get("mobileNumber") || "",
         liveInCity: searchParams.get("liveInCity") || "",
         status: searchParams.get("status") || "",
-        joinedAt: searchParams.get("joinedAt") || "",
-        lastLoginAt: searchParams.get("lastLoginAt") || "",
-        lastUpdatedAt: searchParams.get("lastUpdatedAt") || "",
+        joinedOn: searchParams.get("joinedOn") || "",
+        lastLoginOn: searchParams.get("lastLoginOn") || "",
+        lastUpdatedOn: searchParams.get("lastUpdatedOn") || "",
       });
     }
   }, [searchParams, routeLocation]);

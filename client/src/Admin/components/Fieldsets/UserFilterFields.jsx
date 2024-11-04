@@ -5,7 +5,6 @@ import { cities } from "../../../lib/dummyData";
 import TypeInput from "../Inputs/TypeInput";
 import SearchSelection from "../Selections/SearchSelection";
 import SimpleSelection from "../Selections/SimpleSelection";
-import MinMaxInput from "../Inputs/MinMaxInput";
 import DateInput from "../Inputs/DateInput";
 
 const UserFilterFields = ({ state, setStateHandler }) => {
@@ -97,11 +96,11 @@ const UserFilterFields = ({ state, setStateHandler }) => {
         setStateHandler={setStateHandler}
       />
 
-      {/* Filter by User Joined At Month */}
+      {/* Filter by User Joined On Month */}
       <DateInput
-        inputFor={["joinedAt", "byUserJoinedAt"]}
+        inputFor={["joinedOn", "byUserJoinedOn"]}
         inputType="month"
-        labelText="By Joined At"
+        labelText="By Joined On"
         labelStyle="inputLabels"
         inputStyle="inputFields"
         contStyle="space-y-[0.6rem]"
@@ -109,11 +108,11 @@ const UserFilterFields = ({ state, setStateHandler }) => {
         setStateHandler={setStateHandler}
       />
 
-      {/* Filter by User Last Login At Month */}
+      {/* Filter by User Last Login On Month */}
       <DateInput
-        inputFor={["lastLoginAt", "byUserLastLoginAt"]}
+        inputFor={["lastLoginOn", "byUserLastLoginOn"]}
         inputType="month"
-        labelText="By Last Login At"
+        labelText="By Last Login On"
         labelStyle="inputLabels"
         inputStyle="inputFields"
         contStyle="space-y-[0.6rem]"
@@ -121,11 +120,11 @@ const UserFilterFields = ({ state, setStateHandler }) => {
         setStateHandler={setStateHandler}
       />
 
-      {/* Filter by User Join At Month */}
+      {/* Filter by User Join On Month */}
       <DateInput
-        inputFor={["lastUpdatedAt", "byUserLastUpdatedAt"]}
+        inputFor={["lastUpdatedOn", "byUserLastUpdatedOn"]}
         inputType="month"
-        labelText="By Last Updated At"
+        labelText="By Last Updated On"
         labelStyle="inputLabels"
         inputStyle="inputFields"
         contStyle="space-y-[0.6rem]"
