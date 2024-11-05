@@ -79,7 +79,7 @@ const UserDetails = () => {
       </div>
 
       {/* Property Portfolio */}
-      <div className="w-full space-y-[1.5rem]">
+      <div className="w-full space-y-[1.2rem]">
         {/* Property Portfolio Header */}
         <div className="w-fit flex items-center gap-[0.4rem] bg-white text-theme-blue rounded-md select-none">
           <PiStarFourFill size="1.2rem" className="rotate-12" />
@@ -89,9 +89,7 @@ const UserDetails = () => {
         </div>
 
         {/* Property Portfolio Content */}
-        <div className="w-full p-[1rem] bg-neutral-100 rounded-xl">
-          <UserProperties />
-        </div>
+        <UserProperties />
       </div>
     </div>
   );

@@ -14,6 +14,7 @@ import {
 } from "react-icons/fa6";
 import { BsFillCalendarRangeFill } from "react-icons/bs";
 import { FaMoneyCheck } from "react-icons/fa";
+import InfoCard from "../../components/InfoCard";
 
 const AgentDetails = () => {
   return (
@@ -35,6 +36,7 @@ const AgentDetails = () => {
 
         {/* Core Details Content */}
         <div className="w-full flex">
+          {/* Primary Details */}
           <section className="w-[48%] space-y-[2.5rem]">
             {/* Picture, Name & Identifier */}
             <div className="w-full flex items-center gap-[1.5rem]">
@@ -73,51 +75,38 @@ const AgentDetails = () => {
             </div>
           </section>
 
+          {/* Secondary Details */}
           <section className="w-[52%] space-y-[1rem]">
             {/* Age, Experience & Marital Status */}
-            <div className="w-full flex gap-[1rem]">
+            <div className="w-full flex justify-between gap-[1rem]">
               {/* Age */}
-              <div className="w-[25%] space-y-[0.7rem] p-[1rem] bg-neutral-200 rounded-xl text-[1.6rem] leading-[1.6rem]">
-                <h5 className="text-theme-blue font-bold">Age</h5>
-                <p className="text-neutral-700 font-semibold">25 years</p>
-              </div>
+              <InfoCard title="Age" text="25 years" width={"25%"} />
 
               {/* Experience */}
-              <div className="w-[33%] space-y-[0.7rem] p-[1rem] bg-neutral-200 rounded-xl text-[1.6rem] leading-[1.6rem]">
-                <h5 className="text-theme-blue font-bold">Experience</h5>
-                <p className="text-neutral-700 font-semibold">5 years</p>
-              </div>
+              <InfoCard title="Experience" text="5 years" width={"33%"} />
 
               {/* Marital Status */}
-              <div className="w-[42%] space-y-[0.7rem] p-[1rem] bg-neutral-200 rounded-xl text-[1.6rem] leading-[1.6rem]">
-                <h5 className="text-theme-blue font-bold">Marital Status</h5>
-                <p className="text-neutral-700 font-semibold">Single</p>
-              </div>
+              <InfoCard title="Marital Status" text="Single" width={"42%"} />
             </div>
 
             {/* Date Of Birth & Education */}
             <div className="w-full flex gap-[1rem]">
-              {/* Date Of Birth */}
-              <div className="w-full space-y-[0.7rem] p-[1rem] bg-neutral-200 rounded-xl text-[1.6rem] leading-[1.6rem]">
-                <h5 className="text-theme-blue font-bold">Date Of Birth</h5>
-                <p className="text-neutral-700 font-semibold">Dec 26, 2000</p>
-              </div>
+              <InfoCard
+                title="Date Of Birth"
+                text="Dec 26, 2000"
+                width={"50%"}
+              />
 
-              {/* Education */}
-              <div className="w-full space-y-[0.7rem] p-[1rem] bg-neutral-200 rounded-xl text-[1.6rem] leading-[1.6rem]">
-                <h5 className="text-theme-blue font-bold">Education</h5>
-                <p className="text-neutral-700 font-semibold">Under Graduate</p>
-              </div>
+              <InfoCard title="Education" text="Under Graduate" width={"50%"} />
             </div>
 
             {/* Residential Address */}
-            <div className="w-full space-y-[0.6rem] p-[1rem] bg-neutral-200 rounded-xl text-[1.6rem]">
-              <h5 className="text-theme-blue leading-[1.6rem] font-bold">
-                Residential Address
-              </h5>
-              <p className="text-neutral-700 leading-[2.1rem] font-semibold">
-                Flat no 12, Al Amna Avenue, Sector 09, North-Karachi, Karachi.
-              </p>
+            <div className="w-full flex">
+              <InfoCard
+                title="Residential Address"
+                text="Flat no 12, Al Amna Avenue, Sector 09, North-Karachi, Karachi."
+                width={"100%"}
+              />
             </div>
           </section>
         </div>
@@ -328,5 +317,5 @@ export default AgentDetails;
 
 // Pending -> abhi under review hai
 // Progress -> abhi baat cheet chal rahi hai
-// Successed -> complete hogai hai successfully
+// Finalized -> complete hogai hai successfully
 // Rejected -> details sahi nahi hain property ki
