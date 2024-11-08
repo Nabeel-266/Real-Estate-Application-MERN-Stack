@@ -14,7 +14,45 @@ import {
 } from "react-icons/fa6";
 import { BsFillCalendarRangeFill } from "react-icons/bs";
 import { FaMoneyCheck } from "react-icons/fa";
+import { GoDotFill } from "react-icons/go";
+
+// Import Components
 import InfoCard from "../../components/InfoCard";
+
+const operationalStats = [
+  {
+    title: "Operating City",
+    desc: "Dera Ghazi Khan",
+  },
+  {
+    title: "Joining Date",
+    desc: "Dec 29, 2020",
+  },
+  {
+    title: "Accepted Properties",
+    desc: "22 Properties",
+  },
+  {
+    title: "Finalized Deals",
+    desc: "8 Deals",
+  },
+  {
+    title: "Total Earned",
+    desc: "Rs 12 Lac",
+  },
+  {
+    title: "Highest Earned",
+    desc: "Rs 4 Lac",
+  },
+  {
+    title: "Generate Revenue",
+    desc: "Rs 4 Crore",
+  },
+  {
+    title: "Period of Service",
+    desc: "2 Years",
+  },
+];
 
 const AgentDetails = () => {
   return (
@@ -124,116 +162,19 @@ const AgentDetails = () => {
 
         {/* Operational Stats Content */}
         <div className="w-full flex flex-wrap gap-[2rem]">
-          {/* Operating City */}
-          <div className="flex items-center gap-[1.2rem] pl-[1.2rem] pr-[2.2rem] pt-[1rem] pb-[1.2rem] bg-neutral-200 rounded-3xl shadow-xl border-[2px] border-neutral-300">
-            {/* Icon */}
-            <div className="size-[5rem] flex items-center justify-center rounded-full bg-white text-theme-blue">
-              <FaCity size="3rem" className="drop-shadow-lg" />
-            </div>
-
-            {/* Text */}
-            <div className="flex flex-col items-start gap-[0.7rem]">
-              <h3 className="text-[1.7rem] leading-[1.8rem] text-neutral-800 font-bold whitespace-nowrap">
-                Operating City
+          {operationalStats.map(({ title, desc }, index) => (
+            <div
+              key={index}
+              className="h-fit flex flex-col items-center justify-center gap-[0.8rem] pt-[1rem] pb-[1.2rem] px-[1.5rem] bg-neutral-100 rounded-2xl shadow-md border-[1px] border-neutral-200"
+            >
+              <h3 className="text-[1.55rem] leading-[1.6rem] font-bold text-neutral-700 whitespace-nowrap">
+                {title}
               </h3>
-              <p className="text-white bg-theme-blue text-[1.5rem] leading-[1.4rem] font-semibold px-[1.5rem] py-[0.5rem] rounded-full shadow-lg whitespace-nowrap">
-                Karachi
+              <p className="text-[1.5rem] leading-[1.6rem] font-semibold text-white bg-theme-blue px-[1.5rem] py-[0.4rem] rounded-full shadow-md whitespace-nowrap">
+                {desc}
               </p>
             </div>
-          </div>
-
-          {/* Joining Date */}
-          <div className="flex items-center gap-[1.2rem] pl-[1.2rem] pr-[2.2rem] pt-[1rem] pb-[1.2rem] bg-neutral-200 rounded-3xl shadow-xl border-[2px] border-neutral-300">
-            {/* Icon */}
-            <div className="size-[5rem] flex items-center justify-center rounded-full bg-white text-theme-blue">
-              <BsFillCalendarRangeFill
-                size="2.5rem"
-                className="drop-shadow-lg"
-              />
-            </div>
-
-            {/* Text */}
-            <div className="flex flex-col items-start gap-[0.7rem]">
-              <h3 className="text-[1.7rem] leading-[1.8rem] text-neutral-800 font-bold whitespace-nowrap">
-                Joining Date
-              </h3>
-              <p className="text-white bg-theme-blue text-[1.5rem] leading-[1.4rem] font-semibold px-[1.5rem] py-[0.5rem] rounded-full shadow-lg whitespace-nowrap">
-                Dec 29, 2020
-              </p>
-            </div>
-          </div>
-
-          {/* Successful Deals */}
-          <div className="flex items-center gap-[1.2rem] pl-[1.2rem] pr-[2.2rem] pt-[1rem] pb-[1.2rem] bg-neutral-200 rounded-3xl shadow-xl border-[2px] border-neutral-300">
-            {/* Icon */}
-            <div className="size-[5rem] flex items-center justify-center rounded-full bg-white text-theme-blue">
-              <FaHandshake size="3.3rem" className="drop-shadow-lg" />
-            </div>
-
-            {/* Text */}
-            <div className="flex flex-col items-start gap-[0.7rem]">
-              <h3 className="text-[1.7rem] leading-[1.8rem] text-neutral-800 font-bold whitespace-nowrap">
-                Successful Deals
-              </h3>
-              <p className="text-white bg-theme-blue text-[1.5rem] leading-[1.4rem] font-semibold px-[1.5rem] py-[0.5rem] rounded-full shadow-lg whitespace-nowrap">
-                20 Deals
-              </p>
-            </div>
-          </div>
-
-          {/* Total Earned */}
-          <div className="flex items-center gap-[1.2rem] pl-[1.2rem] pr-[2.2rem] pt-[1rem] pb-[1.2rem] bg-neutral-200 rounded-3xl shadow-xl border-[2px] border-neutral-300">
-            {/* Icon */}
-            <div className="size-[5rem] flex items-center justify-center rounded-full bg-white text-theme-blue">
-              <FaMoneyCheck size="3rem" className="drop-shadow-lg" />
-            </div>
-
-            {/* Text */}
-            <div className="flex flex-col items-start gap-[0.7rem]">
-              <h3 className="text-[1.7rem] leading-[1.8rem] text-neutral-800 font-bold whitespace-nowrap">
-                Total Earned
-              </h3>
-              <p className="text-white bg-theme-blue text-[1.5rem] leading-[1.4rem] font-semibold px-[1.5rem] py-[0.5rem] rounded-full shadow-lg whitespace-nowrap">
-                PKR 1500000
-              </p>
-            </div>
-          </div>
-
-          {/* Highest Earned */}
-          <div className="flex items-center gap-[1.2rem] pl-[1.2rem] pr-[2.2rem] pt-[1rem] pb-[1.2rem] bg-neutral-200 rounded-3xl shadow-xl border-[2px] border-neutral-300">
-            {/* Icon */}
-            <div className="size-[5rem] flex items-center justify-center rounded-full bg-white text-theme-blue">
-              <FaMoneyBillTrendUp size="3rem" className="drop-shadow-lg" />
-            </div>
-
-            {/* Text */}
-            <div className="flex flex-col items-start gap-[0.7rem]">
-              <h3 className="text-[1.7rem] leading-[1.8rem] text-neutral-800 font-bold whitespace-nowrap">
-                Highest Earned
-              </h3>
-              <p className="text-white bg-theme-blue text-[1.5rem] leading-[1.4rem] font-semibold px-[1.5rem] py-[0.5rem] rounded-full shadow-lg whitespace-nowrap">
-                PKR 180000
-              </p>
-            </div>
-          </div>
-
-          {/* Service Period */}
-          <div className="flex items-center gap-[1.2rem] pl-[1.2rem] pr-[2.2rem] pt-[1rem] pb-[1.2rem] bg-neutral-200 rounded-3xl shadow-xl border-[2px] border-neutral-300">
-            {/* Icon */}
-            <div className="size-[5rem] flex items-center justify-center rounded-full bg-white text-theme-blue">
-              <FaServicestack size="3rem" className="drop-shadow-lg" />
-            </div>
-
-            {/* Text */}
-            <div className="flex flex-col items-start gap-[0.7rem]">
-              <h3 className="text-[1.7rem] leading-[1.8rem] text-neutral-800 font-bold whitespace-nowrap">
-                Period of Service
-              </h3>
-              <p className="text-white bg-theme-blue text-[1.5rem] leading-[1.4rem] font-semibold px-[1.5rem] py-[0.5rem] rounded-full shadow-lg whitespace-nowrap">
-                2 years
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
 

@@ -15,7 +15,12 @@ const client = {
   properties: [
     {
       // "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-      image: "/src/assets/Properties/house-02.jpg",
+      images: [
+        "/src/assets/Properties/house-02.jpg",
+        "/src/assets/Properties/room-05.jpg",
+        "/src/assets/Properties/room-04.jpg",
+        "/src/assets/Properties/balcony-02.jpg",
+      ],
       type: "Apartment",
       status: "Sold",
       city: "Dera Ghazi Khan",
@@ -34,7 +39,12 @@ const client = {
       },
     },
     {
-      image: "/src/assets/Properties/room-05.jpg",
+      images: [
+        "/src/assets/Properties/house-02.jpg",
+        "/src/assets/Properties/room-05.jpg",
+        "/src/assets/Properties/room-04.jpg",
+        "/src/assets/Properties/balcony-02.jpg",
+      ],
       type: "Apartment",
       status: "Sold",
       city: "Dera Ghazi Khan",
@@ -53,7 +63,12 @@ const client = {
       },
     },
     {
-      image: "/src/assets/Properties/room-04.jpg",
+      images: [
+        "/src/assets/Properties/house-02.jpg",
+        "/src/assets/Properties/room-05.jpg",
+        "/src/assets/Properties/room-04.jpg",
+        "/src/assets/Properties/balcony-02.jpg",
+      ],
       type: "Apartment",
       status: "Sold",
       city: "Dera Ghazi Khan",
@@ -180,7 +195,12 @@ const ClientDetails = () => {
           {/* Property Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[1.5rem]">
             {client.properties.map((property, index) => (
-              <PropertyCard key={index} property={property} />
+              <PropertyCard
+                key={index}
+                property={property}
+                index={index}
+                specific={false}
+              />
             ))}
           </div>
         </div>
