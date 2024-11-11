@@ -186,7 +186,7 @@ const router = createBrowserRouter([
         element: <Users />,
       },
       {
-        path: "/admin/listing",
+        path: "/admin/listings",
         element: <Listing />,
       },
       {

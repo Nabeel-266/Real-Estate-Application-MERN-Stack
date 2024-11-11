@@ -1,28 +1,27 @@
 import React from "react";
 
 // Import React Icons
-import { FaHourglassHalf } from "react-icons/fa";
-import { BsBuildingFillCheck } from "react-icons/bs";
-import { MdAddHomeWork } from "react-icons/md";
+import { HiHomeModern } from "react-icons/hi2";
+import { FaShop } from "react-icons/fa6";
+import { FaMapMarkedAlt } from "react-icons/fa";
 import { TbArrowBigRightLinesFilled } from "react-icons/tb";
-import { PiStarFourFill } from "react-icons/pi";
 
 // Example data for cards and table
 const listingsStats = [
   {
-    title: "Finalized Properties",
+    title: "Residential Listing",
     count: 120,
-    icon: <BsBuildingFillCheck />,
+    icon: <HiHomeModern />,
   },
   {
-    title: "Published Properties",
+    title: "Commercial Listing",
     count: 60,
-    icon: <MdAddHomeWork />,
+    icon: <FaShop />,
   },
   {
-    title: "Pending Properties",
+    title: "Plot Listing",
     count: 15,
-    icon: <FaHourglassHalf />,
+    icon: <FaMapMarkedAlt />,
   },
 ];
 
@@ -38,11 +37,9 @@ const Listing = () => {
           >
             <div
               className={`absolute z-[1] top-0 bottom-0 right-[1.5rem] flex items-center justify-center text-[#ffffff30] ${
-                stat.title.includes("Total")
-                  ? "text-[7rem] mb-[0.3rem]"
-                  : stat.title.includes("Active")
-                  ? "text-[6.6rem]"
-                  : "text-[6rem]"
+                stat.title.includes("Plot")
+                  ? "text-[5.8rem] mb-[0.1rem] "
+                  : "text-[6.1rem]"
               }`}
             >
               {stat.icon}

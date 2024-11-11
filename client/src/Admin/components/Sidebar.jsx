@@ -43,7 +43,7 @@ const Sidebar = () => {
           [MdOutlineMapsHomeWork, "Properties", "/admin/properties"],
           [FiUsers, "Clients", "/admin/clients"],
           [FaUsersRectangle, "Users", "/admin/users"],
-          [LuLayoutList, "Listing", "/admin/listing"],
+          [LuLayoutList, "Listings", "/admin/listings"],
           [MdOutlineContacts, "Contacts", "/admin/contacts"],
           [TbReport, "Reports", "/admin/reports"],
           [LuSettings, "Settings", "/admin/settings"],
