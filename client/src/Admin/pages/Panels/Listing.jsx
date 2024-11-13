@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 
 // Import React Icons
 import { HiHomeModern } from "react-icons/hi2";
 import { FaShop } from "react-icons/fa6";
 import { FaMapMarkedAlt } from "react-icons/fa";
 import { TbArrowBigRightLinesFilled } from "react-icons/tb";
+
+// Inport Components
+import ListingsBarChart from "../../components/Charts/ListingsBarChart";
 
 // Example data for cards and table
 const listingsStats = [
@@ -26,6 +29,26 @@ const listingsStats = [
 ];
 
 const Listing = () => {
+  const [propertyStatus, setPropertyStatus] = useState("pending");
+  const [timePeriod, setTimePeriod] = useState("last 1 month");
+
+  // Dummy data to simulate listings counts based on categories
+  const dummyData = {
+    "last 1 month": {
+      pending: { Residential: 20, Commercial: 25, Plot: 12 },
+      published: { Residential: 15, Commercial: 10, Plot: 8 },
+      finalized: { Residential: 18, Commercial: 22, Plot: 10 },
+    },
+    "last 2 months": {
+      pending: { Residential: 30, Commercial: 35, Plot: 20 },
+      published: { Residential: 25, Commercial: 15, Plot: 13 },
+      finalized: { Residential: 28, Commercial: 32, Plot: 18 },
+    },
+  };
+
+  // Get data based on current status and time period
+  const listingsData = dummyData[timePeriod][propertyStatus];
+
   return (
     <div className="w-full flex flex-col gap-[3rem] px-[2rem] pt-[2rem] pb-[4rem]">
       {/* Section Top */}
@@ -58,7 +81,48 @@ const Listing = () => {
           </div>
         ))}
       </section>
-      ;
+
+      {/* Section Middle */}
+      <section className="w-full space-y-[1.8rem]">
+        {/* Properties Bar Chart Content */}
+        <div className="w-[58%] min-w-[50rem] flex flex-col gap-[1.2rem] bg-neutral-100 p-[1.5rem] rounded-3xl border-neutral-300 border-[0.2rem]">
+          {/* Top Header */}
+          <div className="w-full flex items-center justify-between">
+            <h3 className="text-[1.8rem] leading-[1.8rem] font-bold text-theme-blue">
+              Property Listings by Category
+            </h3>
+
+            {/* Dropdowns for selecting Property Status and Time Period */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginBottom: "1rem",
+              }}
+            >
+              <select
+                value={propertyStatus}
+                onChange={(e) => setPropertyStatus(e.target.value)}
+              >
+                <option value="pending">Pending</option>
+                <option value="published">Published</option>
+                <option value="finalized">Finalized</option>
+              </select>
+
+              <select
+                value={timePeriod}
+                onChange={(e) => setTimePeriod(e.target.value)}
+              >
+                <option value="last 1 month">Last 1 Month</option>
+                <option value="last 2 months">Last 2 Months</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Pass listings data as a prop to the BarChart component */}
+          <ListingsBarChart data={listingsData} />
+        </div>
+      </section>
     </div>
   );
 };

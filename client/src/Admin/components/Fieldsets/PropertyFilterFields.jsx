@@ -142,7 +142,13 @@ const PropertyFilterFields = ({ state, setStateHandler }) => {
         selectFor="status"
         labelText="By Property Status"
         placeholderText="Select a Property Status"
-        optionsData={["Pending", "Published", "Finalized"]}
+        optionsData={[
+          "Pending",
+          "Published",
+          "Finalized",
+          "Rejected",
+          "Removed",
+        ]}
         labelStyle="inputLabels"
         inputStyle="inputFields"
         contStyle="space-y-[0.6rem]"
