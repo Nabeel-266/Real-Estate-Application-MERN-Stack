@@ -38,7 +38,7 @@ import Agents from "./Admin/pages/Panels/Agents";
 import Properties from "./Admin/pages/Panels/Properties";
 import Clients from "./Admin/pages/Panels/Clients";
 import Users from "./Admin/pages/Panels/Users";
-import Listing from "./Admin/pages/Panels/Listing";
+import Listings from "./Admin/pages/Panels/Listings";
 import Contacts from "./Admin/pages/Panels/Contacts";
 import Reports from "./Admin/pages/Panels/Reports";
 import Settings from "./Admin/pages/Panels/Settings";
@@ -187,7 +187,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/admin/listings",
-        element: <Listing />,
+        element: <Listings />,
       },
       {
         path: "/admin/contacts",

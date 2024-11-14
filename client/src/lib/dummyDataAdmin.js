@@ -560,14 +560,14 @@ export const typesOfProperty = [
   "Hostel",
   "Hotel",
   "Basement",
-  "Agricultural Land",
-  "Industrial Land",
   "Warehouse",
   "Hall",
   "Plaza",
   "Gym",
   "Theatre",
   "Factory",
+  "Agricultural Land",
+  "Industrial Land",
 ];
 
 // Clients Panel
