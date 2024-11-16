@@ -234,7 +234,7 @@
   }
 
   .selectOptionsBox {
-    @apply w-full max-h-[15.4rem] absolute z-[10] bg-white rounded-2xl py-[0.5rem] shadow-lg ring-1 ring-black ring-opacity-5 overflow-auto scrollbar-dropdown-dark border-[0.2rem] border-neutral-400 *:cursor-pointer;
+    @apply w-full max-h-[15.4rem] absolute z-[10] bg-white rounded-2xl py-[0.5rem] shadow-lg ring-1 ring-black/5 overflow-auto scrollbar-dropdown-dark border-[0.2rem] border-neutral-400 *:cursor-pointer;
   }
 
   .selectOption {

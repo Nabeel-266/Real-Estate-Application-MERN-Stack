@@ -9,7 +9,7 @@ const UsersDonutChart = () => {
     labels: ["Basic", "Partial", "Complete"],
     datasets: [
       {
-        label: "User Profile Stage",
+        label: "User Profile Stages",
         data: [58, 34, 28],
         backgroundColor: ["#758893", "#4c646f", "#223f4c"],
         hoverBackgroundColor: ["#758893", "#4c646f", "#223f4c"],
