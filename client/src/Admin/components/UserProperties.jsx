@@ -122,7 +122,7 @@ const UserProperties = () => {
   };
 
   return (
-    <div className="body w-full flex flex-col gap-[2rem]">
+    <div className="w-full flex flex-col gap-[2rem]">
       {/* My Property Tabs Cont */}
       <div className="max-w-fit overflow-x-auto scrollbar-slim-x">
         <div className="w-full relative flex border-b-[0.2rem] border-neutral-200">

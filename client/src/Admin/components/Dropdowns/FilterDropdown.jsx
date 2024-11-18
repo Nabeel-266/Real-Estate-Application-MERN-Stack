@@ -119,7 +119,7 @@ const FilterDropdown = ({ to }) => {
 
       {/* Filter Dropdown */}
       <div
-        className={`min-w-[42rem] w-full bg-neutral-50 text-theme-blue absolute top-[-0.5rem] right-0 rounded-xl shadow-lg shadow-[#00000040] border-neutral-300 border-[0.2rem] transition-all duration-300 ${
+        className={`min-w-[42rem] w-full bg-neutral-50 text-theme-blue absolute z-10 top-[-0.5rem] right-0 rounded-xl shadow-lg shadow-[#00000040] border-neutral-300 border-[0.2rem] transition-all duration-300 ${
           isOpenDropdown ? "translate-x-[0%]" : "translate-x-[115%]"
         }`}
       >

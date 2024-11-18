@@ -41,24 +41,24 @@ const barChartDummyData = {
     "last 1 month": [
       { category: "Residential", count: 20 },
       { category: "Commercial", count: 15 },
-      { category: "Plot", count: 10 },
+      { category: "Plot or Land", count: 10 },
     ],
     "last 2 months": [
       { category: "Residential", count: 25 },
       { category: "Commercial", count: 18 },
-      { category: "Plot", count: 12 },
+      { category: "Plot or Land", count: 12 },
     ],
   },
   finalized: {
     "last 1 month": [
       { category: "Residential", count: 30 },
       { category: "Commercial", count: 22 },
-      { category: "Plot", count: 15 },
+      { category: "Plot or Land", count: 15 },
     ],
     "last 2 months": [
       { category: "Residential", count: 35 },
       { category: "Commercial", count: 28 },
-      { category: "Plot", count: 20 },
+      { category: "Plot or Land", count: 20 },
     ],
   },
 };
@@ -96,7 +96,7 @@ const donutChartDummyData = {
   },
 };
 
-const ListingsBarChart = () => {
+const ListingsCharts = () => {
   const [status, setStatus] = useState("pending");
   const [timePeriod, setTimePeriod] = useState("last 1 month");
 
@@ -336,4 +336,4 @@ const ListingsBarChart = () => {
   );
 };
 
-export default ListingsBarChart;
+export default ListingsCharts;

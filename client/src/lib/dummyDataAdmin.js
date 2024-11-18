@@ -594,3 +594,7 @@ export const usersDataColumns = [
 ];
 
 export const usersDataSortBy = ["Joined At", "Last Login"];
+
+// Listings Panel
+
+export const listingSortBy = ["Sequence", "Price"];

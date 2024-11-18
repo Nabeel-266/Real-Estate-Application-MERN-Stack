@@ -61,7 +61,7 @@ const PropertyCard = ({ property, index, specific }) => {
           <FaChevronRight />
         </button>
 
-        <div className="absolute z-10 top-[1.4rem] right-0">
+        <div className="absolute z-[5] top-[1.4rem] right-0">
           <span
             className={`pl-[1rem] pr-[0.5rem] py-[0.3rem] rounded-l-full text-[1.4rem] leading-[1.4rem] text-theme-blue font-bold select-none ${
               property.status === "Sold"
