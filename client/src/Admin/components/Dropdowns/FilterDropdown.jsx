@@ -10,6 +10,7 @@ import AgentFilterFields from "../Fieldsets/AgentFilterFields";
 import PropertyFilterFields from "../Fieldsets/PropertyFilterFields";
 import ClientFilterFields from "../Fieldsets/ClientFilterFields";
 import UserFilterFields from "../Fieldsets/UserFilterFields";
+import ListingFilterFields from "../Fieldsets/ListingFilterFields";
 
 const FilterDropdown = ({ to }) => {
   const routeLocation = useLocation().pathname.split("/")[2];
@@ -71,6 +72,16 @@ const FilterDropdown = ({ to }) => {
         joinedOn: searchParams.get("joinedOn") || "",
         lastLoginOn: searchParams.get("lastLoginOn") || "",
         lastUpdatedOn: searchParams.get("lastUpdatedOn") || "",
+      });
+    } else if (routeLocation === "listings") {
+      setFilterQuery({
+        status: searchParams.get("status") || "",
+        purpose: searchParams.get("purpose") || "",
+        category: searchParams.get("category") || "",
+        type: searchParams.get("type") || "",
+        city: searchParams.get("city") || "",
+        minPrice: searchParams.get("minPrice") || "",
+        maxPrice: searchParams.get("maxPrice") || "",
       });
     }
   }, [searchParams, routeLocation]);
@@ -157,6 +168,11 @@ const FilterDropdown = ({ to }) => {
               />
             ) : to === "Users" ? (
               <UserFilterFields
+                state={filterQuery}
+                setStateHandler={setFilterQueryHandler}
+              />
+            ) : to === "Listings" ? (
+              <ListingFilterFields
                 state={filterQuery}
                 setStateHandler={setFilterQueryHandler}
               />

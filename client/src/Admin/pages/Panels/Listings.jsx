@@ -13,7 +13,6 @@ import ListingsCharts from "../../components/Charts/ListingsCharts";
 import SortDropdown from "../../components/Dropdowns/SortDropdown";
 import FilterDropdown from "../../components/Dropdowns/FilterDropdown";
 import PropertyCard from "../../components/PropertyCard";
-import PreSelectedSelection from "../../components/Selections/PreSelectedSelection";
 
 // Example data for cards and table
 const listingsStats = [
@@ -179,7 +178,7 @@ const Listings = () => {
                 <SortDropdown dropdownData={listingSortBy} />
               </div>
 
-              <FilterDropdown to="Properties" />
+              <FilterDropdown to="Listings" />
             </div>
           </div>
 
